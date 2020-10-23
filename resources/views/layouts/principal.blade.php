@@ -14,6 +14,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @livewireStyles
 </head>
 <body class="hold-transition sidebar-mini layout-navbar-fixed">
     <!-- Site wrapper -->
@@ -173,5 +174,6 @@
 
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}" defer></script>
+@livewireScripts
 </body>
 </html>
