@@ -136,7 +136,17 @@
                 </a>
               </li>
               @endcan
+              
             </ul>
+          </li>
+          <li class="nav-item">
+          <a href="{{ url('farms') }}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Fincas
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
           </li>
           
         </ul>

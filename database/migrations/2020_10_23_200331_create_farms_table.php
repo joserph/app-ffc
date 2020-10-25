@@ -15,6 +15,17 @@ class CreateFarmsTable extends Migration
     {
         Schema::create('farms', function (Blueprint $table) {
             $table->id();
+
+            $table->string('name');
+            $table->string('phone');
+            $table->string('address');
+            $table->string('state'); // Parroquia
+            $table->string('city');
+            $table->string('country');
+            $table->integer('update_user')->nullable();
+            
+            $table->foreignId('id_user')->references('id')->on('users');
+
             $table->timestamps();
         });
     }

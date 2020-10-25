@@ -21,6 +21,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/farms', function () {
+    return view('farm.farms');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -51,3 +55,8 @@ Route::resource('/permission', 'PermissionController')->names('permission');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+/*Route::get('/farms', function(){
+    return view('farm.farms')->name('farms');
+});*/
+
