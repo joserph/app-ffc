@@ -1,5 +1,5 @@
 @include('farm.form')
 
-<button class="btn btn-sm btn-primary">
+<button wire:click="store" class="btn btn-sm btn-primary">
     Crear
 </button>
