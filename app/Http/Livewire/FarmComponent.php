@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Farm;
+use Auth;
 
 class FarmComponent extends Component
 {
@@ -34,6 +35,13 @@ class FarmComponent extends Component
 
         Farm::create([
             'name' => $this->name,
+            'phone' => $this->phone,
+            'address' => $this->address,
+            'state' => $this->state,
+            'city' => $this->city,
+            'country' => $this->country,
+            'id_user' => Auth::user()->id,
+            'update_user' => Auth::user()->id
         ]);
     }
 
