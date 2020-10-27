@@ -22,7 +22,7 @@
             <td>{{ $farm->city }}</td>
             <td>{{ $farm->country }}</td>
             <td colspan="2">
-               <button class="btn btn-sm btn-warning">
+               <button wire:click="edit({{ $farm->id }})" class="btn btn-sm btn-warning">
                   Editar
                </button>
                <button wire:click="destroy({{ $farm->id }})" class="btn btn-sm btn-danger">
