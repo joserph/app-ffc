@@ -22,11 +22,15 @@ const mix = require('laravel-mix');
             'resources/css/flatly.css',
             ], 'public/css/app.css');*/
 
-mix.scripts(['resources/js/jquery.js',
-        'resources/js/popper.js',
-        'resources/js/bootstrap.js',
+/*mix.scripts(['node_modules/jquery/dist/jquery.js',
+        'node_modules/popper.js/dist/popper.js',
+        'node_modules/bootstrap/dist/js/bootstrap.js',
         'node_modules/admin-lte/dist/js/adminlte.js'], 'public/js/app.js')
-.sass('resources/sass/app.scss', 'public/css/app.css');
+.styles(['node_modules/admin-lte/dist/css/adminlte.css',
+        'node_modules/admin-lte/dist/css/adminlte.css.map'], 'public/css/app.css');*/
 
-/*mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');*/
+mix.scrips(['node_modules/jquery/dist/jquery.js',
+        'node_modules/popper.js/dist/popper.js',
+        'node_modules/bootstrap/dist/js/bootstrap.js',
+        'node_modules/admin-lte/dist/js/adminlte.js'], 'public/js/app.js')
+    .sass('resources/sass/app.scss', 'public/css');

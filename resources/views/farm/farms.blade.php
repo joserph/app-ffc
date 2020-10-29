@@ -24,3 +24,9 @@
    </div>
 </section>
 @endsection
+@section('scripts')
+   $(document).ready(function(){
+      alert('hola jajaja');
+      console.log('hola mundo');
+   });
+@endsection
