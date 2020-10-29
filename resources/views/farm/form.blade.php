@@ -1,44 +1,44 @@
 <div class="row">
     <div class="col-md-8 form-group">
-        {{ Form::label('name', 'Nombre', ['class' => 'control-label']) }}
-        {{ Form::text('name', null, ['class' => 'form-control', 'wire:model' => 'name']) }}
+        {{ Form::label('name', 'Nombre de la finca', ['class' => 'control-label']) }}
+        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" wire:model="name">
         @error('name')
-            <span>{{ $message}}</span>
+            <span class="text-danger">{{ $message}}</span>
         @enderror
     </div>
     <div class="col-md-4 form-group">
         {{ Form::label('phone', 'Teléfono', ['class' => 'control-label']) }}
-        {{ Form::text('phone', null, ['class' => 'form-control', 'wire:model' => 'phone']) }}
+        <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror" wire:model="phone">
         @error('phone')
-            <span>{{ $message}}</span>
+            <span class="text-danger">{{ $message}}</span>
         @enderror
     </div>
     <div class="col-md-6 form-group">
         {{ Form::label('address', 'Dirección', ['class' => 'control-label']) }}
-        {{ Form::text('address', null, ['class' => 'form-control', 'wire:model' => 'address']) }}
+        <input type="text" name="address" class="form-control @error('address') is-invalid @enderror" wire:model="address">
         @error('address')
-            <span>{{ $message}}</span>
+            <span class="text-danger">{{ $message}}</span>
         @enderror
     </div>
     <div class="col-md-2 form-group">
         {{ Form::label('state', 'Estado', ['class' => 'control-label']) }}
-        {{ Form::text('state', null, ['class' => 'form-control', 'wire:model' => 'state']) }}
+        <input type="text" name="state" class="form-control @error('state') is-invalid @enderror" wire:model="state">
         @error('state')
-            <span>{{ $message}}</span>
+            <span class="text-danger">{{ $message}}</span>
         @enderror
     </div>
     <div class="col-md-2 form-group">
         {{ Form::label('city', 'Ciudad', ['class' => 'control-label']) }}
-        {{ Form::text('city', null, ['class' => 'form-control', 'wire:model' => 'city']) }}
+        <input type="text" name="city" class="form-control @error('city') is-invalid @enderror" wire:model="city">
         @error('city')
-            <span>{{ $message}}</span>
+            <span class="text-danger">{{ $message}}</span>
         @enderror
     </div>
     <div class="col-md-2 form-group">
         {{ Form::label('country', 'País', ['class' => 'control-label']) }}
-        {{ Form::text('country', null, ['class' => 'form-control', 'wire:model' => 'country']) }}
+        <input type="text" name="country" class="form-control @error('country') is-invalid @enderror" wire:model="country">
         @error('country')
-            <span>{{ $message}}</span>
+            <span class="text-danger">{{ $message}}</span>
         @enderror
     </div>
     
