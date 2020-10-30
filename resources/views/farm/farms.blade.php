@@ -25,8 +25,10 @@
 </section>
 @endsection
 @section('scripts')
-   $(document).ready(function(){
-      alert('hola jajaja');
-      console.log('hola mundo');
-   });
+<script>
+   $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+   </script>
+   
 @endsection
