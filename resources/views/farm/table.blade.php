@@ -4,11 +4,11 @@
     <thead>
        <tr>
           <th scope="col">Nombre</th>
-          <th scope="col">Telefono</th>
+          <th scope="col">Teléfono</th>
           <th scope="col">Dirección</th>
           <th scope="col">Estado</th>
           <th scope="col">Ciudad</th>
-          <th scope="col">Pais</th>
+          <th scope="col">País</th>
           <th class="text-center" colspan="2">Editar/Eliminar</th>
        </tr>
     </thead>
