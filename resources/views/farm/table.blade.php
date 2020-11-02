@@ -1,6 +1,6 @@
 <h2>Listado de Fincas</h2>
 <div class="table-responsive">
-<table class="table table-sm table-hover">
+   <table class="table table-sm table-hover">
     <thead>
        <tr>
           <th scope="col">Nombre</th>
@@ -9,7 +9,7 @@
           <th scope="col">Estado</th>
           <th scope="col">Ciudad</th>
           <th scope="col">Pais</th>
-          <th class="text-center" colspan="2">&nbsp;</th>
+          <th class="text-center" colspan="2">Editar/Eliminar</th>
        </tr>
     </thead>
     <tbody>
@@ -21,7 +21,7 @@
             <td>{{ $farm->state }}</td>
             <td>{{ $farm->city }}</td>
             <td>{{ $farm->country }}</td>
-            <td colspan="2">
+            <td colspan="2" class="text-center">
                <button wire:click="edit({{ $farm->id }})" class="btn btn-sm btn-outline-warning">
                   <i class="far fa-edit"></i>
                </button>

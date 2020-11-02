@@ -11,11 +11,14 @@ class FarmComponent extends Component
 {
     use WithPagination;
 
+    protected $paginationTheme = 'bootstrap'; /// Importante
+
     public $farm_id, $name, $phone, $address, $state, $city, $country;
     public $view = 'create';
 
     public function render()
     {
+        // Mostramos todos los registros 
         return view('livewire.farm-component', [
             'farms' => Farm::orderBy('id', 'desc')->paginate(5)
         ]);
@@ -43,6 +46,8 @@ class FarmComponent extends Component
             'id_user' => Auth::user()->id,
             'update_user' => Auth::user()->id
         ]);
+        
+        session()->flash('create', 'La finca "' . $this->name . '" se creó con éxito');
 
         $this->edit($farm->id);
     }
@@ -87,12 +92,15 @@ class FarmComponent extends Component
             'update_user' => Auth::user()->id
         ]);
 
+        session()->flash('edit', 'La finca "' . $this->name . '" se actualizó con éxito');
         $this->default();
     }
 
     public function destroy($id)
     {
+        $farm = Farm::find($id);
         Farm::destroy($id);
+        session()->flash('delete', 'Eliminaste la finca "' . $farm->name . '"');
     }
 
     public function default()

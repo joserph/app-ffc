@@ -1,4 +1,5 @@
 <h2>Editar finca</h2>
+@include('custom.message') 
 @include('farm.form')
 
 <button type="button" wire:click="update" class="btn btn-outline-warning">

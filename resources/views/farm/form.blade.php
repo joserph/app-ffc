@@ -1,3 +1,4 @@
+
 <div class="row">
     <div class="col-md-8 form-group">
         {{ Form::label('name', 'Nombre de la finca', ['class' => 'control-label']) }}
