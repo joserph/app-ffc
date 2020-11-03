@@ -1,3 +1,4 @@
+@can('haveaccess', 'farm.edit')
 <h2>Editar finca</h2>
 @include('custom.message') 
 @include('farm.form')
@@ -9,3 +10,4 @@
 <button wire:click="default" class="btn btn-outline-secondary">
     <i class="fas fa-ban"></i> Cancelar
 </button>
+@endcan

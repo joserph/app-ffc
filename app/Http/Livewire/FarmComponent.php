@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Farm;
 use Auth;
+use Illuminate\Support\Facades\Gate;
 
 class FarmComponent extends Component
 {
@@ -18,6 +19,8 @@ class FarmComponent extends Component
 
     public function render()
     {
+        Gate::authorize('haveaccess', 'farms');
+        
         // Mostramos todos los registros 
         return view('livewire.farm-component', [
             'farms' => Farm::orderBy('id', 'desc')->paginate(5)
@@ -105,6 +108,7 @@ class FarmComponent extends Component
 
     public function default()
     {
+        Gate::authorize('haveaccess', 'farm.index');
         $this->name = '';
         $this->phone = '';
         $this->address = '';

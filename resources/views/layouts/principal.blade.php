@@ -142,8 +142,9 @@
               
             </ul>
           </li>
+          @can('haveaccess', 'farms')
           <li class="nav-item">
-          <a href="{{ url('farms') }}" class="nav-link">
+            <a href="{{ url('farms') }}" class="nav-link">
               <i class="nav-icon fas fa-spa"></i>
               <p>
                 Fincas
@@ -151,7 +152,7 @@
               </p>
             </a>
           </li>
-          
+          @endcan
         </ul>
       </nav>
       @endguest

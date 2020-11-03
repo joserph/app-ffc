@@ -1,3 +1,4 @@
+@can('haveaccess', 'farm.index')
 <h2>Listado de Fincas</h2>
 <div class="table-responsive">
    <table class="table table-sm table-hover">
@@ -22,12 +23,16 @@
             <td>{{ $farm->city }}</td>
             <td>{{ $farm->country }}</td>
             <td colspan="2" class="text-center">
+               @can('haveaccess', 'farm.edit')
                <button wire:click="edit({{ $farm->id }})" class="btn btn-sm btn-outline-warning">
                   <i class="far fa-edit"></i>
                </button>
+               @endcan
+               @can('haveaccess', 'farm.destroy')
                <button wire:click="destroy({{ $farm->id }})" class="btn btn-sm btn-outline-danger">
                   <i class="fas fa-trash"></i>
                </button>
+               @endcan
             </td>
          </tr>
        @endforeach
@@ -35,3 +40,4 @@
  </table>
  {{ $farms->links() }}
 </div>
+@endcan

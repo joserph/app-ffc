@@ -6,6 +6,7 @@ use App\PermissionFolder\Models\Role;
 use App\PermissionFolder\Models\Permission;
 use Illuminate\Support\Facades\Gate;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,21 +17,18 @@ use Illuminate\Support\Facades\Gate;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+// Principal
 Route::get('/', function () {
     return view('welcome');
 });
-
+// Fincas
 Route::get('/farms', function () {
     return view('farm.farms');
-});
-
+})->name('farms');
+// Autenticación
 Auth::routes();
-
+// Index
 Route::get('/home', 'HomeController@index')->name('home');
-
-
-
 
 Route::get('/test', function(){
     $user = User::find(2);
@@ -41,22 +39,16 @@ Route::get('/test', function(){
 
     //return $user->havePermission('role.index');
 });
-
+// Roles
 Route::resource('/role', 'RoleController')->names('role');
-
+// Usuarios
 Route::resource('/user', 'UserController', ['except' => ['create', 'store']])->names('user');
 // Cambio de Contraseña
 Route::get('user/password', 'UserController@password')->name('user.password');
 Route::post('user/updatepassword', 'UserController@updatePassword')->name('user.updatepassword');
 // Cambio de imagen de perfil
 Route::post('user/updateprofilepicture', 'UserController@updateProfilePicture');
-
+// Permisos
 Route::resource('/permission', 'PermissionController')->names('permission');
-Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-/*Route::get('/farms', function(){
-    return view('farm.farms')->name('farms');
-});*/
 

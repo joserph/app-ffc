@@ -1,6 +1,8 @@
 @extends('layouts.principal')
 
 @section('content')
+@can('haveaccess', 'farms')
+
 <section class="content-header">
    <div class="container-fluid">
       <div class="row mb-2">
@@ -23,4 +25,5 @@
       @livewire('farm-component')
    </div>
 </section>
+@endcan
 @endsection
