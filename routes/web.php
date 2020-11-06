@@ -25,6 +25,12 @@ Route::get('/', function () {
 Route::get('/farms', function () {
     return view('farm.farms');
 })->name('farms');
+
+// Fincas
+Route::get('/clients', function () {
+    return view('client.clients');
+})->name('clients');
+
 // Autenticación
 Auth::routes();
 // Index

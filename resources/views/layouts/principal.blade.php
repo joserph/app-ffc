@@ -148,6 +148,16 @@
               <i class="nav-icon fas fa-spa"></i>
               <p>
                 Fincas
+              </p>
+            </a>
+          </li>
+          @endcan
+          @can('haveaccess', 'clients')
+          <li class="nav-item">
+            <a href="{{ url('clients') }}" class="nav-link">
+              <i class="nav-icon fas fa-user-tie"></i>
+              <p>
+                Clientes
                 <span class="right badge badge-danger">New</span>
               </p>
             </a>
