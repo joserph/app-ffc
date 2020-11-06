@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-8 form-group">
-        {{ Form::label('name', 'Nombre de la finca', ['class' => 'control-label']) }}
+        {{ Form::label('name', 'Nombre del cliente', ['class' => 'control-label']) }}
         <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" wire:model="name">
     </div>
     <div class="col-md-4 form-group">
@@ -22,5 +22,12 @@
     <div class="col-md-2 form-group">
         {{ Form::label('country', 'País', ['class' => 'control-label']) }}
         <input type="text" name="country" class="form-control @error('country') is-invalid @enderror" wire:model="country">
+    </div>
+    <div class="col-md-12 form-group">
+        {{ Form::label('poa', 'POA', ['class' => 'control-label']) }}
+    </div>
+    <div class="col-md-2 form-group">
+        <label>{{ Form::radio('full_access', 'yes') }} Si</label>
+        <label>{{ Form::radio('full_access', 'no', true) }} No</label>
     </div>
 </div>
