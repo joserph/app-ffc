@@ -40,17 +40,17 @@ class FarmComponent extends Component
         ]);
 
         $farm = Farm::create([
-            'name' => $this->name,
-            'phone' => $this->phone,
-            'address' => $this->address,
-            'state' => $this->state,
-            'city' => $this->city,
-            'country' => $this->country,
-            'id_user' => Auth::user()->id,
-            'update_user' => Auth::user()->id
+            'name'          => $this->name,
+            'phone'         => $this->phone,
+            'address'       => $this->address,
+            'state'         => $this->state,
+            'city'          => $this->city,
+            'country'       => $this->country,
+            'id_user'       => Auth::user()->id,
+            'update_user'   => Auth::user()->id
         ]);
         
-        session()->flash('create', 'La finca "' . $this->name . '" se creó con éxito');
+        session()->flash('create', 'La finca "' . $farm->name . '" se creó con éxito');
 
         $this->edit($farm->id);
     }
@@ -85,17 +85,17 @@ class FarmComponent extends Component
         $farm = Farm::find($this->farm_id);
 
         $farm->update([
-            'name' => $this->name,
-            'phone' => $this->phone,
-            'address' => $this->address,
-            'state' => $this->state,
-            'city' => $this->city,
-            'country' => $this->country,
-            'id_user' => $farm->id_user,
-            'update_user' => Auth::user()->id
+            'name'          => $this->name,
+            'phone'         => $this->phone,
+            'address'       => $this->address,
+            'state'         => $this->state,
+            'city'          => $this->city,
+            'country'       => $this->country,
+            'id_user'       => $farm->id_user,
+            'update_user'   => Auth::user()->id
         ]);
 
-        session()->flash('edit', 'La finca "' . $this->name . '" se actualizó con éxito');
+        session()->flash('edit', 'La finca "' . $farm->name . '" se actualizó con éxito');
         $this->default();
     }
 

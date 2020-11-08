@@ -27,7 +27,13 @@
         {{ Form::label('poa', 'POA', ['class' => 'control-label']) }}
     </div>
     <div class="col-md-2 form-group">
-        <label>{{ Form::radio('full_access', 'yes') }} Si</label>
-        <label>{{ Form::radio('full_access', 'no', true) }} No</label>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input @error('poa') is-invalid @enderror" type="radio" name="poa" id="yes" wire:model="poa" value="yes">
+            <label class="form-check-label" for="yes">Si</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input @error('poa') is-invalid @enderror" type="radio" name="poa" id="no" wire:model="poa" value="no">
+            <label class="form-check-label" for="no">No</label>
+        </div>
     </div>
 </div>
