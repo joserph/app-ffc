@@ -56,5 +56,6 @@ Route::post('user/updatepassword', 'UserController@updatePassword')->name('user.
 Route::post('user/updateprofilepicture', 'UserController@updateProfilePicture');
 // Permisos
 Route::resource('/permission', 'PermissionController')->names('permission');
-
+// Cargas
+Route::resource('/load', 'LoadController')->names('load');
 
