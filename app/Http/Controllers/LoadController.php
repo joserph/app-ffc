@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Load;
 
 class LoadController extends Controller
 {
@@ -13,7 +14,8 @@ class LoadController extends Controller
      */
     public function index()
     {
-        return view('load.index');
+        $loads = Load::orderBy('id', 'DESC')->paginate(5);
+        return view('load.index', compact('loads'));
     }
 
     /**

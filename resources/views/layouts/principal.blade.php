@@ -158,12 +158,24 @@
               <i class="nav-icon fas fa-user-tie"></i>
               <p>
                 Clientes
-                <span class="right badge badge-danger">New</span>
               </p>
             </a>
           </li>
           @endcan
+          
+          <li class="nav-item">
+            <a href="{{ route('load.index') }}" class="nav-link">
+              <i class="nav-icon fas fa-truck-loading"></i>
+              <p>
+                Cargas
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+
+
         </ul>
+
       </nav>
       @endguest
       <!-- /.sidebar-menu -->
