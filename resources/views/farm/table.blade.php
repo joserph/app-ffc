@@ -10,7 +10,7 @@
           <th scope="col">Estado</th>
           <th scope="col">Ciudad</th>
           <th scope="col">País</th>
-          <th class="text-center" colspan="2">Editar/Eliminar</th>
+          <th class="text-center" colspan="2">@can('haveaccess', 'farm.edit') Editar @endcan  @can('haveaccess', 'farm.destroy')/ Eliminar @endcan</th>
        </tr>
     </thead>
     <tbody>

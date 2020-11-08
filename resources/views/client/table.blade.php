@@ -11,7 +11,7 @@
           <th scope="col">Ciudad</th>
           <th scope="col">País</th>
           <th scope="col">POA</th>
-          <th class="text-center" colspan="2">Editar/Eliminar</th>
+          <th class="text-center" colspan="2">@can('haveaccess', 'client.edit') Editar @endcan  @can('haveaccess', 'client.destroy')/ Eliminar @endcan</th>
        </tr>
     </thead>
     <tbody>
