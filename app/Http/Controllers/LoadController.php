@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Load;
+use App\Http\Requests\AddLoadRequest;
+use App\Http\Requests\UpdateLoadRequest;
 
 class LoadController extends Controller
 {
@@ -25,7 +27,7 @@ class LoadController extends Controller
      */
     public function create()
     {
-        //
+        return view('load.create');
     }
 
     /**
@@ -34,9 +36,12 @@ class LoadController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AddLoadRequest $request)
     {
-        //
+        $load = Load::create($request->all());
+
+        return redirect()->route('load.index')
+            ->with('status_success', 'Carga creada con éxito');
     }
 
     /**
@@ -58,7 +63,9 @@ class LoadController extends Controller
      */
     public function edit($id)
     {
-        //
+        $load = Load::find($id);
+
+        return view('load.edit', compact('load'));
     }
 
     /**
@@ -68,9 +75,14 @@ class LoadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateLoadRequest $request, $id)
     {
-        //
+        $load = Load::find($id);
+
+        $load->update($request->all());
+
+        return redirect()->route('load.index')
+            ->with('status_success', 'La carga se actualizó con éxito');
     }
 
     /**
@@ -81,6 +93,10 @@ class LoadController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $load = Load::find($id);
+        $load->delete();
+
+        return redirect()->route('load.index')
+            ->with('status_success', 'Carga eliminada con éxito');
     }
 }
