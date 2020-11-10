@@ -31,6 +31,11 @@ Route::get('/clients', function () {
     return view('client.clients');
 })->name('clients');
 
+// Compañia
+Route::get('/companies', function () {
+    return view('company.companies');
+})->name('companies');
+
 // Autenticación
 Auth::routes();
 // Index
