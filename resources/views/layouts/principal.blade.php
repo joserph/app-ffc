@@ -162,12 +162,32 @@
             </a>
           </li>
           @endcan
-          
+          @can('haveaccess', 'load.index')
           <li class="nav-item">
             <a href="{{ route('load.index') }}" class="nav-link">
               <i class="nav-icon fas fa-truck-loading"></i>
               <p>
                 Cargas
+              </p>
+            </a>
+          </li>
+          @endcan
+          @can('haveaccess', 'companies')
+          <li class="nav-item">
+            <a href="{{ url('companies') }}" class="nav-link">
+              <i class="nav-icon fas fa-building"></i>
+              <p>
+                Mi Empresa
+              </p>
+            </a>
+          </li>
+          @endcan
+
+          <li class="nav-item">
+            <a href="{{ url('companies') }}" class="nav-link">
+              <i class="nav-icon fas fa-building"></i>
+              <p>
+                Empresa de logística
                 <span class="right badge badge-danger">New</span>
               </p>
             </a>
