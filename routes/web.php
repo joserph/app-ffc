@@ -36,6 +36,11 @@ Route::get('/companies', function () {
     return view('company.companies');
 })->name('companies');
 
+// Empresa de Logistica
+Route::get('/logistics', function () {
+    return view('logistic.logistics');
+})->name('logistics');
+
 // Autenticación
 Auth::routes();
 // Index

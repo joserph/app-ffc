@@ -182,9 +182,9 @@
             </a>
           </li>
           @endcan
-
+          @can('haveaccess', 'logistics')
           <li class="nav-item">
-            <a href="{{ url('companies') }}" class="nav-link">
+            <a href="{{ url('logistics') }}" class="nav-link">
               <i class="nav-icon fas fa-building"></i>
               <p>
                 Empresa de logística
@@ -192,7 +192,7 @@
               </p>
             </a>
           </li>
-
+          @endcan
 
         </ul>
 
