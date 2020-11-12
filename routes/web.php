@@ -41,6 +41,12 @@ Route::get('/logistics', function () {
     return view('logistic.logistics');
 })->name('logistics');
 
+// Factura Master
+Route::get('/masterinvoices/{load}', function () {
+    return view('masterinvoice.masterinvoices');
+})->name('masterinvoices');
+
+
 // Autenticación
 Auth::routes();
 // Index
@@ -68,4 +74,5 @@ Route::post('user/updateprofilepicture', 'UserController@updateProfilePicture');
 Route::resource('/permission', 'PermissionController')->names('permission');
 // Cargas
 Route::resource('/load', 'LoadController')->names('load');
-
+// Cabecera de la factura master
+//Route::resource('/masterinvoice', 'InvoiceHeaderController')->names('masterinvoice');

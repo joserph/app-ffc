@@ -1,3 +1,11 @@
-<div>
-    {{-- Do your work, then step back. --}}
+<div class="row">
+    <div class="col-md-12">
+        @include("masterinvoice.$view")
+    </div>
+    <div class="col-md-12">
+        <hr>
+    </div>
+    <div class="col-md-12">
+        
+    </div>
 </div>
