@@ -22,7 +22,8 @@
   <!-- Main content -->
 <section class="content">
    <div class="container-fluid">
-      @livewire('invoice-header-component')
+      @livewire('invoice-header-component', ['prueba' => '$prueba'])
+      
    </div>
 </section>
 @endcan
