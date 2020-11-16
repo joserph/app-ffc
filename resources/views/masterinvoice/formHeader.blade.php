@@ -1,7 +1,8 @@
 <div class="row">
    <div class="col-md-2 form-group">
       {{ Form::label('', 'N° Carga', ['class' => 'control-label']) }}
-      <input type="text" name="id_load" class="form-control" value="{{ $prueba->id }}" readonly>
+      <input type="text" name="" class="form-control" value="{{ $load->shipment }}" readonly>
+      <input type="hidden" class="form-control" wire:model="id_load">
    </div>
    <div class="col-md-3 form-group">
       {{ Form::label('bl', 'BL', ['class' => 'control-label']) }}

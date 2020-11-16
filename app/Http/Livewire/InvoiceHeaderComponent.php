@@ -26,13 +26,13 @@ class InvoiceHeaderComponent extends Component
         
 
         return view('livewire.invoice-header-component', [
-            'load' => Load::select('id')->find($code1),
+            'load' => Load::find($code1),
             'logistics' => LogisticCompany::orderBy('id', 'DESC')->pluck('name', 'id'),
             'company' => Company::get()
         ]);
     }
 
-    public function mount($prueba)
+    public function mount($id_load)
     {
         $url = $_SERVER["REQUEST_URI"];
         
@@ -40,8 +40,8 @@ class InvoiceHeaderComponent extends Component
         
         $code1 = $div[2];
 
-        $prueba = Load::select('id')->find($code1);
-        $this->prueba = $prueba;
+        $id_load = Load::select('id')->find($code1);
+        $this->id_load = $id_load->id;
     }
 
     
