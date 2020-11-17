@@ -13,6 +13,7 @@ class InvoiceHeader extends Model
         'bl', 
         'carrier', 
         'invoice',
+        'date',
         'total_bunches',
         'total_fulls',
         'total_pieces',

@@ -22,6 +22,7 @@ class CreateInvoiceHeadersTable extends Migration
             $table->string('bl')->nullable();
             $table->string('carrier')->nullable();
             $table->string('invoice')->nullable();
+            $table->date('date');
             $table->double('total_bunches', 8, 2)->nullable();
             $table->double('total_fulls', 8, 2)->nullable();
             $table->double('total_pieces', 8, 2)->nullable();

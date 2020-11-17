@@ -7,6 +7,6 @@
         <hr>
     </div>
     <div class="col-md-12">
-        
+        @include('masterinvoice.table')
     </div>
 </div>
