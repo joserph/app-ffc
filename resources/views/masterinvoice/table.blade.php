@@ -4,42 +4,41 @@
    <div class="row">
       <div class="col-12">
          <h4>
-            <i class="fas fa-globe"></i> AdminLTE, Inc.
-            <small class="float-right">Date: 2/10/2014</small>
+            <i class="fas fa-globe"></i> Factura Comercial
+            <small class="float-right">Fecha: {{ $invoiceheader->date }}</small>
          </h4>
       </div>
       <!-- /.col -->
    </div>
    <!-- info row -->
    <div class="row invoice-info">
-      <div class="col-sm-4 invoice-col">
-         From
+      <div class="col-sm-5 invoice-col">
+         Grower Name & Address / Nombre y Dirección Cultivo
          <address>
-            <strong>Admin, Inc.</strong><br>
-            795 Folsom Ave, Suite 600<br>
-            San Francisco, CA 94107<br>
-            Phone: (804) 123-5432<br>
-            Email: info@almasaeedstudio.com
+            <strong>{{ $logistics_company->name }}</strong><br>
+            Address: {{ $logistics_company->address }}<br>
+            Phone: {{ $logistics_company->phone }}<br>
+            RUC: {{ $logistics_company->ruc }}
          </address>
       </div>
       <!-- /.col -->
       <div class="col-sm-4 invoice-col">
-        To
-        <address>
-          <strong>John Doe</strong><br>
-          795 Folsom Ave, Suite 600<br>
-          San Francisco, CA 94107<br>
-          Phone: (555) 539-1037<br>
-          Email: john.doe@example.com
-        </address>
+         Foreign Purchaser / Comprador Extranjero
+         <address>
+            <strong>{{ $company[0]->name }}</strong><br>
+            Address: {{ $company[0]->address }}<br>
+            Phone: {{ $company[0]->phone }}<br>
+         </address>
       </div>
       <!-- /.col -->
-      <div class="col-sm-4 invoice-col">
-        <b>Invoice #007612</b><br>
-        <br>
-        <b>Order ID:</b> 4F3S8J<br>
-        <b>Payment Due:</b> 2/22/2014<br>
-        <b>Account:</b> 968-34567
+      <div class="col-sm-3 invoice-col">
+         <b>Farm:</b> VF<br>
+         <b>Date / Fecha:</b> {{ $invoiceheader->date }}<br>
+         <b>Country:</b> GYE-EC<br>
+         <b>Invoice #{{ $invoiceheader->invoice }}</b><br>
+         <br>
+         <b>BL:</b> {{ $invoiceheader->bl }}<br>
+         <b>Carrier:</b> {{ $invoiceheader->carrier }}<br>
       </div>
       <!-- /.col -->
     </div>

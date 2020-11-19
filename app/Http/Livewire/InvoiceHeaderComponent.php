@@ -24,12 +24,14 @@ class InvoiceHeaderComponent extends Component
         
         $code1 = $div[2];
         //dd($code1);
+        $invoiceHeader = InvoiceHeader::where('id_load', '=', $code1)->first();
 
         return view('livewire.invoice-header-component', [
             'load' => Load::find($code1),
             'logistics' => LogisticCompany::orderBy('id', 'DESC')->pluck('name', 'id'),
             'company' => Company::get(),
-            'invoiceheader' => InvoiceHeader::where('id_load', '=', $code1)->first()
+            'invoiceheader' => InvoiceHeader::where('id_load', '=', $code1)->first(),
+            'logistics_company' => LogisticCompany::where('id', '=', $invoiceHeader->id_logistics_company)->first()
         ]);
     }
 
