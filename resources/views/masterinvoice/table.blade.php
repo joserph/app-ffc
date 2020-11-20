@@ -5,7 +5,7 @@
       <div class="col-12">
          <h4>
             <i class="fas fa-globe"></i> Factura Comercial
-            <small class="float-right">Fecha: {{ $invoiceheader->date }}</small>
+            <small class="float-right">Fecha:  {{ $invoiceheader->date }} </small>
          </h4>
       </div>
       <!-- /.col -->
@@ -15,10 +15,12 @@
       <div class="col-sm-5 invoice-col">
          Grower Name & Address / Nombre y Dirección Cultivo
          <address>
+            @if($logistics_company)
             <strong>{{ $logistics_company->name }}</strong><br>
             Address: {{ $logistics_company->address }}<br>
             Phone: {{ $logistics_company->phone }}<br>
             RUC: {{ $logistics_company->ruc }}
+            @endif
          </address>
       </div>
       <!-- /.col -->
@@ -32,6 +34,7 @@
       </div>
       <!-- /.col -->
       <div class="col-sm-3 invoice-col">
+         @if($invoiceheader)
          <b>Farm:</b> VF<br>
          <b>Date / Fecha:</b> {{ $invoiceheader->date }}<br>
          <b>Country:</b> GYE-EC<br>
@@ -39,10 +42,11 @@
          <br>
          <b>BL:</b> {{ $invoiceheader->bl }}<br>
          <b>Carrier:</b> {{ $invoiceheader->carrier }}<br>
+         @endif
       </div>
       <!-- /.col -->
-    </div>
-    <!-- /.row -->
+   </div>
+   <!-- /.row -->
 
     <!-- Table row -->
     <div class="row">

@@ -14,4 +14,9 @@ class Load extends Model
         'id_user',
         'update_user'
     ];
+
+    public function invoiceheader()
+    {
+        return $this->belongsTo('App\InvoiceHeader', 'id_load');
+    }
 }

@@ -17,7 +17,7 @@ class CreateInvoiceHeadersTable extends Migration
             $table->id();
 
             $table->integer('id_company')->nullable();
-            $table->integer('id_load')->unsigned()->nullable();
+            //$table->integer('id_load')->unsigned()->nullable();
             $table->integer('id_logistics_company')->nullable();
             $table->string('bl')->nullable();
             $table->string('carrier')->nullable();
@@ -31,6 +31,7 @@ class CreateInvoiceHeadersTable extends Migration
             $table->integer('update_user')->nullable();
             
             $table->foreignId('id_user')->references('id')->on('users');
+            $table->foreignId('id_load')->references('id')->on('loads')->onDelete('cascade');
 
             $table->timestamps();
         });

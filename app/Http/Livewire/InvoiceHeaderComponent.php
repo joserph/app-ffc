@@ -13,7 +13,7 @@ class InvoiceHeaderComponent extends Component
 {
     public $invoiceheader_id, $id_company, $id_load, $id_logistics_company, $bl, $carrier, $invoice, $date, $total_bunches, $total_fulls, $total_pieces, $total_stems, $total, $id_user, $update_user, $shipment;
     public $view = 'create';
-    public $code1, $prueba;
+    public $code1, $invoiceheader;
     
     public function render()
     {
@@ -23,15 +23,35 @@ class InvoiceHeaderComponent extends Component
         $div = explode("/", $url);
         
         $code1 = $div[2];
-        //dd($code1);
-        $invoiceHeader = InvoiceHeader::where('id_load', '=', $code1)->first();
+
+        // Carga
+        $load = Load::find($code1);
+        // Empresas de Logistica
+        $logistics = LogisticCompany::orderBy('id', 'DESC')->pluck('name', 'id');
+        // Mi empresa
+        $company = Company::get();
+        // Cabecera de la factura
+        $invoiceheader = InvoiceHeader::where('id_load', '=', $code1)->first();
+        //dd($invoiceheader);
+        
+        
+        // Empresa de logistica que guardamos en la cabecera
+        $invoiceHeader_lc = InvoiceHeader::select('id_logistics_company')->where('id_load', '=', $code1)->first();
+        
+        if(!$invoiceHeader_lc)
+        {
+            $invoiceHeader_lc = 1;
+        }else{
+            $invoiceHeader_lc = $invoiceHeader_lc->id_logistics_company;
+        }
+        $logistics_company = LogisticCompany::where('id', '=', $invoiceHeader_lc)->first();
 
         return view('livewire.invoice-header-component', [
-            'load' => Load::find($code1),
-            'logistics' => LogisticCompany::orderBy('id', 'DESC')->pluck('name', 'id'),
-            'company' => Company::get(),
-            'invoiceheader' => InvoiceHeader::where('id_load', '=', $code1)->first(),
-            'logistics_company' => LogisticCompany::where('id', '=', $invoiceHeader->id_logistics_company)->first()
+            'load' => $load,
+            'logistics' => $logistics,
+            'company' => $company,
+            'invoiceheader' => $invoiceheader, // Posible solucion correr un array en la vista
+            'logistics_company' => $logistics_company
         ]);
     }
 
@@ -75,15 +95,14 @@ class InvoiceHeaderComponent extends Component
             'total'                 => '',
         ]);
 
-        $this->carrier = InvoiceHeader::select('id')->find($this->id_company);
-        
+        $this->carrier = Load::select('carrier')->find($this->id_load);
 
         $invoiceHeader = InvoiceHeader::create([
             'id_company'            => $this->id_company,
             'id_load'               => $this->id_load,
             'id_logistics_company'  => $this->id_logistics_company,
             'bl'                    => $this->bl,
-            'carrier'               => $this->carrier,
+            'carrier'               => $this->carrier->carrier,
             'invoice'               => $this->invoice,
             'date'                  => $this->date,
             'total_bunches'         => $this->total_bunches,
@@ -95,8 +114,30 @@ class InvoiceHeaderComponent extends Component
             'update_user'           => Auth::user()->id
         ]);
 
-        //$this->edit($invoiceHeader->id);
-
+        $this->edit($invoiceHeader->id);
+        
         session()->flash('create', 'La factura master "' . $invoiceHeader->invoice . '" se creó con éxito');
+        
+    }
+
+    public function edit($id)
+    {
+        $invoiceHeader = InvoiceHeader::find($id);
+
+        $this->invoiceheader_id = $invoiceHeader->id;
+        $this->id_company = $invoiceHeader->id_company;
+        $this->id_load = $invoiceHeader->id_load;
+        $this->id_logistics_company = $invoiceHeader->id_logistics_company;
+        $this->bl = $invoiceHeader->bl;
+        $this->carrier = $invoiceHeader->carrier;
+        $this->invoice = $invoiceHeader->invoice;
+        $this->date = $invoiceHeader->date;
+        $this->total_bunches = $invoiceHeader->total_bunches;
+        $this->total_fulls = $invoiceHeader->total_fulls;
+        $this->total_pieces = $invoiceHeader->total_pieces;
+        $this->total_stems = $invoiceHeader->total_stems;
+        $this->total = $invoiceHeader->total;
+
+        $this->view = 'edit';
     }
 }

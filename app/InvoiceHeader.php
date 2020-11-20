@@ -22,4 +22,5 @@ class InvoiceHeader extends Model
         'id_user',
         'update_user'
     ];
+
 }
