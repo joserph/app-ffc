@@ -31,9 +31,8 @@ class InvoiceHeaderComponent extends Component
         // Mi empresa
         $company = Company::get();
         // Cabecera de la factura
-        $invoiceheader = InvoiceHeader::where('id_load', '=', $code1)->first();
-        //dd($invoiceheader);
-        
+        $invoiceheaders = InvoiceHeader::orderBy('id', 'DESC')->where('id_load', '=', $code1)->paginate(5);
+        //dd($invoiceheaders);
         
         // Empresa de logistica que guardamos en la cabecera
         $invoiceHeader_lc = InvoiceHeader::select('id_logistics_company')->where('id_load', '=', $code1)->first();
@@ -50,7 +49,7 @@ class InvoiceHeaderComponent extends Component
             'load' => $load,
             'logistics' => $logistics,
             'company' => $company,
-            'invoiceheader' => $invoiceheader, // Posible solucion correr un array en la vista
+            'invoiceheaders' => $invoiceheaders, // Posible solucion correr un array en la vista
             'logistics_company' => $logistics_company
         ]);
     }

@@ -1,11 +1,38 @@
 <!-- Main content -->
 <div class="invoice p-3 mb-3">
    <!-- title row -->
-   <div class="row">
+   <table class="table table-sm table-hover">
+      <thead>
+         <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Teléfono</th>
+            <th scope="col">Dirección</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Ciudad</th>
+            <th scope="col">País</th>
+            <th scope="col">País</th>
+         </tr>
+      </thead>
+      <tbody>
+         @foreach ($invoiceheaders as $invoice)
+           <tr>
+              <td>{{ $invoice->date }}</td>
+              <td>{{ $invoice->bl }}</td>
+              <td>{{ $invoice->carrier }}</td>
+              <td>{{ $invoice->invoice }}</td>
+              <td>{{ $invoice->id_company }}</td>
+              <td>{{ $invoice->id_load }}</td>
+              <td>{{ $invoice->id_logistics_company }}</td>
+           </tr>
+         @endforeach
+      </tbody>
+   </table>
+   <hr>
+    <div class="row">
       <div class="col-12">
          <h4>
             <i class="fas fa-globe"></i> Factura Comercial
-            <small class="float-right">Fecha:  {{ $invoiceheader->date }} </small>
+            <small class="float-right">Fecha:  </small>
          </h4>
       </div>
       <!-- /.col -->
@@ -15,37 +42,34 @@
       <div class="col-sm-5 invoice-col">
          Grower Name & Address / Nombre y Dirección Cultivo
          <address>
-            @if($logistics_company)
-            <strong>{{ $logistics_company->name }}</strong><br>
-            Address: {{ $logistics_company->address }}<br>
-            Phone: {{ $logistics_company->phone }}<br>
-            RUC: {{ $logistics_company->ruc }}
-            @endif
+            <strong></strong><br>
+            Address: <br>
+            Phone: <br>
+            RUC: 
          </address>
       </div>
       <!-- /.col -->
       <div class="col-sm-4 invoice-col">
          Foreign Purchaser / Comprador Extranjero
          <address>
-            <strong>{{ $company[0]->name }}</strong><br>
-            Address: {{ $company[0]->address }}<br>
-            Phone: {{ $company[0]->phone }}<br>
+            <strong></strong><br>
+            Address: <br>
+            Phone: <br>
          </address>
       </div>
       <!-- /.col -->
       <div class="col-sm-3 invoice-col">
-         @if($invoiceheader)
          <b>Farm:</b> VF<br>
-         <b>Date / Fecha:</b> {{ $invoiceheader->date }}<br>
+         <b>Date / Fecha:</b> <br>
          <b>Country:</b> GYE-EC<br>
-         <b>Invoice #{{ $invoiceheader->invoice }}</b><br>
+         <b>Invoice #</b><br>
          <br>
-         <b>BL:</b> {{ $invoiceheader->bl }}<br>
-         <b>Carrier:</b> {{ $invoiceheader->carrier }}<br>
-         @endif
+         <b>BL:</b> <br>
+         <b>Carrier:</b> <br>
       </div>
       <!-- /.col -->
    </div>
+  
    <!-- /.row -->
 
     <!-- Table row -->
