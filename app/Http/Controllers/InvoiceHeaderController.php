@@ -23,7 +23,8 @@ class InvoiceHeaderController extends Controller
      */
     public function create()
     {
-        return view('masterinvoice.formHeader');
+        return view('masterinvoice.formHeader'); // prueba para subir app a heroku
+        
     }
 
     /**
