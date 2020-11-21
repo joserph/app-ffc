@@ -26,11 +26,11 @@ class InvoiceHeaderComponent extends Component
         $code1 = $div[2];
 
         // Cabecera de la factura
-        //$invoiceheaders = InvoiceHeader::orderBy('id', 'DESC')->where('id_load', '=', $code1)->paginate(2);
+        $invoiceheaders = InvoiceHeader::orderBy('id', 'DESC')->where('id_load', '=', $code1)->paginate(2);
         //dd($invoiceheaders);
         
         // Empresa de logistica que guardamos en la cabecera
-        /*$invoiceHeader_lc = InvoiceHeader::select('id_logistics_company')->where('id_load', '=', $code1)->first();
+        $invoiceHeader_lc = InvoiceHeader::select('id_logistics_company')->where('id_load', '=', $code1)->first();
         
         if(!$invoiceHeader_lc)
         {
@@ -38,10 +38,11 @@ class InvoiceHeaderComponent extends Component
         }else{
             $invoiceHeader_lc = $invoiceHeader_lc->id_logistics_company;
         }
-        $logistics_company = LogisticCompany::where('id', '=', $invoiceHeader_lc)->first();*/
+        $logistics_company = LogisticCompany::where('id', '=', $invoiceHeader_lc)->first();
 
         return view('livewire.invoice-header-component', [
-            'invoiceheaders' => InvoiceHeader::orderBy('id', 'DESC')->where('id_load', '=', $code1)->paginate(2), // Posible solucion correr un array en la vista
+            'invoiceheaders' => $invoiceheaders, // Posible solucion correr un array en la vista
+            'logistics_company' => $logistics_company
         ]);
     }
 
@@ -118,7 +119,7 @@ class InvoiceHeaderComponent extends Component
         $this->edit($invoiceHeader->id);
         
         session()->flash('create', 'La factura master "' . $invoiceHeader->invoice . '" se creó con éxito');
-        $this->render();
+        
     }
 
     public function edit($id)

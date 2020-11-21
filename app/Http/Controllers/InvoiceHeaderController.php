@@ -23,7 +23,7 @@ class InvoiceHeaderController extends Controller
      */
     public function create()
     {
-        //
+        return view('masterinvoice.formHeader');
     }
 
     /**
