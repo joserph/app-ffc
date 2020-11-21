@@ -14,6 +14,7 @@ class LogisticCompany extends Model
         'state', // Estado
         'city', // Ciudad
         'country',
+        'active',
         'id_user',
         'update_user'
     ];

@@ -22,7 +22,15 @@
   <!-- Main content -->
 <section class="content">
    <div class="container-fluid">
-      @livewire('invoice-header-component', ['id_load' => '$id_load', 'bl' => '$bl', 'id_company' => '$id_company', 'shipment' => '$shipment'])
+      @livewire('invoice-header-component', [
+         'id_load' => '$id_load', 
+         'bl' => '$bl', 
+         'id_company' => '$id_company', 
+         'shipment' => '$shipment', 
+         'company' => '$company',
+         'id_logistics_company' => '$id_logistics_company',
+         'logi' => '$logi'
+      ])
    </div>
 </section>
 @endcan

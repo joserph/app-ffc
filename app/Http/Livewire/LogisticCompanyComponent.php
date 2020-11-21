@@ -8,7 +8,7 @@ use Auth;
 
 class LogisticCompanyComponent extends Component
 {
-    public $logistic_id, $name, $ruc, $phone, $address, $state, $city, $country;
+    public $logistic_id, $name, $ruc, $phone, $address, $state, $city, $country, $active;
     public $view = 'create';
 
     public function render()
@@ -29,21 +29,47 @@ class LogisticCompanyComponent extends Component
             'state'     => 'required',
             'city'      => 'required',
             'country'   => 'required',
+            'active'    => 'required',
         ]);
 
-        $logistic = LogisticCompany::create([
-            'name'          => $this->name,
-            'ruc'           => $this->ruc,
-            'phone'         => $this->phone,
-            'address'       => $this->address,
-            'state'         => $this->state,
-            'city'          => $this->city,
-            'country'       => $this->country,
-            'id_user'       => Auth::user()->id,
-            'update_user'   => Auth::user()->id
-        ]);
+        // Buscar si hay alguna empresa de logistica activa
+        $lc_active = LogisticCompany::select('id')->where('active', '=', 'yes')->first();
 
-        session()->flash('create', 'La empresa de logística "' . $logistic->name . '" se creo con éxito');
+        if($lc_active)
+        {
+            // forzar a guardar en 'NO' para que solo exista una sola empresa de logistica activa
+            $this->active = 'no';
+
+            $logistic = LogisticCompany::create([
+                'name'          => $this->name,
+                'ruc'           => $this->ruc,
+                'phone'         => $this->phone,
+                'address'       => $this->address,
+                'state'         => $this->state,
+                'city'          => $this->city,
+                'country'       => $this->country,
+                'active'        => $this->active,
+                'id_user'       => Auth::user()->id,
+                'update_user'   => Auth::user()->id
+            ]);
+            // Mandamos un mensaje para indicar que no se puede colocar como empresa activa
+            session()->flash('create', 'La empresa de logística "' . $logistic->name . '" se creo con éxito, pero no se puede colocar como "Cargamos Actualmente" porque hay otra empresa de logística.');
+        }else{
+            $logistic = LogisticCompany::create([
+                'name'          => $this->name,
+                'ruc'           => $this->ruc,
+                'phone'         => $this->phone,
+                'address'       => $this->address,
+                'state'         => $this->state,
+                'city'          => $this->city,
+                'country'       => $this->country,
+                'active'        => $this->active,
+                'id_user'       => Auth::user()->id,
+                'update_user'   => Auth::user()->id
+            ]);
+    
+           session()->flash('create', 'La empresa de logística "' . $logistic->name . '" se creo con éxito');
+        }
 
         $this->edit($logistic->id);
     }
@@ -60,6 +86,7 @@ class LogisticCompanyComponent extends Component
         $this->state = $logistic->state;
         $this->city = $logistic->city;
         $this->country = $logistic->country;
+        $this->active = $logistic->active;
 
         $this->view = 'edit';
     }
@@ -75,23 +102,49 @@ class LogisticCompanyComponent extends Component
             'state'     => 'required',
             'city'      => 'required',
             'country'   => 'required',
+            'active'    => 'required',
         ]);
-
+        
+        // Buscar la data en la DB
         $logistic = LogisticCompany::find($this->logistic_id);
 
-        $logistic->update([
-            'name'          => $this->name,
-            'ruc'           => $this->ruc,
-            'phone'         => $this->phone,
-            'address'       => $this->address,
-            'state'         => $this->state,
-            'city'          => $this->city,
-            'country'       => $this->country,
-            'id_user'       => $logistic->id_user,
-            'update_user'   => Auth::user()->id
-        ]);
+        // Buscar si hay alguna empresa de logistica activa
+        $lc_active = LogisticCompany::select('id')->where('active', '=', 'yes')->first();
 
-        session()->flash('edit', 'La empresa de logística "' . $logistic->name . '" se actualizó con éxito');
+        if($lc_active){
+            // forzar a guardar en 'NO' para que solo exista una sola empresa de logistica activa
+            $this->active = 'no';
+
+            $logistic->update([
+                'name'          => $this->name,
+                'ruc'           => $this->ruc,
+                'phone'         => $this->phone,
+                'address'       => $this->address,
+                'state'         => $this->state,
+                'city'          => $this->city,
+                'country'       => $this->country,
+                'active'        => $this->active,
+                'id_user'       => $logistic->id_user,
+                'update_user'   => Auth::user()->id
+            ]);
+    
+            session()->flash('edit', 'La empresa de logística "' . $logistic->name . '" se actualizó con éxito, pero no se puede colocar como "Cargamos Actualmente" porque hay otra empresa de logística.');
+        }else{
+            $logistic->update([
+                'name'          => $this->name,
+                'ruc'           => $this->ruc,
+                'phone'         => $this->phone,
+                'address'       => $this->address,
+                'state'         => $this->state,
+                'city'          => $this->city,
+                'country'       => $this->country,
+                'active'        => $this->active,
+                'id_user'       => $logistic->id_user,
+                'update_user'   => Auth::user()->id
+            ]);
+    
+            session()->flash('edit', 'La empresa de logística "' . $logistic->name . '" se actualizó con éxito');
+        }
 
         $this->default();
     }
@@ -105,6 +158,7 @@ class LogisticCompanyComponent extends Component
         $this->state = '';
         $this->city = '';
         $this->country = '';
+        $this->active = '';
 
         $this->view = 'create';
     }

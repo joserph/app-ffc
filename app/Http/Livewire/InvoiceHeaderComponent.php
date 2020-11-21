@@ -11,9 +11,10 @@ use Auth;
 
 class InvoiceHeaderComponent extends Component
 {
-    public $invoiceheader_id, $id_company, $id_load, $id_logistics_company, $bl, $carrier, $invoice, $date, $total_bunches, $total_fulls, $total_pieces, $total_stems, $total, $id_user, $update_user, $shipment;
+    public $invoiceheader_id, $id_company, $id_load, $bl, $carrier, $invoice, $date, $total_bunches, $total_fulls, $total_pieces, $total_stems, $total, $id_user, $update_user, $shipment;
     public $view = 'create';
-    public $code1, $invoiceheader;
+    public $code1, $invoiceheader, $logi, $company;
+    public $id_logistics_company;
     
     public function render()
     {
@@ -24,18 +25,12 @@ class InvoiceHeaderComponent extends Component
         
         $code1 = $div[2];
 
-        // Carga
-        $load = Load::find($code1);
-        // Empresas de Logistica
-        $logistics = LogisticCompany::orderBy('id', 'DESC')->pluck('name', 'id');
-        // Mi empresa
-        $company = Company::get();
         // Cabecera de la factura
-        $invoiceheaders = InvoiceHeader::orderBy('id', 'DESC')->where('id_load', '=', $code1)->paginate(5);
+        //$invoiceheaders = InvoiceHeader::orderBy('id', 'DESC')->where('id_load', '=', $code1)->paginate(2);
         //dd($invoiceheaders);
         
         // Empresa de logistica que guardamos en la cabecera
-        $invoiceHeader_lc = InvoiceHeader::select('id_logistics_company')->where('id_load', '=', $code1)->first();
+        /*$invoiceHeader_lc = InvoiceHeader::select('id_logistics_company')->where('id_load', '=', $code1)->first();
         
         if(!$invoiceHeader_lc)
         {
@@ -43,18 +38,14 @@ class InvoiceHeaderComponent extends Component
         }else{
             $invoiceHeader_lc = $invoiceHeader_lc->id_logistics_company;
         }
-        $logistics_company = LogisticCompany::where('id', '=', $invoiceHeader_lc)->first();
+        $logistics_company = LogisticCompany::where('id', '=', $invoiceHeader_lc)->first();*/
 
         return view('livewire.invoice-header-component', [
-            'load' => $load,
-            'logistics' => $logistics,
-            'company' => $company,
-            'invoiceheaders' => $invoiceheaders, // Posible solucion correr un array en la vista
-            'logistics_company' => $logistics_company
+            'invoiceheaders' => InvoiceHeader::orderBy('id', 'DESC')->where('id_load', '=', $code1)->paginate(2), // Posible solucion correr un array en la vista
         ]);
     }
 
-    public function mount($id_load, $bl, $id_company, $shipment)
+    public function mount($id_load, $bl, $id_company, $shipment, $company, $id_logistics_company, $logi)
     {
         // Busco el ID de la carga por medio de la URL
         $url = $_SERVER["REQUEST_URI"];
@@ -72,6 +63,17 @@ class InvoiceHeaderComponent extends Component
 
         // Carga
         $this->shipment = $id_load->shipment;
+
+        // Empresas de Logistica 
+        $lc_active = LogisticCompany::where('active', '=', 'yes')->first();
+        $this->logi = $lc_active->name;
+        // ID
+        $this->id_logistics_company = $lc_active->id;
+
+        // Mi empresa
+        $this->company = Company::get();
+
+        //dd($this->logi);
     }
 
     
@@ -116,7 +118,7 @@ class InvoiceHeaderComponent extends Component
         $this->edit($invoiceHeader->id);
         
         session()->flash('create', 'La factura master "' . $invoiceHeader->invoice . '" se creó con éxito');
-        
+        $this->render();
     }
 
     public function edit($id)

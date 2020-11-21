@@ -16,7 +16,8 @@
    </div>
    <div class="col-md-4 form-group">
       {{ Form::label('id_logistics_company', 'Empresa de Logística', ['class' => 'control-label']) }}
-      {{ Form::select('id_logistics_company', $logistics, null, ['class' => 'form-control', 'wire:model' => 'id_logistics_company', 'placeholder' => 'Seleccione Empresa de Logística']) }}
+      <input type="text" name="" class="form-control" value="{{ $logi }}" readonly>
+      <input type="hidden" class="form-control" wire:model="id_logistics_company">
    </div>
    <div class="col-md-4 form-group">
       {{ Form::label('invoice', 'N° de Factura', ['class' => 'control-label']) }}

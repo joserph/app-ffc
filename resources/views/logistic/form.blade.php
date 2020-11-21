@@ -27,4 +27,21 @@
         {{ Form::label('country', 'País', ['class' => 'control-label']) }}
         <input type="text" name="country" class="form-control @error('country') is-invalid @enderror" wire:model="country">
     </div>
+    
+    <div class="col-md-4 form-group">
+        {{ Form::label('active', 'Cargamos actualmente', ['class' => 'control-label']) }}
+
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="active" wire:model="active" value="no" checked>
+            <label class="form-check-label @error('active') is-invalid @enderror" for="active1">
+              No
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="active" wire:model="active" value="yes">
+            <label class="form-check-label @error('active') is-invalid @enderror" for="active2">
+              Si
+            </label>
+          </div>
+    </div>
 </div>

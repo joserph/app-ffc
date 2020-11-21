@@ -23,6 +23,7 @@ class CreateLogisticCompaniesTable extends Migration
             $table->string('state'); // Parroquia
             $table->string('city');
             $table->string('country');
+            $table->string('active');
             $table->integer('update_user')->nullable();
             
             $table->foreignId('id_user')->references('id')->on('users');

@@ -10,6 +10,7 @@
           <th scope="col">Estado</th>
           <th scope="col">Ciudad</th>
           <th scope="col">País</th>
+          <th scope="col">Estatus</th>
           <th class="text-center" colspan="2">@can('haveaccess', 'logistic.edit') Editar @endcan  @can('haveaccess', 'logistic.destroy')/ Eliminar @endcan</th>
        </tr>
     </thead>
@@ -22,6 +23,7 @@
             <td>{{ $logistic->state }}</td>
             <td>{{ $logistic->city }}</td>
             <td>{{ $logistic->country }}</td>
+            <td>{{ $logistic->active }}</td>
             <td colspan="2" class="text-center">
                @can('haveaccess', 'logistic.edit')
                <button wire:click="edit({{ $logistic->id }})" class="btn btn-sm btn-outline-warning">
