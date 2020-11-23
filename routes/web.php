@@ -42,9 +42,7 @@ Route::get('/logistics', function () {
 })->name('logistics');
 
 // Factura Master
-Route::get('/masterinvoices/{load}', function () {
-    return view('masterinvoice.masterinvoices');
-})->name('masterinvoices');
+Route::get('/masterinvoices/{load}', 'InvoiceHeaderController@index')->name('masterinvoices');
 
 
 // Autenticación

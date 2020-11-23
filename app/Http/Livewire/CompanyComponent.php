@@ -15,7 +15,7 @@ class CompanyComponent extends Component
     {
         return view('livewire.company-component', [
             'companies' => Company::orderBy('id', 'DESC')->paginate(5),
-            'company' => Company::get()
+            'company' => Company::first()
         ]);
     }
 
