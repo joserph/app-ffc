@@ -45,16 +45,18 @@
                         <span aria-hidden="true">&times;</span>
                      </button>
                   </div>
-                  <div class="modal-body">
-                     @include('masterinvoice.formHeader')
-                  </div>
-                  <div class="modal-footer">
-                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
-                     <button wire:click="store" class="btn btn-outline-primary" id="createMasterInvoice" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
-                        <i class="fas fa-plus-circle"></i> Crear
-                    </button>
-                  </div>
-                  
+                  {{ Form::open(['route' => 'masterinvoices.store', 'class' => 'form-horizontal']) }}
+                     <div class="modal-body">
+                        
+                        @include('masterinvoice.formHeader')
+                     </div>
+                     <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-outline-primary" id="createMasterInvoice" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
+                           <i class="fas fa-plus-circle"></i> Crear
+                     </button>
+                     </div>
+                  {{ Form::close() }}
                </div>
             </div>
          </div>

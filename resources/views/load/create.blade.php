@@ -33,7 +33,7 @@
                     
                    @include('custom.message')
 
-                    {{ Form::open(['route' => 'load.store', 'class' => 'form-horizontal']) }}
+                     {{ Form::open(['route' => 'load.store', 'class' => 'form-horizontal']) }}
                         @include('load.partials.form')
                         <hr>
                         <div class="form-group row">
@@ -41,7 +41,7 @@
                               <button type="submit" class="btn btn-outline-primary"><i class="fas fa-plus-circle"></i></button>
                            </div>
                         </div>
-                    {{ Form::close() }}
+                     {{ Form::close() }}
                     
                     </div>
                 </div>

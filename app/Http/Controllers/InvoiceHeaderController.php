@@ -7,6 +7,7 @@ use App\Load;
 use App\InvoiceHeader;
 use App\LogisticCompany;
 use App\Company;
+use App\Http\Requests\InvoiceHeaderRequest;
 
 class InvoiceHeaderController extends Controller
 {
@@ -19,12 +20,12 @@ class InvoiceHeaderController extends Controller
     {
         // Busco el ID de la carga por medio de la URL
         $url = $_SERVER["REQUEST_URI"];
-        $div = explode("/", $url);
-        $code1 = $div[2];
-        $load = Load::find($code1);
+        $arr = explode("?", $url);
+        $code = $arr[1];
+        $load = Load::find($code);
 
         // Cabecera de la factura
-        $invoiceheaders = InvoiceHeader::orderBy('id', 'DESC')->where('id_load', '=', $code1)->first();
+        $invoiceheaders = InvoiceHeader::orderBy('id', 'DESC')->where('id_load', '=', $code)->first();
 
         // Empresas de Logistica "Activa"
         $lc_active = LogisticCompany::where('active', '=', 'yes')->first();
@@ -32,7 +33,7 @@ class InvoiceHeaderController extends Controller
         // Mi empresa
         $company = Company::first();
 
-        //dd($company);
+        //dd($invoiceheaders);
 
         return view('masterinvoice.index', compact('load', 'invoiceheaders', 'lc_active', 'company'));
     }
@@ -44,8 +45,7 @@ class InvoiceHeaderController extends Controller
      */
     public function create()
     {
-        return view('masterinvoice.formHeader'); // prueba para subir app a heroku
-        
+        //
     }
 
     /**
@@ -54,9 +54,14 @@ class InvoiceHeaderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(InvoiceHeaderRequest $request)
     {
-        //
+        $invoiceHeader = InvoiceHeader::create($request->all());
+
+        $load = Load::where('id', '=', $invoiceHeader->id_load)->first();
+
+        return redirect()->route('masterinvoices.index', $load->id)
+            ->with('status_success', 'Factura creada con éxito');
     }
 
     /**

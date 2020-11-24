@@ -39,7 +39,7 @@
                     <div class="icon">
                       <i class="fas fa-shopping-cart"></i>
                     </div>
-                     <a href="{{ url('masterinvoices', $load->id) }}" class="small-box-footer">
+                     <a href="{{ route('masterinvoices.index', $load->id) }}" class="small-box-footer">
                       More info <i class="fas fa-arrow-circle-right"></i>
                     </a>
                   </div>
