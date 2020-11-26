@@ -28,4 +28,5 @@
    </div>
    {{ Form::hidden('id_user', Auth::user()->id )}}
    {{ Form::hidden('update_user', Auth::user()->id )}}
+   {{ Form::hidden('carrier', $load->carrier )}}
 </div>
