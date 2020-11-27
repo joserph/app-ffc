@@ -111,7 +111,7 @@
            <!-- /.col -->
          </div>
          <!-- /.row -->
-
+         
          <!-- Table row -->
          <div class="row">
            <div class="col-12 table-responsive">
@@ -127,7 +127,7 @@
                </thead>
                <tbody>
                <tr>
-                 <td>1</td>
+                 <td></td>
                  <td>Call of Duty</td>
                  <td>455-981-221</td>
                  <td>El snort testosterone trophy driving gloves handsome</td>
