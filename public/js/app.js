@@ -49545,10 +49545,15 @@ module.exports = function(module) {
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-///require('./jquery'); 
+var _require = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"),
+    Axios = _require["default"]; ///require('./jquery'); 
+
+
 __webpack_require__(/*! ./bootstrap.js */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+
+__webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -49566,9 +49571,26 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-/*const app = new Vue({
-    el: '#app',
-});*/
+
+var app = new Vue({
+  el: '#invoiceitem',
+  created: function created() {
+    this.getInvoiceItems();
+  },
+  data: {
+    invoiceitems: []
+  },
+  methods: {
+    getInvoiceItems: function getInvoiceItems() {
+      var _this = this;
+
+      var urlInvoiceItems = 'masterinvoicesitems';
+      axios.get(urlInvoiceItems).then(function (response) {
+        _this.invoiceitems = response.data;
+      });
+    }
+  }
+});
 
 /***/ }),
 

@@ -74,3 +74,5 @@ Route::resource('/permission', 'PermissionController')->names('permission');
 Route::resource('/load', 'LoadController')->names('load');
 // Cabecera de la factura master
 Route::resource('/masterinvoices', 'InvoiceHeaderController')->names('masterinvoices');
+// Items de la factura master
+Route::resource('/masterinvoicesitems', 'MasterInvoiceItemController')->names('masterinvoicesitems');

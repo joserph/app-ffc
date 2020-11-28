@@ -3,10 +3,14 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+
+const { default: Axios } = require('axios');
+
 ///require('./jquery'); 
 require('./bootstrap.js');
 
 window.Vue = require('vue');
+require('axios');
 
 /**
  * The following block of code may be used to automatically register your
@@ -27,9 +31,23 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-/*const app = new Vue({
-    el: '#app',
-});*/
+const app = new Vue({
+    el: '#invoiceitem',
+    created: function(){
+        this.getInvoiceItems();
+    },
+    data: {
+        invoiceitems: []
+    },
+    methods: {
+        getInvoiceItems: function(){
+            var urlInvoiceItems = 'masterinvoicesitems';
+            axios.get(urlInvoiceItems).then(response => {
+                this.invoiceitems = response.data
+            });
+        }
+    }
+});
 
 
 
