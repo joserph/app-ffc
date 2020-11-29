@@ -9,8 +9,11 @@ const { default: Axios } = require('axios');
 ///require('./jquery'); 
 require('./bootstrap.js');
 
+
 window.Vue = require('vue');
+require('toastr');
 require('axios');
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -44,6 +47,13 @@ const app = new Vue({
             var urlInvoiceItems = 'masterinvoicesitems';
             axios.get(urlInvoiceItems).then(response => {
                 this.invoiceitems = response.data
+            });
+        },
+        deleteInvoiveItem: function(item){
+            var url = 'masterinvoicesitems/' + item.id;
+            axios.delete(url).then(response => {
+                this.getInvoiceItems();
+                toastr.success('Eliminado correctamente');
             });
         }
     }

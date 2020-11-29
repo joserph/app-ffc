@@ -133,13 +133,13 @@
                <tbody>
                <tr v-for="item in invoiceitems">
                 <td>@{{ item.fulls }}</td>
-                 <td>@{{ item.pcs }}</td>
+                 <td>@{{ item.pieces }}</td>
                  <td>@{{ item.id_farm }}</td>
                  <td>@{{ item.description }}</td>
                  <td>@{{ item.hawb }}</td>
                  <td>
-                   <a href="#" class="btn btn-warning btn-sm">Editar</a>
-                   <a href="#" class="btn btn-danger btn-sm">Eliminar</a>
+                   <a href="#" class="btn btn-warning btn-sm" >Editar</a>
+                   <a href="#" class="btn btn-danger btn-sm" v-on:click.prevent="deleteInvoiveItem(item)">Eliminar</a>
                  </td>
                </tr>
                

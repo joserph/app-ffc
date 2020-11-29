@@ -28,6 +28,7 @@
         "@popperjs/core": "^2.5.3",
         "admin-lte": "^3.0.5",
         "bootstrap-switch": "^3.3.4",
-        "core-js": "^3.6.5"
+        "core-js": "^3.6.5",
+        "toastr": "^2.1.4"
     }
 }

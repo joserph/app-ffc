@@ -59,7 +59,7 @@ class MasterInvoiceItemController extends Controller
      */
     public function edit($id)
     {
-        $invoiceItems = MasterInvoiceItem::findOrFil($id);
+        $invoiceItems = MasterInvoiceItem::findOrFail($id);
 
         return $invoiceItems;
     }
@@ -84,7 +84,7 @@ class MasterInvoiceItemController extends Controller
      */
     public function destroy($id)
     {
-        $invoiceItems = MasterInvoiceItem::findOrFil($id);
+        $invoiceItems = MasterInvoiceItem::findOrFail($id);
         $invoiceItems->delete();
     }
 }
