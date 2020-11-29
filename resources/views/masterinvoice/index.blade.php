@@ -28,39 +28,38 @@
             
          
             
-         @if(!$invoiceheaders)
-            <button class="btn btn-outline-primary" id="createMasterInvoice" data-toggle="modal" data-target="#exampleModal" data-toggle="tooltip" data-placement="top" title="Crear Master Invoice">
-               <i class="fas fa-plus-circle"></i> Crear
-            </button>
-         @endif
-
-  
-         <!-- Modal -->
-         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
+         <!-- Button trigger modal -->
+         <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#createInvoiceHeader" >
+            <i class="fas fa-plus-circle"></i> Crear
+         </button>
+ 
+            <!-- Modal -->
+            <div class="modal fade" id="createInvoiceHeader" tabindex="-1" aria-labelledby="createInvoiceHeaderLabel" aria-hidden="true">
+               <div class="modal-dialog modal-xl">
                <div class="modal-content">
                   <div class="modal-header">
-                     <h5 class="modal-title" id="exampleModalLabel">Crear Factura Master</h5>
+                     <h5 class="modal-title" id="createInvoiceHeaderLabel">Crear Factura Master</h5>
                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                     <span aria-hidden="true">&times;</span>
                      </button>
                   </div>
-                  {{ Form::open(['route' => 'masterinvoices.store', 'class' => 'form-horizontal']) }}
-                     <div class="modal-body">
-                        
-                        @include('masterinvoice.formHeader')
-                     </div>
-                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-outline-primary" id="createMasterInvoice" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
-                           <i class="fas fa-plus-circle"></i> Crear
-                     </button>
-                     </div>
-                  {{ Form::close() }}
+                  <div class="modal-body">
+                     {{ Form::open(['route' => 'masterinvoices.store', 'class' => 'form-horizontal']) }}
+                        <div class="modal-body">
+                           
+                           @include('masterinvoice.formHeader')
+                        </div>
+                        <div class="modal-footer">
+                           <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+                           <button type="submit" class="btn btn-outline-primary" id="createMasterInvoice" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
+                              <i class="fas fa-plus-circle"></i> Crear
+                        </button>
+                        </div>
+                     {{ Form::close() }}
+                  </div>
+               </div>
                </div>
             </div>
-         </div>
-
 
          @endcan
 
@@ -114,7 +113,42 @@
          <hr>
          @include('masterinvoice.formItems')
          <hr>
-         @{{ $data }}
+         <pre>
+            @{{ $data }}
+         </pre>
+         <hr>
+         <!-- Button trigger modal -->
+         <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#agregarItem">
+            <i class="fas fa-plus-circle"></i> Crear Item
+         </button>
+         
+         <!-- Modal -->
+         <div class="modal fade" id="agregarItem" tabindex="-1" aria-labelledby="agregarItemLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="agregarItemLabel">Agregar item de la factura</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  {{ Form::open(['route' => 'masterinvoicesitems.store', 'class' => 'form-horizontal']) }}
+                     <div class="modal-body">
+                        
+                        @include('masterinvoice.formItems')
+                     </div>
+                     <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-outline-primary" id="createMasterInvoice" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
+                           <i class="fas fa-plus-circle"></i> Crear
+                     </button>
+                     </div>
+                  {{ Form::close() }}
+               </div>
+            </div>
+            </div>
+         </div>
          <hr>
          <!-- Table row -->
          <div class="row">

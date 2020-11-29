@@ -4,15 +4,15 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-const { default: Axios } = require('axios');
+//const { default: Axios } = require('axios');
 
-///require('./jquery'); 
-require('./bootstrap.js');
+/////require('./jquery'); 
+//require('./bootstrap.js');
 
 
-window.Vue = require('vue');
-require('toastr');
-require('axios');
+//window.Vue = require('vue');
+//require('toastr');
+//require('axios');
 
 
 /**
@@ -51,9 +51,9 @@ const app = new Vue({
         },
         deleteInvoiveItem: function(item){
             var url = 'masterinvoicesitems/' + item.id;
-            axios.delete(url).then(response => {
-                this.getInvoiceItems();
-                toastr.success('Eliminado correctamente');
+            axios.delete(url).then(response => { // Eliminamos
+                this.getInvoiceItems(); // Listamos
+                toastr.success('Eliminado correctamente'); // Mensaje
             });
         }
     }

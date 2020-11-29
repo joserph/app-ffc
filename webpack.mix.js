@@ -11,16 +11,16 @@ const mix = require('laravel-mix');
  |
  */
 
-/*mix.scripts([
-            'resources/js/jquery.js',
-            'resources/js/popper.js',
-            'resources/js/bootstrap.js',
-            //'resources/js/paper-dashboard.js',
-            ], 'public/js/app.js')
-    .styles([
-            'resources/css/bootstrap.css',
-            'resources/css/flatly.css',
-            ], 'public/css/app.css');*/
+mix.scripts([
+   'node_modules/jquery/dist/jquery.js',
+   'node_modules/bootstrap/dist/js/bootstrap.js',
+   'node_modules/admin-lte/dist/js/adminlte.js',
+   'node_modules/toastr/toastr.js',
+   'node_modules/vue/dist/vue.js',
+   'node_modules/axios/dist/axios.js',
+   'resources/js/app.js',
+   ], 'public/js/app.js')
+.sass('resources/sass/app.scss', 'public/css');
 
 /*mix.scripts(['node_modules/jquery/dist/jquery.js',
         'node_modules/popper.js/dist/popper.js',
@@ -29,5 +29,5 @@ const mix = require('laravel-mix');
 .styles(['node_modules/admin-lte/dist/css/adminlte.css',
         'node_modules/admin-lte/dist/css/adminlte.css.map'], 'public/css/app.css');*/
 
-mix.js('resources/js/app.js', 'public/js/app.js')
-    .sass('resources/sass/app.scss', 'public/css');
+/*mix.js('resources/js/app.js', 'public/js/app.js')
+    .sass('resources/sass/app.scss', 'public/css');*/
