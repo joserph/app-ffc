@@ -44,6 +44,11 @@ Route::get('/logistics', function () {
 // Factura Master
 //Route::get('/masterinvoices/{load}', 'InvoiceHeaderController@index')->name('masterinvoices');
 
+// Variedades de flores
+Route::get('/varieties', function () {
+    return view('variety.varieties');
+})->name('varieties');
+
 
 // Autenticación
 Auth::routes();

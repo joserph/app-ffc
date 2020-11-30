@@ -27,11 +27,12 @@
          @include('custom.message') 
             
          
-            
+         @if(!$invoiceheaders)   
          <!-- Button trigger modal -->
          <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#createInvoiceHeader" >
             <i class="fas fa-plus-circle"></i> Crear
          </button>
+         @endif
  
             <!-- Modal -->
             <div class="modal fade" id="createInvoiceHeader" tabindex="-1" aria-labelledby="createInvoiceHeaderLabel" aria-hidden="true">
