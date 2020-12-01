@@ -8,6 +8,9 @@ use App\InvoiceHeader;
 use App\LogisticCompany;
 use App\Company;
 use App\Http\Requests\InvoiceHeaderRequest;
+use App\Farm;
+use App\Client;
+use App\Variety;
 
 class InvoiceHeaderController extends Controller
 {
@@ -33,9 +36,23 @@ class InvoiceHeaderController extends Controller
         // Mi empresa
         $company = Company::first();
 
+        // Datos para items de la factura
+        // Fincas
+        $farms = Farm::pluck('name', 'id');
+        // Clientes
+        $clients = Client::pluck('name', 'id');
+        // Variedades
+        $varieties = Variety::pluck('name', 'id');
+
         //dd($invoiceheaders);
 
-        return view('masterinvoice.index', compact('load', 'invoiceheaders', 'lc_active', 'company'));
+        return view('masterinvoice.index', compact('load', 
+            'invoiceheaders', 
+            'lc_active', 
+            'company',
+            'farms',
+            'clients',
+            'varieties'));
     }
 
     /**

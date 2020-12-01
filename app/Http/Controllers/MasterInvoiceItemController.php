@@ -37,7 +37,9 @@ class MasterInvoiceItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        MasterInvoiceItem::create($request->all());
+
+        return;
     }
 
     /**

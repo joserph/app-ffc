@@ -27,6 +27,7 @@ class CreateMasterInvoiceItemsTable extends Migration
             $table->integer('bunches')->nullable();
             $table->double('fulls', 8, 2)->nullable();
             $table->double('total', 8, 2)->nullable();
+            $table->double('stems_p_bunches', 8, 2)->nullable();
             $table->integer('update_user')->nullable();
 
             $table->foreignId('id_invoiceh')->references('id')->on('invoice_headers')->onDelete('cascade');

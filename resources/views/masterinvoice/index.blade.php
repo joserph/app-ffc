@@ -112,8 +112,6 @@
          </div>
          <!-- /.row -->
          <hr>
-         @include('masterinvoice.formItems')
-         <hr>
          <pre>
             @{{ $data }}
          </pre>
@@ -134,7 +132,7 @@
                   </button>
                </div>
                <div class="modal-body">
-                  {{ Form::open(['route' => 'masterinvoicesitems.store', 'class' => 'form-horizontal']) }}
+                  <form method="POST" v-on:submit.prevent="createInvoiceItem">
                      <div class="modal-body">
                         
                         @include('masterinvoice.formItems')
@@ -145,7 +143,7 @@
                            <i class="fas fa-plus-circle"></i> Crear
                      </button>
                      </div>
-                  {{ Form::close() }}
+                  </form>
                </div>
             </div>
             </div>
