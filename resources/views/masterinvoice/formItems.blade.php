@@ -59,8 +59,8 @@
         <span id="helpBlock" class="help-block">En caso de que el total no coincida con la factura "Colocar manualmente".</span>
     </div>
     {{$invoiceheaders->id}}
-    {{ Form::hidden('id_user', Auth::user()->id), null, ['v-model' => 'id_user'] }}
-    {{ Form::hidden('update_user', Auth::user()->id, null, ['v-model' => 'update_user']) }}
-    {{ Form::hidden('id_load', $load->id, null, ['v-model' => 'id_load']) }}
-    {{ Form::hidden('id_invoiceh', $invoiceheaders->id, null, ['v-model' => 'id_invoiceh']) }}
+    {{ Form::hidden('id_user', Auth::user()->id, ['v-model' => 'id_user']) }}
+    {{ Form::hidden('update_user', Auth::user()->id, ['v-model' => 'update_user']) }}
+    {{ Form::hidden('id_load', $load->id, ['v-model' => 'id_load']) }}
+    {{ Form::hidden('id_invoiceh', $invoiceheaders->id, ['v-model' => 'id_invoiceh']) }}
 </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\MasterInvoiceItem;
+use Auth;
 
 class MasterInvoiceItemController extends Controller
 {
@@ -37,7 +38,27 @@ class MasterInvoiceItemController extends Controller
      */
     public function store(Request $request)
     {
-        MasterInvoiceItem::create($request->all());
+        dd($request->id_invoiceh);
+        MasterInvoiceItem::create([
+            'id_invoiceh'       => $request->id_invoiceh,
+            'id_client'         => $request->id_client,
+            'id_farm'           => $request->id_farm,
+            'id_load'           => $request->id_load,
+            'description'       => $request->description,
+            'hawb'              => $request->hawb,
+            'pieces'            => $request->pieces,
+            'hb'                => $request->hb,
+            'qb'                => $request->qb,
+            'eb'                => $request->eb ,
+            'stems'             => $request->stems,
+            'price'             => $request->price,
+            'bunches'           => $request->bunches,
+            'fulls'             => $request->fulls,    
+            'total'             => $request->total,
+            'id_user'           => Auth::user()->id,
+            'update_user'       => Auth::user()->id,
+            'stems_p_bunches'   => $request->stems_p_bunches
+        ]);
 
         return;
     }

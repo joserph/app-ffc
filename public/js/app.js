@@ -31431,8 +31431,8 @@ const app = new Vue({
                 bunches: this.bunches, 
                 fulls: this.fulls,    
                 total: this.total,
-                id_user: this.id_user,
-                update_user: this.update_user,
+                //id_user: this.id_user,
+                //update_user: this.update_user,
                 stems_p_bunches: this.stems_p_bunches
             }).then(response => {
                 this.getInvoiceItems();
