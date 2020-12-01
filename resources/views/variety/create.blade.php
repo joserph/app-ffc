@@ -1,5 +1,5 @@
 @can('haveaccess', 'variety.create')
-<h2>Crear cliente</h2>
+<h2>Crear tipo de variedad</h2>
 @include('custom.message') 
 
 @include('variety.form')

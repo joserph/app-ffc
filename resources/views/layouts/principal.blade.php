@@ -161,6 +161,16 @@
             </a>
           </li>
           @endcan
+          @can('haveaccess', 'varieties')
+          <li class="nav-item">
+            <a href="{{ url('varieties') }}" class="nav-link">
+              <i class="nav-icon fas fa-fan"></i>
+              <p>
+                Variedades
+              </p>
+            </a>
+          </li>
+          @endcan
           @can('haveaccess', 'load.index')
           <li class="nav-item">
             <a href="{{ route('load.index') }}" class="nav-link">

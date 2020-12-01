@@ -3,13 +3,86 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use App\Variety;
+use Livewire\WithPagination;
+use Auth;
 
 class VarietyComponent extends Component
 {
+    use WithPagination;
+
+    protected $paginationTheme = 'bootstrap'; /// Importante
+
+    public $name, $variety_id;
     public $view = 'create';
     
     public function render()
     {
-        return view('livewire.variety-component');
+        return view('livewire.variety-component', [
+            'varieties' => Variety::orderBy('name', 'ASC')->paginate(5)
+        ]);
+    }
+
+    public function store()
+    {
+        // Validaciones
+        $this->validate([
+            'name'      => 'required'
+        ]);
+
+        $variety = Variety::create([
+            'name'=> $this->name,
+            'id_user'       => Auth::user()->id,
+            'update_user'   => Auth::user()->id
+        ]);
+
+        session()->flash('create', 'La variedad "' . $variety->name . '" se creo con éxito');
+
+        // Madamos a la vista editar
+        $this->edit($variety->id);
+    }
+
+    public function edit($id)
+    {
+        $variety = Variety::find($id);
+
+        $this->variety_id = $variety->id;
+        $this->name = $variety->name;
+
+        $this->view = 'edit';
+    }
+
+    public function update()
+    {
+        // Validaciones
+        $this->validate([
+            'name'      => 'required'
+        ]);
+
+        $variety = Variety::find($this->variety_id);
+
+        $variety->update([
+            'name'=> $this->name,
+            'id_user'       => Auth::user()->id,
+            'update_user'   => Auth::user()->id
+        ]);
+
+        session()->flash('edit', 'La Variedad "' . $variety->name . '" se actualizó con éxito');
+        // Madamos a la viste default
+        $this->default();
+    }
+
+    public function default()
+    {
+        $this->name = '';
+
+        $this->view = 'create';
+    }
+
+    public function destroy($id)
+    {
+        $variety = Variety::find($id);
+        Variety::destroy($id);
+        session()->flash('delete', 'Eliminaste la variedad "' . $variety->name);
     }
 }
