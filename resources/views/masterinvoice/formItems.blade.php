@@ -58,9 +58,8 @@
         {{ Form::text('total', null, ['class' => 'form-control', 'id' => 'total', 'v-model' => 'total']) }}
         <span id="helpBlock" class="help-block">En caso de que el total no coincida con la factura "Colocar manualmente".</span>
     </div>
-    {{$invoiceheaders->id}}
-    {{ Form::hidden('id_user', Auth::user()->id, ['v-model' => 'id_user']) }}
-    {{ Form::hidden('update_user', Auth::user()->id, ['v-model' => 'update_user']) }}
-    {{ Form::hidden('id_load', $load->id, ['v-model' => 'id_load']) }}
-    {{ Form::hidden('id_invoiceh', $invoiceheaders->id, ['v-model' => 'id_invoiceh']) }}
+    {{ Form::hidden('id_user', Auth::user()->id, ['id' => 'id_user']) }}
+    {{ Form::hidden('update_user', Auth::user()->id, ['id' => 'update_user']) }}
+    {{ Form::hidden('id_load', $load->id, ['id' => 'id_load']) }}
+    {{ Form::hidden('id_invoiceh', $invoiceheaders->id, ['id' => 'id_invoiceh']) }}
 </div>

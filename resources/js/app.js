@@ -76,11 +76,14 @@ const app = new Vue({
         },
         createInvoiceItem: function(){
             var url = 'masterinvoicesitems';
+            
+            console.log($('#id_invoiceh').val());
+
             axios.post(url, {
-                id_invoiceh: this.id_invoiceh,
+                id_invoiceh: $('#id_invoiceh').val(),
                 id_client: this.id_client, 
                 id_farm: this.id_farm, 
-                id_load: this.id_load, 
+                id_load: $('#id_load').val(), 
                 description: this.description, 
                 hawb: this.hawb, 
                 pieces: this.pieces,
@@ -92,12 +95,29 @@ const app = new Vue({
                 bunches: this.bunches, 
                 fulls: this.fulls,    
                 total: this.total,
-                //id_user: this.id_user,
-                //update_user: this.update_user,
+                id_user: $('#id_user').val(),
+                update_user: $('#update_user').val(),
                 stems_p_bunches: this.stems_p_bunches
             }).then(response => {
                 this.getInvoiceItems();
+                this.id_invoiceh = '';
+                this.id_client = '';
                 this.id_farm = '';
+                this.id_load = '';
+                this.description = '';
+                this.hawb = '';
+                this.pieces = '';
+                this.hb = '';
+                this.qb = '';
+                this.eb = '';
+                this.stems = '';
+                this.price = '';
+                this.bunches = '';
+                this.fulls = '';
+                this.total = '';
+                this.id_user = '';
+                this.update_user = '';
+                this.stems_p_bunches = '';
                 $('#agregarItem').modal('hide');
                 toastr.success('creado correctamente'); // Mensaje
             })
