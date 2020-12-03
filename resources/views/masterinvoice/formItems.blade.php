@@ -1,18 +1,17 @@
-<div class="form-group">
-    <div class="col-sm-4">
+<div class="row">
+    <div class="col-md-4 form-group">
         {{ Form::label('id_farm', 'Finca', ['class' => 'control-label']) }}
-        {{ Form::select('id_farm', $farms, null, ['class' => 'form-control select-farm', 'placeholder' => 'Seleccione finca', 'style' => 'width: 200px', 'v-model' => 'id_farm']) }}
+        {{ Form::select('id_farm', $farms, null, ['class' => 'form-control select-farm', 'placeholder' => 'Seleccione finca', 'v-model' => 'id_farm']) }}
     </div>
-    <div class="col-sm-4">
+    <div class="col-md-4 form-group">
         {{ Form::label('id_client', 'Cliente', ['class' => 'control-label']) }}
         {{ Form::select('id_client', $clients, null, ['class' => 'form-control select-client', 'placeholder' => 'Seleccione cliente', 'v-model' => 'id_client']) }}
     </div>
-    <div class="col-sm-4">
+    <div class="col-md-4 form-group">
         {{ Form::label('description', 'Descripción', ['class' => 'control-label']) }}
         {{ Form::select('description', $varieties, null, ['class' => 'form-control select-product', 'placeholder' => 'Seleccione tipo', 'v-model' => 'description']) }}
     </div>
-</div>
-<div class="form-group">
+
     
     <div class="col-sm-2">
         {{ Form::label('hb', 'HB', ['class' => 'control-label']) }}
@@ -39,8 +38,7 @@
             '25' => '25',
             ], '25', ['class' => 'form-control grupo', 'id' => 'stems_p_bunches', 'v-model' => 'stems_p_bunches']) }}
     </div>
-</div>
-<div class="form-group">
+
     <div class="col-sm-3">
         {{ Form::label('stems', 'Tallos', ['class' => 'control-label']) }}
         {{ Form::number('stems', null, ['class' => 'form-control grupo', 'id' => 'stems', 'v-model' => 'stems']) }}
