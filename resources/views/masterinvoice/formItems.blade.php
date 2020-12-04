@@ -11,8 +11,6 @@
         {{ Form::label('description', 'Descripción', ['class' => 'control-label']) }}
         {{ Form::select('description', $varieties, null, ['class' => 'form-control select-product', 'placeholder' => 'Seleccione tipo', 'v-model' => 'description']) }}
     </div>
-
-    
     <div class="col-sm-2">
         {{ Form::label('hb', 'HB', ['class' => 'control-label']) }}
         {{ Form::number('hb', null, ['class' => 'form-control', 'v-model' => 'hb']) }}
@@ -29,7 +27,6 @@
         {{ Form::label('hawb', 'HAWB', ['class' => 'control-label']) }}
         {{ Form::text('hawb', null, ['class' => 'form-control', 'v-model' => 'hawb']) }}
     </div>
-    
     <div class="col-sm-3">
         {{ Form::label('stems_p_bunches', 'Tallos por bonches', ['class' => 'control-label']) }}
         {{ Form::select('stems_p_bunches', [
@@ -38,7 +35,6 @@
             '25' => '25',
             ], '25', ['class' => 'form-control grupo', 'id' => 'stems_p_bunches', 'v-model' => 'stems_p_bunches']) }}
     </div>
-
     <div class="col-sm-3">
         {{ Form::label('stems', 'Tallos', ['class' => 'control-label']) }}
         {{ Form::number('stems', null, ['class' => 'form-control grupo', 'id' => 'stems', 'v-model' => 'stems']) }}

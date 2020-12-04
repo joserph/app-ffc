@@ -111,11 +111,6 @@
            <!-- /.col -->
          </div>
          <!-- /.row -->
-         <hr>
-         <pre>
-            @{{ $data }}
-         </pre>
-         <hr>
          <!-- Button trigger modal -->
          <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#agregarItem">
             <i class="fas fa-plus-circle"></i> Crear Item
@@ -155,22 +150,30 @@
              <table class="table table-striped">
                <thead>
                <tr>
-                 <th>Fulls</th>
-                 <th>Pcs</th>
-                 <th>Proveedor de flores</th>
-                 <th>Description</th>
-                 <th>HAWB</th>
-                 <th>Acción</th>
+                  <th class="text-center">Fulls</th>
+                  <th class="text-center">Pcs</th>
+                  <th class="text-center">farms</th>
+                  <th class="text-center">Desciption</th>
+                  <th class="text-center">Hawb</th>
+                  <th class="text-center">Stems</th>
+                  <th class="text-center">Bunch</th>
+                  <th class="text-center">Price</th>
+                  <th class="text-center">Total USD</th>
+                  <th colspan="2" class="text-center">Aciones</th>
                </tr>
                </thead>
                <tbody>
                <tr v-for="item in invoiceitems">
-                <td>@{{ item.fulls }}</td>
-                 <td>@{{ item.pieces }}</td>
-                 <td>@{{ item.id_farm }}</td>
-                 <td>@{{ item.description }}</td>
-                 <td>@{{ item.hawb }}</td>
-                 <td>
+                <td class="text-center">@{{ item.fulls }}</td>
+                 <td class="text-center">@{{ item.pieces }}</td>
+                 <td class="text-center">@{{ item.id_farm }}</td>
+                 <td class="text-center">@{{ item.description }}</td>
+                 <td class="text-center">@{{ item.hawb }}</td>
+                 <td class="text-center">@{{ item.stems  }}</td>
+                 <td class="text-center">@{{ item.bunches }}</td>
+                 <td class="text-center">@{{ item.price }}</td>
+                 <td class="text-center">@{{ item.total }}</td>
+                 <td class="text-center">
                    <a href="#" class="btn btn-warning btn-sm" >Editar</a>
                    <a href="#" class="btn btn-danger btn-sm" v-on:click.prevent="deleteInvoiveItem(item)">Eliminar</a>
                  </td>
@@ -193,4 +196,25 @@
    </div>
 </section>
 @endcan
+
+@section('scripts')
+<script>
+    $(document).ready(function(){
+        $(".grupo").keyup(function()
+        {
+            var stems = $('#stems').val();
+            var stems_p_bunches = $('#stems_p_bunches').val();
+            var bunches = parseFloat(stems) / parseFloat(stems_p_bunches);
+            $('#bunches').val(parseFloat(bunches));
+            // Total
+            var price = $('#price').val();
+            var total = parseFloat(stems) * parseFloat(price);
+            $('#total').val(parseFloat(total));
+            console.log(bunches);
+        });
+    });
+</script>
+
+@endsection
+
 @endsection

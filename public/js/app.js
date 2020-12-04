@@ -31416,8 +31416,10 @@ const app = new Vue({
         createInvoiceItem: function(){
             var url = 'masterinvoicesitems';
             
-            console.log($('#id_invoiceh').val());
-
+            // Calculo de los bunches
+            this.pieces = this.hb + this.qb + this.eb;
+            console.log(this.pieces);
+            
             axios.post(url, {
                 id_invoiceh: $('#id_invoiceh').val(),
                 id_client: this.id_client, 
