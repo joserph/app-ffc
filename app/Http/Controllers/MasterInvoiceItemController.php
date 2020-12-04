@@ -41,7 +41,7 @@ class MasterInvoiceItemController extends Controller
     {
         // Carga
         //dd($request->id_invoiceh);
-        
+        //dd($request->bunches);
         
         MasterInvoiceItem::create([
             'id_invoiceh'       => $request->id_invoiceh,
