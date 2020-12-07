@@ -151,6 +151,9 @@
                <thead>
                <tr>
                   <th class="text-center">Fulls</th>
+                  <th class="text-center">HB</th>
+                  <th class="text-center">QB</th>
+                  <th class="text-center">EB</th>
                   <th class="text-center">Pcs</th>
                   <th class="text-center">farms</th>
                   <th class="text-center">Desciption</th>
@@ -165,8 +168,11 @@
                <tbody>
                <tr v-for="item in invoiceitems">
                 <td class="text-center">@{{ item.fulls }}</td>
+                 <td class="text-center">@{{ item.hb }}</td>
+                 <td class="text-center">@{{ item.qb }}</td>
+                 <td class="text-center">@{{ item.eb }}</td>
                  <td class="text-center">@{{ item.pieces }}</td>
-                 <td class="text-center">@{{ item.id_farm }}</td>
+                 <td class="text-center" v-if="item.id_farm === 1">ALKAVAT CIA LTDA</td>
                  <td class="text-center">@{{ item.description }}</td>
                  <td class="text-center">@{{ item.hawb }}</td>
                  <td class="text-center">@{{ item.stems  }}</td>

@@ -4,6 +4,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+
 //const { default: Axios } = require('axios');
 
 /////require('./jquery'); 
@@ -77,26 +78,29 @@ const app = new Vue({
         createInvoiceItem: function(){
             var url = 'masterinvoicesitems';
             
-            // Calculo de los bunches
-            this.pieces = this.hb + this.qb + this.eb;
-            console.log(this.pieces);
+            // Calculo de los total de piezas.
+            this.pieces = parseInt(this.hb) + parseInt(this.qb) + parseInt(this.eb);
+            // Calculo de los fulls.
+            this.fulls = parseFloat(this.hb * 0.50) + parseFloat(this.qb * 0.25) + parseFloat(this.eb * 0.125);
+
+            console.log(this.fulls);
             
             axios.post(url, {
                 id_invoiceh: $('#id_invoiceh').val(),
-                id_client: this.id_client, 
-                id_farm: this.id_farm, 
-                id_load: $('#id_load').val(), 
-                description: this.description, 
-                hawb: this.hawb, 
+                id_client: this.id_client,
+                id_farm: this.id_farm,
+                id_load: $('#id_load').val(),
+                description: this.description,
+                hawb: this.hawb,
                 pieces: this.pieces,
                 hb: this.hb,
                 qb: this.qb,
-                eb: this.eb, 
+                eb: this.eb,
                 stems: this.stems, 
-                price: this.price,
-                bunches: this.bunches, 
-                fulls: this.fulls,    
-                total: this.total,
+                price: parseFloat(this.price),
+                bunches: $('#bunches').val(), 
+                fulls: parseFloat(this.fulls),  
+                total: parseFloat($('#total').val()),
                 id_user: $('#id_user').val(),
                 update_user: $('#update_user').val(),
                 stems_p_bunches: this.stems_p_bunches

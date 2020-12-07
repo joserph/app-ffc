@@ -25,7 +25,7 @@ class CreateMasterInvoiceItemsTable extends Migration
             $table->integer('stems')->nullable();
             $table->double('price')->nullable();
             $table->integer('bunches')->nullable();
-            $table->double('fulls', 8, 2)->nullable();
+            $table->double('fulls', 8, 3)->nullable();
             $table->double('total', 8, 2)->nullable();
             $table->double('stems_p_bunches', 8, 2)->nullable();
             $table->integer('update_user')->nullable();
