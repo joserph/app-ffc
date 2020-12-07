@@ -173,7 +173,7 @@
                  <td class="text-center">@{{ item.eb }}</td>
                  <td class="text-center">@{{ item.pieces }}</td>
                   <td class="text-center">@{{ item.farm.name }}</td>
-                 <td class="text-center">@{{ item.description }}</td>
+                 <td class="text-center">@{{ item.variety.name }}</td>
                  <td class="text-center">@{{ item.hawb }}</td>
                  <td class="text-center">@{{ item.stems  }}</td>
                  <td class="text-center">@{{ item.bunches }}</td>

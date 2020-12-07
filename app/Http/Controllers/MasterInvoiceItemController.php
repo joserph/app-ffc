@@ -14,10 +14,10 @@ class MasterInvoiceItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        $invoiceItems = MasterInvoiceItem::with('farm')->get();
-        //dd($invoiceItems);
+        $invoiceItems = MasterInvoiceItem::with('farm')->with('variety')->get();
+        dd($invoiceItems);
         return $invoiceItems;
     }
 
@@ -48,7 +48,7 @@ class MasterInvoiceItemController extends Controller
             'id_client'         => $request->id_client,
             'id_farm'           => $request->id_farm,
             'id_load'           => $request->id_load,
-            'description'       => $request->description,
+            'variety_id'        => $request->variety_id,
             'hawb'              => $request->hawb,
             'pieces'            => $request->pieces,
             'hb'                => $request->hb,

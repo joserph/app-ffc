@@ -31377,6 +31377,7 @@ return /******/ (function(modules) { // webpackBootstrap
 const app = new Vue({
     el: '#invoiceitem',
     created: function(){
+               
         this.getInvoiceItems();
     },
     data: {
@@ -31385,7 +31386,7 @@ const app = new Vue({
         id_client: '', 
         id_farm: '', 
         id_load: '', 
-        description: '', 
+        variety_id: '', 
         hawb: '', 
         pieces: '',
         hb: '',
@@ -31402,7 +31403,9 @@ const app = new Vue({
     },
     methods: {
         getInvoiceItems: function(){
-            var urlInvoiceItems = 'masterinvoicesitems';
+            var id_load = $('#id_load').val();
+            //alert(id_load);
+            var urlInvoiceItems = 'masterinvoicesitems/' + id_load;
             axios.get(urlInvoiceItems).then(response => {
                 this.invoiceitems = response.data
             });
@@ -31429,7 +31432,7 @@ const app = new Vue({
                 id_client: this.id_client,
                 id_farm: this.id_farm,
                 id_load: $('#id_load').val(),
-                description: this.description,
+                variety_id: this.variety_id,
                 hawb: this.hawb,
                 pieces: this.pieces,
                 hb: this.hb,
@@ -31449,7 +31452,7 @@ const app = new Vue({
                 this.id_client = '';
                 this.id_farm = '';
                 this.id_load = '';
-                this.description = '';
+                this.variety_id = '';
                 this.hawb = '';
                 this.pieces = '';
                 this.hb = '';

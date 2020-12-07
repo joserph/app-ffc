@@ -8,8 +8,8 @@
         {{ Form::select('id_client', $clients, null, ['class' => 'form-control select-client', 'placeholder' => 'Seleccione cliente', 'v-model' => 'id_client']) }}
     </div>
     <div class="col-md-4 form-group">
-        {{ Form::label('description', 'Descripción', ['class' => 'control-label']) }}
-        {{ Form::select('description', $varieties, null, ['class' => 'form-control select-product', 'placeholder' => 'Seleccione tipo', 'v-model' => 'description']) }}
+        {{ Form::label('variety_id', 'Descripción', ['class' => 'control-label']) }}
+        {{ Form::select('variety_id', $varieties, null, ['class' => 'form-control select-product', 'placeholder' => 'Seleccione tipo', 'v-model' => 'variety_id']) }}
     </div>
     <div class="col-sm-2">
         {{ Form::label('hb', 'HB', ['class' => 'control-label']) }}

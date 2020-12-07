@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\User;
+use App\MasterInvoiceItem;
 use App\PermissionFolder\Models\Role;
 use App\PermissionFolder\Models\Permission;
 use Illuminate\Support\Facades\Gate;
@@ -80,4 +81,9 @@ Route::resource('/load', 'LoadController')->names('load');
 // Cabecera de la factura master
 Route::resource('/masterinvoices', 'InvoiceHeaderController')->names('masterinvoices');
 // Items de la factura master
-Route::resource('/masterinvoicesitems', 'MasterInvoiceItemController')->names('masterinvoicesitems');
+Route::resource('/masterinvoicesitems', 'MasterInvoiceItemController', ['except' => ['index']])->names('masterinvoicesitems');
+Route::get('/masterinvoicesitems/{id}', function(){
+    $invoiceItems = MasterInvoiceItem::with('farm')->with('variety')->get();
+    return $invoiceItems;
+
+});

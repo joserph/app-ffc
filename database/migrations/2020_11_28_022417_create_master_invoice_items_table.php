@@ -16,7 +16,6 @@ class CreateMasterInvoiceItemsTable extends Migration
         Schema::create('master_invoice_items', function (Blueprint $table) {
             $table->id();
 
-            $table->string('description')->nullable();
             $table->string('hawb')->nullable();
             $table->integer('pieces')->nullable();
             $table->integer('hb')->nullable();
@@ -33,6 +32,7 @@ class CreateMasterInvoiceItemsTable extends Migration
             $table->foreignId('id_invoiceh')->references('id')->on('invoice_headers')->onDelete('cascade');
             $table->foreignId('id_client')->references('id')->on('clients')->onDelete('cascade');
             $table->foreignId('id_farm')->references('id')->on('farms')->onDelete('cascade');
+            $table->foreignId('variety_id')->references('id')->on('varieties')->onDelete('cascade');
             $table->foreignId('id_user')->references('id')->on('users');
             $table->foreignId('id_load')->references('id')->on('loads')->onDelete('cascade');
 
