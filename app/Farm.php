@@ -16,4 +16,9 @@ class Farm extends Model
         'id_user',
         'update_user'
     ];
+
+    public function masterinvoiceitems()
+    {
+        return $this->hasMany('App\MasterInvoiceItem', 'id_farm');
+    }
 }

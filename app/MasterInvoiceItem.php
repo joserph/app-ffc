@@ -26,4 +26,9 @@ class MasterInvoiceItem extends Model
         'update_user',
         'stems_p_bunches'
     ];
+
+    public function farm()
+    {
+        return $this->belongsTo('App\Farm', 'id_farm');
+    }
 }
