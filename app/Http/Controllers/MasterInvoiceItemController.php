@@ -16,8 +16,8 @@ class MasterInvoiceItemController extends Controller
      */
     public function index()
     {
-        $invoiceItems = MasterInvoiceItem::get();
-        //dd($invoiceItems);
+        $invoiceItems = MasterInvoiceItem::find(1);
+        //dd($invoiceItems->farm);
         return $invoiceItems;
     }
 
