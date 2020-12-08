@@ -38,11 +38,11 @@ class InvoiceHeaderController extends Controller
 
         // Datos para items de la factura
         // Fincas
-        $farms = Farm::pluck('name', 'id');
+        $farms = Farm::orderBy('name', 'ASC')->pluck('name', 'id');
         // Clientes
-        $clients = Client::pluck('name', 'id');
+        $clients = Client::orderBy('name', 'ASC')->pluck('name', 'id');
         // Variedades
-        $varieties = Variety::pluck('name', 'id');
+        $varieties = Variety::orderBy('name', 'ASC')->pluck('name', 'id');
 
         //dd($invoiceheaders);
 

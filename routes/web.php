@@ -82,8 +82,10 @@ Route::resource('/load', 'LoadController')->names('load');
 Route::resource('/masterinvoices', 'InvoiceHeaderController')->names('masterinvoices');
 // Items de la factura master
 Route::resource('/masterinvoicesitems', 'MasterInvoiceItemController', ['except' => ['index']])->names('masterinvoicesitems');
-Route::get('/masterinvoicesitems/{id}', function($id){
-    //$invoiceItems = MasterInvoiceItem::with('farm')->with('variety')->get();
-    return 'load ' . $id;
-
+Route::get('/invoicesitems/{id}', function($id){
+    $invoiceItems = MasterInvoiceItem::with([
+        'farm' => function ($q){
+            $q->orderBy('name', 'asc');
+        }])->with('variety')->where('id_load', $id)->get();
+    return $invoiceItems;
 });

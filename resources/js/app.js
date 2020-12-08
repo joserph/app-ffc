@@ -66,7 +66,7 @@ const app = new Vue({
         getInvoiceItems: function(){
             var id_load = $('#id_load').val();
             //alert(id_load);
-            var urlInvoiceItems = 'masterinvoicesitems/' + id_load;
+            var urlInvoiceItems = 'invoicesitems/' + id_load;
             axios.get(urlInvoiceItems).then(response => {
                 this.invoiceitems = response.data
             });

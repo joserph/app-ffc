@@ -167,7 +167,7 @@
                </thead>
                <tbody>
                <tr v-for="item in invoiceitems" :key="item.id">
-                <td class="text-center">@{{ item.fulls }}</td>
+                <td class="text-center">@{{ item.fulls.toFixed(3) }}</td>
                  <td class="text-center">@{{ item.hb }}</td>
                  <td class="text-center">@{{ item.qb }}</td>
                  <td class="text-center">@{{ item.eb }}</td>
@@ -177,8 +177,8 @@
                  <td class="text-center">@{{ item.hawb }}</td>
                  <td class="text-center">@{{ item.stems  }}</td>
                  <td class="text-center">@{{ item.bunches }}</td>
-                 <td class="text-center">@{{ item.price }}</td>
-                 <td class="text-center">@{{ item.total }}</td>
+                 <td class="text-center">@{{ item.price.toFixed(2) }}</td>
+                 <td class="text-center">@{{ item.total.toFixed(2) }}</td>
                  <td class="text-center">
                    <a href="#" class="btn btn-warning btn-sm" >Editar</a>
                    <a href="#" class="btn btn-danger btn-sm" v-on:click.prevent="deleteInvoiveItem(item)">Eliminar</a>
