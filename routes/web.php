@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\User;
+use App\Farm;
 use App\MasterInvoiceItem;
 use App\PermissionFolder\Models\Role;
 use App\PermissionFolder\Models\Permission;
@@ -83,9 +84,22 @@ Route::resource('/masterinvoices', 'InvoiceHeaderController')->names('masterinvo
 // Items de la factura master
 Route::resource('/masterinvoicesitems', 'MasterInvoiceItemController', ['except' => ['index']])->names('masterinvoicesitems');
 Route::get('/invoicesitems/{id}', function($id){
-    $invoiceItems = MasterInvoiceItem::with([
+    /*$invoiceItems = MasterInvoiceItem::with([
         'farm' => function ($q){
             $q->orderBy('name', 'asc');
-        }])->with('variety')->where('id_load', $id)->get();
+        }])->with('variety')->where('id_load', $id)->get();*/
+    /*$invoiceItems = MasterInvoiceItem::with(['farm' => function($query)
+    {
+        Farm::orderBy('name', 'ASC');
+    }])->get();*/
+    //$invoiceItems = Farm::orderBy('name', 'ASC')->get();
+    /*$invoiceItems = MasterInvoiceItem::with([
+        'farm' => function($q)
+        {
+            $q->orderBy('name', 'asc');
+            //Farm::select('name')->orderBy('name', 'asc');
+        }])->get();*/
+    $items = MasterInvoiceItem::where('id_load', $id)->get();
+    $invoiceItems = $items->farm()->orderBy('created_at', 'desc')->paginate(5);;
     return $invoiceItems;
 });

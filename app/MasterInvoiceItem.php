@@ -29,7 +29,7 @@ class MasterInvoiceItem extends Model
 
     public function farm()
     {
-        return $this->belongsTo('App\Farm', 'id_farm')->orderBy('name', 'asc');
+        return $this->belongsTo('App\Farm', 'id_farm');
     }
 
     public function variety()
