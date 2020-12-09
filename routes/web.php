@@ -100,6 +100,7 @@ Route::get('/invoicesitems/{id}', function($id){
             //Farm::select('name')->orderBy('name', 'asc');
         }])->get();*/
     $items = MasterInvoiceItem::where('id_load', $id)->get();
-    $invoiceItems = $items->farm()->orderBy('created_at', 'desc')->paginate(5);;
+    $invoiceItems = $items->farm()->orderBy('created_at', 'desc')->paginate(5);
+    // Intentar hacer la consulta al contrario es decir llamando las fincas primero y luego los items de la master invoice.
     return $invoiceItems;
 });
