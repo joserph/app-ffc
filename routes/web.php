@@ -99,7 +99,7 @@ Route::get('/invoicesitems/{id}', function($id){
             $q->orderBy('name', 'asc');
             //Farm::select('name')->orderBy('name', 'asc');
         }])->get();*/
-    $invoiceItems = MasterInvoiceItem::with('farm')->where('id_load', $id)->get();
+    $invoiceItems = MasterInvoiceItem::with('farm')->with('variety')->where('id_load', $id)->get();
     /*$invoiceItems = $items::with(['farm' => function($q)
     {
         $q->orderBy('name', 'ASC');
@@ -111,4 +111,8 @@ Route::get('/invoicesitems/{id}', function($id){
     }])->get();*/
     // Intentar hacer la consulta al contrario es decir llamando las fincas primero y luego los items de la master invoice.
     return $invoiceItems;
+});
+
+Route::get('/farmall', function(){
+    $farms = Farm::orderBy('name', 'ASC')->get();
 });
