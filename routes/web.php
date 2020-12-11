@@ -83,36 +83,13 @@ Route::resource('/load', 'LoadController')->names('load');
 Route::resource('/masterinvoices', 'InvoiceHeaderController')->names('masterinvoices');
 // Items de la factura master
 Route::resource('/masterinvoicesitems', 'MasterInvoiceItemController', ['except' => ['index']])->names('masterinvoicesitems');
-Route::get('/invoicesitems/{id}', function($id){
-    /*$invoiceItems = MasterInvoiceItem::with([
-        'farm' => function ($q){
-            $q->orderBy('name', 'asc');
-        }])->with('variety')->where('id_load', $id)->get();*/
-    /*$invoiceItems = MasterInvoiceItem::with(['farm' => function($query)
-    {
-        Farm::orderBy('name', 'ASC');
-    }])->get();*/
-    //$invoiceItems = Farm::orderBy('name', 'ASC')->get();
-    /*$invoiceItems = MasterInvoiceItem::with([
-        'farm' => function($q)
-        {
-            $q->orderBy('name', 'asc');
-            //Farm::select('name')->orderBy('name', 'asc');
-        }])->get();*/
-    $invoiceItems = MasterInvoiceItem::with('farm')->with('variety')->where('id_load', $id)->get();
-    /*$invoiceItems = $items::with(['farm' => function($q)
-    {
-        $q->orderBy('name', 'ASC');
-    }])->get();*/
-    //dd($id);
-    /*$invoiceItems = Farm::orderBy('name', 'ASC')->with(['masterinvoiceitems' => function($query)
-    {
-        $query->where('id_load', '=', 29);
-    }])->get();*/
-    // Intentar hacer la consulta al contrario es decir llamando las fincas primero y luego los items de la master invoice.
-    return $invoiceItems;
-});
 
-Route::get('/farmall', function(){
-    $farms = Farm::orderBy('name', 'ASC')->get();
+Route::get('/invoicesitems/{id}', function($id){
+    $invoiceItems = MasterInvoiceItem::select('*')
+        ->where('id_load', '=', $id)
+        ->with('variety')
+        ->join('farms', 'master_invoice_items.id_farm', '=', 'farms.id')
+        ->orderBy('farms.name', 'ASC')
+        ->get();
+    return $invoiceItems;
 });

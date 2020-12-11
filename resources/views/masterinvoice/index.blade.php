@@ -166,13 +166,13 @@
                </tr>
                </thead>
                <tbody>
-               <tr v-for="item in invoiceitems" :key="item.id">
+               <tr v-for="item in invoiceitems">
                 <td class="text-center">@{{ item.fulls.toFixed(3) }}</td>
                  <td class="text-center">@{{ item.hb }}</td>
                  <td class="text-center">@{{ item.qb }}</td>
                  <td class="text-center">@{{ item.eb }}</td>
                  <td class="text-center">@{{ item.pieces }}</td>
-                  <td class="text-center"></td>
+                  <td class="text-center">@{{ item.name }}</td>
                  <td class="text-center">@{{ item.variety.name }}</td>
                  <td class="text-center">@{{ item.hawb }}</td>
                  <td class="text-center">@{{ item.stems  }}</td>

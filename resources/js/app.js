@@ -67,12 +67,8 @@ const app = new Vue({
             var id_load = $('#id_load').val();
             //alert(id_load);
             var urlInvoiceItems = 'invoicesitems/' + id_load;
-            var farms = 'farmall';
             axios.get(urlInvoiceItems).then(response => {
                 this.invoiceitems = response.data
-            });
-            axios.get(farms).then(response => {
-                this.farms = response.data
             });
         },
         deleteInvoiveItem: function(item){
