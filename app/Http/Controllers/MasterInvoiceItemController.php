@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\MasterInvoiceItem;
 use Auth;
 use App\Load;
+use App\InvoiceHeader;
 
 class MasterInvoiceItemController extends Controller
 {
@@ -43,7 +44,7 @@ class MasterInvoiceItemController extends Controller
         //dd($request->id_invoiceh);
         //dd($request->bunches);
         
-        MasterInvoiceItem::create([
+        $masterInvoiceHeader = MasterInvoiceItem::create([
             'id_invoiceh'       => $request->id_invoiceh,
             'id_client'         => $request->id_client,
             'id_farm'           => $request->id_farm,
@@ -63,7 +64,12 @@ class MasterInvoiceItemController extends Controller
             'update_user'       => $request->update_user,
             'stems_p_bunches'   => $request->stems_p_bunches
         ]);
-
+        // Actualizamos los totales en la table Invoice Header
+        $fulls = MasterInvoiceItem::select('fulls')->where('id_load', '=', $masterInvoiceHeader->id_load)->sum('fulls');
+        $invoiceHeader = InvoiceHeader::find($masterInvoiceHeader->id_invoiceh);
+        $invoiceHeader->update([
+            'total_fulls' => $fulls
+        ]);
         return;
     }
 

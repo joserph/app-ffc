@@ -166,8 +166,9 @@
                </tr>
                </thead>
                <tbody>
+                  
                <tr v-for="item in invoiceitems">
-                <td class="text-center">@{{ item.fulls.toFixed(3) }}</td>
+                <td class="text-center" id="fulls">@{{ item.fulls.toFixed(3) }}</td>
                  <td class="text-center">@{{ item.hb }}</td>
                  <td class="text-center">@{{ item.qb }}</td>
                  <td class="text-center">@{{ item.eb }}</td>
@@ -184,8 +185,23 @@
                    <a href="#" class="btn btn-danger btn-sm" v-on:click.prevent="deleteInvoiveItem(item)">Eliminar</a>
                  </td>
                </tr>
-               
                </tbody>
+               <tfoot>
+                  <tr>
+                      <th class="text-center">1</th>
+                      <th class="text-center"></th>
+                      <th class="text-center"></th>
+                      <th class="text-center"></th>
+                      <th class="text-center">5</th>
+                      <th class="text-center"></th>
+                      <th class="text-center"></th>
+                      <th class="text-center"></th>
+                      <th class="text-center">3</th>
+                      <th class="text-center">4</th>
+                      <th class="text-center"></th>
+                      <th class="text-center">6</th>
+                  </tr>
+              </tfoot>
              </table>
            </div>
            <!-- /.col -->
