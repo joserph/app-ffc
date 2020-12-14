@@ -36,4 +36,9 @@ class MasterInvoiceItem extends Model
     {
         return $this->belongsTo('App\Variety', 'variety_id');
     }
+
+    public function invoiceh()
+    {
+        return $this->belongsTo('App\InvoiceHeader', 'id_invoiceh');
+    }
 }

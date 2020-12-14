@@ -187,19 +187,19 @@
                </tr>
                </tbody>
                <tfoot>
-                  <tr>
-                      <th class="text-center">1</th>
+                  <tr v-for="invoiceheader in invoiceitems.slice(0,1)">
+                      <th class="text-center">@{{ invoiceheader.invoiceh.total_fulls.toFixed(3) }}</th>
                       <th class="text-center"></th>
                       <th class="text-center"></th>
                       <th class="text-center"></th>
-                      <th class="text-center">5</th>
+                      <th class="text-center">@{{ invoiceheader.invoiceh.total_pieces }}</th>
                       <th class="text-center"></th>
                       <th class="text-center"></th>
                       <th class="text-center"></th>
-                      <th class="text-center">3</th>
-                      <th class="text-center">4</th>
+                      <th class="text-center">@{{ invoiceheader.invoiceh.total_stems }}</th>
+                      <th class="text-center">@{{ invoiceheader.invoiceh.total_bunches }}</th>
                       <th class="text-center"></th>
-                      <th class="text-center">6</th>
+                      <th class="text-center">@{{ invoiceheader.invoiceh.total.toFixed(2) }}</th>
                   </tr>
               </tfoot>
              </table>

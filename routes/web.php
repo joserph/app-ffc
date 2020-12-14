@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\User;
 use App\Farm;
 use App\MasterInvoiceItem;
+use App\InvoiceHeader;
 use App\PermissionFolder\Models\Role;
 use App\PermissionFolder\Models\Permission;
 use Illuminate\Support\Facades\Gate;
@@ -88,8 +89,16 @@ Route::get('/invoicesitems/{id}', function($id){
     $invoiceItems = MasterInvoiceItem::select('*')
         ->where('id_load', '=', $id)
         ->with('variety')
+        ->with('invoiceh')
         ->join('farms', 'master_invoice_items.id_farm', '=', 'farms.id')
         ->orderBy('farms.name', 'ASC')
         ->get();
+
     return $invoiceItems;
+});
+
+Route::get('/invoiceheader/{id}', function($id){
+    $invoiceHeader = InvoiceHeader::where('id_load', '=', $id)->first();
+
+    return $invoiceHeader;
 });

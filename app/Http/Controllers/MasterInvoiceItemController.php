@@ -66,9 +66,17 @@ class MasterInvoiceItemController extends Controller
         ]);
         // Actualizamos los totales en la table Invoice Header
         $fulls = MasterInvoiceItem::select('fulls')->where('id_load', '=', $masterInvoiceHeader->id_load)->sum('fulls');
+        $bunches = MasterInvoiceItem::select('bunches')->where('id_load', '=', $masterInvoiceHeader->id_load)->sum('bunches');
+        $pieces = MasterInvoiceItem::select('pieces')->where('id_load', '=', $masterInvoiceHeader->id_load)->sum('pieces');
+        $stems = MasterInvoiceItem::select('stems')->where('id_load', '=', $masterInvoiceHeader->id_load)->sum('stems');
+        $total_t = MasterInvoiceItem::select('total')->where('id_load', '=', $masterInvoiceHeader->id_load)->sum('total');
         $invoiceHeader = InvoiceHeader::find($masterInvoiceHeader->id_invoiceh);
         $invoiceHeader->update([
-            'total_fulls' => $fulls
+            'total_fulls'   => $fulls,
+            'total_bunches' => $bunches,
+            'total_pieces'  => $pieces,
+            'total_stems'   => $stems,
+            'total'         => $total_t
         ]);
         return;
     }

@@ -43,6 +43,8 @@ const app = new Vue({
     },
     data: {
         invoiceitems: [],
+        invoiceheader: [],
+        total_fulls: '',
         id_invoiceh: '', 
         id_client: '', 
         id_farm: '', 
