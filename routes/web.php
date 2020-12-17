@@ -102,3 +102,5 @@ Route::get('/invoiceheader/{id}', function($id){
 
     return $invoiceHeader;
 });
+
+Route::get('comercial-invoice-pdf', 'InvoiceHeaderController@masterInvoicePdf')->name('comercial-invoice.pdf');

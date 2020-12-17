@@ -11,6 +11,7 @@ use App\Http\Requests\InvoiceHeaderRequest;
 use App\Farm;
 use App\Client;
 use App\Variety;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class InvoiceHeaderController extends Controller
 {
@@ -53,6 +54,21 @@ class InvoiceHeaderController extends Controller
             'farms',
             'clients',
             'varieties'));
+    }
+
+    public function masterInvoicePdf()
+    {
+        $url = $_SERVER["REQUEST_URI"];
+        $arr = explode("?", $url);
+        $code = $arr[1];
+        $load = Load::find($code);
+        
+        //dd($load);
+
+        $masterInvoicePdf = PDF::loadView('masterinvoice.masterInvoicePdf', compact('load'));
+
+        return $masterInvoicePdf->stream();
+        
     }
 
     /**

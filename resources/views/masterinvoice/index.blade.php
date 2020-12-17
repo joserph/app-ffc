@@ -115,6 +115,8 @@
          <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#agregarItem">
             <i class="fas fa-plus-circle"></i> Crear Item
          </button>
+
+         <a href="{{ route('comercial-invoice.pdf', $load) }}" target="_blank" class="btn btn-xs btn-info pull-right"><i class="far fa-file-pdf"></i></a>
          
          <!-- Modal -->
          <div class="modal fade" id="agregarItem" tabindex="-1" aria-labelledby="agregarItemLabel" aria-hidden="true">
