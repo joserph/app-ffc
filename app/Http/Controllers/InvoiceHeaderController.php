@@ -12,6 +12,7 @@ use App\Farm;
 use App\Client;
 use App\Variety;
 use Barryvdh\DomPDF\Facade as PDF;
+use App\MasterInvoiceItem;
 
 class InvoiceHeaderController extends Controller
 {
@@ -58,14 +59,38 @@ class InvoiceHeaderController extends Controller
 
     public function masterInvoicePdf()
     {
+        // Busco el ID de la carga por medio de la URL
         $url = $_SERVER["REQUEST_URI"];
         $arr = explode("?", $url);
         $code = $arr[1];
         $load = Load::find($code);
-        
-        //dd($load);
 
-        $masterInvoicePdf = PDF::loadView('masterinvoice.masterInvoicePdf', compact('load'));
+        // Cabecera de la factura
+        $invoiceheaders = InvoiceHeader::orderBy('id', 'DESC')->where('id_load', '=', $code)->first();
+
+        // Empresas de Logistica "Activa"
+        $lc_active = LogisticCompany::where('active', '=', 'yes')->first();
+
+        // Mi empresa
+        $company = Company::first();
+
+        $invoiceItems = MasterInvoiceItem::select('*')
+            ->where('id_load', '=', $code)
+            ->with('variety')
+            ->with('invoiceh')
+            ->join('farms', 'master_invoice_items.id_farm', '=', 'farms.id')
+            ->orderBy('farms.name', 'ASC')
+            ->get();
+        
+        //dd($invoiceItems);
+
+        $masterInvoicePdf = PDF::loadView('masterinvoice.masterInvoicePdf', compact(
+            'load',
+            'invoiceheaders',
+            'lc_active',
+            'company',
+            'invoiceItems'
+        ));
 
         return $masterInvoicePdf->stream();
         

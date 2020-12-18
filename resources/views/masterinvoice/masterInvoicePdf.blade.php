@@ -14,9 +14,11 @@
         }
         .text-right{
             text-align: right;
+            padding-right: 5px;
         }
         .text-left{
             text-align: left;
+            padding-left: 5px;
         }
         table {
             border-collapse: collapse;
@@ -67,20 +69,16 @@
         <tbody>
             <tr>
                 <td class="small-letter">
-                    @foreach ($lcompanies as $item)
-                        @if($invoice_header->id_logistics_company == $item->id)
-                            {{ strtoupper($item->name) }} RUC: {{ $item->ruc }} <br>
-                            {{ strtoupper($item->address) }} <br>
-                            TLF: {{ $item->phone }} <br>
-                            {{ strtoupper($item->parish) }} - {{ strtoupper($item->country) }} <br>
-                        @endif
-                    @endforeach
+                    {{ strtoupper($lc_active->name) }} RUC: {{ $lc_active->ruc }} <br>
+                    {{ strtoupper($lc_active->address) }} <br>
+                    TLF: {{ $lc_active->phone }} <br>
+                    {{ strtoupper($lc_active->city) }} - {{ strtoupper($lc_active->country) }} <br>
                 </td>
                 <td class="small-letter">
-                    {{ strtoupper($my_company->name) }} <br>
-                    {{ strtoupper($my_company->address) }} <br>
-                    TLF: {{ $my_company->phone }} <br>
-                    {{ strtoupper($my_company->parish) }} - {{ strtoupper($my_company->country) }} <br>
+                    {{ strtoupper($company->name) }} <br>
+                    {{ strtoupper($company->address) }} <br>
+                    TLF: {{ $company->phone }} <br>
+                    {{ strtoupper($company->city) }} - {{ strtoupper($company->country) }} <br>
                 </td>
             </tr>
         </tbody>
@@ -99,78 +97,64 @@
         <tbody>
             <tr>
                 <td class="small-letter text-center">VF</td>
-                <td class="small-letter text-center">{{ $date_load }}</td>
+                <td class="small-letter text-center">{{ date('d-m-Y', strtotime($invoiceheaders->date)) }}</td>
                 <td class="small-letter text-center">GYE</td>
-                <td class="small-letter text-center">{{ $invoice_header->invoice }}</td>
-                <td class="small-letter text-center">{{ $invoice_header->bl }}</td>
-                <td class="small-letter text-center">{{ $invoice_header->carrier }}</td>
+                <td class="small-letter text-center">{{ $invoiceheaders->invoice }}</td>
+                <td class="small-letter text-center">{{ $invoiceheaders->bl }}</td>
+                <td class="small-letter text-center">{{ $invoiceheaders->carrier }}</td>
             </tr>
         </tbody>
     </table>
     <br>
     <table>
-        <thead>
-            <tr>
-                <th class="text-center medium-letter">Fulls</th>
-                <th class="text-center medium-letter">Pcs</th>
-                <th class="text-center farms medium-letter">Farms</th>
-                <th class="text-center medium-letter">Desciption</th>
-                <th class="text-center medium-letter">Hawb</th>
-                <th class="text-center medium-letter">Stems</th>
-                <th class="text-center medium-letter">Bunch</th>
-                <th class="text-center medium-letter">Price</th>
-                <th class="text-center medium-letter">Total USD</th>
-            </tr>
-        </thead>
-        <tbody>
-            @php
-                $fulls = 0; $pcs = 0; $stems = 0; $total = 0;
-            @endphp
-            @foreach ($comercial_invoice_items as $item)
-                @php
-                    $fulls+= $item->fulls;
-                    $pcs+= $item->pieces;
-                    $stems+= $item->stems;
-                    $total+= $item->total;
-
-                    
-                @endphp
-                <tr>
-                    <td class="text-center small-letter">{{ number_format($item->fulls, 2, '.','') }}</td>
-                    <td class="text-center small-letter">{{ $item->pieces }}</td>
-                    <td class="text-left small-letter">
-                        @foreach ($farms_all as $farm)
-                            @if($item->id_farm == $farm->id)
-                                {{ strtoupper($farm->name) }}
-                            @endif
-                        @endforeach
-                    </td>
-                    <td class="text-center small-letter">
-                        @foreach ($product_all as $product)
-                            @if ($item->description == $product->id)
-                                {{ strtoupper($product->name) }}
-                            @endif
-                        @endforeach
-                        
-                    </td>
-                    <td class="text-center small-letter">{{ $item->hawb }}</td>
-                    <td class="text-center small-letter">{{ number_format($item->stems, 0, '','.') }}</td>
-                    <td class="text-center small-letter">{{ $item->bunches }}</td>
-                    <td class="text-center small-letter">{{ number_format($item->price, 2, ',','') }}</td>
-                    <td class="text-center small-letter">{{ number_format($item->total, 2, ',','.') }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-        <tfoot>
-            <tr>
-                <th class="text-center small-letter">{{ number_format($fulls, 2, '.','') }}</th>
-                <th class="text-center small-letter">{{ $pcs }}</th>
-                <th colspan="3" class="text-right small-letter">TOTAL:</th>
-                <th class="text-center small-letter">{{ number_format($stems, 0, '','.') }}</th>
-                <th colspan="2" class="text-center small-letter"></th>
-                <th class="text-center small-letter">{{ number_format($total, 2, ',','.') }}</th>
-            </tr>
-        </tfoot>
+      <thead>
+         <tr>
+             <th class="text-center medium-letter">Fulls</th>
+             <th class="text-center medium-letter">Pcs</th>
+             <th class="text-center farms medium-letter">Farms</th>
+             <th class="text-center medium-letter">Desciption</th>
+             <th class="text-center medium-letter">Hawb</th>
+             <th class="text-center medium-letter">Stems</th>
+             <th class="text-center medium-letter">Bunch</th>
+             <th class="text-center medium-letter">Price</th>
+             <th class="text-center medium-letter">Total USD</th>
+         </tr>
+     </thead>
+     <tbody>
+         @php
+             $fulls = 0; $pcs = 0; $stems = 0; $total = 0;
+         @endphp
+         @foreach ($invoiceItems as $item)
+             @php
+                 $fulls+= $item->fulls;
+                 $pcs+= $item->pieces;
+                 $stems+= $item->stems;
+                 $total+= $item->total;
+                 
+             @endphp
+             <tr>
+                 <td class="text-center small-letter">{{ number_format($item->fulls, 3, '.','') }}</td>
+                 <td class="text-center small-letter">{{ $item->pieces }}</td>
+                 <td class="text-left small-letter">{{ $item->name }}</td>
+                 <td class="text-center small-letter">{{ $item->variety->name }}</td>
+                 <td class="text-center small-letter">{{ $item->hawb }}</td>
+                 <td class="text-center small-letter">{{ number_format($item->stems, 0, '','.') }}</td>
+                 <td class="text-center small-letter">{{ $item->bunches }}</td>
+                 <td class="text-center small-letter">{{ number_format($item->price, 2, ',','') }}</td>
+                 <td class="text-center small-letter">{{ number_format($item->total, 2, ',','.') }}</td>
+             </tr>
+         @endforeach
+     </tbody>
+     <tfoot>
+      <tr>
+          <th class="text-center small-letter">{{ number_format($fulls, 3, '.','') }}</th>
+          <th class="text-center small-letter">{{ $pcs }}</th>
+          <th colspan="3" class="text-right small-letter">TOTAL:</th>
+          <th class="text-center small-letter">{{ number_format($stems, 0, '','.') }}</th>
+          <th colspan="2" class="text-center small-letter"></th>
+          <th class="text-center small-letter">{{ number_format($total, 2, ',','.') }}</th>
+      </tr>
+  </tfoot>
     </table>
 
     <br>
@@ -181,16 +165,8 @@
                 <td class="small-letter text-center">Freight forwarder / Agencia de carga</td>
             </tr>
             <tr>
-                <td class="small-letter text-white">@foreach ($lcompanies as $item)
-                        @if($invoice_header->id_logistics_company == $item->id)
-                            {{ strtoupper($item->name) }}
-                        @endif
-                    @endforeach</td>
-                <td class="small-letter text-center">@foreach ($lcompanies as $item)
-                        @if($invoice_header->id_logistics_company == $item->id)
-                            {{ strtoupper($item->name) }}
-                        @endif
-                    @endforeach</td>
+                <td class="small-letter text-center">{{ strtoupper($lc_active->name) }}</td>
+                <td class="small-letter text-center">{{ strtoupper($company->name) }}</td>
             </tr>
         </tbody>
         <tbody>

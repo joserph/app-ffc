@@ -116,7 +116,7 @@
             <i class="fas fa-plus-circle"></i> Crear Item
          </button>
 
-         <a href="{{ route('comercial-invoice.pdf', $load) }}" target="_blank" class="btn btn-xs btn-info pull-right"><i class="far fa-file-pdf"></i></a>
+         <a href="{{ route('comercial-invoice.pdf', $load) }}" target="_blank" class="btn btn-xs btn-outline-success pull-right"><i class="far fa-file-pdf"></i></a>
          
          <!-- Modal -->
          <div class="modal fade" id="agregarItem" tabindex="-1" aria-labelledby="agregarItemLabel" aria-hidden="true">
@@ -183,8 +183,8 @@
                  <td class="text-center">@{{ item.price.toFixed(2) }}</td>
                  <td class="text-center">@{{ item.total.toFixed(2) }}</td>
                  <td class="text-center">
-                   <a href="#" class="btn btn-warning btn-sm" >Editar</a>
-                   <a href="#" class="btn btn-danger btn-sm" v-on:click.prevent="deleteInvoiveItem(item)">Eliminar</a>
+                   <a href="#" class="btn btn-outline-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                   <a href="#" class="btn btn-outline-danger btn-sm" v-on:click.prevent="deleteInvoiveItem(item)"><i class="fas fa-trash-alt"></i></a>
                  </td>
                </tr>
                </tbody>
