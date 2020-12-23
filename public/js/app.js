@@ -17661,6 +17661,7 @@ return jQuery;
  * (c) 2014-2020 Evan You
  * Released under the MIT License.
  */
+
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -31374,6 +31375,7 @@ return /******/ (function(modules) { // webpackBootstrap
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+
 const app = new Vue({
     el: '#invoiceitem',
     created: function(){
@@ -31401,7 +31403,8 @@ const app = new Vue({
         total: '',
         id_user: '',
         update_user: '',
-        stems_p_bunches: ''
+        stems_p_bunches: '',
+        errors: []
     },
     methods: {
         getInvoiceItems: function(){
@@ -31468,9 +31471,13 @@ const app = new Vue({
                 this.id_user = '';
                 this.update_user = '';
                 this.stems_p_bunches = '';
+                this.errors = [];
                 $('#agregarItem').modal('hide');
                 toastr.success('creado correctamente'); // Mensaje
-            })
+            }).catch(error => {
+                this.errors = error.response.data
+                //this.errors.push(error.response.data.errors.rut.shift());
+            });
         }
     }
 });

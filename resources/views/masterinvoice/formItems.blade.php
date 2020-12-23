@@ -2,6 +2,7 @@
     <div class="col-md-4 form-group">
         {{ Form::label('id_farm', 'Finca', ['class' => 'control-label']) }}
         {{ Form::select('id_farm', $farms, null, ['class' => 'form-control select-farm', 'placeholder' => 'Seleccione finca', 'v-model' => 'id_farm']) }}
+        <span v-for="error in errors">@{{ error.id_farm }}</span>
     </div>
     <div class="col-md-4 form-group">
         {{ Form::label('id_client', 'Cliente', ['class' => 'control-label']) }}
@@ -50,7 +51,6 @@
     <div class="col-sm-3">
         {{ Form::label('total', 'Total', ['class' => 'control-label']) }}
         {{ Form::text('total', null, ['class' => 'form-control', 'id' => 'total', 'v-model' => 'total']) }}
-        <span id="helpBlock" class="help-block">En caso de que el total no coincida con la factura "Colocar manualmente".</span>
     </div>
     {{ Form::hidden('id_user', Auth::user()->id, ['id' => 'id_user']) }}
     {{ Form::hidden('update_user', Auth::user()->id, ['id' => 'update_user']) }}

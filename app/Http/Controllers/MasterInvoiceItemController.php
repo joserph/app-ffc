@@ -7,6 +7,7 @@ use App\MasterInvoiceItem;
 use Auth;
 use App\Load;
 use App\InvoiceHeader;
+use App\Http\Requests\AddMasterInvoiceItemRequest;
 
 class MasterInvoiceItemController extends Controller
 {
@@ -38,7 +39,7 @@ class MasterInvoiceItemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AddMasterInvoiceItemRequest $request)
     {
         // Carga
         //dd($request->id_invoiceh);
