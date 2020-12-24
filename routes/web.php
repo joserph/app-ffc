@@ -86,11 +86,11 @@ Route::resource('/masterinvoices', 'InvoiceHeaderController')->names('masterinvo
 Route::resource('/masterinvoicesitems', 'MasterInvoiceItemController', ['except' => ['index']])->names('masterinvoicesitems');
 
 Route::get('/invoicesitems/{id}', function($id){
-    $invoiceItems = MasterInvoiceItem::select('*')
-        ->where('id_load', '=', $id)
+    $invoiceItems = MasterInvoiceItem::where('id_load', '=', $id)
         ->with('variety')
         ->with('invoiceh')
         ->join('farms', 'master_invoice_items.id_farm', '=', 'farms.id')
+        ->select('master_invoice_items.*', 'farms.name')
         ->orderBy('farms.name', 'ASC')
         ->get();
 

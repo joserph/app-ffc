@@ -31375,6 +31375,21 @@ return /******/ (function(modules) { // webpackBootstrap
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+class Errors{
+    constructor(){
+        this.errors = {};
+    }   
+
+    /*get(fieldform){
+        if(this.errors[fieldform]){
+            return this.errors[fieldform][0];
+        }
+    }*/
+
+    record(errors){
+        this.errors = errors.errors;
+    }
+}
 
 const app = new Vue({
     el: '#invoiceitem',
@@ -31416,11 +31431,12 @@ const app = new Vue({
             });
         },
         deleteInvoiveItem: function(item){
-            var url = 'masterinvoicesitems/' + item.id;
-            axios.delete(url).then(response => { // Eliminamos
+            var urlDelete = 'masterinvoicesitems/' + item.id;
+            axios.delete(urlDelete).then(response => { // Eliminamos
                 this.getInvoiceItems(); // Listamos
                 toastr.success('Eliminado correctamente'); // Mensaje
             });
+            
         },
         createInvoiceItem: function(){
             var url = 'masterinvoicesitems';
@@ -31430,8 +31446,6 @@ const app = new Vue({
             // Calculo de los fulls.
             this.fulls = parseFloat(this.hb * 0.50) + parseFloat(this.qb * 0.25) + parseFloat(this.eb * 0.125);
 
-            console.log(this.fulls);
-            
             axios.post(url, {
                 id_invoiceh: $('#id_invoiceh').val(),
                 id_client: this.id_client,
@@ -31475,12 +31489,16 @@ const app = new Vue({
                 $('#agregarItem').modal('hide');
                 toastr.success('creado correctamente'); // Mensaje
             }).catch(error => {
-                this.errors = error.response.data
-                //this.errors.push(error.response.data.errors.rut.shift());
+                toastr.error('Hubo un error al guardar ');
+                this.errors.push(error.response.data);
             });
         }
     }
+
+    
 });
+
+
 
 
 
