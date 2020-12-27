@@ -17,4 +17,9 @@ class Client extends Model
         'id_user',
         'update_user'
     ];
+
+    public function masterinvoiceitems()
+    {
+        return $this->hasMany('App\MasterInvoiceItem', 'id_client');
+    }
 }

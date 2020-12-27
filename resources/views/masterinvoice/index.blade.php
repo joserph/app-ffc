@@ -157,7 +157,8 @@
                   <th class="text-center">QB</th>
                   <th class="text-center">EB</th>
                   <th class="text-center">Pcs</th>
-                  <th class="text-center">farms</th>
+                  <th class="text-center">Farms</th>
+                  <th class="text-center">Client</th>
                   <th class="text-center">Desciption</th>
                   <th class="text-center">Hawb</th>
                   <th class="text-center">Stems</th>
@@ -176,6 +177,7 @@
                  <td class="text-center">@{{ item.eb }}</td>
                  <td class="text-center">@{{ item.pieces }}</td>
                   <td class="text-center">@{{ item.name }}</td>
+                 <td class="text-center">@{{ item.client.name }}</td>
                  <td class="text-center">@{{ item.variety.name }}</td>
                  <td class="text-center">@{{ item.hawb }}</td>
                  <td class="text-center">@{{ item.stems  }}</td>
@@ -195,6 +197,7 @@
                       <th class="text-center"></th>
                       <th class="text-center"></th>
                       <th class="text-center">@{{ invoiceheader.invoiceh.total_pieces }}</th>
+                      <th class="text-center"></th>
                       <th class="text-center"></th>
                       <th class="text-center"></th>
                       <th class="text-center"></th>
@@ -234,7 +237,6 @@
             var price = $('#price').val();
             var total = parseFloat(stems) * parseFloat(price);
             $('#total').val(parseFloat(total));
-            console.log(bunches);
         });
     });
 </script>

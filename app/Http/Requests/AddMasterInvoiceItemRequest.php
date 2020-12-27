@@ -29,7 +29,7 @@ class AddMasterInvoiceItemRequest extends FormRequest
             'id_farm'           => 'required',
             'id_load'           => 'required',
             'variety_id'        => 'required',
-            'hawb'              => 'required|alpha_num',
+            'hawb'              => 'required|alpha_num|unique:master_invoice_items,hawb',
             'pieces'            => 'required',
             'hb'                => '',
             'qb'                => '',
@@ -42,7 +42,7 @@ class AddMasterInvoiceItemRequest extends FormRequest
             'id_user'           => 'required',
             'update_user'       => 'required',
             'stems_p_bunches'   => 'required',
-            'fa_cl_de'          => 'unique_custom:master_invoice_items,fa_cl_de'
+            'fa_cl_de'          => 'unique:master_invoice_items,fa_cl_de'
         ];
     }
 }

@@ -35,22 +35,6 @@
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-class Errors{
-    constructor(){
-        this.errors = {};
-    }   
-
-    /*get(fieldform){
-        if(this.errors[fieldform]){
-            return this.errors[fieldform][0];
-        }
-    }*/
-
-    record(errors){
-        this.errors = errors.errors;
-    }
-}
-
 const app = new Vue({
     el: '#invoiceitem',
     created: function(){
@@ -106,8 +90,8 @@ const app = new Vue({
             this.pieces = parseInt(this.hb) + parseInt(this.qb) + parseInt(this.eb);
             // Calculo de los fulls.
             this.fulls = parseFloat(this.hb * 0.50) + parseFloat(this.qb * 0.25) + parseFloat(this.eb * 0.125);
-            //var fa_cl_de_ = this.id_farm + '-' + this.id_client + '-' + this.variety_id;
-            //console.log(fa_cl_de_);
+            var fa_cl_de_ = this.id_farm + '-' + this.id_client + '-' + this.variety_id;
+            console.log(fa_cl_de_);
 
             axios.post(url, {
                 id_invoiceh: $('#id_invoiceh').val(),
@@ -128,7 +112,7 @@ const app = new Vue({
                 id_user: $('#id_user').val(),
                 update_user: $('#update_user').val(),
                 stems_p_bunches: this.stems_p_bunches,
-                //fa_cl_de: fa_cl_de_
+                fa_cl_de: fa_cl_de_
             }).then(response => {
                 this.getInvoiceItems();
                 this.id_invoiceh = '';
@@ -153,7 +137,7 @@ const app = new Vue({
                 $('#agregarItem').modal('hide');
                 toastr.success('creado correctamente'); // Mensaje
             }).catch(error => {
-                toastr.error('Hubo un error al guardar '),
+                toastr.error('Hubo uno o varios errores al guardar '),
                 this.errors = error.response.data
             });
         }

@@ -131,7 +131,7 @@ return [
 
     'custom' => [
         'attribute-name' => [
-            'rule-name' => 'custom-message',
+            'unique_custom' => 'El valor de la convinación de Finca, Cliente o Descripción ya está en uso.',
         ],
     ],
 

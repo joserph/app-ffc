@@ -89,6 +89,7 @@ Route::get('/invoicesitems/{id}', function($id){
     $invoiceItems = MasterInvoiceItem::where('id_load', '=', $id)
         ->with('variety')
         ->with('invoiceh')
+        ->with('client')
         ->join('farms', 'master_invoice_items.id_farm', '=', 'farms.id')
         ->select('master_invoice_items.*', 'farms.name')
         ->orderBy('farms.name', 'ASC')
