@@ -28,6 +28,7 @@ class CreateMasterInvoiceItemsTable extends Migration
             $table->double('total', 8, 2)->nullable();
             $table->double('stems_p_bunches', 8, 2)->nullable();
             $table->integer('update_user')->nullable();
+            $table->string('fa_cl_de')->nullable();
 
             $table->foreignId('id_invoiceh')->references('id')->on('invoice_headers')->onDelete('cascade');
             $table->foreignId('id_client')->references('id')->on('clients')->onDelete('cascade');

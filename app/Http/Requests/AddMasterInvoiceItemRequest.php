@@ -41,7 +41,8 @@ class AddMasterInvoiceItemRequest extends FormRequest
             'total'             => 'required|numeric',
             'id_user'           => 'required',
             'update_user'       => 'required',
-            'stems_p_bunches'   => 'required'
+            'stems_p_bunches'   => 'required',
+            'fa_cl_de'          => 'unique_custom:master_invoice_items,fa_cl_de'
         ];
     }
 }

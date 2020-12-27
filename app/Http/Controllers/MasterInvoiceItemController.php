@@ -63,7 +63,8 @@ class MasterInvoiceItemController extends Controller
             'total'             => $request->total,
             'id_user'           => $request->id_user,
             'update_user'       => $request->update_user,
-            'stems_p_bunches'   => $request->stems_p_bunches
+            'stems_p_bunches'   => $request->stems_p_bunches,
+            'fa_cl_de'          => $request->fa_cl_de
         ]);
         // Actualizamos los totales en la table Invoice Header
         $fulls = MasterInvoiceItem::select('fulls')->where('id_load', '=', $masterInvoiceHeader->id_load)->sum('fulls');
