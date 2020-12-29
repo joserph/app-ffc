@@ -64,7 +64,29 @@ const app = new Vue({
         update_user: '',
         stems_p_bunches: '',
         fa_cl_de: '',
-        errors: []
+        errors: [],
+        fillInvoiceItem: {
+            'total_fulls': '',
+            'id_invoiceh': '', 
+            'id_client': '', 
+            'id_farm': '', 
+            'id_load': '', 
+            'variety_id': '', 
+            'hawb': '', 
+            'pieces': '',
+            'hb': '',
+            'qb': '',
+            'eb': '', 
+            'stems': '', 
+            'price': '',
+            'bunches': '', 
+            'fulls': '',    
+            'total': '',
+            'id_user': '',
+            'update_user': '',
+            'stems_p_bunches': '',
+            'fa_cl_de': '',
+        }
     },
     methods: {
         getInvoiceItems: function(){
@@ -74,6 +96,32 @@ const app = new Vue({
             axios.get(urlInvoiceItems).then(response => {
                 this.invoiceitems = response.data
             });
+        },
+        editInvoiceItem: function(item){
+            this.fillInvoiceItem.id = item.id;
+            this.fillInvoiceItem.id_invoiceh = item.id_invoiceh;
+            this.fillInvoiceItem.id_client = item.id_client;
+            this.fillInvoiceItem.id_farm = item.id_farm;
+            this.fillInvoiceItem.id_load = item.id_load;
+            this.fillInvoiceItem.variety_id = item.variety_id;
+            this.fillInvoiceItem.hawb = item.hawb;
+            this.fillInvoiceItem.pieces = item.pieces;
+            this.fillInvoiceItem.hb = item.hb;
+            this.fillInvoiceItem.qb = item.qb;
+            this.fillInvoiceItem.eb = item.eb;
+            this.fillInvoiceItem.stems = item.stems;
+            this.fillInvoiceItem.price = item.price;
+            this.fillInvoiceItem.bunches = item.bunches;
+            this.fillInvoiceItem.fulls = item.fulls;
+            this.fillInvoiceItem.total = item.total;
+            this.fillInvoiceItem.id_user = item.id_user;
+            this.fillInvoiceItem.update_user = item.update_user;
+            this.fillInvoiceItem.stems_p_bunches = item.stems_p_bunches;
+            this.fillInvoiceItem.fa_cl_de = item.fa_cl_de;
+            $('#editarItem').modal('show');
+        },
+        updateInvoiceItem: function(id){
+            alert('edición');
         },
         deleteInvoiveItem: function(item){
             var urlDelete = 'masterinvoicesitems/' + item.id;

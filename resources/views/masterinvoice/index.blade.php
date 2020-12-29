@@ -118,7 +118,7 @@
 
          <a href="{{ route('comercial-invoice.pdf', $load) }}" target="_blank" class="btn btn-xs btn-outline-success pull-right"><i class="far fa-file-pdf"></i></a>
          
-         <!-- Modal -->
+         <!-- Modal Add Master Invoice Items -->
          <div class="modal fade" id="agregarItem" tabindex="-1" aria-labelledby="agregarItemLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -185,7 +185,7 @@
                  <td class="text-center">@{{ item.price.toFixed(2) }}</td>
                  <td class="text-center">@{{ item.total.toFixed(2) }}</td>
                  <td class="text-center">
-                   <a href="#" class="btn btn-outline-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                   <a href="#" class="btn btn-outline-warning btn-sm" v-on:click.prevent="editInvoiceItem(item)"><i class="fas fa-pencil-alt"></i></a>
                    <a href="#" class="btn btn-outline-danger btn-sm" v-on:click.prevent="deleteInvoiveItem(item)"><i class="fas fa-trash-alt"></i></a>
                  </td>
                </tr>
@@ -220,6 +220,33 @@
        <!-- /. End invoice header -->
        @endif
 
+
+       <!-- Modal Add Master Invoice Items -->
+       <div class="modal fade" id="editarItem" tabindex="-1" aria-labelledby="editarItemLabel" aria-hidden="true">
+         <div class="modal-dialog modal-xl">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title" id="editarItemLabel">Editar item de la factura</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               <form method="POST" v-on:submit.prevent="updateInvoiceItem(fillInvoiceItem.id)">
+                  <div class="modal-body">
+                     @include('masterinvoice.editFormItems')
+                  </div>
+                  <div class="modal-footer">
+                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+                     <button type="submit" class="btn btn-outline-primary" id="createMasterInvoice" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
+                        <i class="fas fa-plus-circle"></i> Actualizar
+                  </button>
+                  </div>
+               </form>
+            </div>
+         </div>
+         </div>
+      </div>
    </div>
 </section>
 @endcan
