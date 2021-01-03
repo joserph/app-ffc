@@ -218,10 +218,10 @@
          
        </div>
        <!-- /. End invoice header -->
-       @endif
+       
 
 
-       <!-- Modal Add Master Invoice Items -->
+       <!-- Modal Update Master Invoice Items -->
        <div class="modal fade" id="editarItem" tabindex="-1" aria-labelledby="editarItemLabel" aria-hidden="true">
          <div class="modal-dialog modal-xl">
          <div class="modal-content">
@@ -238,7 +238,7 @@
                   </div>
                   <div class="modal-footer">
                      <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
-                     <button type="submit" class="btn btn-outline-primary" id="createMasterInvoice" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
+                     <button type="submit" class="btn btn-outline-warning" id="createMasterInvoice" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
                         <i class="fas fa-plus-circle"></i> Actualizar
                   </button>
                   </div>
@@ -247,6 +247,7 @@
          </div>
          </div>
       </div>
+      @endif
    </div>
 </section>
 @endcan
@@ -264,6 +265,16 @@
             var price = $('#price').val();
             var total = parseFloat(stems) * parseFloat(price);
             $('#total').val(parseFloat(total));
+
+            /// Edit
+            var Editstems = $('#Editstems').val();
+            var Editstems_p_bunches = $('#Editstems_p_bunches').val();
+            var Editbunches = parseFloat(Editstems) / parseFloat(Editstems_p_bunches);
+            $('#Editbunches').val(parseFloat(Editbunches));
+            // Total
+            var Editprice = $('#Editprice').val();
+            var Edittotal = parseFloat(Editstems) * parseFloat(Editprice);
+            $('#Edittotal').val(parseFloat(Edittotal));
         });
     });
 </script>

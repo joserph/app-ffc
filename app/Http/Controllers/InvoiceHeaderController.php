@@ -28,10 +28,10 @@ class InvoiceHeaderController extends Controller
         $arr = explode("?", $url);
         $code = $arr[1];
         $load = Load::find($code);
-
+        
         // Cabecera de la factura
         $invoiceheaders = InvoiceHeader::orderBy('id', 'DESC')->where('id_load', '=', $code)->first();
-
+        //dd($invoiceheaders);
         // Empresas de Logistica "Activa"
         $lc_active = LogisticCompany::where('active', '=', 'yes')->first();
 
@@ -115,7 +115,7 @@ class InvoiceHeaderController extends Controller
     public function store(InvoiceHeaderRequest $request)
     {
         $invoiceHeader = InvoiceHeader::create($request->all());
-
+        
         $load = Load::where('id', '=', $invoiceHeader->id_load)->first();
 
         return redirect()->route('masterinvoices.index', $load->id)

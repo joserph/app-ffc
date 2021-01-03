@@ -40,31 +40,30 @@
             '10' => '10',
             '12' => '12',
             '25' => '25',
-            ], '25', ['class' => 'form-control grupo', 'id' => 'stems_p_bunches', 'v-model' => 'fillInvoiceItem.stems_p_bunches']) }}
+            ], '25', ['class' => 'form-control grupo', 'id' => 'Editstems_p_bunches', 'v-model' => 'fillInvoiceItem.stems_p_bunches']) }}
             <span class="text-danger" v-for="error in errors" v-if="error.stems_p_bunches">El campo Tallos por bunche es obligatorio.</span>
     </div>
     <div class="col-sm-3">
         {{ Form::label('stems', 'Tallos', ['class' => 'control-label']) }}
-        {{ Form::number('stems', null, ['class' => 'form-control grupo', 'id' => 'stems', 'v-model' => 'fillInvoiceItem.stems']) }}
+        {{ Form::number('stems', null, ['class' => 'form-control grupo', 'id' => 'Editstems', 'v-model' => 'fillInvoiceItem.stems']) }}
         <span class="text-danger" v-for="error in errors" v-if="error.stems">El campo Tallos es obligatorio.</span>
     </div>
     <div class="col-sm-3">
         {{ Form::label('bunches', 'Ramos', ['class' => 'control-label']) }}
-        {{ Form::number('bunches', null, ['class' => 'form-control', 'id' => 'bunches', 'v-model' => 'fillInvoiceItem.bunches', 'readonly']) }}
+        {{ Form::number('bunches', null, ['class' => 'form-control', 'id' => 'Editbunches', 'v-model' => 'fillInvoiceItem.bunches', 'readonly']) }}
         <span class="text-danger" v-for="error in errors" v-if="error.bunches">El campo Ramos es obligatorio.</span>
     </div>
     <div class="col-sm-3">
         {{ Form::label('price', 'Precio', ['class' => 'control-label']) }}
-        {{ Form::text('price', null, ['class' => 'form-control grupo', 'id' => 'price', 'v-model' => 'fillInvoiceItem.price']) }}
+        {{ Form::text('price', null, ['class' => 'form-control grupo', 'id' => 'Editprice', 'v-model' => 'fillInvoiceItem.price']) }}
         <span class="text-danger" v-for="error in errors" v-if="error.price">El campo Precio es obligatorio.</span>
     </div>
     <div class="col-sm-3">
         {{ Form::label('total', 'Total', ['class' => 'control-label']) }}
-        {{ Form::text('total', null, ['class' => 'form-control', 'id' => 'total', 'v-model' => 'fillInvoiceItem.total', 'readonly']) }}
+        {{ Form::text('total', null, ['class' => 'form-control', 'id' => 'Edittotal', 'v-model' => 'fillInvoiceItem.total', 'readonly']) }}
         <span class="text-danger" v-for="error in errors" v-if="error.total">El campo Total es obligatorio.</span>
     </div>
-    {{ Form::hidden('id_user', Auth::user()->id, ['id' => 'id_user']) }}
-    {{ Form::hidden('update_user', Auth::user()->id, ['id' => 'update_user']) }}
-    {{ Form::hidden('id_load', $load->id, ['id' => 'id_load']) }}
-    {{ Form::hidden('id_invoiceh', $invoiceheaders->id, ['id' => 'id_invoiceh']) }}
+    {{ Form::hidden('update_user', Auth::user()->id, ['id' => 'Editupdate_user']) }}
+    {{ Form::hidden('id_load', $load->id, ['id' => 'Editid_load']) }}
+    {{ Form::hidden('id_invoiceh', $invoiceheaders->id, ['id' => 'Editid_invoiceh']) }}
 </div>
