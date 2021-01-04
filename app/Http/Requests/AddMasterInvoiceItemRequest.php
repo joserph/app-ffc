@@ -29,7 +29,7 @@ class AddMasterInvoiceItemRequest extends FormRequest
             'id_farm'           => 'required',
             'id_load'           => 'required',
             'variety_id'        => 'required',
-            'hawb'              => 'required|alpha_num|unique:master_invoice_items,hawb',
+            'hawb'              => 'required|unique:master_invoice_items,hawb',
             'pieces'            => 'required',
             'hb'                => '',
             'qb'                => '',
