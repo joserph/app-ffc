@@ -97,7 +97,30 @@ class InvoiceHeaderController extends Controller
 
     public function shiptmentConfirmation()
     {
+        // Busco el ID de la carga por medio de la URL
+        $url = $_SERVER["REQUEST_URI"];
+        $arr = explode("?", $url);
+        $code = $arr[1];
+        $load = Load::find($code);
+
+        $invoiceItems = MasterInvoiceItem::select('*')
+            ->where('id_load', '=', $code)
+            ->with('variety')
+            ->with('invoiceh')
+            ->with('client')
+            ->join('farms', 'master_invoice_items.id_farm', '=', 'farms.id')
+            ->orderBy('farms.name', 'ASC')
+            ->get();
         
+        $clients = Client::get();
+        
+        $shiptmentConfirmationPdf = PDF::loadView('masterinvoice.shiptmentConfirmationPdf', compact(
+            'invoiceItems',
+            'clients'
+        ));
+
+        return $shiptmentConfirmationPdf->stream();
+        //dd($invoiceItems);
     }
 
     /**

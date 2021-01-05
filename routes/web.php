@@ -103,5 +103,7 @@ Route::get('/invoiceheader/{id}', function($id){
 
     return $invoiceHeader;
 });
-
+// Factura Master
 Route::get('comercial-invoice-pdf', 'InvoiceHeaderController@masterInvoicePdf')->name('comercial-invoice.pdf');
+// Shiptment Confirmation
+Route::get('shiptment-confirmation-pdf', 'InvoiceHeaderController@shiptmentConfirmation')->name('shiptment-confirmation.pdf');
