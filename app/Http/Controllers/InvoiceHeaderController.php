@@ -93,6 +93,10 @@ class InvoiceHeaderController extends Controller
         ));
 
         return $masterInvoicePdf->stream();
+    }
+
+    public function shiptmentConfirmation()
+    {
         
     }
 

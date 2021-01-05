@@ -55,6 +55,9 @@
         .firma{
             height: 40px;
         }
+        .c-width{
+            width: 80px;
+        }
     </style>
 </head>
 <body>
@@ -113,7 +116,7 @@
              <th class="text-center medium-letter">Pcs</th>
              <th class="text-center farms medium-letter">Farms</th>
              <th class="text-center medium-letter">Desciption</th>
-             <th class="text-center medium-letter">Hawb</th>
+             <th class="text-center medium-letter c-width">Hawb</th>
              <th class="text-center medium-letter">Stems</th>
              <th class="text-center medium-letter">Bunch</th>
              <th class="text-center medium-letter">Price</th>

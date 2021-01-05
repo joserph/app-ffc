@@ -12,13 +12,15 @@ class ClientComponent extends Component
 {
     use WithPagination;
 
+    protected $paginationTheme = 'bootstrap'; /// Importante
+
     public $client_id, $name, $phone, $address, $state, $city, $country, $poa;
     public $view = 'create';
     
     public function render()
     {
         return view('livewire.client-component', [
-            'clients' => Client::orderBy('id', 'desc')->paginate(5)
+            'clients' => Client::orderBy('name', 'ASC')->paginate(5)
         ]);
     }
 
