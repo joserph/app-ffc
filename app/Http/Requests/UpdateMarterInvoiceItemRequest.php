@@ -29,7 +29,7 @@ class UpdateMarterInvoiceItemRequest extends FormRequest
             'id_farm'           => 'required',
             'id_load'           => 'required',
             'variety_id'        => 'required',
-            'hawb'              => 'required|alpha_num|unique:master_invoice_items,hawb,' . $this->id,
+            'hawb'              => 'required',
             'pieces'            => 'required',
             'hb'                => '',
             'qb'                => '',

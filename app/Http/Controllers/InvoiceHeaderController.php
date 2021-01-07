@@ -13,6 +13,7 @@ use App\Client;
 use App\Variety;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\MasterInvoiceItem;
+use Illuminate\Support\Arr;
 
 class InvoiceHeaderController extends Controller
 {
@@ -82,7 +83,16 @@ class InvoiceHeaderController extends Controller
             ->orderBy('farms.name', 'ASC')
             ->get();
         
-        //dd($invoiceItems);
+        //$invoiceItemsArray[] = '';
+        foreach($invoiceItems as $item)
+        {
+            $fulls = ['fulls' => $item->fulls];
+            $pieces = ['pieces' => $item->pieces];
+            $invoiceItemsArray[] = Arr::collapse([$fulls, $pieces]);
+            
+        }
+        dd($invoiceItemsArray);
+        
 
         $masterInvoicePdf = PDF::loadView('masterinvoice.masterInvoicePdf', compact(
             'load',
