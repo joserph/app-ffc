@@ -86,9 +86,41 @@ class InvoiceHeaderController extends Controller
         //$invoiceItemsArray[] = '';
         foreach($invoiceItems as $item)
         {
-            $fulls = ['fulls' => $item->fulls];
-            $pieces = ['pieces' => $item->pieces];
-            $invoiceItemsArray[] = Arr::collapse([$fulls, $pieces]);
+            // En las siguientes vueltas consultar si $ids_dupli existe y si existe no guardar ese array
+            $dupliHawb = MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->count('hawb');
+            if($dupliHawb > 1)
+            {
+                
+                $fulls = ['fulls' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('fulls')];
+                
+                $pieces = ['pieces' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('pieces')];
+                
+                $name = ['name' => $item->name];
+                $variety = ['variety' => $item->variety->name];
+                $hawb = ['hawb' => $item->hawb];
+                $stems = ['stems' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('stems')];
+                
+                $bunches = ['bunches' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('bunches')];
+                
+                $price = ['price' => $item->price];
+                
+                $total = ['total' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('total')];
+                $ids_dupli = MasterInvoiceItem::select('id')->where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->pluck('id');
+                $count_dupli = $dupliHawb;
+                dd($ids_dupli);
+            }else{
+                $fulls = ['fulls' => $item->fulls];
+                $pieces = ['pieces' => $item->pieces];
+                $name = ['name' => $item->name];
+                $variety = ['variety' => $item->variety->name];
+                $hawb = ['hawb' => $item->hawb];
+                $stems = ['stems' => $item->stems];
+                $bunches = ['bunches' => $item->bunches];
+                $price = ['price' => $item->price];
+                $total = ['total' => $item->total];
+            }
+            
+            $invoiceItemsArray[] = Arr::collapse([$fulls, $pieces, $name, $variety, $hawb, $stems, $bunches, $price, $total]);
             
         }
         dd($invoiceItemsArray);
