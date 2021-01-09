@@ -75,7 +75,7 @@ class InvoiceHeaderController extends Controller
         // Mi empresa
         $company = Company::first();
 
-        $invoiceItems = MasterInvoiceItem::select('*')
+        $invoiceItemsAll = MasterInvoiceItem::select('*')
             ->where('id_load', '=', $code)
             ->with('variety')
             ->with('invoiceh')
@@ -83,31 +83,22 @@ class InvoiceHeaderController extends Controller
             ->orderBy('farms.name', 'ASC')
             ->get();
         
-        //$invoiceItemsArray[] = '';
-        foreach($invoiceItems as $item)
+        foreach($invoiceItemsAll as $item)
         {
-            // En las siguientes vueltas consultar si $ids_dupli existe y si existe no guardar ese array
+            // Buscamos los valores duplicados
             $dupliHawb = MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->count('hawb');
+            // Validamos si hay valores duplicados, para agrupar
             if($dupliHawb > 1)
             {
-                
                 $fulls = ['fulls' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('fulls')];
-                
                 $pieces = ['pieces' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('pieces')];
-                
                 $name = ['name' => $item->name];
                 $variety = ['variety' => $item->variety->name];
                 $hawb = ['hawb' => $item->hawb];
                 $stems = ['stems' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('stems')];
-                
                 $bunches = ['bunches' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('bunches')];
-                
                 $price = ['price' => $item->price];
-                
                 $total = ['total' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('total')];
-                $ids_dupli = MasterInvoiceItem::select('id')->where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->pluck('id');
-                $count_dupli = $dupliHawb;
-                dd($ids_dupli);
             }else{
                 $fulls = ['fulls' => $item->fulls];
                 $pieces = ['pieces' => $item->pieces];
@@ -123,9 +114,8 @@ class InvoiceHeaderController extends Controller
             $invoiceItemsArray[] = Arr::collapse([$fulls, $pieces, $name, $variety, $hawb, $stems, $bunches, $price, $total]);
             
         }
-        dd($invoiceItemsArray);
-        
-
+        $invoiceItems = collect(array_unique($invoiceItemsArray, SORT_REGULAR));
+        //dd($invoiceItems);
         $masterInvoicePdf = PDF::loadView('masterinvoice.masterInvoicePdf', compact(
             'load',
             'invoiceheaders',

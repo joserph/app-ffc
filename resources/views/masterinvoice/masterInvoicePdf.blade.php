@@ -127,24 +127,23 @@
          @php
              $fulls = 0; $pcs = 0; $stems = 0; $total = 0;
          @endphp
-         @foreach ($invoiceItems as $item)
+         @foreach ($invoiceItems as $key => $item)
              @php
-                 $fulls+= $item->fulls;
-                 $pcs+= $item->pieces;
-                 $stems+= $item->stems;
-                 $total+= $item->total;
-                 
+                 $fulls+= $item['fulls'];
+                 $pcs+= $item['pieces'];
+                 $stems+= $item['stems'];
+                 $total+= $item['total'];
              @endphp
              <tr>
-                 <td class="text-center small-letter">{{ number_format($item->fulls, 3, '.','') }}</td>
-                 <td class="text-center small-letter">{{ $item->pieces }}</td>
-                 <td class="text-left small-letter">{{ $item->name }}</td>
-                 <td class="text-center small-letter">{{ $item->variety->name }}</td>
-                 <td class="text-center small-letter">{{ $item->hawb }}</td>
-                 <td class="text-center small-letter">{{ number_format($item->stems, 0, '','.') }}</td>
-                 <td class="text-center small-letter">{{ $item->bunches }}</td>
-                 <td class="text-center small-letter">{{ number_format($item->price, 2, ',','') }}</td>
-                 <td class="text-center small-letter">{{ number_format($item->total, 2, ',','.') }}</td>
+                 <td class="text-center small-letter">{{ number_format($item['fulls'], 3, '.','') }}</td>
+                 <td class="text-center small-letter">{{ $item['pieces'] }}</td>
+                 <td class="text-left small-letter">{{ $item['name'] }}</td>
+                 <td class="text-center small-letter">{{ $item['variety'] }}</td>
+                 <td class="text-center small-letter">{{ $item['hawb'] }}</td>
+                 <td class="text-center small-letter">{{ number_format($item['stems'], 0, '','.') }}</td>
+                 <td class="text-center small-letter">{{ $item['bunches'] }}</td>
+                 <td class="text-center small-letter">{{ number_format($item['price'], 2, ',','') }}</td>
+                 <td class="text-center small-letter">{{ number_format($item['total'], 2, ',','.') }}</td>
              </tr>
          @endforeach
      </tbody>
