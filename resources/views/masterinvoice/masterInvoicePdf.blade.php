@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title></title>
+    <title>COMERCIAL INVOICE {{ $invoiceheaders->bl }}</title>
     <style>
         body{
             font-family: Arial, Helvetica, sans-serif;
@@ -125,13 +125,14 @@
      </thead>
      <tbody>
          @php
-             $fulls = 0; $pcs = 0; $stems = 0; $total = 0;
+             $fulls = 0; $pcs = 0; $stems = 0; $total = 0; $bunches = 0;
          @endphp
          @foreach ($invoiceItems as $key => $item)
              @php
                  $fulls+= $item['fulls'];
                  $pcs+= $item['pieces'];
                  $stems+= $item['stems'];
+                 $bunches+= $item['bunches'];
                  $total+= $item['total'];
              @endphp
              <tr>
@@ -153,7 +154,8 @@
           <th class="text-center small-letter">{{ $pcs }}</th>
           <th colspan="3" class="text-right small-letter">TOTAL:</th>
           <th class="text-center small-letter">{{ number_format($stems, 0, '','.') }}</th>
-          <th colspan="2" class="text-center small-letter"></th>
+          <th class="text-center small-letter">{{ number_format($bunches, 0, ',','.') }}</th>
+          <th class="text-center small-letter"></th>
           <th class="text-center small-letter">{{ number_format($total, 2, ',','.') }}</th>
       </tr>
   </tfoot>
