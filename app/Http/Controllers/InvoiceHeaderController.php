@@ -147,16 +147,17 @@ class InvoiceHeaderController extends Controller
             ->orderBy('farms.name', 'ASC')
             ->get();
         
-        $clientsInInvoice = MasterInvoiceItem::select('id_client')
-            ->where('id_load', '=', $code)
-            ->with('client')
+        $clientsInInvoice = MasterInvoiceItem::where('id_load', '=', $code)
+            ->join('clients', 'master_invoice_items.id_client', '=', 'clients.id')
+            ->select('clients.id', 'clients.name')
+            ->orderBy('clients.name', 'ASC')
             ->get();
 
         $clients = collect(array_unique($clientsInInvoice->toArray(), SORT_REGULAR));
 
         // Total pieces
         $totalPieces = MasterInvoiceItem::where('id_load', '=', $code)->sum('pieces');
-        //dd($totalPieces);
+        //dd($clients);
 
         $shiptmentConfirmationPdf = PDF::loadView('masterinvoice.shiptmentConfirmationPdf', compact(
             'invoiceItems',

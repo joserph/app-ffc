@@ -31,6 +31,9 @@
         .medium-letter{
             font-size: 11px;
         }
+        .large-letter{
+            font-size: 14px;
+        }
         .farms{
             width: 300px;
         }
@@ -66,34 +69,37 @@
             width: 40px;
         }
         .gris{
-            background-color: #A6ABAB;
+            background-color: #d1cfcf;
         }
     </style>
 </head>
 <body>
     <table>
         <tr>
-            <th colspan="4">Shiptment Confirmation</th>
+            <th colspan="4" class="large-letter">SHIPMENT CONFIRMATION</th>
         </tr>
         <tr>
-            <th>Date:</th>
-            <th>{{ $load->date }}</th>
-            <th>PCS</th>
-            <th>{{ $totalPieces }}</th>
+            <th class="medium-letter text-left pcs-bxs">Date:</th>
+            <th class="medium-letter text-left farms">{{ $load->date }}</th>
+            <th class="medium-letter text-left pcs-bxs">Pcs:</th>
+            <th class="medium-letter text-left">{{ $totalPieces }}</th>
         </tr>
         <tr>
-            <th>Client:</th>
-            <th>{{ $company->name }}</th>
-            <th>Carrier:</th>
-            <th>MARITIMO</th>
+            <th class="medium-letter text-left">Client:</th>
+            <th class="medium-letter text-left">{{ $company->name }}</th>
+            <th class="medium-letter text-left">Carrier:</th>
+            <th class="medium-letter text-left">MARITIMO</th>
         </tr>
         <tr>
-            <th>AWB:</th>
-            <th colspan="3">{{ $load->bl }}</th>
+            <th class="medium-letter text-left">Awb:</th>
+            <th colspan="3" class="medium-letter text-left">{{ $load->bl }}</th>
         </tr>
     </table>
     <br>
     <table>
+        @php
+            $totalFulls = 0; $totalHb = 0; $totalQb = 0; $totalEb = 0;
+        @endphp
         @foreach($clients as  $key => $client)
         <thead>
             <tr>
@@ -103,7 +109,7 @@
         <thead>
             <tr>
                 <th class="text-center medium-letter">AWB</th>
-                <th class="text-center medium-letter" colspan="7">{{ $client['client']['name'] }}</th>
+                <th class="text-center medium-letter" colspan="7">{{ $client['name'] }}</th>
             </tr>
         </thead>
         <thead>
@@ -120,11 +126,10 @@
         </thead>
         <tbody>
             @php
-                $tPieces = 0; $tFulls = 0; $tHb = 0; $tQb = 0; $tEb = 0; $totalFulls = 0; $totalHb = 0; $totalQb = 0; $totalEb = 0;
-                
+                $tPieces = 0; $tFulls = 0; $tHb = 0; $tQb = 0; $tEb = 0;
             @endphp
             @foreach($invoiceItems as $item)
-            @if($client['id_client'] == $item->id_client)
+            @if($client['id'] == $item->id_client)
             @php
                 $tPieces+= $item->pieces;
                 $tFulls+= $item->fulls;
