@@ -135,6 +135,9 @@ class InvoiceHeaderController extends Controller
         $code = $arr[1];
         $load = Load::find($code);
 
+        // Mi empresa
+        $company = Company::first();
+
         $invoiceItems = MasterInvoiceItem::select('*')
             ->where('id_load', '=', $code)
             ->with('variety')
@@ -150,11 +153,17 @@ class InvoiceHeaderController extends Controller
             ->get();
 
         $clients = collect(array_unique($clientsInInvoice->toArray(), SORT_REGULAR));
-        //dd($invoiceItems);
+
+        // Total pieces
+        $totalPieces = MasterInvoiceItem::where('id_load', '=', $code)->sum('pieces');
+        //dd($totalPieces);
 
         $shiptmentConfirmationPdf = PDF::loadView('masterinvoice.shiptmentConfirmationPdf', compact(
             'invoiceItems',
-            'clients'
+            'clients',
+            'load',
+            'company',
+            'totalPieces'
         ));
 
         return $shiptmentConfirmationPdf->stream();
