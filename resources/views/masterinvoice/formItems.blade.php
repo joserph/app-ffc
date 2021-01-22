@@ -64,6 +64,18 @@
         {{ Form::text('total', null, ['class' => 'form-control', 'id' => 'total', 'v-model' => 'total', 'readonly']) }}
         <span class="text-danger" v-for="error in errors" v-if="error.total">El campo Total es obligatorio.</span>
     </div>
+    <div class="form-group col-md-12">
+        <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+          <input type="checkbox" class="custom-control-input" id="customSwitch3">
+          <label class="custom-control-label" for="customSwitch3">Agregar cliente para confirmación</label>
+        </div>
+    </div>
+    <div class="col-md-4 form-group client_confirm">
+        {{ Form::label('id_client', 'Cliente para Confirmación', ['class' => 'control-label']) }}
+        {{ Form::select('id_client', $clients, null, ['class' => 'form-control select-client', 'placeholder' => 'Seleccione cliente', 'v-model' => 'id_client']) }}
+        <span class="text-danger" v-for="error in errors" v-if="error.id_client">El campo Cliente es obligatorio.</span>
+        <span class="text-danger" v-for="error in errors" v-if="error.fa_cl_de">La conbinación de Finca, Cliente y Variedad esta duplicada.</span>
+    </div>
     {{ Form::hidden('id_user', Auth::user()->id, ['id' => 'id_user']) }}
     {{ Form::hidden('update_user', Auth::user()->id, ['id' => 'update_user']) }}
     {{ Form::hidden('id_load', $load->id, ['id' => 'id_load']) }}

@@ -256,8 +256,8 @@
 @section('scripts')
 <script>
     $(document).ready(function(){
-        $(".grupo").keyup(function()
-        {
+         $(".grupo").keyup(function()
+         {
             var stems = $('#stems').val();
             var stems_p_bunches = $('#stems_p_bunches').val();
             var bunches = parseFloat(stems) / parseFloat(stems_p_bunches);
@@ -276,7 +276,21 @@
             var Editprice = $('#Editprice').val();
             var Edittotal = parseFloat(Editstems) * parseFloat(Editprice);
             $('#Edittotal').val(parseFloat(Edittotal));
-        });
+         });
+         $("#customSwitch3").click(function(){
+            console.log($('#customSwitch3').val());
+         });
+         $('.client_confirm').hide();
+         $('#customSwitch3').on('change', function() {
+            if ($(this).is(':checked') ) {
+               console.log("Checkbox " + $(this).prop("id") +  " (" + $(this).val() + ") => Seleccionado");
+               $('.client_confirm').show();
+            } else {
+               console.log("Checkbox " + $(this).prop("id") +  " (" + $(this).val() + ") => Deseleccionado");
+               $('.client_confirm').hide();
+            }
+         });
+      
     });
 </script>
 

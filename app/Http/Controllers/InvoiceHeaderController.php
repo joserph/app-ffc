@@ -157,7 +157,7 @@ class InvoiceHeaderController extends Controller
 
         // Total pieces
         $totalPieces = MasterInvoiceItem::where('id_load', '=', $code)->sum('pieces');
-        //dd($clients);
+        dd($invoiceItems);
 
         $shiptmentConfirmationPdf = PDF::loadView('masterinvoice.shiptmentConfirmationPdf', compact(
             'invoiceItems',
