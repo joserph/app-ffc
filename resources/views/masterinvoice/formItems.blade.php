@@ -71,10 +71,9 @@
         </div>
     </div>
     <div class="col-md-4 form-group client_confirm">
-        {{ Form::label('id_client', 'Cliente para Confirmación', ['class' => 'control-label']) }}
-        {{ Form::select('id_client', $clients, null, ['class' => 'form-control select-client', 'placeholder' => 'Seleccione cliente', 'v-model' => 'id_client']) }}
-        <span class="text-danger" v-for="error in errors" v-if="error.id_client">El campo Cliente es obligatorio.</span>
-        <span class="text-danger" v-for="error in errors" v-if="error.fa_cl_de">La conbinación de Finca, Cliente y Variedad esta duplicada.</span>
+        {{ Form::label('client_confim_id', 'Cliente para Confirmación', ['class' => 'control-label']) }}
+        {{ Form::select('client_confim_id', $clients, null, ['class' => 'form-control select-client', 'placeholder' => 'Seleccione cliente', 'v-model' => 'client_confim_id']) }}
+        <span class="text-danger" v-for="error in errors" v-if="error.client_confim_id">El campo Cliente es obligatorio.</span>
     </div>
     {{ Form::hidden('id_user', Auth::user()->id, ['id' => 'id_user']) }}
     {{ Form::hidden('update_user', Auth::user()->id, ['id' => 'update_user']) }}

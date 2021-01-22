@@ -277,16 +277,11 @@
             var Edittotal = parseFloat(Editstems) * parseFloat(Editprice);
             $('#Edittotal').val(parseFloat(Edittotal));
          });
-         $("#customSwitch3").click(function(){
-            console.log($('#customSwitch3').val());
-         });
          $('.client_confirm').hide();
          $('#customSwitch3').on('change', function() {
             if ($(this).is(':checked') ) {
-               console.log("Checkbox " + $(this).prop("id") +  " (" + $(this).val() + ") => Seleccionado");
                $('.client_confirm').show();
             } else {
-               console.log("Checkbox " + $(this).prop("id") +  " (" + $(this).val() + ") => Deseleccionado");
                $('.client_confirm').hide();
             }
          });

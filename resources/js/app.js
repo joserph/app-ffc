@@ -64,6 +64,7 @@ const app = new Vue({
         update_user: '',
         stems_p_bunches: '',
         fa_cl_de: '',
+        client_confim_id: '',
         errors: [],
         fillInvoiceItem: {
             'total_fulls': '',
@@ -86,6 +87,7 @@ const app = new Vue({
             'update_user': '',
             'stems_p_bunches': '',
             'fa_cl_de': '',
+            'client_confim_id': ''
         }
     },
     methods: {
@@ -118,6 +120,7 @@ const app = new Vue({
             this.fillInvoiceItem.update_user = item.update_user;
             this.fillInvoiceItem.stems_p_bunches = item.stems_p_bunches;
             this.fillInvoiceItem.fa_cl_de = item.fa_cl_de;
+            this.fillInvoiceItem.client_confim_id = item.client_confim_id;
             $('#editarItem').modal('show');
         },
         updateInvoiceItem: function(id){
@@ -158,6 +161,7 @@ const app = new Vue({
                     'update_user': '',
                     'stems_p_bunches': '',
                     'fa_cl_de': '',
+                    'client_confim_id': ''
                 };
                 this.errors = [];
                 $('#editarItem').modal('hide');
@@ -203,7 +207,8 @@ const app = new Vue({
                 id_user: $('#id_user').val(),
                 update_user: $('#update_user').val(),
                 stems_p_bunches: this.stems_p_bunches,
-                fa_cl_de: fa_cl_de_
+                fa_cl_de: fa_cl_de_,
+                client_confim_id: this.client_confim_id
             }).then(response => {
                 this.getInvoiceItems();
                 this.id_invoiceh = '';
@@ -224,6 +229,7 @@ const app = new Vue({
                 this.id_user = '';
                 this.update_user = '';
                 this.stems_p_bunches = '';
+                this.client_confim_id = '';
                 this.errors = [];
                 $('#agregarItem').modal('hide');
                 toastr.success('creado correctamente'); // Mensaje
