@@ -25,7 +25,8 @@ class MasterInvoiceItem extends Model
         'id_user',
         'update_user',
         'stems_p_bunches',
-        'fa_cl_de'
+        'fa_cl_de',
+        'client_confim_id'
     ];
 
     public function farm()

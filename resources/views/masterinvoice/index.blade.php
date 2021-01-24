@@ -285,8 +285,19 @@
                $('.client_confirm').hide();
             }
          });
-      
+         $('.select-farm').chosen({
+            disable_search_threshold: 10,
+            width: "100%"
+         });
+         $('.select-client').chosen({
+            disable_search_threshold: 10,
+            width: "100%"
+         });
+    $('#createInvoiceHeader').on('shown.bs.modal', function(){
+      $('.select-farm', this).chosen();
     });
+    });
+    
 </script>
 
 @endsection

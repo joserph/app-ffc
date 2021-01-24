@@ -18,6 +18,7 @@ mix.scripts([
    'node_modules/toastr/toastr.js',
    'node_modules/vue/dist/vue.js',
    'node_modules/axios/dist/axios.js',
+   'node_modules/chosen-js/chosen.jquery.js',
    'resources/js/app.js',
    ], 'public/js/app.js')
 .sass('resources/sass/app.scss', 'public/css');

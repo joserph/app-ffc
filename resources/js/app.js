@@ -232,8 +232,10 @@ const app = new Vue({
                 this.client_confim_id = '';
                 this.errors = [];
                 $('#agregarItem').modal('hide');
+                $('.client_confirm').hide();
                 toastr.success('creado correctamente'); // Mensaje
             }).catch(error => {
+                $('.client_confirm').hide();
                 toastr.error('Hubo uno o varios errores al guardar '),
                 this.errors = error.response.data
             });
