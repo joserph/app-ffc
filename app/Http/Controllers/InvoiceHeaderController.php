@@ -94,6 +94,7 @@ class InvoiceHeaderController extends Controller
                 $pieces = ['pieces' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('pieces')];
                 $name = ['name' => $item->name];
                 $variety = ['variety' => $item->variety->name];
+                $scientific = ['scientific_name' => $item->variety->scientific_name];
                 $hawb = ['hawb' => $item->hawb];
                 $stems = ['stems' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('stems')];
                 $bunches = ['bunches' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('bunches')];
@@ -104,6 +105,7 @@ class InvoiceHeaderController extends Controller
                 $pieces = ['pieces' => $item->pieces];
                 $name = ['name' => $item->name];
                 $variety = ['variety' => $item->variety->name];
+                $scientific = ['scientific_name' => $item->variety->scientific_name];
                 $hawb = ['hawb' => $item->hawb];
                 $stems = ['stems' => $item->stems];
                 $bunches = ['bunches' => $item->bunches];
@@ -111,7 +113,7 @@ class InvoiceHeaderController extends Controller
                 $total = ['total' => $item->total];
             }
             
-            $invoiceItemsArray[] = Arr::collapse([$fulls, $pieces, $name, $variety, $hawb, $stems, $bunches, $price, $total]);
+            $invoiceItemsArray[] = Arr::collapse([$fulls, $pieces, $name, $variety, $scientific, $hawb, $stems, $bunches, $price, $total]);
             
         }
         $invoiceItems = collect(array_unique($invoiceItemsArray, SORT_REGULAR));

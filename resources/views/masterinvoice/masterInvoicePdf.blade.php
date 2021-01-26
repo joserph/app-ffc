@@ -32,7 +32,7 @@
             width: 100%;
         }
         .small-letter{
-            font-size: 10px;
+            font-size: 9px;
         }
         .medium-letter{
             font-size: 13px;
@@ -112,20 +112,22 @@
     <table>
       <thead>
          <tr>
-             <th class="text-center medium-letter">Fulls</th>
-             <th class="text-center medium-letter">Pcs</th>
-             <th class="text-center farms medium-letter">Farms</th>
-             <th class="text-center medium-letter">Desciption</th>
-             <th class="text-center medium-letter c-width">Hawb</th>
-             <th class="text-center medium-letter">Stems</th>
-             <th class="text-center medium-letter">Bunch</th>
-             <th class="text-center medium-letter">Price</th>
-             <th class="text-center medium-letter">Total USD</th>
+             <th class="text-center small-letter">Fulls</th>
+             <th class="text-center small-letter">Pcs</th>
+             <th class="text-center small-letter">Bunch</th>
+             <th class="text-center farms small-letter">Flower Provider</th>
+             <th class="text-center small-letter">Desciption</th>
+             <th class="text-center small-letter">Scientific Name</th>
+             <th class="text-center small-letter c-width">Hawb</th>
+             <th class="text-center small-letter">Total Stems</th>
+             <th class="text-center small-letter">Price</th>
+             <th class="text-center small-letter">Total Bunch</th>
+             <th class="text-center small-letter">Total USD</th>
          </tr>
      </thead>
      <tbody>
          @php
-             $fulls = 0; $pcs = 0; $stems = 0; $total = 0; $bunches = 0;
+             $fulls = 0; $pcs = 0; $stems = 0; $total = 0; $bunches = 0; $promBunches = 0;
          @endphp
          @foreach ($invoiceItems as $key => $item)
              @php
@@ -134,16 +136,20 @@
                  $stems+= $item['stems'];
                  $bunches+= $item['bunches'];
                  $total+= $item['total'];
+                 // Promedio de bunches por cajas.
+                 $promBunches = $item['bunches'] / $item['pieces'];
              @endphp
              <tr>
                  <td class="text-center small-letter">{{ number_format($item['fulls'], 3, '.','') }}</td>
                  <td class="text-center small-letter">{{ $item['pieces'] }}</td>
+                 <td class="text-center small-letter">{{ round($promBunches) }}</td>
                  <td class="text-left small-letter">{{ $item['name'] }}</td>
                  <td class="text-center small-letter">{{ $item['variety'] }}</td>
+                 <td class="text-center small-letter">{{ $item['scientific_name'] }}</td>
                  <td class="text-center small-letter">{{ $item['hawb'] }}</td>
                  <td class="text-center small-letter">{{ number_format($item['stems'], 0, '','.') }}</td>
-                 <td class="text-center small-letter">{{ $item['bunches'] }}</td>
                  <td class="text-center small-letter">{{ number_format($item['price'], 2, ',','') }}</td>
+                 <td class="text-center small-letter">{{ $item['bunches'] }}</td>
                  <td class="text-center small-letter">{{ number_format($item['total'], 2, ',','.') }}</td>
              </tr>
          @endforeach
@@ -152,10 +158,11 @@
       <tr>
           <th class="text-center small-letter">{{ number_format($fulls, 3, '.','') }}</th>
           <th class="text-center small-letter">{{ $pcs }}</th>
-          <th colspan="3" class="text-right small-letter">TOTAL:</th>
+          <th class="text-center"></th>
+          <th colspan="4" class="text-right small-letter">TOTAL:</th>
           <th class="text-center small-letter">{{ number_format($stems, 0, '','.') }}</th>
-          <th class="text-center small-letter">{{ number_format($bunches, 0, ',','.') }}</th>
           <th class="text-center small-letter"></th>
+          <th class="text-center small-letter">{{ number_format($bunches, 0, ',','.') }}</th>
           <th class="text-center small-letter">{{ number_format($total, 2, ',','.') }}</th>
       </tr>
   </tfoot>

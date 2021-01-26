@@ -12,6 +12,7 @@
        @foreach ($varieties as $variety)
          <tr>
             <td>{{ $variety->name }}</td>
+            <td>{{ $variety->scientific_name }}</td>
             <td colspan="2" class="text-center">
                @can('haveaccess', 'variety.edit')
                <button wire:click="edit({{ $variety->id }})" class="btn btn-sm btn-outline-warning">

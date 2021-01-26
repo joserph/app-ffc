@@ -13,7 +13,7 @@ class VarietyComponent extends Component
 
     protected $paginationTheme = 'bootstrap'; /// Importante
 
-    public $name, $variety_id;
+    public $name, $variety_id, $scientific_name;
     public $view = 'create';
     
     public function render()
@@ -27,13 +27,15 @@ class VarietyComponent extends Component
     {
         // Validaciones
         $this->validate([
-            'name'      => 'required'
+            'name'              => 'required',
+            'scientific_name'   => 'required'
         ]);
 
         $variety = Variety::create([
-            'name'=> $this->name,
-            'id_user'       => Auth::user()->id,
-            'update_user'   => Auth::user()->id
+            'name'              => $this->name,
+            'scientific_name'   => $this->scientific_name,
+            'id_user'           => Auth::user()->id,
+            'update_user'       => Auth::user()->id
         ]);
 
         session()->flash('create', 'La variedad "' . $variety->name . '" se creo con éxito');
@@ -48,6 +50,7 @@ class VarietyComponent extends Component
 
         $this->variety_id = $variety->id;
         $this->name = $variety->name;
+        $this->scientific_name = $variety->scientific_name;
 
         $this->view = 'edit';
     }
@@ -56,15 +59,17 @@ class VarietyComponent extends Component
     {
         // Validaciones
         $this->validate([
-            'name'      => 'required'
+            'name'              => 'required',
+            'scientific_name'   => 'required'
         ]);
 
         $variety = Variety::find($this->variety_id);
 
         $variety->update([
-            'name'=> $this->name,
-            'id_user'       => Auth::user()->id,
-            'update_user'   => Auth::user()->id
+            'name'              => $this->name,
+            'scientific_name'   => $this->scientific_name,
+            'id_user'           => Auth::user()->id,
+            'update_user'       => Auth::user()->id
         ]);
 
         session()->flash('edit', 'La Variedad "' . $variety->name . '" se actualizó con éxito');
