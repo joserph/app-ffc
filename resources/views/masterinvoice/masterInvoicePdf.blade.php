@@ -122,8 +122,8 @@
              <th class="text-center small-letter">Pcs</th>
              <th class="text-center small-letter">Bunch per box</th>
              <th class="text-center farms small-letter">Flower Provider</th>
-             <th class="text-center small-letter gender">Gender</th>
-             <th class="text-center small-letter">Species</th>
+             <th class="text-center small-letter gender">Genus</th>
+             <th class="text-center small-letter gender">Species</th>
              <th class="text-center small-letter c-width">Hawb</th>
              <th class="text-center small-letter">Total Stems</th>
              <th class="text-center small-letter">Price</th>

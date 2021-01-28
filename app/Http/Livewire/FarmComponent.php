@@ -23,7 +23,7 @@ class FarmComponent extends Component
         
         // Mostramos todos los registros 
         return view('livewire.farm-component', [
-            'farms' => Farm::orderBy('name', 'ASC')->paginate(5)
+            'farms' => Farm::orderBy('name', 'ASC')->paginate(10)
         ]);
     }
 

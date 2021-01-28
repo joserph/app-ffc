@@ -37,10 +37,10 @@
                       <p>New Orders</p>
                     </div>
                     <div class="icon">
-                      <i class="fas fa-shopping-cart"></i>
+                     <i class="fas fa-file-invoice-dollar"></i>
                     </div>
                      <a href="{{ route('masterinvoices.index', $load->id) }}" class="small-box-footer">
-                      More info <i class="fas fa-arrow-circle-right"></i>
+                      Ver Master Invoice <i class="fas fa-arrow-circle-right"></i>
                     </a>
                   </div>
                 </div>
