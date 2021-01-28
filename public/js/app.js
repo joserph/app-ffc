@@ -32818,7 +32818,7 @@ const app = new Vue({
             this.fillInvoiceItem.pieces = parseInt(this.fillInvoiceItem.hb) + parseInt(this.fillInvoiceItem.qb) + parseInt(this.fillInvoiceItem.eb);
             // Calculo de los fulls.
             this.fillInvoiceItem.fulls = parseFloat(this.fillInvoiceItem.hb * 0.50) + parseFloat(this.fillInvoiceItem.qb * 0.25) + parseFloat(this.fillInvoiceItem.eb * 0.125);
-            this.fillInvoiceItem.fa_cl_de = this.fillInvoiceItem.id_farm + '-' + this.fillInvoiceItem.id_client + '-' + this.fillInvoiceItem.variety_id;
+            this.fillInvoiceItem.fa_cl_de = this.fillInvoiceItem.id_farm + '-' + this.fillInvoiceItem.id_client + '-' + this.fillInvoiceItem.variety_id + '-' + $('#Editid_invoiceh').val();
             this.fillInvoiceItem.id_invoiceh = $('#Editid_invoiceh').val();
             this.fillInvoiceItem.id_load = $('#Editid_load').val();
             this.fillInvoiceItem.price = parseFloat(this.fillInvoiceItem.price);
@@ -32873,7 +32873,7 @@ const app = new Vue({
             this.pieces = parseInt(this.hb) + parseInt(this.qb) + parseInt(this.eb);
             // Calculo de los fulls.
             this.fulls = parseFloat(this.hb * 0.50) + parseFloat(this.qb * 0.25) + parseFloat(this.eb * 0.125);
-            var fa_cl_de_ = this.id_farm + '-' + this.id_client + '-' + this.variety_id;
+            var fa_cl_de_ = this.id_farm + '-' + this.id_client + '-' + this.variety_id + '-' + $('#id_invoiceh').val();
             console.log(fa_cl_de_);
 
             axios.post(url, {

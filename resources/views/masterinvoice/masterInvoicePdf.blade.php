@@ -38,7 +38,7 @@
             font-size: 13px;
         }
         .farms{
-            width: 300px;
+            width: 280px;
         }
         
         table.sinb{
@@ -47,7 +47,7 @@
         }
         table.sinb, th, td{
             border: 1px solid black;
-            height: 20px;
+            height: 15px;
         }
         .text-white{
             color: #fff;
@@ -58,10 +58,16 @@
         .c-width{
             width: 80px;
         }
+        .gender{
+            width: 55px;
+        }
+        h1{
+            font-size: 30px;
+        }
     </style>
 </head>
 <body>
-    <h1 class="text-center">COMERCIAL INVOICE</h1>
+    <h1 class="text-center">MASTER INVOICE</h1>
     <table>
         <thead>
             <tr>
@@ -114,10 +120,10 @@
          <tr>
              <th class="text-center small-letter">Fulls</th>
              <th class="text-center small-letter">Pcs</th>
-             <th class="text-center small-letter">Bunch</th>
+             <th class="text-center small-letter">Bunch per box</th>
              <th class="text-center farms small-letter">Flower Provider</th>
-             <th class="text-center small-letter">Desciption</th>
-             <th class="text-center small-letter">Scientific Name</th>
+             <th class="text-center small-letter gender">Gender</th>
+             <th class="text-center small-letter">Species</th>
              <th class="text-center small-letter c-width">Hawb</th>
              <th class="text-center small-letter">Total Stems</th>
              <th class="text-center small-letter">Price</th>
@@ -176,8 +182,8 @@
                 <td class="small-letter text-center">Freight forwarder / Agencia de carga</td>
             </tr>
             <tr>
+                <td class="small-letter text-center"></td>
                 <td class="small-letter text-center">{{ strtoupper($lc_active->name) }}</td>
-                <td class="small-letter text-center">{{ strtoupper($company->name) }}</td>
             </tr>
         </tbody>
         <tbody>
