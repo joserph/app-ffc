@@ -148,7 +148,8 @@ class MasterInvoiceItemController extends Controller
             'total'             => $request->total,
             'update_user'       => $request->update_user,
             'stems_p_bunches'   => $request->stems_p_bunches,
-            'fa_cl_de'          => $request->fa_cl_de
+            'fa_cl_de'          => $request->fa_cl_de,
+            'client_confim_id'  => $request->client_confim_id
         ]);
 
         // Actualizamos los totales en la table Invoice Header

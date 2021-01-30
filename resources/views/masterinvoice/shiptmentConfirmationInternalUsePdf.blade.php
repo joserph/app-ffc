@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SHIPMENT CONFIRMATION {{ $load->bl }}</title>
+    <title>CONFIRMACIÓN DE DESPACHO {{ $load->bl }}</title>
     <style>
         body{
             font-family: Arial, Helvetica, sans-serif;
@@ -76,7 +76,7 @@
 <body>
     <table>
         <tr>
-            <th colspan="4" class="large-letter">SHIPMENT CONFIRMATION</th>
+            <th colspan="4" class="large-letter">CONFIRMACIÓN DE DESPACHO</th>
         </tr>
         <tr>
             <th class="medium-letter text-left pcs-bxs">Date:</th>
@@ -129,7 +129,7 @@
                 $tPieces = 0; $tFulls = 0; $tHb = 0; $tQb = 0; $tEb = 0;
             @endphp
             @foreach($invoiceItems as $item)
-            @if($client['id'] == $item->client_confim_id)
+            @if($client['id'] == $item->id_client)
             @php
                 $tPieces+= $item->pieces;
                 $tFulls+= $item->fulls;
@@ -142,7 +142,7 @@
                 <td class="small-letter text-center">{{ $item->variety->name }}</td>
                 <td class="small-letter text-center">{{ $item->hawb }}</td>
                 <td class="small-letter text-center">{{ $item->pieces }}</td>
-                <td class="small-letter text-center">{{ number_format($item->fulls, 3, '.','') }}</td>
+                <td class="small-letter text-center">{{ $item->fulls }}</td>
                 <td class="small-letter text-center">{{ $item->hb }}</td>
                 <td class="small-letter text-center">{{ $item->qb }}</td>
                 <td class="small-letter text-center">{{ $item->eb }}</td>
@@ -158,12 +158,12 @@
         @endphp
         <tfoot>
             <tr class="gris">
-                <th class="medium-letter text-right" colspan="3">Total:</th>
-                <th class="medium-letter">{{ $tPieces }}</th>
-                <th class="medium-letter">{{ number_format($tFulls, 3, '.','') }}</th>
-                <th class="medium-letter">{{ $tHb }}</th>
-                <th class="medium-letter">{{ $tQb }}</th>
-                <th class="medium-letter">{{ $tEb }}</th>
+                <th class="small-letter text-right" colspan="3">Total:</th>
+                <th class="small-letter">{{ $tPieces }}</th>
+                <th class="small-letter">{{ $tFulls }}</th>
+                <th class="small-letter">{{ $tHb }}</th>
+                <th class="small-letter">{{ $tQb }}</th>
+                <th class="small-letter">{{ $tEb }}</th>
             </tr>
         @endforeach
             <tr>
@@ -171,11 +171,11 @@
             </tr>
             <tr class="gris">
                 <th colspan="3">Total Global:</th>
-                <th class="medium-letter">{{ $totalPieces }}</th>
-                <th class="medium-letter">{{ number_format($totalFulls, 3, '.','') }}</th>
-                <th class="medium-letter">{{ $totalHb }}</th>
-                <th class="medium-letter">{{ $totalQb }}</th>
-                <th class="medium-letter">{{ $totalEb }}</th>
+                <th class="small-letter">{{ $totalPieces }}</th>
+                <th class="small-letter">{{ $totalFulls }}</th>
+                <th class="small-letter">{{ $totalHb }}</th>
+                <th class="small-letter">{{ $totalQb }}</th>
+                <th class="small-letter">{{ $totalEb }}</th>
             </tr>
         </tfoot>
     </table>

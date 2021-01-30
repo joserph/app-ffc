@@ -107,3 +107,5 @@ Route::get('/invoiceheader/{id}', function($id){
 Route::get('comercial-invoice-pdf', 'InvoiceHeaderController@masterInvoicePdf')->name('comercial-invoice.pdf');
 // Shiptment Confirmation
 Route::get('shiptment-confirmation-pdf', 'InvoiceHeaderController@shiptmentConfirmation')->name('shiptment-confirmation.pdf');
+// Confirmacion de despacho
+Route::get('shiptment-confirmation-internal-use-pdf', 'InvoiceHeaderController@shiptmentConfirmationInternalUse')->name('shiptment-confirmation-internal-use.pdf');

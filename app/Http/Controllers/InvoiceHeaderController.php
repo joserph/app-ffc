@@ -139,7 +139,8 @@ class InvoiceHeaderController extends Controller
 
         // Mi empresa
         $company = Company::first();
-
+        
+        // Buscamos todos los items con id_load actual
         $invoiceItems = MasterInvoiceItem::select('*')
             ->where('id_load', '=', $code)
             ->with('variety')
@@ -149,17 +150,19 @@ class InvoiceHeaderController extends Controller
             ->orderBy('farms.name', 'ASC')
             ->get();
         
+        // Buscamos los clientes (client_confim_id) que esten en esta carga, por el id_load
         $clientsInInvoice = MasterInvoiceItem::where('id_load', '=', $code)
-            ->join('clients', 'master_invoice_items.id_client', '=', 'clients.id')
+            ->join('clients', 'master_invoice_items.client_confim_id', '=', 'clients.id')
             ->select('clients.id', 'clients.name')
             ->orderBy('clients.name', 'ASC')
             ->get();
 
+        // Eliminamos los clientes duplicados
         $clients = collect(array_unique($clientsInInvoice->toArray(), SORT_REGULAR));
 
         // Total pieces
         $totalPieces = MasterInvoiceItem::where('id_load', '=', $code)->sum('pieces');
-        dd($invoiceItems);
+        //dd($invoiceItems);
 
         $shiptmentConfirmationPdf = PDF::loadView('masterinvoice.shiptmentConfirmationPdf', compact(
             'invoiceItems',
@@ -171,6 +174,52 @@ class InvoiceHeaderController extends Controller
 
         return $shiptmentConfirmationPdf->stream();
         
+    }
+
+    public function shiptmentConfirmationInternalUse()
+    {
+        // Busco el ID de la carga por medio de la URL
+        $url = $_SERVER["REQUEST_URI"];
+        $arr = explode("?", $url);
+        $code = $arr[1];
+        $load = Load::find($code);
+
+        // Mi empresa
+        $company = Company::first();
+
+        // Buscamos todos los items con id_load actual
+        $invoiceItems = MasterInvoiceItem::select('*')
+            ->where('id_load', '=', $code)
+            ->with('variety')
+            ->with('invoiceh')
+            ->with('client')
+            ->join('farms', 'master_invoice_items.id_farm', '=', 'farms.id')
+            ->orderBy('farms.name', 'ASC')
+            ->get();
+        
+        // Buscamos los clientes que esten en esta carga, por el id_load
+        $clientsInInvoice = MasterInvoiceItem::where('id_load', '=', $code)
+            ->join('clients', 'master_invoice_items.id_client', '=', 'clients.id')
+            ->select('clients.id', 'clients.name')
+            ->orderBy('clients.name', 'ASC')
+            ->get();
+
+        // Eliminamos los clientes duplicados
+        $clients = collect(array_unique($clientsInInvoice->toArray(), SORT_REGULAR));
+
+        // Total pieces
+        $totalPieces = MasterInvoiceItem::where('id_load', '=', $code)->sum('pieces');
+        //dd($invoiceItems);
+
+        $shiptmentConfirmationPdf = PDF::loadView('masterinvoice.shiptmentConfirmationInternalUsePdf', compact(
+            'invoiceItems',
+            'clients',
+            'load',
+            'company',
+            'totalPieces'
+        ));
+
+        return $shiptmentConfirmationPdf->stream();
     }
 
     /**

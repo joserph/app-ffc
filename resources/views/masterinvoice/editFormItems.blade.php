@@ -64,6 +64,17 @@
         {{ Form::text('total', null, ['class' => 'form-control', 'id' => 'Edittotal', 'v-model' => 'fillInvoiceItem.total', 'readonly']) }}
         <span class="text-danger" v-for="error in errors" v-if="error.total">El campo Total es obligatorio.</span>
     </div>
+    <div class="form-group col-md-12">
+        <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+          <input type="checkbox" class="custom-control-input" id="EditcustomSwitch3">
+          <label class="custom-control-label" for="customSwitch3">Agregar cliente para confirmación</label>
+        </div>
+    </div>
+    <div class="col-md-4 form-group client_confirm">
+        {{ Form::label('client_confim_id', 'Cliente para Confirmación', ['class' => 'control-label']) }}
+        {{ Form::select('client_confim_id', $clients, null, ['class' => 'form-control select-client', 'placeholder' => 'Seleccione cliente', 'v-model' => 'fillInvoiceItem.client_confim_id']) }}
+        <span class="text-danger" v-for="error in errors" v-if="error.client_confim_id">El campo Cliente es obligatorio.</span>
+    </div>
     {{ Form::hidden('update_user', Auth::user()->id, ['id' => 'Editupdate_user']) }}
     {{ Form::hidden('id_load', $load->id, ['id' => 'Editid_load']) }}
     {{ Form::hidden('id_invoiceh', $invoiceheaders->id, ['id' => 'Editid_invoiceh']) }}
