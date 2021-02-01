@@ -158,6 +158,10 @@ class InvoiceHeaderController extends Controller
             // Validamos si hay valores duplicados, para agrupar
             if($dupliHawb > 1)
             {
+                $client_confim_id = ['client_confim_id' => $item->client_confim_id];
+                $hb = ['hb' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('hb')];
+                $qb = ['qb' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('qb')];
+                $eb = ['eb' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('eb')];
                 $fulls = ['fulls' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('fulls')];
                 $pieces = ['pieces' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('pieces')];
                 $name = ['name' => $item->name];
@@ -169,6 +173,10 @@ class InvoiceHeaderController extends Controller
                 $price = ['price' => $item->price];
                 $total = ['total' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('total')];
             }else{
+                $client_confim_id = ['client_confim_id' => $item->client_confim_id];
+                $hb = ['hb' => $item->hb];
+                $qb = ['qb' => $item->qb];
+                $eb = ['eb' => $item->eb];
                 $fulls = ['fulls' => $item->fulls];
                 $pieces = ['pieces' => $item->pieces];
                 $name = ['name' => $item->name];
@@ -181,7 +189,7 @@ class InvoiceHeaderController extends Controller
                 $total = ['total' => $item->total];
             }
             
-            $invoiceItemsArray[] = Arr::collapse([$fulls, $pieces, $name, $variety, $scientific, $hawb, $stems, $bunches, $price, $total]);
+            $invoiceItemsArray[] = Arr::collapse([$client_confim_id, $hb, $qb, $eb, $fulls, $pieces, $name, $variety, $scientific, $hawb, $stems, $bunches, $price, $total]);
             
         }
         // Eliminamos los clientes duplicados
@@ -200,7 +208,7 @@ class InvoiceHeaderController extends Controller
 
         // Total pieces
         $totalPieces = MasterInvoiceItem::where('id_load', '=', $code)->sum('pieces');
-        dd($invoiceItems);
+        //dd($invoiceItems);
 
         $shiptmentConfirmationPdf = PDF::loadView('masterinvoice.shiptmentConfirmationPdf', compact(
             'invoiceItems',

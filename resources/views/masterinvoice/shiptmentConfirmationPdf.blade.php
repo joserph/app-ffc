@@ -129,23 +129,23 @@
                 $tPieces = 0; $tFulls = 0; $tHb = 0; $tQb = 0; $tEb = 0;
             @endphp
             @foreach($invoiceItems as $item)
-            @if($client['id'] == $item->client_confim_id)
+            @if($client['id'] == $item['client_confim_id'])
             @php
-                $tPieces+= $item->pieces;
-                $tFulls+= $item->fulls;
-                $tHb+= $item->hb;
-                $tQb+= $item->qb;
-                $tEb+= $item->eb;
+                $tPieces+= $item['pieces'];
+                $tFulls+= $item['fulls'];
+                $tHb+= $item['hb'];
+                $tQb+= $item['qb'];
+                $tEb+= $item['eb'];
             @endphp
             <tr>
-                <td class="small-letter farms">{{ $item->name }}</td>
-                <td class="small-letter text-center">{{ $item->variety->name }}</td>
-                <td class="small-letter text-center">{{ $item->hawb }}</td>
-                <td class="small-letter text-center">{{ $item->pieces }}</td>
-                <td class="small-letter text-center">{{ number_format($item->fulls, 3, '.','') }}</td>
-                <td class="small-letter text-center">{{ $item->hb }}</td>
-                <td class="small-letter text-center">{{ $item->qb }}</td>
-                <td class="small-letter text-center">{{ $item->eb }}</td>
+                <td class="small-letter farms">{{ $item['name'] }}</td>
+                <td class="small-letter text-center">{{ $item['variety'] }}</td>
+                <td class="small-letter text-center">{{ $item['hawb'] }}</td>
+                <td class="small-letter text-center">{{ $item['pieces'] }}</td>
+                <td class="small-letter text-center">{{ number_format($item['fulls'], 3, '.','') }}</td>
+                <td class="small-letter text-center">{{ $item['hb'] }}</td>
+                <td class="small-letter text-center">{{ $item['qb'] }}</td>
+                <td class="small-letter text-center">{{ $item['eb'] }}</td>
             </tr>
             @endif
             @endforeach
@@ -158,12 +158,12 @@
         @endphp
         <tfoot>
             <tr class="gris">
-                <th class="medium-letter text-right" colspan="3">Total:</th>
-                <th class="medium-letter">{{ $tPieces }}</th>
-                <th class="medium-letter">{{ number_format($tFulls, 3, '.','') }}</th>
-                <th class="medium-letter">{{ $tHb }}</th>
-                <th class="medium-letter">{{ $tQb }}</th>
-                <th class="medium-letter">{{ $tEb }}</th>
+                <th class="small-letter text-right" colspan="3">Total:</th>
+                <th class="small-letter">{{ $tPieces }}</th>
+                <th class="small-letter">{{ number_format($tFulls, 3, '.','') }}</th>
+                <th class="small-letter">{{ $tHb }}</th>
+                <th class="small-letter">{{ $tQb }}</th>
+                <th class="small-letter">{{ $tEb }}</th>
             </tr>
         @endforeach
             <tr>
@@ -171,11 +171,11 @@
             </tr>
             <tr class="gris">
                 <th colspan="3">Total Global:</th>
-                <th class="medium-letter">{{ $totalPieces }}</th>
-                <th class="medium-letter">{{ number_format($totalFulls, 3, '.','') }}</th>
-                <th class="medium-letter">{{ $totalHb }}</th>
-                <th class="medium-letter">{{ $totalQb }}</th>
-                <th class="medium-letter">{{ $totalEb }}</th>
+                <th class="small-letter">{{ $totalPieces }}</th>
+                <th class="small-letter">{{ number_format($totalFulls, 3, '.','') }}</th>
+                <th class="small-letter">{{ $totalHb }}</th>
+                <th class="small-letter">{{ $totalQb }}</th>
+                <th class="small-letter">{{ $totalEb }}</th>
             </tr>
         </tfoot>
     </table>

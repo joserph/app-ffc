@@ -142,7 +142,7 @@
                 <td class="small-letter text-center">{{ $item->variety->name }}</td>
                 <td class="small-letter text-center">{{ $item->hawb }}</td>
                 <td class="small-letter text-center">{{ $item->pieces }}</td>
-                <td class="small-letter text-center">{{ $item->fulls }}</td>
+                <td class="small-letter text-center">{{ number_format($item->fulls, 3, '.','') }}</td>
                 <td class="small-letter text-center">{{ $item->hb }}</td>
                 <td class="small-letter text-center">{{ $item->qb }}</td>
                 <td class="small-letter text-center">{{ $item->eb }}</td>
@@ -160,7 +160,7 @@
             <tr class="gris">
                 <th class="small-letter text-right" colspan="3">Total:</th>
                 <th class="small-letter">{{ $tPieces }}</th>
-                <th class="small-letter">{{ $tFulls }}</th>
+                <th class="small-letter">{{ number_format($tFulls, 3, '.','') }}</th>
                 <th class="small-letter">{{ $tHb }}</th>
                 <th class="small-letter">{{ $tQb }}</th>
                 <th class="small-letter">{{ $tEb }}</th>
@@ -172,7 +172,7 @@
             <tr class="gris">
                 <th colspan="3">Total Global:</th>
                 <th class="small-letter">{{ $totalPieces }}</th>
-                <th class="small-letter">{{ $totalFulls }}</th>
+                <th class="small-letter">{{ number_format($totalFulls, 3, '.','') }}</th>
                 <th class="small-letter">{{ $totalHb }}</th>
                 <th class="small-letter">{{ $totalQb }}</th>
                 <th class="small-letter">{{ $totalEb }}</th>
