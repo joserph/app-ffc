@@ -32,9 +32,9 @@
                   <!-- small card -->
                   <div class="small-box bg-info">
                     <div class="inner">
-                      <h3>150</h3>
+                      <h3>{{ $loadCount }}</h3>
       
-                      <p>New Orders</p>
+                      <p>Items de la factura</p>
                     </div>
                     <div class="icon">
                      <i class="fas fa-file-invoice-dollar"></i>
@@ -44,7 +44,25 @@
                     </a>
                   </div>
                 </div>
-            </div>
+            
+               <!-- ISF -->
+               <div class="col-lg-3 col-6">
+                 <!-- small card -->
+                 <div class="small-box bg-success">
+                   <div class="inner">
+                     <h3>13</h3>
+     
+                     <p>Fincas</p>
+                   </div>
+                   <div class="icon">
+                     <i class="fas fa-file-alt"></i>
+                   </div>
+                    <a href="{{ route('isf.index', $load->id) }}" class="small-box-footer">
+                     Ver ISF <i class="fas fa-arrow-circle-right"></i>
+                   </a>
+                 </div>
+               </div>
+           </div>
 
         
         </div>

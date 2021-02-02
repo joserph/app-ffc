@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Load;
 use App\Http\Requests\AddLoadRequest;
 use App\Http\Requests\UpdateLoadRequest;
+use App\MasterInvoiceItem;
 
 class LoadController extends Controller
 {
@@ -53,8 +54,9 @@ class LoadController extends Controller
     public function show($id)
     {
         $load = Load::find($id);
-
-        return view('load.show', compact('load'));
+        $loadCount = MasterInvoiceItem::where('id_load', '=', $id)->count();
+        //dd($loadCount);
+        return view('load.show', compact('load', 'loadCount'));
     }
 
     /**

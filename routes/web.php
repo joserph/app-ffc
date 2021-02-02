@@ -109,3 +109,9 @@ Route::get('comercial-invoice-pdf', 'InvoiceHeaderController@masterInvoicePdf')-
 Route::get('shiptment-confirmation-pdf', 'InvoiceHeaderController@shiptmentConfirmation')->name('shiptment-confirmation.pdf');
 // Confirmacion de despacho
 Route::get('shiptment-confirmation-internal-use-pdf', 'InvoiceHeaderController@shiptmentConfirmationInternalUse')->name('shiptment-confirmation-internal-use.pdf');
+
+// ISF
+Route::resource('/isf', 'ISFController')->names('isf');
+
+// Factura Master
+Route::get('isf-pdf', 'ISFController@isfPdf')->name('isf.pdf');

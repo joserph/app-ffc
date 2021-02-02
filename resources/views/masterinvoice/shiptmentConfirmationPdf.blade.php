@@ -27,6 +27,7 @@
         }
         .small-letter{
             font-size: 10px;
+            font-weight: normal;
         }
         .medium-letter{
             font-size: 11px;
@@ -80,19 +81,19 @@
         </tr>
         <tr>
             <th class="medium-letter text-left pcs-bxs">Date:</th>
-            <th class="medium-letter text-left farms">{{ $load->date }}</th>
+            <th class="small-letter text-left farms">{{ date('l, d F - Y', strtotime($load->date)) }}</th>
             <th class="medium-letter text-left pcs-bxs">Pcs:</th>
-            <th class="medium-letter text-left">{{ $totalPieces }}</th>
+            <th class="small-letter text-left">{{ $totalPieces }}</th>
         </tr>
         <tr>
             <th class="medium-letter text-left">Client:</th>
-            <th class="medium-letter text-left">{{ $company->name }}</th>
+            <th class="small-letter text-left">{{ $company->name }}</th>
             <th class="medium-letter text-left">Carrier:</th>
-            <th class="medium-letter text-left">MARITIMO</th>
+            <th class="small-letter text-left">MARITIMO</th>
         </tr>
         <tr>
             <th class="medium-letter text-left">Awb:</th>
-            <th colspan="3" class="medium-letter text-left">{{ $load->bl }}</th>
+            <th colspan="3" class="small-letter text-left">{{ $load->bl }}</th>
         </tr>
     </table>
     <br>
