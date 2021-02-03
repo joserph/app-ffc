@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\MasterInvoiceItem;
 use App\Load;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class ISFController extends Controller
 {
@@ -55,15 +56,14 @@ class ISFController extends Controller
             ->orderBy('farms.name', 'ASC')
             ->get();
 
-        //
 
         $farmsItemsLoad = $loadCount->unique('id');
 
         $isfPdf = PDF::loadView('isf.isfPdf', compact(
             'load',
             'farmsItemsLoad'
-        ));
-
+        ))->setPaper('A4', 'landscape');
+        //dd($farmsItemsLoad);
         return $isfPdf->stream();
     }
 
