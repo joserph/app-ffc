@@ -50,7 +50,7 @@
                  <!-- small card -->
                  <div class="small-box bg-success">
                    <div class="inner">
-                     <h3>13</h3>
+                     <h3>{{ $farmsCount }}</h3>
      
                      <p>Fincas</p>
                    </div>
@@ -62,6 +62,24 @@
                    </a>
                  </div>
                </div>
+
+               <!-- Plano de carga -->
+               <div class="col-lg-3 col-6">
+                <!-- small card -->
+                <div class="small-box bg-warning">
+                  <div class="inner">
+                    <h3>{{ $farmsCount }}</h3>
+    
+                    <p>Plano de Carga</p>
+                  </div>
+                  <div class="icon">
+                    <i class="fas fa-grip-vertical"></i>
+                  </div>
+                   <a href="{{ route('isf.index', $load->id) }}" class="small-box-footer">
+                    Ver Plano <i class="fas fa-arrow-circle-right"></i>
+                  </a>
+                </div>
+              </div>
            </div>
 
         

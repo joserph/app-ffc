@@ -46,9 +46,12 @@
                         </tr>
                      </thead>
                      <tbody>
+                        @php
+                            $count = 1;
+                        @endphp
                         @foreach ($farmsItemsLoad as $key => $item)
                             <tr>
-                                <td class="text-center">{{ $key+1 }}</td>
+                                <td class="text-center">{{ $count++ }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td class="text-center">{{ $item->phone }}</td>
                                 <td>{{ $item->address }}</td>

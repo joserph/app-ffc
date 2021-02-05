@@ -55,8 +55,11 @@ class LoadController extends Controller
     {
         $load = Load::find($id);
         $loadCount = MasterInvoiceItem::where('id_load', '=', $id)->count();
-        //dd($loadCount);
-        return view('load.show', compact('load', 'loadCount'));
+        $farms = MasterInvoiceItem::select('id_farm')->where('id_load', '=', $id)->get();
+        $farmsUnique = $farms->unique('id_farm');
+        $farmsCount = $farmsUnique->count();
+        //dd($farmsCount);
+        return view('load.show', compact('load', 'loadCount', 'farmsCount'));
     }
 
     /**
