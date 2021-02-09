@@ -75,7 +75,7 @@
                   <div class="icon">
                     <i class="fas fa-grip-vertical"></i>
                   </div>
-                   <a href="{{ route('isf.index', $load->id) }}" class="small-box-footer">
+                   <a href="{{ route('loadingplane.index', $load->id) }}" class="small-box-footer">
                     Ver Plano <i class="fas fa-arrow-circle-right"></i>
                   </a>
                 </div>

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Load;
+use App\MasterInvoiceItem;
+use App\Company;
 
 class LoadingPlaneController extends Controller
 {
@@ -13,7 +16,38 @@ class LoadingPlaneController extends Controller
      */
     public function index()
     {
-        //
+        // Busco el ID de la carga por medio de la URL
+        $url = $_SERVER["REQUEST_URI"];
+        $arr = explode("?", $url);
+        $code = $arr[1];
+        $load = Load::find($code);
+
+        // Buscamos todos los items con id_load actual
+        $invoiceItems = MasterInvoiceItem::select('*')
+            ->where('id_load', '=', $code)
+            ->with('variety')
+            ->with('invoiceh')
+            ->with('client')
+            ->join('farms', 'master_invoice_items.id_farm', '=', 'farms.id')
+            ->orderBy('farms.name', 'ASC')
+            ->get();
+        
+        // Buscamos los clientes que esten en esta carga, por el id_load
+        $clientsInInvoice = MasterInvoiceItem::where('id_load', '=', $code)
+            ->join('clients', 'master_invoice_items.id_client', '=', 'clients.id')
+            ->select('clients.id', 'clients.name')
+            ->orderBy('clients.name', 'ASC')
+            ->get();
+
+        // Eliminamos los clientes duplicados
+        $clients = collect(array_unique($clientsInInvoice->toArray(), SORT_REGULAR));
+        // Total pieces
+        $totalPieces = MasterInvoiceItem::where('id_load', '=', $code)->sum('pieces');
+
+        // Mi empresa
+        $company = Company::first();
+
+        return view('loadingplane.index', compact('invoiceItems', 'clientsInInvoice', 'clients', 'load', 'totalPieces', 'company'));
     }
 
     /**

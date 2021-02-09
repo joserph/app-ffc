@@ -115,3 +115,6 @@ Route::resource('/isf', 'ISFController')->names('isf');
 
 // Factura Master
 Route::get('isf-pdf', 'ISFController@isfPdf')->name('isf.pdf');
+
+// Loading Plane
+Route::resource('/loadingplane', 'LoadingPlaneController')->names('loadingplane');
