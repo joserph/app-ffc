@@ -92,7 +92,6 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            
             <!-- Factura Master -->
             <div class="row">
                 <div class="table-responsive">
@@ -108,26 +107,22 @@
                             $totalFulls = 0; $totalHb = 0; $totalQb = 0; $totalEb = 0;
                         @endphp
                         @foreach($clients as  $key => $client)
+                        
                         <thead>
                             <tr>
-                                <th colspan="4"></th>
+                                <th class="text-center" colspan="8">{{ $client['name'] }}</th>
                             </tr>
                         </thead>
                         <thead>
                             <tr>
-                                <th class="text-center" colspan="4">{{ $client['name'] }}</th>
-                            </tr>
-                        </thead>
-                        <thead>
-                            <tr class="gris">
-                                <th class="text-center medium-letter">Exporter</th>
-                                <th class="text-center medium-letter hawb">Variety</th>
-                                <th class="text-center medium-letter hawb">HAWB</th>
-                                <th class="text-center medium-letter pcs-bxs">PCS</th>
-                                <th class="text-center medium-letter pcs-bxs">BXS</th>
-                                <th class="text-center medium-letter box-size">HALF</th>
-                                <th class="text-center medium-letter box-size">QUART</th>
-                                <th class="text-center medium-letter box-size">OCT</th>
+                                <th class="text-center">Exporter</th>
+                                <th class="text-center">Variety</th>
+                                <th class="text-center">HAWB</th>
+                                <th class="text-center">PCS</th>
+                                <th class="text-center">BXS</th>
+                                <th class="text-center">HALF</th>
+                                <th class="text-center">QUART</th>
+                                <th class="text-center">OCT</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -144,14 +139,14 @@
                                 $tEb+= $item->eb;
                             @endphp
                             <tr>
-                                <td class="small-letter farms">{{ $item->name }}</td>
-                                <td class="small-letter text-center">{{ $item->variety->name }}</td>
-                                <td class="small-letter text-center">{{ $item->hawb }}</td>
-                                <td class="small-letter text-center">{{ $item->pieces }}</td>
-                                <td class="small-letter text-center">{{ number_format($item->fulls, 3, '.','') }}</td>
-                                <td class="small-letter text-center">{{ $item->hb }}</td>
-                                <td class="small-letter text-center">{{ $item->qb }}</td>
-                                <td class="small-letter text-center">{{ $item->eb }}</td>
+                                <td>{{ $item->name }}</td>
+                                <td class="text-center">{{ $item->variety->name }}</td>
+                                <td class="text-center">{{ $item->hawb }}</td>
+                                <td class="text-center">{{ $item->pieces }}</td>
+                                <td class="text-center">{{ number_format($item->fulls, 3, '.','') }}</td>
+                                <td class="text-center">{{ $item->hb }}</td>
+                                <td class="text-center">{{ $item->qb }}</td>
+                                <td class="text-center">{{ $item->eb }}</td>
                             </tr>
                             @endif
                             @endforeach
@@ -163,138 +158,50 @@
                             $totalEb+= $tEb;
                         @endphp
                         <tfoot>
-                            <tr class="gris">
-                                <th class="small-letter text-right" colspan="3">Total:</th>
-                                <th class="small-letter">{{ $tPieces }}</th>
-                                <th class="small-letter">{{ number_format($tFulls, 3, '.','') }}</th>
-                                <th class="small-letter">{{ $tHb }}</th>
-                                <th class="small-letter">{{ $tQb }}</th>
-                                <th class="small-letter">{{ $tEb }}</th>
-                            </tr>
                         @endforeach
                             <tr>
-                                <th colspan="8" class="sin-border"></th>
+                                <th colspan="8"></th>
                             </tr>
-                            <tr class="gris">
+                            <tr class="table-secondary">
                                 <th colspan="3">Total Global:</th>
-                                <th class="small-letter">{{ $totalPieces }}</th>
-                                <th class="small-letter">{{ number_format($totalFulls, 3, '.','') }}</th>
-                                <th class="small-letter">{{ $totalHb }}</th>
-                                <th class="small-letter">{{ $totalQb }}</th>
-                                <th class="small-letter">{{ $totalEb }}</th>
+                                <th class="text-center">{{ $totalPieces }}</th>
+                                <th class="text-center">{{ number_format($totalFulls, 3, '.','') }}</th>
+                                <th class="text-center">{{ $totalHb }}</th>
+                                <th class="text-center">{{ $totalQb }}</th>
+                                <th class="text-center">{{ $totalEb }}</th>
                             </tr>
                         </tfoot>
                     </table>
                 </div>
-                <table>
-                    <tr>
-                        <th colspan="4" class="large-letter">CONFIRMACIÓN DE DESPACHO</th>
-                    </tr>
-                    <tr>
-                        <th class="medium-letter text-left pcs-bxs">Date:</th>
-                        <th class="small-letter text-left farms">{{ date('l, d F - Y', strtotime($load->date)) }}</th>
-                        <th class="medium-letter text-left pcs-bxs">Pcs:</th>
-                        <th class="small-letter text-left">{{ $totalPieces }}</th>
-                    </tr>
-                    <tr>
-                        <th class="medium-letter text-left">Client:</th>
-                        <th class="small-letter text-left">{{ $company->name }}</th>
-                        <th class="medium-letter text-left">Carrier:</th>
-                        <th class="small-letter text-left">MARITIMO</th>
-                    </tr>
-                    <tr>
-                        <th class="medium-letter text-left">Awb:</th>
-                        <th colspan="3" class="small-letter text-left">{{ $load->bl }}</th>
-                    </tr>
-                </table>
-                <br>
-                <table>
-                    @php
-                        $totalFulls = 0; $totalHb = 0; $totalQb = 0; $totalEb = 0;
-                    @endphp
-                    @foreach($clients as  $key => $client)
-                    <thead>
-                        <tr>
-                            <th colspan="8" class="sin-border"></th>
-                        </tr>
-                    </thead>
-                    <thead>
-                        <tr>
-                            <th class="text-center medium-letter">AWB</th>
-                            <th class="text-center medium-letter" colspan="7">{{ $client['name'] }}</th>
-                        </tr>
-                    </thead>
-                    <thead>
-                        <tr class="gris">
-                            <th class="text-center medium-letter">Exporter</th>
-                            <th class="text-center medium-letter hawb">Variety</th>
-                            <th class="text-center medium-letter hawb">HAWB</th>
-                            <th class="text-center medium-letter pcs-bxs">PCS</th>
-                            <th class="text-center medium-letter pcs-bxs">BXS</th>
-                            <th class="text-center medium-letter box-size">HALF</th>
-                            <th class="text-center medium-letter box-size">QUART</th>
-                            <th class="text-center medium-letter box-size">OCT</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php
-                            $tPieces = 0; $tFulls = 0; $tHb = 0; $tQb = 0; $tEb = 0;
-                        @endphp
-                        @foreach($invoiceItems as $item)
-                        @if($client['id'] == $item->id_client)
-                        @php
-                            $tPieces+= $item->pieces;
-                            $tFulls+= $item->fulls;
-                            $tHb+= $item->hb;
-                            $tQb+= $item->qb;
-                            $tEb+= $item->eb;
-                        @endphp
-                        <tr>
-                            <td class="small-letter farms">{{ $item->name }}</td>
-                            <td class="small-letter text-center">{{ $item->variety->name }}</td>
-                            <td class="small-letter text-center">{{ $item->hawb }}</td>
-                            <td class="small-letter text-center">{{ $item->pieces }}</td>
-                            <td class="small-letter text-center">{{ number_format($item->fulls, 3, '.','') }}</td>
-                            <td class="small-letter text-center">{{ $item->hb }}</td>
-                            <td class="small-letter text-center">{{ $item->qb }}</td>
-                            <td class="small-letter text-center">{{ $item->eb }}</td>
-                        </tr>
-                        @endif
-                        @endforeach
-                    </tbody>
-                    @php
-                        $totalFulls+= $tFulls;
-                        $totalHb+= $tHb;
-                        $totalQb+= $tQb;
-                        $totalEb+= $tEb;
-                    @endphp
-                    <tfoot>
-                        <tr class="gris">
-                            <th class="small-letter text-right" colspan="3">Total:</th>
-                            <th class="small-letter">{{ $tPieces }}</th>
-                            <th class="small-letter">{{ number_format($tFulls, 3, '.','') }}</th>
-                            <th class="small-letter">{{ $tHb }}</th>
-                            <th class="small-letter">{{ $tQb }}</th>
-                            <th class="small-letter">{{ $tEb }}</th>
-                        </tr>
-                    @endforeach
-                        <tr>
-                            <th colspan="8" class="sin-border"></th>
-                        </tr>
-                        <tr class="gris">
-                            <th colspan="3">Total Global:</th>
-                            <th class="small-letter">{{ $totalPieces }}</th>
-                            <th class="small-letter">{{ number_format($totalFulls, 3, '.','') }}</th>
-                            <th class="small-letter">{{ $totalHb }}</th>
-                            <th class="small-letter">{{ $totalQb }}</th>
-                            <th class="small-letter">{{ $totalEb }}</th>
-                        </tr>
-                    </tfoot>
-                </table>
            </div>
+        </div>
+        <hr>
+        <h1>Formulario para crear plano</h1>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Launch demo modal
+        </button>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                ...
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            </div>
+        </div>
 
         
-        </div>
     </div>
 </div>
 @endsection
