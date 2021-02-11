@@ -67,6 +67,20 @@ class ISFController extends Controller
         return $isfPdf->stream();
     }
 
+    public function isf10_2Pdf(){
+        // Busco el ID de la carga por medio de la URL
+        $url = $_SERVER["REQUEST_URI"];
+        $arr = explode("?", $url);
+        $code = $arr[1];
+        $load = Load::find($code);
+
+        $isf10_2Pdf = PDF::loadView('isf.isf10_2Pdf', compact(
+            'load'
+        ))->setPaper('A4');
+        //dd($farmsItemsLoad);
+        return $isf10_2Pdf->stream();
+    }
+
     /**
      * Show the form for creating a new resource.
      *

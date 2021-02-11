@@ -27,6 +27,7 @@
                <div class="card-header">
                   Lista de fincas para ISF
                   <a href="{{ route('isf.pdf', $code) }}" target="_blank" class="btn btn-xs btn-outline-default pull-right"><i class="far fa-file-pdf"></i></a>
+                  <a href="{{ route('isf.isf10_2Pdf', $code) }}" target="_blank" class="btn btn-xs btn-outline-info pull-right"><i class="far fa-file-pdf"></i></a>
                </div>
 
                @include('custom.message') 

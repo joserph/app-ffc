@@ -177,26 +177,35 @@
         </div>
         <hr>
         <h1>Formulario para crear plano</h1>
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Launch demo modal
+
+
+        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#agregarItem">
+            <i class="fas fa-plus-circle"></i> Crear Item
         </button>
-        
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+
+        <div class="modal fade" id="agregarItem" tabindex="-1" aria-labelledby="agregarItemLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
             <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                ...
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+               <div class="modal-header">
+                  <h5 class="modal-title" id="agregarItemLabel">Agregar item de la factura</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <form method="POST" v-on:submit.prevent="createInvoiceItem">
+                     <div class="modal-body">
+                        
+                        
+                     </div>
+                     <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-outline-primary" id="createMasterInvoice" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
+                           <i class="fas fa-plus-circle"></i> Crear
+                     </button>
+                     </div>
+                  </form>
+               </div>
             </div>
             </div>
         </div>

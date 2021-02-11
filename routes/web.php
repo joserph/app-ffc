@@ -113,8 +113,11 @@ Route::get('shiptment-confirmation-internal-use-pdf', 'InvoiceHeaderController@s
 // ISF
 Route::resource('/isf', 'ISFController')->names('isf');
 
-// Factura Master
+// ISF Farms
 Route::get('isf-pdf', 'ISFController@isfPdf')->name('isf.pdf');
+
+// ISF 10 + 2
+Route::get('isf10_2Pdf', 'ISFController@isf10_2Pdf')->name('isf.isf10_2Pdf');
 
 // Loading Plane
 Route::resource('/loadingplane', 'LoadingPlaneController')->names('loadingplane');
