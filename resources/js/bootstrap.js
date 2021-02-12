@@ -43,5 +43,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 jQuery( document ).ready(function( $ ) {
     $('#createFarm').tooltip();
- });
+});
 
+Vue.component('loadingplane', require('../components/Loadingplane.vue'));

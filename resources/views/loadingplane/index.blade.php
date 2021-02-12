@@ -176,6 +176,12 @@
            </div>
         </div>
         <hr>
+        <div id="invoiceitem">
+            <loadingplane>
+
+            </loadingplane>
+        </div>
+        
         <h1>Formulario para crear plano</h1>
 
 
