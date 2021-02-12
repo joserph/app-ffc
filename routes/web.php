@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\User;
 use App\Farm;
+use App\Coordination;
 use App\MasterInvoiceItem;
 use App\InvoiceHeader;
 use App\PermissionFolder\Models\Role;
@@ -98,6 +99,14 @@ Route::get('/invoicesitems/{id}', function($id){
     return $invoiceItems;
 });
 
+// Coordinacion
+Route::resource('/coordination', 'CoordinationController')->names('coordination');
+
+Route::get('/getcoordination/{id}', function($id){
+    $coordination = Coordination::where('id_load', '=', $id)->get();
+
+    return $coordination;
+});
 Route::get('/invoiceheader/{id}', function($id){
     $invoiceHeader = InvoiceHeader::where('id_load', '=', $id)->first();
 
@@ -121,3 +130,4 @@ Route::get('isf10_2Pdf', 'ISFController@isf10_2Pdf')->name('isf.isf10_2Pdf');
 
 // Loading Plane
 Route::resource('/loadingplane', 'LoadingPlaneController')->names('loadingplane');
+

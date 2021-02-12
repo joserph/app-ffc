@@ -45,4 +45,4 @@ jQuery( document ).ready(function( $ ) {
     $('#createFarm').tooltip();
 });
 
-Vue.component('loadingplane', require('../components/Loadingplane.vue'));
+//Vue.component('loadingplane', require('../components/Loadingplane.vue'));

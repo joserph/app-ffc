@@ -80,6 +80,24 @@
                   </a>
                 </div>
               </div>
+
+              <!-- Coordinaciones -->
+              <div class="col-lg-3 col-6">
+                <!-- small card -->
+                <div class="small-box bg-primary">
+                  <div class="inner">
+                    <h3>{{ $farmsCount }}</h3>
+    
+                    <p>Coordinaciones</p>
+                  </div>
+                  <div class="icon">
+                    <i class="fas fa-grip-vertical"></i>
+                  </div>
+                   <a href="{{ route('coordination.index', $load->id) }}" class="small-box-footer">
+                    Ver coordinaciones <i class="fas fa-arrow-circle-right"></i>
+                  </a>
+                </div>
+              </div>
            </div>
 
         

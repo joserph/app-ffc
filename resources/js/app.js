@@ -36,13 +36,23 @@
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+/*const app = new Vue({
+    el: '#coordination',
+    created: function(){
+               
+        this.getCoordination();
+    }
+});*/
+
 const app = new Vue({
     el: '#invoiceitem',
     created: function(){
                
         this.getInvoiceItems();
+        this.getCoordination();
     },
     data: {
+        // invoice Items
         invoiceitems: [],
         invoiceheader: [],
         total_fulls: '',
@@ -89,9 +99,22 @@ const app = new Vue({
             'stems_p_bunches': '',
             'fa_cl_de': '',
             'client_confim_id': ''
-        }
+        },
+
+        // Coordination
+        coordinations: [],
     },
     methods: {
+        // Coordination
+        getCoordination: function(){
+            var id_load = $('#id_load').val();
+            var urlGetCoordination = 'getcoordination/' + id_load;
+            axios.get(urlGetCoordination).then(response => {
+                this.coordinations = response.data
+            });
+        },
+
+        // Invoice Items
         getInvoiceItems: function(){
             var id_load = $('#id_load').val();
             //alert(id_load);
