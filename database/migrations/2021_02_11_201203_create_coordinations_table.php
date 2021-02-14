@@ -21,10 +21,14 @@ class CreateCoordinationsTable extends Migration
             $table->integer('hb')->nullable();
             $table->integer('qb')->nullable();
             $table->integer('eb')->nullable();
+            $table->double('fulls', 8, 3)->nullable();
             $table->integer('hb_r')->nullable();
             $table->integer('qb_r')->nullable();
             $table->integer('eb_r')->nullable();
+            $table->integer('pieces_r')->nullable();
+            $table->double('fulls_r', 8, 3)->nullable();
             $table->integer('missing')->nullable(); //faltante
+            $table->integer('returns')->nullable(); // Devoluciones
 
             $table->foreignId('id_client')->references('id')->on('clients')->onDelete('cascade');
             $table->foreignId('id_farm')->references('id')->on('farms')->onDelete('cascade');

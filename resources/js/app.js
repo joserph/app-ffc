@@ -49,7 +49,6 @@ const app = new Vue({
     created: function(){
                
         this.getInvoiceItems();
-        this.getCoordination();
     },
     data: {
         // invoice Items
@@ -101,18 +100,8 @@ const app = new Vue({
             'client_confim_id': ''
         },
 
-        // Coordination
-        coordinations: [],
     },
     methods: {
-        // Coordination
-        getCoordination: function(){
-            var id_load = $('#id_load').val();
-            var urlGetCoordination = 'getcoordination/' + id_load;
-            axios.get(urlGetCoordination).then(response => {
-                this.coordinations = response.data
-            });
-        },
 
         // Invoice Items
         getInvoiceItems: function(){

@@ -8,6 +8,8 @@ use App\Client;
 use App\Variety;
 use App\Load;
 use App\Company;
+use App\Coordination;
+use App\Http\Requests\CoordinationRequest;
 
 class CoordinationController extends Controller
 {
@@ -18,22 +20,33 @@ class CoordinationController extends Controller
      */
     public function index()
     {
+        // Busco el ID de la carga por medio de la URL
+        $url = $_SERVER["REQUEST_URI"];
+        $arr = explode("?", $url);
+        $code = $arr[1];
+        $load = Load::find($code);
+
+        $coordinations = Coordination::where('id_load', '=', $load->id)->get();
         // Fincas
         $farms = Farm::orderBy('name', 'ASC')->pluck('name', 'id');
         // Clientes
         $clients = Client::orderBy('name', 'ASC')->pluck('name', 'id');
         // Variedades
         $varieties = Variety::orderBy('name', 'ASC')->pluck('name', 'id');
-        // Carga
-        // Busco el ID de la carga por medio de la URL
-        $url = $_SERVER["REQUEST_URI"];
-        $arr = explode("?", $url);
-        $code = $arr[1];
-        $load = Load::find($code);
+        
         // Empresa
         $company = Company::first();
-        //dd($company);
-        return view('coordination.index', compact('farms', 'clients', 'varieties', 'load', 'company'));
+        // Buscamos los clientes que esten en esta carga, por el id_load
+        $clientsCoord = Coordination::where('id_load', '=', $code)
+            ->join('clients', 'coordinations.id_client', '=', 'clients.id')
+            ->select('clients.id', 'clients.name')
+            ->orderBy('clients.name', 'ASC')
+            ->get();
+        // Eliminamos los clientes duplicados
+        $clientsCoordination = collect(array_unique($clientsCoord->toArray(), SORT_REGULAR));
+
+        //dd($clientsCoordination);
+        return view('coordination.index', compact('farms', 'clients', 'varieties', 'load', 'company', 'coordinations', 'clientsCoordination'));
     }
 
     /**
@@ -52,9 +65,21 @@ class CoordinationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CoordinationRequest $request)
     {
-        //
+        // calculo de fulls
+        $request['fulls'] = ($request['hb'] * 0.5) + ($request['qb'] * 0.25) + ($request['eb'] * 0.125);
+        $request['fulls_r'] = ($request['hb_r'] * 0.5) + ($request['qb_r'] * 0.25) + ($request['eb_r'] * 0.125);
+        // calculo de piezas
+        $request['pieces'] = $request['hb'] + $request['qb'] + $request['eb'];
+        $request['pieces_r'] = $request['hb_r'] + $request['qb_r'] + $request['eb_r'];
+        // Faltantes 
+        $request['missing'] = $request['pieces'] - $request['pieces_r'];
+
+        $coordination = Coordination::create($request->all());
+
+        return redirect()->route('coordination.index', $coordination->id_load)
+            ->with('status_success', 'Coordinación guardada con éxito');
     }
 
     /**

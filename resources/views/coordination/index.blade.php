@@ -20,10 +20,13 @@
 
 
   <!-- Main content -->
-<section id="invoiceitem" class="content">
+<section class="content">
    <div class="container-fluid">
       <div class="row justify-content-center">
          <div class="col-12">
+
+            @include('custom.message') 
+
             <div class="card">
                <div class="card-header">
                   Coordinaciones
@@ -39,6 +42,17 @@
                   <!-- tabla de coordinaciones -->
                   <div class="table-responsive">
                      <table class="table table-hover">
+                        @foreach($clientsCoordination as  $key => $client)
+                        <thead>
+                           <tr>
+                               <th colspan="14"></th>
+                           </tr>
+                       </thead>
+                       <thead>
+                           <tr>
+                              <th class="text-center medium-letter" colspan="14">{{ $client['name'] }}</th>
+                           </tr>
+                     </thead>
                         <thead>
                            <tr>
                               <th scope="col">Farms</th>
@@ -58,23 +72,29 @@
                            </tr>
                         </thead>
                         <tbody>
-                           <tr v-for="item in coordinations">
-                              <td>@{{ item.id_farm }}</td>
-                              <td>@{{ item.hawb }}</td>
-                              <td>@{{ item.variety_id }}</td>
-                              <td>@{{ item.pieces }}</td>
-                              <td>@{{ item.hb }}</td>
-                              <td>@{{ item.qb }}</td>
-                              <td>@{{ item.eb }}</td>
-                              <td></td>
-                              <td>@{{ item.hb_r }}</td>
-                              <td>@{{ item.qb_r }}</td>
-                              <td>@{{ item.eb_r }}</td>
-                              <td></td>
-                              <td></td>
-                              <td>@{{ item.missing }}</td>
-                           </tr>
+                           @foreach ($coordinations as $item)
+                              @if($client['id'] == $item->id_client)
+                                 <tr>
+                                    <td>{{ $item->id_farm }}</td>
+                                    <td>{{ $item->hawb }}</td>
+                                    <td>{{ $item->variety_id }}</td>
+                                    <td>{{ $item->pieces }}</td>
+                                    <td>{{ $item->hb }}</td>
+                                    <td>{{ $item->qb }}</td>
+                                    <td>{{ $item->eb }}</td>
+                                    <td>{{ $item->fulls }}</td>
+                                    <td>{{ $item->hb_r }}</td>
+                                    <td>{{ $item->qb_r }}</td>
+                                    <td>{{ $item->eb_r }}</td>
+                                    <td>{{ $item->fulls_r }}</td>
+                                    <td>{{ $item->returns }}</td>
+                                    <td>{{ $item->missing }}</td>
+                                 </tr>
+                              @endif
+                           @endforeach
+                           
                         </tbody>
+                        @endforeach
                      </table>
                   </div>
                   <!-- fin tabla de coordinaciones -->
@@ -93,17 +113,17 @@
                      </button>
                   </div>
                   <div class="modal-body">
-                     <form method="POST" v-on:submit.prevent="createInvoiceItem">
+                     {{ Form::open(['route' => 'coordination.store', 'class' => 'form-horizontal']) }}
                         <div class="modal-body">
                            @include('coordination.form')
                         </div>
                         <div class="modal-footer">
                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
-                           <button type="submit" class="btn btn-outline-primary" id="createMasterInvoice" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
+                           <button type="submit" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
                               <i class="fas fa-plus-circle"></i> Crear
                            </button>
                         </div>
-                     </form>
+                     {{ Form::close() }}
                   </div>
                </div>
             </div>

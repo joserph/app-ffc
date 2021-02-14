@@ -21,6 +21,10 @@ class Coordination extends Model
         'id_load',
         'variety_id',
         'id_user',
-        'update_user'
+        'update_user',
+        'fulls',
+        'pieces_r',
+        'fulls_r',
+        'returns'
     ];
 }
