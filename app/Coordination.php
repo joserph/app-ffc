@@ -27,4 +27,14 @@ class Coordination extends Model
         'fulls_r',
         'returns'
     ];
+
+    public function farm()
+    {
+        return $this->belongsTo('App\Farm', 'id_farm');
+    }
+
+    public function variety()
+    {
+        return $this->belongsTo('App\Variety', 'variety_id');
+    }
 }

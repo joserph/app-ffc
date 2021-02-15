@@ -41,7 +41,7 @@
                <div class="card-footer">
                   <!-- tabla de coordinaciones -->
                   <div class="table-responsive">
-                     <table class="table table-hover">
+                     <table class="table table-hover table-sm">
                         @foreach($clientsCoordination as  $key => $client)
                         <thead>
                            <tr>
@@ -75,9 +75,9 @@
                            @foreach ($coordinations as $item)
                               @if($client['id'] == $item->id_client)
                                  <tr>
-                                    <td>{{ $item->id_farm }}</td>
+                                    <td>{{ $item->farm->name }}</td>
                                     <td>{{ $item->hawb }}</td>
-                                    <td>{{ $item->variety_id }}</td>
+                                    <td>{{ $item->variety->name }}</td>
                                     <td>{{ $item->pieces }}</td>
                                     <td>{{ $item->hb }}</td>
                                     <td>{{ $item->qb }}</td>

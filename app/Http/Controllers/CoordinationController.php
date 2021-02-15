@@ -26,7 +26,8 @@ class CoordinationController extends Controller
         $code = $arr[1];
         $load = Load::find($code);
 
-        $coordinations = Coordination::where('id_load', '=', $load->id)->get();
+        $coordinations = Coordination::where('id_load', '=', $load->id)
+            ->with('farm')->with('variety')->get();
         // Fincas
         $farms = Farm::orderBy('name', 'ASC')->pluck('name', 'id');
         // Clientes
@@ -45,7 +46,7 @@ class CoordinationController extends Controller
         // Eliminamos los clientes duplicados
         $clientsCoordination = collect(array_unique($clientsCoord->toArray(), SORT_REGULAR));
 
-        //dd($clientsCoordination);
+        //dd($coordinations);
         return view('coordination.index', compact('farms', 'clients', 'varieties', 'load', 'company', 'coordinations', 'clientsCoordination'));
     }
 
