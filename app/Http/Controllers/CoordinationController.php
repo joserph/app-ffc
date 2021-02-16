@@ -26,8 +26,12 @@ class CoordinationController extends Controller
         $code = $arr[1];
         $load = Load::find($code);
 
-        $coordinations = Coordination::where('id_load', '=', $load->id)
-            ->with('farm')->with('variety')->get();
+        $coordinations = Coordination::select('*')
+            ->where('id_load', '=', $code)
+            ->with('variety')
+            ->join('farms', 'coordinations.id_farm', '=', 'farms.id')
+            ->orderBy('farms.name', 'ASC')
+            ->get();
         // Fincas
         $farms = Farm::orderBy('name', 'ASC')->pluck('name', 'id');
         // Clientes

@@ -48,8 +48,85 @@
                           <div class="card">
                             <div class="card-body">
                               <h5 class="card-title">Special title treatment</h5>
-                              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                              <a href="#" class="btn btn-primary">Go somewhere</a>
+                              <table class="table table-hover table-sm">
+                                 @php
+                                     $totalFulls = 0; $totalHb = 0; $totalQb = 0; $totalEb = 0; $totalPieces = 0;
+                                 @endphp
+                                 @foreach($clientsCoordination as  $key => $client)
+                                 
+                                 <thead>
+                                     <tr>
+                                         <th>AWB</th>
+                                         <th colspan="7">{{ $client['name'] }}</th>
+                                     </tr>
+                                 </thead>
+                                 <thead>
+                                     <tr class="gris">
+                                         <th>Exporter</th>
+                                         <th>Variety</th>
+                                         <th>HAWB</th>
+                                         <th>PCS</th>
+                                         <th>BXS</th>
+                                         <th>HALF</th>
+                                         <th>QUART</th>
+                                         <th>OCT</th>
+                                     </tr>
+                                 </thead>
+                                 <tbody>
+                                     @php
+                                         $tPieces = 0; $tFulls = 0; $tHb = 0; $tQb = 0; $tEb = 0;
+                                     @endphp
+                                     @foreach($coordinations as $item)
+                                     @if($client['id'] == $item->id_client)
+                                       @php
+                                          $tPieces+= $item->pieces;
+                                          $tFulls+= $item->fulls;
+                                          $tHb+= $item->hb;
+                                          $tQb+= $item->qb;
+                                          $tEb+= $item->eb;
+                                       @endphp
+                                       <tr>
+                                          <td>{{ $item->name }}</td>
+                                          <td>{{ $item->variety->name }}</td>
+                                          <td>{{ $item->hawb }}</td>
+                                          <td>{{ $item->pieces }}</td>
+                                          <td>{{ number_format($item->fulls, 3, '.','') }}</td>
+                                          <td>{{ $item->hb }}</td>
+                                          <td>{{ $item->qb }}</td>
+                                          <td>{{ $item->eb }}</td>
+                                       </tr>
+                                       @endif
+                                     @endforeach
+                                 </tbody>
+                                 
+                                 <tfoot>
+                                     <tr>
+                                         <th colspan="3">Total:</th>
+                                         <th>{{ $tPieces }}</th>
+                                         <th>{{ number_format($tFulls, 3, '.','') }}</th>
+                                         <th>{{ $tHb }}</th>
+                                         <th>{{ $tQb }}</th>
+                                         <th>{{ $tEb }}</th>
+                                     </tr>
+                                    @php
+                                       $totalFulls+= $tFulls;
+                                       $totalHb+= $tHb;
+                                       $totalQb+= $tQb;
+                                       $totalEb+= $tEb;
+                                       $totalPieces+= $totalHb + $totalQb + $totalEb;
+                                    @endphp
+                                 @endforeach
+                                     
+                                     <tr>
+                                         <th colspan="3">Total Global:</th>
+                                         <th>{{ $totalPieces }}</th>
+                                         <th>{{ number_format($totalFulls, 3, '.','') }}</th>
+                                         <th>{{ $totalHb }}</th>
+                                         <th>{{ $totalQb }}</th>
+                                         <th>{{ $totalEb }}</th>
+                                     </tr>
+                                 </tfoot>
+                             </table>
                             </div>
                           </div>
                         </div>
@@ -59,61 +136,118 @@
                <div class="card-footer">
                   <!-- tabla de coordinaciones -->
                   <div class="table-responsive">
-                     <table class="table table-hover table-sm">
-                        @foreach($clientsCoordination as  $key => $client)
+                     <table>
+                        <tr>
+                            <th colspan="4" class="large-letter">CONFIRMACIÓN DE DESPACHO</th>
+                        </tr>
+                        <tr>
+                            <th class="medium-letter text-left pcs-bxs">Date:</th>
+                            <th class="small-letter text-left farms">{{ date('l, d F - Y', strtotime($load->date)) }}</th>
+                            <th class="medium-letter text-left pcs-bxs">Pcs:</th>
+                            <th class="small-letter text-left">{{ $totalPieces }}</th>
+                        </tr>
+                        <tr>
+                            <th class="medium-letter text-left">Client:</th>
+                            <th class="small-letter text-left">{{ $company->name }}</th>
+                            <th class="medium-letter text-left">Carrier:</th>
+                            <th class="small-letter text-left">MARITIMO</th>
+                        </tr>
+                        <tr>
+                            <th class="medium-letter text-left">Awb:</th>
+                            <th colspan="3" class="small-letter text-left">{{ $load->bl }}</th>
+                        </tr>
+                    </table>
+                    <br>
+                    <table class="table table-sm">
+                        @php
+                            $totalFulls = 0; $totalHb = 0; $totalQb = 0; $totalEb = 0;
+                        @endphp
+                        @foreach($clientsCoordination as $client)
                         <thead>
-                           <tr>
-                               <th colspan="14"></th>
-                           </tr>
-                       </thead>
-                       <thead>
-                           <tr>
-                              <th class="text-center medium-letter" colspan="14">{{ $client['name'] }}</th>
-                           </tr>
-                     </thead>
+                            <tr>
+                                <th colspan="8" class="sin-border"></th>
+                            </tr>
+                        </thead>
                         <thead>
-                           <tr>
-                              <th scope="col">Farms</th>
-                              <th scope="col">HAWB</th>
-                              <th scope="col">Varieties</th>
-                              <th scope="col">Pcs</th>
-                              <th scope="col">HB</th>
-                              <th scope="col">QB</th>
-                              <th scope="col">EB</th>
-                              <th scope="col">Box</th>
-                              <th scope="col">HB</th>
-                              <th scope="col">QB</th>
-                              <th scope="col">EB</th>
-                              <th scope="col">Box</th>
-                              <th scope="col">Dev</th>
-                              <th scope="col">Missing</th>
-                           </tr>
+                            <tr>
+                                <th class="text-center medium-letter">AWB</th>
+                                <th class="text-center medium-letter" colspan="7">{{ $client['name'] }}</th>
+                            </tr>
+                        </thead>
+                        <thead>
+                            <tr class="gris">
+                                <th class="text-center medium-letter">Exporter</th>
+                                <th class="text-center medium-letter hawb">Variety</th>
+                                <th class="text-center medium-letter hawb">HAWB</th>
+                                <th class="text-center medium-letter pcs-bxs">PCS</th>
+                                <th class="text-center medium-letter pcs-bxs">BXS</th>
+                                <th class="text-center medium-letter box-size">HALF</th>
+                                <th class="text-center medium-letter box-size">QUART</th>
+                                <th class="text-center medium-letter box-size">OCT</th>
+                            </tr>
                         </thead>
                         <tbody>
-                           @foreach ($coordinations as $item)
-                              @if($client['id'] == $item->id_client)
-                                 <tr>
-                                    <td>{{ $item->farm->name }}</td>
-                                    <td>{{ $item->hawb }}</td>
-                                    <td>{{ $item->variety->name }}</td>
-                                    <td>{{ $item->pieces }}</td>
-                                    <td>{{ $item->hb }}</td>
-                                    <td>{{ $item->qb }}</td>
-                                    <td>{{ $item->eb }}</td>
-                                    <td>{{ $item->fulls }}</td>
-                                    <td>{{ $item->hb_r }}</td>
-                                    <td>{{ $item->qb_r }}</td>
-                                    <td>{{ $item->eb_r }}</td>
-                                    <td>{{ $item->fulls_r }}</td>
-                                    <td>{{ $item->returns }}</td>
-                                    <td>{{ $item->missing }}</td>
-                                 </tr>
-                              @endif
-                           @endforeach
-                           
+                            @php
+                                $tPieces = 0; $tFulls = 0; $tHb = 0; $tQb = 0; $tEb = 0; $totalPieces = 0;
+                            @endphp
+                            @foreach($coordinations as $item)
+                            @if($client['id'] == $item->id_client)
+                            @php
+                                $tPieces+= $item->pieces;
+                                $tFulls+= $item->fulls;
+                                $tHb+= $item->hb;
+                                $tQb+= $item->qb;
+                                $tEb+= $item->eb;
+                            @endphp
+                            <tr>
+                                <td class="small-letter farms">{{ $item->name }}</td>
+                                <td class="small-letter text-center">{{ $item->variety->name }}</td>
+                                <td class="small-letter text-center">{{ $item->hawb }}</td>
+                                <td class="small-letter text-center">{{ $item->pieces }}</td>
+                                <td class="small-letter text-center">{{ number_format($item->fulls, 3, '.','') }}</td>
+                                <td class="small-letter text-center">{{ $item->hb }}</td>
+                                <td class="small-letter text-center">{{ $item->qb }}</td>
+                                <td class="small-letter text-center">{{ $item->eb }}</td>
+                            </tr>
+                            @endif
+                            @endforeach
+                            @php
+                                 $totalFulls+= $tFulls;
+                                 $totalHb+= $tHb;
+                                 $totalQb+= $tQb;
+                                 $totalEb+= $tEb;
+                                 
+                              @endphp
+                           <tr class="gris">
+                              <th class="small-letter text-right" colspan="3">Total:</th>
+                              <th class="small-letter">{{ $tPieces }}</th>
+                              <th class="small-letter">{{ number_format($tFulls, 3, '.','') }}</th>
+                              <th class="small-letter">{{ $tHb }}</th>
+                              <th class="small-letter">{{ $tQb }}</th>
+                              <th class="small-letter">{{ $tEb }}</th>
+                           </tr>
                         </tbody>
+                        
+                        <tfoot>
+                            
+                        
                         @endforeach
-                     </table>
+                        @php
+                            $totalPieces+= $totalHb + $totalQb + $totalEb;
+                        @endphp
+                            <tr>
+                                <th colspan="8" class="sin-border"></th>
+                            </tr>
+                            <tr class="gris">
+                                <th colspan="3">Total Global:</th>
+                                <th class="small-letter">{{ $totalPieces }}</th>
+                                <th class="small-letter">{{ number_format($totalFulls, 3, '.','') }}</th>
+                                <th class="small-letter">{{ $totalHb }}</th>
+                                <th class="small-letter">{{ $totalQb }}</th>
+                                <th class="small-letter">{{ $totalEb }}</th>
+                            </tr>
+                        </tfoot>
+                    </table>
                   </div>
                   <!-- fin tabla de coordinaciones -->
                </div>
