@@ -62,14 +62,14 @@
                                  </thead>
                                  <thead>
                                      <tr class="gris">
-                                         <th>Exporter</th>
-                                         <th>Variety</th>
+                                         <th>Finca</th>
                                          <th>HAWB</th>
+                                         <th>Variedad</th>
                                          <th>PCS</th>
-                                         <th>BXS</th>
-                                         <th>HALF</th>
-                                         <th>QUART</th>
-                                         <th>OCT</th>
+                                         <th>HB</th>
+                                         <th>QB</th>
+                                         <th>EB</th>
+                                         <th>FULL</th>
                                      </tr>
                                  </thead>
                                  <tbody>
@@ -97,26 +97,24 @@
                                        </tr>
                                        @endif
                                      @endforeach
-                                 </tbody>
-                                 
-                                 <tfoot>
-                                     <tr>
-                                         <th colspan="3">Total:</th>
-                                         <th>{{ $tPieces }}</th>
-                                         <th>{{ number_format($tFulls, 3, '.','') }}</th>
-                                         <th>{{ $tHb }}</th>
-                                         <th>{{ $tQb }}</th>
-                                         <th>{{ $tEb }}</th>
-                                     </tr>
-                                    @php
+                                     @php
                                        $totalFulls+= $tFulls;
                                        $totalHb+= $tHb;
                                        $totalQb+= $tQb;
                                        $totalEb+= $tEb;
                                        $totalPieces+= $totalHb + $totalQb + $totalEb;
                                     @endphp
+                                    <tr>
+                                       <th colspan="3">Total:</th>
+                                       <th>{{ $tPieces }}</th>
+                                       <th>{{ number_format($tFulls, 3, '.','') }}</th>
+                                       <th>{{ $tHb }}</th>
+                                       <th>{{ $tQb }}</th>
+                                       <th>{{ $tEb }}</th>
+                                   </tr>
+                                 </tbody>
+                                 <tfoot>
                                  @endforeach
-                                     
                                      <tr>
                                          <th colspan="3">Total Global:</th>
                                          <th>{{ $totalPieces }}</th>
@@ -176,14 +174,14 @@
                         </thead>
                         <thead>
                             <tr class="gris">
-                                <th class="text-center medium-letter">Exporter</th>
-                                <th class="text-center medium-letter hawb">Variety</th>
-                                <th class="text-center medium-letter hawb">HAWB</th>
-                                <th class="text-center medium-letter pcs-bxs">PCS</th>
-                                <th class="text-center medium-letter pcs-bxs">BXS</th>
-                                <th class="text-center medium-letter box-size">HALF</th>
-                                <th class="text-center medium-letter box-size">QUART</th>
-                                <th class="text-center medium-letter box-size">OCT</th>
+                              <th>Finca</th>
+                              <th>HAWB</th>
+                              <th>Variedad</th>
+                              <th>PCS</th>
+                              <th>HB</th>
+                              <th>QB</th>
+                              <th>EB</th>
+                              <th>FULL</th>
                             </tr>
                         </thead>
                         <tbody>
