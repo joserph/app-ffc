@@ -174,14 +174,21 @@
                         </thead>
                         <thead>
                             <tr class="gris">
-                              <th>Finca</th>
-                              <th>HAWB</th>
-                              <th>Variedad</th>
-                              <th>PCS</th>
-                              <th>HB</th>
-                              <th>QB</th>
-                              <th>EB</th>
-                              <th>FULL</th>
+                              <th class="text-center">Finca</th>
+                              <th class="text-center">HAWB</th>
+                              <th class="text-center">Variedad</th>
+                              <th class="text-center">PCS</th>
+                              <th class="text-center">HB</th>
+                              <th class="text-center">QB</th>
+                              <th class="text-center">EB</th>
+                              <th class="text-center">FULL</th>
+                              <th class="text-center">PCS</th>
+                              <th class="text-center">HB</th>
+                              <th class="text-center">QB</th>
+                              <th class="text-center">EB</th>
+                              <th class="text-center">FULL</th>
+                              <th class="text-center">Dev</th>
+                              <th class="text-center">Faltantes</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -198,14 +205,21 @@
                                 $tEb+= $item->eb;
                             @endphp
                             <tr>
-                                <td class="small-letter farms">{{ $item->name }}</td>
-                                <td class="small-letter text-center">{{ $item->variety->name }}</td>
-                                <td class="small-letter text-center">{{ $item->hawb }}</td>
-                                <td class="small-letter text-center">{{ $item->pieces }}</td>
-                                <td class="small-letter text-center">{{ number_format($item->fulls, 3, '.','') }}</td>
-                                <td class="small-letter text-center">{{ $item->hb }}</td>
-                                <td class="small-letter text-center">{{ $item->qb }}</td>
-                                <td class="small-letter text-center">{{ $item->eb }}</td>
+                                <td class="farms">{{ $item->name }}</td>
+                                <td class="text-center">{{ $item->hawb }}</td>
+                                <td class="text-center">{{ $item->variety->name }}</td>
+                                <td class="text-center">{{ $item->pieces }}</td>
+                                <td class="text-center">{{ $item->hb }}</td>
+                                <td class="text-center">{{ $item->qb }}</td>
+                                <td class="text-center">{{ $item->eb }}</td>
+                                <td class="text-center">{{ number_format($item->fulls, 3, '.','') }}</td>
+                                <td class="text-center">{{ $item->pieces_r }}</td>
+                                <td class="text-center">{{ $item->hb_r }}</td>
+                                <td class="text-center">{{ $item->qb_r }}</td>
+                                <td class="text-center">{{ $item->eb_r }}</td>
+                                <td class="text-center">{{ number_format($item->fulls_r, 3, '.','') }}</td>
+                                <td class="text-center">{{ $item->returns }}</td>
+                                <td class="text-center">{{ $item->missing }}</td>
                             </tr>
                             @endif
                             @endforeach
