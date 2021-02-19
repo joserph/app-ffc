@@ -52,26 +52,17 @@
                                  @php
                                      $totalFulls = 0; $totalHb = 0; $totalQb = 0; $totalEb = 0; $totalPieces = 0;
                                  @endphp
+                                 <thead>
+                                    <tr class="gris">
+                                        <th>Cliente</th>
+                                        <th class="text-center">PCS</th>
+                                        <th class="text-center">HB</th>
+                                        <th class="text-center">QB</th>
+                                        <th class="text-center">EB</th>
+                                    </tr>
+                                </thead>
                                  @foreach($clientsCoordination as  $key => $client)
                                  
-                                 <thead>
-                                     <tr>
-                                         <th>AWB</th>
-                                         <th colspan="7">{{ $client['name'] }}</th>
-                                     </tr>
-                                 </thead>
-                                 <thead>
-                                     <tr class="gris">
-                                         <th>Finca</th>
-                                         <th>HAWB</th>
-                                         <th>Variedad</th>
-                                         <th>PCS</th>
-                                         <th>HB</th>
-                                         <th>QB</th>
-                                         <th>EB</th>
-                                         <th>FULL</th>
-                                     </tr>
-                                 </thead>
                                  <tbody>
                                      @php
                                          $tPieces = 0; $tFulls = 0; $tHb = 0; $tQb = 0; $tEb = 0;
@@ -85,16 +76,7 @@
                                           $tQb+= $item->qb;
                                           $tEb+= $item->eb;
                                        @endphp
-                                       <tr>
-                                          <td>{{ $item->name }}</td>
-                                          <td>{{ $item->variety->name }}</td>
-                                          <td>{{ $item->hawb }}</td>
-                                          <td>{{ $item->pieces }}</td>
-                                          <td>{{ number_format($item->fulls, 3, '.','') }}</td>
-                                          <td>{{ $item->hb }}</td>
-                                          <td>{{ $item->qb }}</td>
-                                          <td>{{ $item->eb }}</td>
-                                       </tr>
+                                       
                                        @endif
                                      @endforeach
                                      @php
@@ -102,26 +84,26 @@
                                        $totalHb+= $tHb;
                                        $totalQb+= $tQb;
                                        $totalEb+= $tEb;
-                                       $totalPieces+= $totalHb + $totalQb + $totalEb;
                                     @endphp
                                     <tr>
-                                       <th colspan="3">Total:</th>
-                                       <th>{{ $tPieces }}</th>
-                                       <th>{{ number_format($tFulls, 3, '.','') }}</th>
-                                       <th>{{ $tHb }}</th>
-                                       <th>{{ $tQb }}</th>
-                                       <th>{{ $tEb }}</th>
+                                       <td>{{ $client['name'] }}</td>
+                                       <td class="text-center">{{ $tPieces }}</td>
+                                       <td class="text-center">{{ $tHb }}</td>
+                                       <td class="text-center">{{ $tQb }}</td>
+                                       <td class="text-center">{{ $tEb }}</td>
                                    </tr>
                                  </tbody>
                                  <tfoot>
                                  @endforeach
+                                 @php
+                                     $totalPieces+= $totalHb + $totalQb + $totalEb;
+                                 @endphp
                                      <tr>
-                                         <th colspan="3">Total Global:</th>
-                                         <th>{{ $totalPieces }}</th>
-                                         <th>{{ number_format($totalFulls, 3, '.','') }}</th>
-                                         <th>{{ $totalHb }}</th>
-                                         <th>{{ $totalQb }}</th>
-                                         <th>{{ $totalEb }}</th>
+                                         <th>Total Global:</th>
+                                         <th class="text-center">{{ $totalPieces }}</th>
+                                         <th class="text-center">{{ $totalHb }}</th>
+                                         <th class="text-center">{{ $totalQb }}</th>
+                                         <th class="text-center">{{ $totalEb }}</th>
                                      </tr>
                                  </tfoot>
                              </table>
@@ -134,28 +116,6 @@
                <div class="card-footer">
                   <!-- tabla de coordinaciones -->
                   <div class="table-responsive">
-                     <table>
-                        <tr>
-                            <th colspan="4" class="large-letter">CONFIRMACIÓN DE DESPACHO</th>
-                        </tr>
-                        <tr>
-                            <th class="medium-letter text-left pcs-bxs">Date:</th>
-                            <th class="small-letter text-left farms">{{ date('l, d F - Y', strtotime($load->date)) }}</th>
-                            <th class="medium-letter text-left pcs-bxs">Pcs:</th>
-                            <th class="small-letter text-left">{{ $totalPieces }}</th>
-                        </tr>
-                        <tr>
-                            <th class="medium-letter text-left">Client:</th>
-                            <th class="small-letter text-left">{{ $company->name }}</th>
-                            <th class="medium-letter text-left">Carrier:</th>
-                            <th class="small-letter text-left">MARITIMO</th>
-                        </tr>
-                        <tr>
-                            <th class="medium-letter text-left">Awb:</th>
-                            <th colspan="3" class="small-letter text-left">{{ $load->bl }}</th>
-                        </tr>
-                    </table>
-                    <br>
                     <table class="table table-sm">
                         @php
                             $totalFulls = 0; $totalHb = 0; $totalQb = 0; $totalEb = 0;
@@ -163,13 +123,13 @@
                         @foreach($clientsCoordination as $client)
                         <thead>
                             <tr>
-                                <th colspan="8" class="sin-border"></th>
+                                <th colspan="15" class="sin-border"></th>
                             </tr>
                         </thead>
                         <thead>
                             <tr>
                                 <th class="text-center medium-letter">AWB</th>
-                                <th class="text-center medium-letter" colspan="7">{{ $client['name'] }}</th>
+                                <th class="text-center medium-letter" colspan="14">{{ $client['name'] }}</th>
                             </tr>
                         </thead>
                         <thead>
@@ -189,11 +149,13 @@
                               <th class="text-center">FULL</th>
                               <th class="text-center">Dev</th>
                               <th class="text-center">Faltantes</th>
+                              <th class="text-center" colspan="2">Aciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             @php
-                                $tPieces = 0; $tFulls = 0; $tHb = 0; $tQb = 0; $tEb = 0; $totalPieces = 0;
+                                $tPieces = 0; $tFulls = 0; $tHb = 0; $tQb = 0; $tEb = 0; $totalPieces = 0; $tPcsR = 0;
+                                 $tHbr = 0; $tQbr = 0; $tEbr = 0; $tFullsR = 0; $tDevR = 0; $tMissingR = 0;
                             @endphp
                             @foreach($coordinations as $item)
                             @if($client['id'] == $item->id_client)
@@ -203,6 +165,13 @@
                                 $tHb+= $item->hb;
                                 $tQb+= $item->qb;
                                 $tEb+= $item->eb;
+                                $tPcsR+= $item->pieces_r;
+                                 $tHbr+= $item->hb_r;
+                                 $tQbr+= $item->qb_r;
+                                 $tEbr+= $item->eb_r;
+                                 $tFullsR+= $item->fulls_r;
+                                 $tDevR+= $item->returns;
+                                 $tMissingR+= $item->missing;
                             @endphp
                             <tr>
                                 <td class="farms">{{ $item->name }}</td>
@@ -220,6 +189,10 @@
                                 <td class="text-center">{{ number_format($item->fulls_r, 3, '.','') }}</td>
                                 <td class="text-center">{{ $item->returns }}</td>
                                 <td class="text-center">{{ $item->missing }}</td>
+                                <td class="text-center">
+                                    <a href="#" class="btn btn-outline-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                                    <a href="#" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
+                               </td>
                             </tr>
                             @endif
                             @endforeach
@@ -231,18 +204,22 @@
                                  
                               @endphp
                            <tr class="gris">
-                              <th class="small-letter text-right" colspan="3">Total:</th>
-                              <th class="small-letter">{{ $tPieces }}</th>
-                              <th class="small-letter">{{ number_format($tFulls, 3, '.','') }}</th>
-                              <th class="small-letter">{{ $tHb }}</th>
-                              <th class="small-letter">{{ $tQb }}</th>
-                              <th class="small-letter">{{ $tEb }}</th>
+                              <th class="text-center text-right" colspan="3">Total:</th>
+                              <th class="text-center">{{ $tPieces }}</th>
+                              <th class="text-center">{{ $tHb }}</th>
+                              <th class="text-center">{{ $tQb }}</th>
+                              <th class="text-center">{{ $tEb }}</th>
+                              <th class="text-center">{{ number_format($tFulls, 3, '.','') }}</th>
+                              <th class="text-center">{{ $tPcsR }}</th>
+                              <th class="text-center">{{ $tHbr }}</th>
+                              <th class="text-center">{{ $tQbr }}</th>
+                              <th class="text-center">{{ $tEbr }}</th>
+                              <th class="text-center">{{ number_format($tFullsR, 3, '.','') }}</th>
+                              <th class="text-center">{{ $tDevR }}</th>
+                              <th class="text-center">{{ $tMissingR }}</th>
                            </tr>
                         </tbody>
-                        
                         <tfoot>
-                            
-                        
                         @endforeach
                         @php
                             $totalPieces+= $totalHb + $totalQb + $totalEb;
@@ -251,12 +228,12 @@
                                 <th colspan="8" class="sin-border"></th>
                             </tr>
                             <tr class="gris">
-                                <th colspan="3">Total Global:</th>
-                                <th class="small-letter">{{ $totalPieces }}</th>
-                                <th class="small-letter">{{ number_format($totalFulls, 3, '.','') }}</th>
-                                <th class="small-letter">{{ $totalHb }}</th>
-                                <th class="small-letter">{{ $totalQb }}</th>
-                                <th class="small-letter">{{ $totalEb }}</th>
+                                <th class="text-center" colspan="3">Total Global:</th>
+                                <th class="text-center">{{ $totalPieces }}</th>
+                                <th class="text-center">{{ $totalHb }}</th>
+                                <th class="text-center">{{ $totalQb }}</th>
+                                <th class="text-center">{{ $totalEb }}</th>
+                                <th class="text-center">{{ number_format($totalFulls, 3, '.','') }}</th>
                             </tr>
                         </tfoot>
                     </table>
