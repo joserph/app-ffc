@@ -47,7 +47,7 @@
                         <div class="col-sm-6">
                           <div class="card">
                             <div class="card-body">
-                              <h5 class="card-title">Special title treatment</h5>
+                              <h5 class="card-title">Resumen coordinación</h5>
                               <table class="table table-hover table-sm">
                                  @php
                                      $totalFulls = 0; $totalHb = 0; $totalQb = 0; $totalEb = 0; $totalPieces = 0;
@@ -118,7 +118,8 @@
                   <div class="table-responsive">
                     <table class="table table-sm">
                         @php
-                            $totalFulls = 0; $totalHb = 0; $totalQb = 0; $totalEb = 0;
+                            $totalFulls = 0; $totalHb = 0; $totalQb = 0; $totalEb = 0; $totalPcsr = 0; $totalHbr = 0; $totalQbr = 0;
+                            $totalEbr = 0; $totalFullsr = 0; $totalDevr = 0; $totalMissingr = 0;
                         @endphp
                         @foreach($clientsCoordination as $client)
                         <thead>
@@ -190,7 +191,7 @@
                                 <td class="text-center">{{ $item->returns }}</td>
                                 <td class="text-center">{{ $item->missing }}</td>
                                 <td class="text-center">
-                                    <a href="#" class="btn btn-outline-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                                    <a href="{{ route('coordination.edit', $item->id) }}" class="btn btn-outline-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
                                     <a href="#" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
                                </td>
                             </tr>
@@ -201,7 +202,13 @@
                                  $totalHb+= $tHb;
                                  $totalQb+= $tQb;
                                  $totalEb+= $tEb;
-                                 
+                                 $totalPcsr+= $tPcsR;
+                                 $totalHbr+= $tHbr;
+                                 $totalQbr+= $tQbr;
+                                 $totalEbr+= $tEbr;
+                                 $totalFullsr+= $tFullsR;
+                                 $totalDevr+= $tDevR;
+                                 $totalMissingr+= $tMissingR;
                               @endphp
                            <tr class="gris">
                               <th class="text-center text-right" colspan="3">Total:</th>
@@ -234,6 +241,13 @@
                                 <th class="text-center">{{ $totalQb }}</th>
                                 <th class="text-center">{{ $totalEb }}</th>
                                 <th class="text-center">{{ number_format($totalFulls, 3, '.','') }}</th>
+                                <th class="text-center">{{ $totalPcsr }}</th>
+                                <th class="text-center">{{ $totalHbr }}</th>
+                                <th class="text-center">{{ $totalQbr }}</th>
+                                <th class="text-center">{{ $totalEbr }}</th>
+                                <th class="text-center">{{ number_format($totalFullsr, 3, '.','') }}</th>
+                                <th class="text-center">{{ $totalDevr }}</th>
+                                <th class="text-center">{{ $totalMissingr }}</th>
                             </tr>
                         </tfoot>
                     </table>
@@ -248,7 +262,7 @@
             <div class="modal-dialog modal-xl">
                <div class="modal-content">
                   <div class="modal-header">
-                     <h5 class="modal-title" id="agregarItemLabel">Agregar item de la factura</h5>
+                     <h5 class="modal-title" id="agregarItemLabel">Agregar item de coordinación</h5>
                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                      </button>

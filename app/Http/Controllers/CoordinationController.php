@@ -50,7 +50,7 @@ class CoordinationController extends Controller
         // Eliminamos los clientes duplicados
         $clientsCoordination = collect(array_unique($clientsCoord->toArray(), SORT_REGULAR));
 
-        //dd($coordinations);
+        dd($coordinations);
         return view('coordination.index', compact('farms', 'clients', 'varieties', 'load', 'company', 'coordinations', 'clientsCoordination'));
     }
 
