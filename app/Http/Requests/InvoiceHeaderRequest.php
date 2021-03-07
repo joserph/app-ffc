@@ -28,7 +28,7 @@ class InvoiceHeaderRequest extends FormRequest
             'bl'                    => 'required',
             'id_company'            => 'required',
             'id_logistics_company'  => 'required',
-            'invoice'               => '',
+            'invoice'               => 'required|max:50|unique:invoice_headers,invoice',
             'date'                  => 'required'
         ];
     }

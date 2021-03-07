@@ -34,7 +34,7 @@
          </button>
          @endif
  
-            <!-- Modal -->
+            <!-- Modal create header invoice -->
             <div class="modal fade" id="createInvoiceHeader" tabindex="-1" aria-labelledby="createInvoiceHeaderLabel" aria-hidden="true">
                <div class="modal-dialog modal-xl">
                <div class="modal-content">
@@ -65,6 +65,9 @@
          @endcan
 
          @if($invoiceheaders)
+         
+
+
          <!-- Invoice Header -->
          <div class="invoice p-3 mb-3">
             <!-- title row -->
@@ -119,6 +122,38 @@
          <a href="{{ route('comercial-invoice.pdf', $load) }}" target="_blank" class="btn btn-xs btn-outline-success pull-right"><i class="far fa-file-pdf"></i></a>
          <a href="{{ route('shiptment-confirmation.pdf', $load) }}" target="_blank" class="btn btn-xs btn-outline-default pull-right"><i class="far fa-file-pdf"></i></a>
          <a href="{{ route('shiptment-confirmation-internal-use.pdf', $load) }}" target="_blank" class="btn btn-xs btn-outline-info pull-right"><i class="far fa-file-pdf"></i></a>
+         <!-- Button for modal editFormHeader -->
+         <button type="button" class="btn btn-outline-warning float-right" data-toggle="modal" data-target="#editInvoiceHeader" >
+            <i class="fas fa-edit"></i> Editar
+         </button>
+
+         <!-- Modal edit header invoice -->
+         <div class="modal fade" id="editInvoiceHeader" tabindex="-1" aria-labelledby="editInvoiceHeaderLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="editInvoiceHeaderLabel">Editar Factura Master</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  {{ Form::model($invoiceheaders, ['route' => ['masterinvoices.update', $invoiceheaders->id], 'class' => 'form-horizontal', 'method' => 'PUT']) }}
+                     <div class="modal-body">
+                        
+                        @include('masterinvoice.editFormHeader')
+                     </div>
+                     <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-outline-warning" id="editMasterInvoice" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
+                           <i class="fas fa-sync-alt"></i> Actualizar
+                     </button>
+                     </div>
+                  {{ Form::close() }}
+               </div>
+            </div>
+            </div>
+         </div>
          
          <!-- Modal Add Master Invoice Items -->
          <div class="modal fade" id="agregarItem" tabindex="-1" aria-labelledby="agregarItemLabel" aria-hidden="true">

@@ -8,12 +8,14 @@ use App\InvoiceHeader;
 use App\LogisticCompany;
 use App\Company;
 use App\Http\Requests\InvoiceHeaderRequest;
+use App\Http\Requests\UpdateInvoiceHeaderRequest;
 use App\Farm;
 use App\Client;
 use App\Variety;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\MasterInvoiceItem;
 use Illuminate\Support\Arr;
+use Illuminate\Validation\Rule;
 
 class InvoiceHeaderController extends Controller
 {
@@ -329,7 +331,22 @@ class InvoiceHeaderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $invoiceHeader = InvoiceHeader::find($id);
+        //dd($request->all());
+        $data = request()->validate([
+            'id_load'               => 'required',
+            'bl'                    => 'required',
+            'id_company'            => 'required',
+            'id_logistics_company'  => 'required',
+            'date'                  => 'required',
+            'invoice'               => 'required|numeric|unique:invoice_headers,invoice,' . $invoiceHeader->id,
+        ]);
+        
+        $invoiceHeader->update($request->all());
+        $load = Load::where('id', '=', $invoiceHeader->id_load)->first();
+
+        return redirect()->route('masterinvoices.index', $load->id)
+            ->with('status_success', 'Factura editada con éxito');
     }
 
     /**
