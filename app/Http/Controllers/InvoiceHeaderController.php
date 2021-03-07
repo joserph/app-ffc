@@ -79,6 +79,7 @@ class InvoiceHeaderController extends Controller
             ->where('id_load', '=', $code)
             ->with('variety')
             ->with('invoiceh')
+            ->with('client')
             ->join('farms', 'master_invoice_items.id_farm', '=', 'farms.id')
             ->orderBy('farms.name', 'ASC')
             ->get();
@@ -88,6 +89,7 @@ class InvoiceHeaderController extends Controller
             // Buscamos los valores duplicados
             $dupliHawb = MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->count('hawb');
             // Validamos si hay valores duplicados, para agrupar
+            
             if($dupliHawb > 1)
             {
                 $fulls = ['fulls' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('fulls')];
@@ -100,6 +102,7 @@ class InvoiceHeaderController extends Controller
                 $bunches = ['bunches' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('bunches')];
                 $price = ['price' => $item->price];
                 $total = ['total' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('total')];
+                $client = ['client' => $item->client->name];
             }else{
                 $fulls = ['fulls' => $item->fulls];
                 $pieces = ['pieces' => $item->pieces];
@@ -111,9 +114,10 @@ class InvoiceHeaderController extends Controller
                 $bunches = ['bunches' => $item->bunches];
                 $price = ['price' => $item->price];
                 $total = ['total' => $item->total];
+                $client = ['client' => $item->client->name];
             }
             
-            $invoiceItemsArray[] = Arr::collapse([$fulls, $pieces, $name, $variety, $scientific, $hawb, $stems, $bunches, $price, $total]);
+            $invoiceItemsArray[] = Arr::collapse([$fulls, $pieces, $name, $variety, $scientific, $hawb, $stems, $bunches, $price, $total, $client]);
             
         }
         $invoiceItems = collect(array_unique($invoiceItemsArray, SORT_REGULAR));

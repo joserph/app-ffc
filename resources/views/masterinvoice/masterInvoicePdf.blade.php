@@ -32,13 +32,13 @@
             width: 100%;
         }
         .small-letter{
-            font-size: 9px;
+            font-size: 8px;
         }
         .medium-letter{
-            font-size: 13px;
+            font-size: 12px;
         }
         .farms{
-            width: 280px;
+            width: 220px;
         }
         
         table.sinb{
@@ -62,7 +62,10 @@
             width: 55px;
         }
         h1{
-            font-size: 30px;
+            font-size: 29px;
+        }
+        .client{
+            width: 80px;
         }
     </style>
 </head>
@@ -122,6 +125,7 @@
              <th class="text-center small-letter">Pcs</th>
              <th class="text-center small-letter">Bunch per box</th>
              <th class="text-center farms small-letter">Flower Provider</th>
+             <th class="text-center small-letter client">Client</th>
              <th class="text-center small-letter gender">Genus</th>
              <th class="text-center small-letter gender">Species</th>
              <th class="text-center small-letter c-width">Hawb</th>
@@ -149,7 +153,8 @@
                  <td class="text-center small-letter">{{ number_format($item['fulls'], 3, '.','') }}</td>
                  <td class="text-center small-letter">{{ $item['pieces'] }}</td>
                  <td class="text-center small-letter">{{ round($promBunches) }}</td>
-                 <td class="text-left small-letter">{{ $item['name'] }}</td>
+                 <td class="text-left small-letter">{{ Str::limit($item['name'], '40') }}</td>
+                 <td class="text-left small-letter">{{ Str::limit(str_replace('SAG-', '', $item['client']), '12') }}</td>
                  <td class="text-center small-letter">{{ $item['variety'] }}</td>
                  <td class="text-center small-letter">{{ $item['scientific_name'] }}</td>
                  <td class="text-center small-letter">{{ $item['hawb'] }}</td>
@@ -165,7 +170,7 @@
           <th class="text-center small-letter">{{ number_format($fulls, 3, '.','') }}</th>
           <th class="text-center small-letter">{{ $pcs }}</th>
           <th class="text-center"></th>
-          <th colspan="4" class="text-right small-letter">TOTAL:</th>
+          <th colspan="5" class="text-right small-letter">TOTAL:</th>
           <th class="text-center small-letter">{{ number_format($stems, 0, '','.') }}</th>
           <th class="text-center small-letter"></th>
           <th class="text-center small-letter">{{ number_format($bunches, 0, ',','.') }}</th>
