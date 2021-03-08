@@ -26,7 +26,6 @@
        {{ Form::label('date', 'Fecha', ['class' => 'control-label']) }}
        <input type="date" name="date" value="{{ $invoiceheaders->date }}" class="form-control @error('date') is-invalid @enderror" name="date">
     </div>
-    {{ Form::hidden('id_user', Auth::user()->id )}}
     {{ Form::hidden('update_user', Auth::user()->id )}}
     {{ Form::hidden('carrier', $load->carrier )}}
  </div>

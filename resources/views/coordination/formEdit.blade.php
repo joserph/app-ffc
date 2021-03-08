@@ -17,15 +17,15 @@
     </div>
     <div class="col-sm-2">
         {{ Form::label('hb', 'HB Coordinado', ['class' => 'control-label']) }}
-        {{ Form::number('hb', 0, ['class' => 'form-control']) }}
+        {{ Form::number('hb', null, ['class' => 'form-control']) }}
     </div>
     <div class="col-sm-2">
         {{ Form::label('qb', 'QB Coordinado', ['class' => 'control-label']) }}
-        {{ Form::number('qb', 0, ['class' => 'form-control']) }}
+        {{ Form::number('qb', null, ['class' => 'form-control']) }}
     </div>
     <div class="col-sm-2">
         {{ Form::label('eb', 'EB Coordinado', ['class' => 'control-label']) }}
-        {{ Form::number('eb', 0, ['class' => 'form-control']) }}
+        {{ Form::number('eb', null, ['class' => 'form-control']) }}
     </div>
     
     <hr>
@@ -33,24 +33,23 @@
     <h5 class="col-sm-12">Recibidos</h5>
     <div class="col-sm-2">
         {{ Form::label('hb_r', 'HB Recibido', ['class' => 'control-label']) }}
-        {{ Form::number('hb_r', 0, ['class' => 'form-control']) }}
+        {{ Form::number('hb_r', null, ['class' => 'form-control']) }}
     </div>
     <div class="col-sm-2">
         {{ Form::label('qb_r', 'QB Recibido', ['class' => 'control-label']) }}
-        {{ Form::number('qb_r', 0, ['class' => 'form-control']) }}
+        {{ Form::number('qb_r', null, ['class' => 'form-control']) }}
     </div>
     <div class="col-sm-2">
         {{ Form::label('eb_r', 'EB Recibido', ['class' => 'control-label']) }}
-        {{ Form::number('eb_r', 0, ['class' => 'form-control']) }}
+        {{ Form::number('eb_r', null, ['class' => 'form-control']) }}
     </div>
 
     <div class="col-sm-2">
         {{ Form::label('returns', 'Devolución', ['class' => 'control-label']) }}
-        {{ Form::number('returns', 0, ['class' => 'form-control']) }}
+        {{ Form::number('returns', null, ['class' => 'form-control']) }}
     </div>
     
     
-    {{ Form::hidden('id_user', Auth::user()->id, ['id' => 'id_user']) }}
     {{ Form::hidden('update_user', Auth::user()->id, ['id' => 'update_user']) }}
     {{ Form::hidden('id_load', $load->id, ['id' => 'id_load']) }}
 </div>

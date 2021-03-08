@@ -191,10 +191,38 @@
                                 <td class="text-center">{{ $item->returns }}</td>
                                 <td class="text-center">{{ $item->missing }}</td>
                                 <td class="text-center">
-                                    <a href="{{ route('coordination.edit', $item->id) }}" class="btn btn-outline-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                                    <button type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#editarItem{{ $item->id }}">
+                                       <i class="fas fa-pencil-alt"></i>
+                                    </button>
                                     <a href="#" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
                                </td>
                             </tr>
+                            <div class="modal fade" id="editarItem{{ $item->id }}" tabindex="-1" aria-labelledby="editarItemLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-xl">
+                                 <div class="modal-content">
+                                    <div class="modal-header">
+                                       <h5 class="modal-title" id="editarItemLabel">Editar item de coordinación</h5>
+                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                       </button>
+                                    </div>
+                                    <div class="modal-body">
+                                       {{ Form::model($item, ['route' => ['coordination.update', $item->id], 'class' => 'form-horizontal', 'method' => 'PUT']) }}
+                                          <div class="modal-body">
+                                             {{ $item->id }}
+                                             @include('coordination.formEdit')
+                                          </div>
+                                          <div class="modal-footer">
+                                             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+                                             <button type="submit" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
+                                                <i class="fas fa-plus-circle"></i> Crear
+                                             </button>
+                                          </div>
+                                       {{ Form::close() }}
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
                             @endif
                             @endforeach
                             @php
@@ -283,6 +311,8 @@
                </div>
             </div>
          </div>
+         
+
          
 
 

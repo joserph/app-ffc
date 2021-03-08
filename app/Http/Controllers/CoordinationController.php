@@ -30,6 +30,7 @@ class CoordinationController extends Controller
             ->where('id_load', '=', $code)
             ->with('variety')
             ->join('farms', 'coordinations.id_farm', '=', 'farms.id')
+            ->select('farms.name', 'coordinations.*')
             ->orderBy('farms.name', 'ASC')
             ->get();
         // Fincas
@@ -50,7 +51,7 @@ class CoordinationController extends Controller
         // Eliminamos los clientes duplicados
         $clientsCoordination = collect(array_unique($clientsCoord->toArray(), SORT_REGULAR));
 
-        dd($coordinations);
+        //dd($coordinations);
         return view('coordination.index', compact('farms', 'clients', 'varieties', 'load', 'company', 'coordinations', 'clientsCoordination'));
     }
 
@@ -80,7 +81,7 @@ class CoordinationController extends Controller
         $request['pieces_r'] = $request['hb_r'] + $request['qb_r'] + $request['eb_r'];
         // Faltantes 
         $request['missing'] = $request['pieces'] - $request['pieces_r'];
-
+        
         $coordination = Coordination::create($request->all());
 
         return redirect()->route('coordination.index', $coordination->id_load)
