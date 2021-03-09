@@ -10,6 +10,7 @@ use App\Load;
 use App\Company;
 use App\Coordination;
 use App\Http\Requests\CoordinationRequest;
+use App\Http\Requests\UpdateCoordinationRequest;
 
 class CoordinationController extends Controller
 {
@@ -119,7 +120,31 @@ class CoordinationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $coordination = Coordination::find($id);
+
+        $data = request()->validate([
+            'hawb'          => 'required|unique:coordinations,hawb,' . $coordination->id,
+            'pieces'        => '',
+            'hb'            => 'required',
+            'qb'            => 'required', 
+            'eb'            => 'required', 
+            'hb_r'          => '',
+            'qb_r'          => '',
+            'eb_r'          => '',
+            'missing'       => '',
+            'id_client'     => 'required',
+            'id_farm'       => 'required',
+            'id_load'       => 'required',
+            'variety_id'    => 'required',
+            'id_user'       => '',
+            'update_user'   => 'required'
+        ]);
+
+        $coordination->update($request->all());
+        $load = Load::where('id', '=', $coordination->id_load)->first();
+
+        return redirect()->route('coordination.index', $load->id)
+            ->with('status_success', 'Item de coordinación editada con éxito');
     }
 
     /**
@@ -130,6 +155,11 @@ class CoordinationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $coordination = Coordination::find($id);
+        $coordination->delete();
+        $load = Load::where('id', '=', $coordination->id_load)->first();
+
+        return redirect()->route('coordination.index', $load->id)
+            ->with('status_success', 'Coordinación eliminada con éxito');
     }
 }

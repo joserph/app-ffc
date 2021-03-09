@@ -194,7 +194,11 @@
                                     <button type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#editarItem{{ $item->id }}">
                                        <i class="fas fa-pencil-alt"></i>
                                     </button>
-                                    <a href="#" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
+                                    <td width="20px" class="text-center">
+                                       {{ Form::open(['route' => ['coordination.destroy', $item->id], 'method' => 'DELETE']) }}
+                                          {{ Form::button('<i class="fas fa-trash-alt"></i> ', ['type' => 'submit', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Eliminar usuario', 'class' => 'btn btn-sm btn-outline-danger', 'onclick' => 'return confirm("¿Seguro de eliminar la coordinación?")']) }}
+                                       {{ Form::close() }}
+                                    </td>
                                </td>
                             </tr>
                             <div class="modal fade" id="editarItem{{ $item->id }}" tabindex="-1" aria-labelledby="editarItemLabel" aria-hidden="true">
@@ -209,13 +213,12 @@
                                     <div class="modal-body">
                                        {{ Form::model($item, ['route' => ['coordination.update', $item->id], 'class' => 'form-horizontal', 'method' => 'PUT']) }}
                                           <div class="modal-body">
-                                             {{ $item->id }}
                                              @include('coordination.formEdit')
                                           </div>
                                           <div class="modal-footer">
                                              <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
-                                             <button type="submit" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
-                                                <i class="fas fa-plus-circle"></i> Crear
+                                             <button type="submit" class="btn btn-outline-warning" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
+                                                <i class="fas fa-sync"></i> Actualizar
                                              </button>
                                           </div>
                                        {{ Form::close() }}
