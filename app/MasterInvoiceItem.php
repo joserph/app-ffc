@@ -48,4 +48,9 @@ class MasterInvoiceItem extends Model
     {
         return $this->belongsTo('App\InvoiceHeader', 'id_invoiceh');
     }
+
+    public function client_confirm()
+    {
+        return $this->belongsTo('App\Client', 'client_confim_id');
+    }
 }

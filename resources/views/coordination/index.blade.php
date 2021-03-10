@@ -322,4 +322,12 @@
       </div>
    </div>
 </section>
+
+@section('scripts')
+   <script>
+      $('#id_farm').select2({
+         theme: 'bootstrap4',
+      });
+   </script>
+@endsection
 @endsection

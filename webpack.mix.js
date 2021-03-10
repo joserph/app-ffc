@@ -16,6 +16,7 @@ mix.scripts([
    'node_modules/bootstrap/dist/js/bootstrap.js',
    'node_modules/admin-lte/dist/js/adminlte.js',
    'node_modules/toastr/toastr.js',
+   'node_modules/select2/dist/js/select2.js',
    'node_modules/vue/dist/vue.js',
    'node_modules/axios/dist/axios.js',
    'node_modules/chosen-js/chosen.jquery.js',

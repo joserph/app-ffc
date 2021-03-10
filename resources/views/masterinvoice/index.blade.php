@@ -276,7 +276,7 @@
                   <div class="modal-footer">
                      <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
                      <button type="submit" class="btn btn-outline-warning" id="createMasterInvoice" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
-                        <i class="fas fa-plus-circle"></i> Actualizar
+                        <i class="fas fa-sync"></i> Actualizar
                   </button>
                   </div>
                </form>
@@ -329,7 +329,7 @@
             }
          });
     });
-    
+
 </script>
 
 @endsection
