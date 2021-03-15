@@ -54,3 +54,4 @@
     {{ Form::hidden('update_user', Auth::user()->id, ['id' => 'update_user']) }}
     {{ Form::hidden('id_load', $load->id, ['id' => 'id_load']) }}
 </div>
+

@@ -325,9 +325,17 @@
 
 @section('scripts')
    <script>
+      $('#id_farmEdit').select2({
+         theme: 'bootstrap4',
+      });
+
+      $('#id_farm').select2({
+         theme: 'bootstrap4',
+      });
       $('#id_farm').select2({
          theme: 'bootstrap4',
       });
    </script>
 @endsection
+
 @endsection

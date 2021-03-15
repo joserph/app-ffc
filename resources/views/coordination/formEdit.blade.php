@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-3 form-group">
         {{ Form::label('id_farm', 'Finca', ['class' => 'control-label']) }}
-        {{ Form::select('id_farm', $farms, null, ['class' => 'form-control select-farm', 'placeholder' => 'Seleccione finca']) }}
+        {{ Form::select('id_farm', $farms, null, ['class' => 'form-control select-farm', 'placeholder' => 'Seleccione finca', 'id' => 'id_farmEdit']) }}
     </div>
     <div class="col-md-3 form-group">
         {{ Form::label('id_client', 'Cliente', ['class' => 'control-label']) }}
@@ -53,3 +53,4 @@
     {{ Form::hidden('update_user', Auth::user()->id, ['id' => 'update_user']) }}
     {{ Form::hidden('id_load', $load->id, ['id' => 'id_load']) }}
 </div>
+
