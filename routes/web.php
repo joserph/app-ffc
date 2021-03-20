@@ -131,3 +131,5 @@ Route::get('isf10_2Pdf', 'ISFController@isf10_2Pdf')->name('isf.isf10_2Pdf');
 // Loading Plane
 Route::resource('/loadingplane', 'LoadingPlaneController')->names('loadingplane');
 
+// Coordination PDF
+Route::get('coordination-Pdf', 'CoordinationController@coordinationPdf')->name('coordination.pdf');

@@ -43,6 +43,7 @@
                               </button>
                             </div>
                           </div>
+                          <a href="{{ route('coordination.pdf', $load) }}" target="_blank" class="btn btn-xs btn-outline-success pull-right"><i class="far fa-file-pdf"></i></a>
                         </div>
                         <div class="col-sm-6">
                           <div class="card">
@@ -109,6 +110,7 @@
                              </table>
                             </div>
                           </div>
+                          
                         </div>
                       </div>
                   

@@ -11,6 +11,7 @@ use App\Company;
 use App\Coordination;
 use App\Http\Requests\CoordinationRequest;
 use App\Http\Requests\UpdateCoordinationRequest;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class CoordinationController extends Controller
 {
@@ -26,7 +27,7 @@ class CoordinationController extends Controller
         $arr = explode("?", $url);
         $code = $arr[1];
         $load = Load::find($code);
-
+        // Coordinaciones
         $coordinations = Coordination::select('*')
             ->where('id_load', '=', $code)
             ->with('variety')
@@ -54,6 +55,49 @@ class CoordinationController extends Controller
 
         //dd($coordinations);
         return view('coordination.index', compact('farms', 'clients', 'varieties', 'load', 'company', 'coordinations', 'clientsCoordination'));
+    }
+
+    public function coordinationPdf()
+    {
+        // Busco el ID de la carga por medio de la URL
+        $url = $_SERVER["REQUEST_URI"];
+        $arr = explode("?", $url);
+        $code = $arr[1];
+        $load = Load::find($code);
+
+        // Coordinaciones
+        $coordinations = Coordination::select('*')
+            ->where('id_load', '=', $code)
+            ->with('variety')
+            ->join('farms', 'coordinations.id_farm', '=', 'farms.id')
+            ->select('farms.name', 'coordinations.*')
+            ->orderBy('farms.name', 'ASC')
+            ->get();
+
+        // Fincas
+        $farms = Farm::orderBy('name', 'ASC')->pluck('name', 'id');
+        // Clientes
+        $clients = Client::orderBy('name', 'ASC')->pluck('name', 'id');
+        // Variedades
+        $varieties = Variety::orderBy('name', 'ASC')->pluck('name', 'id');
+
+        // Empresa
+        $company = Company::first();
+        // Buscamos los clientes que esten en esta carga, por el id_load
+        $clientsCoord = Coordination::where('id_load', '=', $code)
+            ->join('clients', 'coordinations.id_client', '=', 'clients.id')
+            ->select('clients.id', 'clients.name')
+            ->orderBy('clients.name', 'ASC')
+            ->get();
+        // Eliminamos los clientes duplicados
+        $clientsCoordination = collect(array_unique($clientsCoord->toArray(), SORT_REGULAR));
+
+        //dd('HOLA');
+        $coordinationPdf = PDF::loadView('coordination.coordinationPdf', compact(
+            'load', 'coordinations', 'company', 'clientsCoordination', 'farms', 'clients', 'varieties'
+        ))->setPaper('A4', 'landscape');
+        //dd($farmsItemsLoad);
+        return $coordinationPdf->stream();
     }
 
     /**
