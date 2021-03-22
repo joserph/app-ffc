@@ -213,6 +213,7 @@
                                        </button>
                                     </div>
                                     <div class="modal-body">
+                                       @include('custom.message') 
                                        {{ Form::model($item, ['route' => ['coordination.update', $item->id], 'class' => 'form-horizontal', 'method' => 'PUT']) }}
                                           <div class="modal-body">
                                              @include('coordination.formEdit')
@@ -301,6 +302,7 @@
                      </button>
                   </div>
                   <div class="modal-body">
+                     @include('custom.message')
                      {{ Form::open(['route' => 'coordination.store', 'class' => 'form-horizontal']) }}
                         <div class="modal-body">
                            @include('coordination.form')

@@ -184,6 +184,15 @@ class CoordinationController extends Controller
             'update_user'   => 'required'
         ]);
 
+        // calculo de fulls
+        $request['fulls'] = ($request['hb'] * 0.5) + ($request['qb'] * 0.25) + ($request['eb'] * 0.125);
+        $request['fulls_r'] = ($request['hb_r'] * 0.5) + ($request['qb_r'] * 0.25) + ($request['eb_r'] * 0.125);
+        // calculo de piezas
+        $request['pieces'] = $request['hb'] + $request['qb'] + $request['eb'];
+        $request['pieces_r'] = $request['hb_r'] + $request['qb_r'] + $request['eb_r'];
+        // Faltantes 
+        $request['missing'] = $request['pieces'] - $request['pieces_r'];
+
         $coordination->update($request->all());
         $load = Load::where('id', '=', $coordination->id_load)->first();
 
