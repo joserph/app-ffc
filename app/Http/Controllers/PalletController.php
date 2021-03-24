@@ -22,7 +22,7 @@ class PalletController extends Controller
         $arr = explode("?", $url);
         $code = $arr[1];
         $load = Load::find($code);
-        $pallets = Pallet::where('id_load', '=', $load)->orderBy('id', '=', 'DESC')->get();
+        //$pallets = Pallet::where('id_load', '=', $load)->orderBy('id', '=', 'desc')->get();
 
         $last_pallet = Pallet::where('id_load', '=', $load)->select('counter')->get()->last();
         
@@ -42,7 +42,7 @@ class PalletController extends Controller
             $counter = 1;
         }
         $number = $code . '-' . $counter;
-        $palletItem = PalletItem::where('id_load', '=', $load)->get();
+        //$palletItem = PalletItem::where('id_load', '=', $load)->get();
         // Farms
         $farms = Farm::all();
         // Clients
