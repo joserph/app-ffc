@@ -70,13 +70,13 @@
                   <div class="inner">
                     <h3>{{ $farmsCount }}</h3>
     
-                    <p>Plano de Carga</p>
+                    <p>Paletas</p>
                   </div>
                   <div class="icon">
                     <i class="fas fa-grip-vertical"></i>
                   </div>
-                   <a href="{{ route('loadingplane.index', $load->id) }}" class="small-box-footer">
-                    Ver Plano <i class="fas fa-arrow-circle-right"></i>
+                   <a href="{{ route('pallets.index', $load->id) }}" class="small-box-footer">
+                    Ver Paletas <i class="fas fa-arrow-circle-right"></i>
                   </a>
                 </div>
               </div>

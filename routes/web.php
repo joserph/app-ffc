@@ -118,18 +118,15 @@ Route::get('comercial-invoice-pdf', 'InvoiceHeaderController@masterInvoicePdf')-
 Route::get('shiptment-confirmation-pdf', 'InvoiceHeaderController@shiptmentConfirmation')->name('shiptment-confirmation.pdf');
 // Confirmacion de despacho
 Route::get('shiptment-confirmation-internal-use-pdf', 'InvoiceHeaderController@shiptmentConfirmationInternalUse')->name('shiptment-confirmation-internal-use.pdf');
-
 // ISF
 Route::resource('/isf', 'ISFController')->names('isf');
-
 // ISF Farms
 Route::get('isf-pdf', 'ISFController@isfPdf')->name('isf.pdf');
-
 // ISF 10 + 2
 Route::get('isf10_2Pdf', 'ISFController@isf10_2Pdf')->name('isf.isf10_2Pdf');
-
 // Loading Plane
 Route::resource('/loadingplane', 'LoadingPlaneController')->names('loadingplane');
-
 // Coordination PDF
 Route::get('coordination-Pdf', 'CoordinationController@coordinationPdf')->name('coordination.pdf');
+// Pallets
+Route::resource('/pallets', 'PalletController')->names('pallets');
