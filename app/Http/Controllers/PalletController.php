@@ -7,6 +7,7 @@ use App\Load;
 use App\Pallet;
 use App\Farm;
 use App\Client;
+use App\PalletItem;
 
 class PalletController extends Controller
 {
@@ -22,7 +23,8 @@ class PalletController extends Controller
         $arr = explode("?", $url);
         $code = $arr[1];
         $load = Load::find($code);
-        //$pallets = Pallet::where('id_load', '=', $load)->orderBy('id', '=', 'desc')->get();
+        
+        $pallets = Pallet::where('id_load', '=', $load->id)->get();
 
         $last_pallet = Pallet::where('id_load', '=', $load)->select('counter')->get()->last();
         
@@ -42,7 +44,7 @@ class PalletController extends Controller
             $counter = 1;
         }
         $number = $code . '-' . $counter;
-        //$palletItem = PalletItem::where('id_load', '=', $load)->get();
+        $palletItem = PalletItem::where('id_load', '=', $load)->get();
         // Farms
         $farms = Farm::all();
         // Clients
@@ -69,7 +71,19 @@ class PalletController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $pallet = Pallet::create($request->all());
+        if($pallet->usda == '1')
+        {
+            $id_load = Load::select('code')->where('id', '=', $pallet->id_load)->first();
+            $pallet->number = $id_load->code .'-USDA';
+        }else{
+            $pallet->number = $pallet->number;
+        }
+        $pallet->save();
+        $load = Load::where('id', '=', $pallet->id_load)->get();
+
+        return redirect()->route('pallets.index', $load[0]->code)
+            ->with('info', 'Paleta Guardada con exito');
     }
 
     /**
