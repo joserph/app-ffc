@@ -49,8 +49,15 @@ class PalletController extends Controller
         $farms = Farm::all();
         // Clients
         $clients = Client::all();
+
+        $pallets = Pallet::select('id')->where('id_load', '=', $load->id)->get();
+        $id_pallet = $pallets[0]->id;
+
+        $farmsList = Farm::orderBy('name', 'ASC')->pluck('name', 'id');
+        $clientsList = Client::orderBy('name', 'ASC')->pluck('name', 'id');
+
         //dd($pallets);
-        return view('pallets.index', compact('pallets','code', 'counter', 'number', 'load', 'palletItem', 'farms', 'clients', 'total_container', 'total_hb', 'total_qb', 'total_eb'));
+        return view('pallets.index', compact('pallets','code', 'farmsList', 'clientsList', 'counter', 'id_pallet', 'number', 'load', 'palletItem', 'farms', 'clients', 'total_container', 'total_hb', 'total_qb', 'total_eb'));
     }
 
     /**
@@ -81,8 +88,8 @@ class PalletController extends Controller
         }
         $pallet->save();
         $load = Load::where('id', '=', $pallet->id_load)->get();
-
-        return redirect()->route('pallets.index', $load[0]->code)
+        
+        return redirect()->route('pallets.index', $load[0]->id)
             ->with('info', 'Paleta Guardada con exito');
     }
 
