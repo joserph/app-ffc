@@ -25,14 +25,14 @@
         }
 
         .small-letter{
-            font-size: 9px;
+            font-size: 8px;
             font-weight: normal;
         }
         .medium-letter{
-            font-size: 10px;
+            font-size: 9px;
         }
         .large-letter{
-            font-size: 11px;
+            font-size: 10px;
         }
         .farms{
             width: 300px;
@@ -44,11 +44,9 @@
         }
         table.sinb, th{
             border: 1px solid black;
-            height: 15px;
         }
         table.sinb, td{
             border: 1px solid black;
-            height: 13px;
         }
         .text-white{
             color: #fff;
@@ -91,10 +89,7 @@
 <body>
     <table>
         <tr>
-            <th class="medium-letter">COORDINACIONES MARITIMO</th>
-        </tr>
-        <tr>
-            <th class="medium-letter">{{ $load->bl }}</th>
+            <th class="medium-letter">COORDINACIONES MARITIMO - {{ $load->bl }}</th>
         </tr>
     </table>
     
