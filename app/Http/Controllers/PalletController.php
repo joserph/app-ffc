@@ -25,9 +25,15 @@ class PalletController extends Controller
         $load = Load::find($code);
         
         $pallets = Pallet::where('id_load', '=', $load->id)->get();
-
-        $last_pallet = Pallet::where('id_load', '=', $load)->select('counter')->get()->last();
+        if($pallets)
+        {
+            $id_pallet = null;
+        }else{
+            $id_pallet = null;
+        }
         
+        $last_pallet = Pallet::where('id_load', '=', $load->id)->select('counter')->get()->last();
+        //dd($load);
         // Total contenedor
         $total_container = PalletItem::where('id_load', '=', $load)->sum('quantity');
         // Total HB
@@ -43,15 +49,13 @@ class PalletController extends Controller
         }else{
             $counter = 1;
         }
+        //dd($counter);
         $number = $code . '-' . $counter;
         $palletItem = PalletItem::where('id_load', '=', $load)->get();
         // Farms
         $farms = Farm::all();
         // Clients
         $clients = Client::all();
-
-        $pallets = Pallet::select('id')->where('id_load', '=', $load->id)->get();
-        $id_pallet = $pallets[0]->id;
 
         $farmsList = Farm::orderBy('name', 'ASC')->pluck('name', 'id');
         $clientsList = Client::orderBy('name', 'ASC')->pluck('name', 'id');
@@ -84,7 +88,7 @@ class PalletController extends Controller
             $id_load = Load::select('code')->where('id', '=', $pallet->id_load)->first();
             $pallet->number = $id_load->code .'-USDA';
         }else{
-            $pallet->number = $pallet->number;
+            $pallet->number = $pallet->number . '-' . $pallet->counter;
         }
         $pallet->save();
         $load = Load::where('id', '=', $pallet->id_load)->get();

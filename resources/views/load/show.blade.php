@@ -73,7 +73,7 @@
                     <p>Paletas</p>
                   </div>
                   <div class="icon">
-                    <i class="fas fa-grip-vertical"></i>
+                    <i class="fas fa-pallet"></i>
                   </div>
                    <a href="{{ route('pallets.index', $load->id) }}" class="small-box-footer">
                     Ver Paletas <i class="fas fa-arrow-circle-right"></i>
