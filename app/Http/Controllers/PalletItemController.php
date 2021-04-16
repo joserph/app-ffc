@@ -88,8 +88,8 @@ class PalletItemController extends Controller
         $pallet_update->save();
 
 
-        //dd($load);
-        return redirect()->route('pallets.index', $load[0]->code)
+        //dd($load[0]->id);
+        return redirect()->route('pallets.index', $load[0]->id)
             ->with('info', 'Item Guardado con exito');
     }
 

@@ -20,6 +20,8 @@ class CreatePalletItemsTable extends Migration
             $table->integer('hb')->nullable();
             $table->integer('qb')->nullable();
             $table->integer('eb')->nullable();
+            $table->integer('piso')->nullable();
+            $table->string('farms')->nullable();
 
             $table->foreignId('id_load')->references('id')->on('loads')->onDelete('cascade');
             $table->foreignId('id_user')->references('id')->on('users');

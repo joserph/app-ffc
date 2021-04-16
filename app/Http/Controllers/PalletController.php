@@ -25,23 +25,18 @@ class PalletController extends Controller
         $load = Load::find($code);
         
         $pallets = Pallet::where('id_load', '=', $load->id)->get();
-        if($pallets)
-        {
-            $id_pallet = null;
-        }else{
-            $id_pallet = null;
-        }
+        
         
         $last_pallet = Pallet::where('id_load', '=', $load->id)->select('counter')->get()->last();
         //dd($load);
         // Total contenedor
-        $total_container = PalletItem::where('id_load', '=', $load)->sum('quantity');
+        $total_container = PalletItem::where('id_load', '=', $load->id)->sum('quantity');
         // Total HB
-        $total_hb = PalletItem::where('id_load', '=', $load)->sum('hb');
+        $total_hb = PalletItem::where('id_load', '=', $load->id)->sum('hb');
         // Total QB
-        $total_qb = PalletItem::where('id_load', '=', $load)->sum('qb');
+        $total_qb = PalletItem::where('id_load', '=', $load->id)->sum('qb');
         // Total EB
-        $total_eb = PalletItem::where('id_load', '=', $load)->sum('eb');
+        $total_eb = PalletItem::where('id_load', '=', $load->id)->sum('eb');
         
         if($last_pallet)
         {
@@ -51,7 +46,7 @@ class PalletController extends Controller
         }
         //dd($counter);
         $number = $code . '-' . $counter;
-        $palletItem = PalletItem::where('id_load', '=', $load)->get();
+        $palletItem = PalletItem::where('id_load', '=', $load->id)->get();
         // Farms
         $farms = Farm::all();
         // Clients
@@ -60,8 +55,8 @@ class PalletController extends Controller
         $farmsList = Farm::orderBy('name', 'ASC')->pluck('name', 'id');
         $clientsList = Client::orderBy('name', 'ASC')->pluck('name', 'id');
 
-        //dd($pallets);
-        return view('pallets.index', compact('pallets','code', 'farmsList', 'clientsList', 'counter', 'id_pallet', 'number', 'load', 'palletItem', 'farms', 'clients', 'total_container', 'total_hb', 'total_qb', 'total_eb'));
+        //dd($palletItem);
+        return view('pallets.index', compact('pallets','code', 'farmsList', 'clientsList', 'counter', 'number', 'load', 'palletItem', 'farms', 'clients', 'total_container', 'total_hb', 'total_qb', 'total_eb'));
     }
 
     /**
