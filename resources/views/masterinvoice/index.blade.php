@@ -330,6 +330,17 @@
          });
     });
 
+
+    /*$('#id_farm').select2({
+         theme: 'bootstrap4',
+      });
+      $('#id_client').select2({
+         theme: 'bootstrap4'
+      });
+      $('#variety_id').select2({
+         theme: 'bootstrap4'
+      });*/
+
 </script>
 
 @endsection

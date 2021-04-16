@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-4 form-group">
-        {{ Form::label('id_farm', 'Finca', ['class' => 'control-label']) }}
+        {{ Form::label('id_farm', 'Finca', ['class' => 'control-label', 'autofocus' => 'autofocus']) }}
         {{ Form::select('id_farm', $farms, null, ['class' => 'form-control select-farm', 'placeholder' => 'Seleccione finca', 'v-model' => 'id_farm']) }}
         <span class="text-danger" v-for="error in errors" v-if="error.id_farm">El campo Finca es obligatorio.</span>
         <span class="text-danger" v-for="error in errors" v-if="error.fa_cl_de">La conbinación de Finca, Cliente y Variedad esta duplicada.</span>

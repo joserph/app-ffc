@@ -32,7 +32,7 @@ class FarmComponent extends Component
         // Validaciones
         $this->validate([
             'name'      => 'required',
-            'phone'     => 'required|alpha_num',
+            'phone'     => 'required',
             'address'   => 'required',
             'state'     => 'required',
             'city'      => 'required',
