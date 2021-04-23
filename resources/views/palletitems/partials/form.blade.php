@@ -15,7 +15,7 @@
     <div class="col-md-4 form-group">
         {{ Form::label('hb', 'HB', ['class' => 'control-label']) }}
         <div class="input-group mb-12">
-            {{ Form::text('hb', 0, ['class' => 'form-control grupo', 'id' => 'hb_', 'value' => '0']) }}
+            {{ Form::text('hb', 0, ['class' => 'form-control grupo', 'id' => 'hb_{{ $item->id }}', 'value' => '0']) }}
         </div>
     </div>
     <div class="col-md-4 form-group">

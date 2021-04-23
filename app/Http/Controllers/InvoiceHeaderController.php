@@ -341,7 +341,7 @@ class InvoiceHeaderController extends Controller
             'id_company'            => 'required',
             'id_logistics_company'  => 'required',
             'date'                  => 'required',
-            'invoice'               => 'required|numeric|unique:invoice_headers,invoice,' . $invoiceHeader->id,
+            'invoice'               => 'required|unique:invoice_headers,invoice,' . $invoiceHeader->id,
         ]);
         
         $invoiceHeader->update($request->all());
