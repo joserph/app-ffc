@@ -1,46 +1,46 @@
-<div class="form-group">
-    {{ Form::label('id_farm', 'Finca', ['class' => 'col-sm-2 control-label']) }}
-    <div class="col-sm-10">
-        {{ Form::select('id_farm', $farmsList, null, ['class' => 'form-control select-farm', 'placeholder' => 'Seleccione finca']) }}
+<div class="row">
+    <div class="col-md-12 form-group">
+        {{ Form::label('id_farm', 'Finca', ['class' => 'control-label']) }}
+        <div class="input-group mb-12">
+            {{ Form::select('id_farm', $farmsList, null, ['class' => 'form-control select-farm', 'placeholder' => 'Seleccione finca']) }}
+        </div>
     </div>
-</div>
-<div class="form-group">
-    {{ Form::label('id_client', 'Cliente', ['class' => 'col-sm-2 control-label']) }}
-    <div class="col-sm-6">
-        {{ Form::select('id_client', $clientsList, null, ['class' => 'form-control select-client', 'placeholder' => 'Seleccione cliente']) }}
-    </div>
-</div>
 
-
-
-<div class="form-group">
-    {{ Form::label('hb', 'HB', ['class' => 'col-sm-2 control-label']) }}
-    <div class="col-sm-2">
-        {{ Form::text('hb', 0, ['class' => 'form-control grupo', 'id' => 'hb', 'value' => '0']) }}
+    <div class="col-md-12 form-group">
+        {{ Form::label('id_client', 'Cliente', ['class' => 'control-label']) }}
+        <div class="input-group mb-12">
+            {{ Form::select('id_client', $clientsList, null, ['class' => 'form-control select-client', 'placeholder' => 'Seleccione cliente']) }}
+        </div>
     </div>
-</div>
-<div class="form-group">
-    {{ Form::label('qb', 'QB', ['class' => 'col-sm-2 control-label']) }}
-    <div class="col-sm-2">
-        {{ Form::text('qb', 0, ['class' => 'form-control grupo', 'id' => 'qb']) }}
+    <div class="col-md-4 form-group">
+        {{ Form::label('hb', 'HB', ['class' => 'control-label']) }}
+        <div class="input-group mb-12">
+            {{ Form::text('hb', 0, ['class' => 'form-control grupo', 'id' => 'hb_', 'value' => '0']) }}
+        </div>
     </div>
-</div>
-<div class="form-group">
-    {{ Form::label('eb', 'EB', ['class' => 'col-sm-2 control-label']) }}
-    <div class="col-sm-2">
-        {{ Form::text('eb', 0, ['class' => 'form-control grupo', 'id' => 'eb']) }}
+    <div class="col-md-4 form-group">
+        {{ Form::label('qb', 'QB', ['class' => 'control-label']) }}
+        <div class="input-group mb-12">
+            {{ Form::text('qb', 0, ['class' => 'form-control grupo', 'id' => 'qb_']) }}
+        </div>
     </div>
-</div>
-<div class="form-group">
-    {{ Form::label('quantity', 'Total', ['class' => 'col-sm-2 control-label']) }}
-    <div class="col-sm-2">
-        {{ Form::number('quantity', 0, ['class' => 'form-control', 'id' => 'total', 'readonly']) }}
+    <div class="col-md-4 form-group">
+        {{ Form::label('eb', 'EB', ['class' => 'control-label']) }}
+        <div class="input-group mb-12">
+            {{ Form::text('eb', 0, ['class' => 'form-control grupo', 'id' => 'eb_']) }}
+        </div>
     </div>
-</div>
-<div class="form-group">
-    {{ Form::label('piso', 'Piso', ['class' => 'col-sm-2 control-label']) }}
-    <div class="col-sm-2">
-        {{ Form::checkbox('piso', 'value', false) }}
+    <div class="col-md-6 form-group">
+        {{ Form::label('quantity', 'Total', ['class' => 'control-label']) }}
+        <div class="input-group mb-12">
+            {{ Form::number('quantity', 0, ['class' => 'form-control', 'id' => 'total_', 'readonly']) }}
+        </div>
+    </div>
+    <div class="col-md-6 form-group">
+        {{ Form::label('piso', 'Piso', ['class' => 'control-label']) }}
+        <div class="input-group mb-12">
+            {{ Form::checkbox('piso', 'value', false) }}
+        </div>
     </div>
 </div>
 @section('scripts')
@@ -59,3 +59,6 @@
 </script>
 
 @endsection
+
+
+

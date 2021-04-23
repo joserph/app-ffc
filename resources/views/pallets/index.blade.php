@@ -34,7 +34,7 @@
                         <div class="card-header">
                            <i class="fas fa-pallet"></i> Paleta # <span class="badge bg-dark">{{ $item->number }}</span>
                            <input type="hidden" name="prueba" id="prueba_{{ $indexKey }}" value="{{ $item->number }}">
-                           <a href="{{ route('palletitems.create', $item->number) }}" class="btn btn-xs btn-info float-right" data-toggle="modal" data-target="#addPalletItem" data-toggle="tooltip" data-placement="top" title="Agregar item de paleta"><i class="fas fa-plus-circle"></i> Agregar</a>
+                           <a href="{{ route('palletitems.create', $item->number) }}" class="btn btn-xs btn-info float-right" data-toggle="modal" data-target="#addPalletItem_{{ $item->id }}" data-toggle="tooltip" data-placement="top" title="Agregar item de paleta"><i class="fas fa-plus-circle"></i></a>
                         </div>
                         <div class="card-body">
                            <div class="table-responsive">
@@ -82,11 +82,11 @@
                                              <td class="text-center">{{ $item2->eb }}</td>
                                              <td class="text-center">{{ $item2->quantity }}</td>
                                              <td class="text-center" width="10px">
-                                                <a href="{{ route('palletitems.edit', $item2->id) }}" class="btn btn-xs btn-warning" data-toggle="tooltip" data-placement="top" title="Editar item de paleta"><i class="fas fa-edit"></i> Editar</a>
+                                                <a href="{{ route('palletitems.edit', $item2->id) }}" class="btn btn-xs btn-warning" data-toggle="tooltip" data-placement="top" title="Editar item de paleta"><i class="fas fa-edit"></i></a>
                                              </td>
                                              <td class="text-center" width="10px">
                                                 {!! Form::open(['route' => ['palletitems.destroy', $item2->id], 'method' => 'DELETE', 'onclick' => 'return confirm("¿Seguro de eliminar item de paleta?")']) !!}
-                                                   <button class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar item de paleta"><i class="fas fa-trash-alt"></i> Eliminar</button>
+                                                   <button class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar item de paleta"><i class="fas fa-trash-alt"></i></button>
                                                 {!! Form::close() !!}
                                              </td>
                                           </tr>
@@ -115,33 +115,23 @@
                      </div>
 
                      <!-- Modal Pallets Items -->
-                    <div class="modal fade" id="addPalletItem" tabindex="-1" role="dialog" aria-labelledby="addPalletItem">
+                     <div class="modal fade" id="addPalletItem_{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="addPalletItemLabel">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="addPalletItem">Contenedor {{ $code }}</h4>
-                                </div>
+                                 <div class="modal-header">
+                                    <h5 class="modal-title" id="agregarItemLabel">Contenedor {{ $load->shipment }}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                       <span aria-hidden="true">&times;</span>
+                                    </button>
+                                 </div>
                                 <div class="modal-body">
-                                    @if (count($errors) > 0)
-                                        <div class="alert alert-danger">
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                            <strong><i class="fa fa-exclamation-triangle fa-fw"></i></strong> Por favor corrige los siguentes errores:<br><br>
-                                            <ul>
-                                                @foreach ($errors->all() as $error)
-                                                    <li>{{ $error }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                    @endif
-                    
+                                    @include('custom.message')
+                     
                                     {{ Form::open(['route' => 'palletitems.store', 'class' => 'form-horizontal']) }}
                                         {!! Form::hidden('id_user', \Auth::user()->id) !!}
                                         {!! Form::hidden('update_user', \Auth::user()->id) !!}
                                         {!! Form::hidden('id_load', $load->id) !!}
-                                        {!! Form::hidden('id_pallet', $item->id) !!}
+                                        {!! Form::hidden('id_pallet', $item->id, ['id' => '$item->id']) !!}
 
                                         @include('palletitems.partials.form')
                                         <div class="form-group">
@@ -151,12 +141,10 @@
                                         </div>
                                     {{ Form::close() }}
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-sm" data-dismiss="modal">Cerrar</button>
-                                </div>
                             </div>
                         </div>
-                    </div>
+                     </div>
+                    
                     <!-- End Modal Pallets Items -->
                   @endforeach
                </div>
