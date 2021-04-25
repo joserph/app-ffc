@@ -34,7 +34,7 @@
                         <div class="card-header">
                            <i class="fas fa-pallet"></i> Paleta # <span class="badge bg-dark">{{ $item->number }}</span>
                            <input type="hidden" name="prueba" id="prueba_{{ $indexKey }}" value="{{ $item->number }}">
-                           <a href="{{ route('palletitems.create', $item->number) }}" class="btn btn-xs btn-info float-right" data-toggle="modal" data-target="#addPalletItem_{{ $item->id }}" data-toggle="tooltip" data-placement="top" title="Agregar item de paleta"><i class="fas fa-plus-circle"></i></a>
+                           <a href="{{ route('palletitems.create', $item->id) }}" onclick="mifuncion(this)" value="{{ $item->id }}" class="btn btn-xs btn-info float-right" data-toggle="modal" data-target="#addPalletItem_{{ $item->id }}" data-toggle="tooltip" data-placement="top" title="Agregar item de paleta"><i class="fas fa-plus-circle"></i></a>
                         </div>
                         <div class="card-body">
                            <div class="table-responsive">
@@ -131,7 +131,7 @@
                                         {!! Form::hidden('id_user', \Auth::user()->id) !!}
                                         {!! Form::hidden('update_user', \Auth::user()->id) !!}
                                         {!! Form::hidden('id_load', $load->id) !!}
-                                        {!! Form::hidden('id_pallet', $item->id, ['id' => '$item->id']) !!}
+                                       <input type="hidden" name="id_pallet" id="id_pallet" value="{{ $item->id }}" class="grupo">
 
                                         @include('palletitems.partials.form')
                                         <div class="form-group">

@@ -46,7 +46,7 @@ class PalletController extends Controller
         }
         //dd($counter);
         $number = $code . '-' . $counter;
-        $palletItem = PalletItem::where('id_load', '=', $load->id)->get();
+        $palletItem = PalletItem::where('id_load', '=', $load->id)->orderBy('farms', 'ASC')->get();
         // Farms
         $farms = Farm::all();
         // Clients

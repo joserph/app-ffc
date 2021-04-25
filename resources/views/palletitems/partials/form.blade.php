@@ -15,25 +15,25 @@
     <div class="col-md-4 form-group">
         {{ Form::label('hb', 'HB', ['class' => 'control-label']) }}
         <div class="input-group mb-12">
-            {{ Form::text('hb', 0, ['class' => 'form-control grupo', 'id' => 'hb_{{ $item->id }}', 'value' => '0']) }}
+            <input type="text" name="hb" id="hb_{{ $item->id }}" value="0" class="form-control grupo">
         </div>
     </div>
     <div class="col-md-4 form-group">
         {{ Form::label('qb', 'QB', ['class' => 'control-label']) }}
         <div class="input-group mb-12">
-            {{ Form::text('qb', 0, ['class' => 'form-control grupo', 'id' => 'qb_']) }}
+            <input type="text" name="qb" id="qb_{{ $item->id }}" value="0" class="form-control grupo">
         </div>
     </div>
     <div class="col-md-4 form-group">
         {{ Form::label('eb', 'EB', ['class' => 'control-label']) }}
         <div class="input-group mb-12">
-            {{ Form::text('eb', 0, ['class' => 'form-control grupo', 'id' => 'eb_']) }}
+            <input type="text" name="eb" id="eb_{{ $item->id }}" value="0" class="form-control grupo">
         </div>
     </div>
     <div class="col-md-6 form-group">
         {{ Form::label('quantity', 'Total', ['class' => 'control-label']) }}
         <div class="input-group mb-12">
-            {{ Form::number('quantity', 0, ['class' => 'form-control', 'id' => 'total_', 'readonly']) }}
+            <input type="text" name="quantity" id="total_{{ $item->id }}" value="0" class="form-control grupo" readonly>
         </div>
     </div>
     <div class="col-md-6 form-group">
@@ -45,17 +45,25 @@
 </div>
 @section('scripts')
 <script>
-    $(document).ready(function(){
-        $(".grupo").keyup(function()
-        {
-            var hb = $('#hb').val();
-            var qb = $('#qb').val();
-            var eb = $('#eb').val();
-            var total = parseFloat(hb) + parseFloat(qb) + parseFloat(eb);
-            $('#total').val(parseFloat(total));
-            console.log(total);
-        });
-    });
+        function mifuncion(elemento) {
+            var id_pallet = elemento.getAttribute('value');
+            $(document).ready(function(){
+        
+        //var id = $('#id_pallet').val();
+        //alert(id_pallet);
+        
+                $(".grupo").keyup(function()
+                {
+                    var hb = $('#hb_'+id_pallet).val();
+                    var qb = $('#qb_'+id_pallet).val();
+                    var eb = $('#eb_'+id_pallet).val();
+                    var total = parseFloat(hb) + parseFloat(qb) + parseFloat(eb);
+                    $('#total_'+id_pallet).val(parseFloat(total));
+                    console.log(total);
+                });
+            });
+        }
+    
 </script>
 
 @endsection
