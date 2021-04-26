@@ -124,7 +124,13 @@ class PalletItemController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $palletItem = PalletItem::find($id);
+        $palletItem->update($request->all());
+
+        $load = Load::where('id', '=', $palletItem->id_load)->get();
+
+        return redirect()->route('pallets.index', $load[0]->id)
+            ->with('info', 'Item Actualizado con exito');
     }
 
     /**
@@ -135,6 +141,12 @@ class PalletItemController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $palletItem = PalletItem::find($id);
+        $palletItem->delete();
+
+        $load = Load::where('id', '=', $palletItem->id_load)->get();
+
+        return redirect()->route('pallets.index', $load[0]->id)
+            ->with('info', 'Item eliminado con exito');
     }
 }

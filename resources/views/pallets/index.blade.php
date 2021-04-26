@@ -82,14 +82,42 @@
                                              <td class="text-center">{{ $item2->eb }}</td>
                                              <td class="text-center">{{ $item2->quantity }}</td>
                                              <td class="text-center" width="10px">
-                                                <a href="{{ route('palletitems.edit', $item2->id) }}" class="btn btn-xs btn-warning" data-toggle="tooltip" data-placement="top" title="Editar item de paleta"><i class="fas fa-edit"></i></a>
+                                                <button type="button" onclick="mifuncion2(this)" value="{{ $item2->id }}" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#editPalletItem{{ $item2->id }}">
+                                                   <i class="fas fa-pencil-alt"></i>
+                                                </button>
                                              </td>
                                              <td class="text-center" width="10px">
                                                 {!! Form::open(['route' => ['palletitems.destroy', $item2->id], 'method' => 'DELETE', 'onclick' => 'return confirm("¿Seguro de eliminar item de paleta?")']) !!}
-                                                   <button class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar item de paleta"><i class="fas fa-trash-alt"></i></button>
+                                                   <button class="btn btn-sm btn-outline-danger" data-toggle="tooltip" data-placement="top" title="Eliminar item de paleta"><i class="fas fa-trash-alt"></i></button>
                                                 {!! Form::close() !!}
                                              </td>
                                           </tr>
+                                          <div class="modal fade" id="editPalletItem{{ $item2->id }}" tabindex="-1" aria-labelledby="editPalletItemLabel" aria-hidden="true">
+                                             <div class="modal-dialog ">
+                                                <div class="modal-content">
+                                                   <div class="modal-header">
+                                                      <h5 class="modal-title" id="editPalletItemLabel">Editar Pallet Items</h5>
+                                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                         <span aria-hidden="true">&times;</span>
+                                                      </button>
+                                                   </div>
+                                                   <div class="modal-body">
+                                                      @include('custom.message') 
+                                                      {{ Form::model($item2, ['route' => ['palletitems.update', $item2->id], 'class' => 'form-horizontal', 'method' => 'PUT']) }}
+                                                         <div class="modal-body">
+                                                            @include('palletitems.partials.formEdit')
+                                                         </div>
+                                                         <div class="modal-footer">
+                                                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+                                                            <button type="submit" class="btn btn-outline-warning" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
+                                                               <i class="fas fa-sync"></i> Actualizar
+                                                            </button>
+                                                         </div>
+                                                      {{ Form::close() }}
+                                                   </div>
+                                                </div>
+                                             </div>
+                                          </div>
                                        @endif
                                     @endforeach
                                  </tbody>
