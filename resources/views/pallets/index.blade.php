@@ -34,7 +34,9 @@
                         <div class="card-header">
                            <i class="fas fa-pallet"></i> Paleta # <span class="badge bg-dark">{{ $item->number }}</span>
                            <input type="hidden" name="prueba" id="prueba_{{ $indexKey }}" value="{{ $item->number }}">
-                           <a href="{{ route('palletitems.create', $item->id) }}" onclick="mifuncion(this)" value="{{ $item->id }}" class="btn btn-xs btn-info float-right" data-toggle="modal" data-target="#addPalletItem_{{ $item->id }}" data-toggle="tooltip" data-placement="top" title="Agregar item de paleta"><i class="fas fa-plus-circle"></i></a>
+                           <button type="button" onclick="mifuncion(this)" value="{{ $item->id }}" class="btn btn-xs btn-info float-right" data-toggle="modal" data-target="#addPalletItem_{{ $item->id }}" data-toggle="tooltip" data-placement="top" title="Agregar item de paleta">
+                              <i class="fas fa-plus-circle"></i>
+                           </button>
                         </div>
                         <div class="card-body">
                            <div class="table-responsive">
@@ -191,6 +193,97 @@
                   </button>
                 </div>
              </div>
+
+             <div class="card text-white bg-dark">
+               <div class="card-header">
+                 Resumen de la carga.
+               </div>
+               <div class="card-body">
+                  <!-- tabla de coordinaciones -->
+                  <div class="table-responsive">
+                     <table class="table table-sm">
+                         @php
+                             $totalFulls = 0; $totalHb = 0; $totalQb = 0; $totalEb = 0; $totalPcsr = 0; $totalHbr = 0; $totalQbr = 0;
+                             $totalEbr = 0; $totalFullsr = 0; $totalDevr = 0; $totalMissingr = 0;
+                         @endphp
+                         @foreach($resumenCargaAll as $client)
+                         <thead>
+                             <tr>
+                                 <th colspan="15" class="sin-border"></th>
+                             </tr>
+                         </thead>
+                         <thead>
+                             <tr>
+                                 <th class="text-center medium-letter">Cliente</th>
+                                 <th class="text-center medium-letter" colspan="14">{{ $client['name'] }}</th>
+                             </tr>
+                         </thead>
+                         <thead>
+                             <tr class="gris">
+                               <th class="text-center">Finca</th>
+                               <th class="text-center">PCS</th>
+                               <th class="text-center">HB</th>
+                               <th class="text-center">QB</th>
+                               <th class="text-center">EB</th>
+                             </tr>
+                         </thead>
+                         <tbody>
+                             @php
+                                 $tPieces = 0; $tHb = 0; $tQb = 0; $tEb = 0; $totalPieces = 0;
+                             @endphp
+                             @foreach($itemsCarga as $item)
+                             @if($client['id'] == $item->id_client)
+                             @php
+                                 $tPieces+= $item->quantity;
+                                 $tHb+= $item->hb;
+                                 $tQb+= $item->qb;
+                                 $tEb+= $item->eb;
+                             @endphp
+                             <tr>
+                                 <td class="farms">{{ $item->name }}</td>
+                                 <td class="text-center">{{ $item->quantity }}</td>
+                                 <td class="text-center">{{ $item->hb }}</td>
+                                 <td class="text-center">{{ $item->qb }}</td>
+                                 <td class="text-center">{{ $item->eb }}</td>
+                             </tr>
+                             
+                             @endif
+                             @endforeach
+                             @php
+                                  $totalHb+= $tHb;
+                                  $totalQb+= $tQb;
+                                  $totalEb+= $tEb;
+                               @endphp
+                            <tr class="gris">
+                               <th class="text-center text-right">Total:</th>
+                               <th class="text-center">{{ $tPieces }}</th>
+                               <th class="text-center">{{ $tHb }}</th>
+                               <th class="text-center">{{ $tQb }}</th>
+                               <th class="text-center">{{ $tEb }}</th>
+                            </tr>
+                         </tbody>
+                         <tfoot>
+                         @endforeach
+                         @php
+                             $totalPieces+= $totalHb + $totalQb + $totalEb;
+                         @endphp
+                             <tr>
+                                 <th colspan="8" class="sin-border"></th>
+                             </tr>
+                             <tr class="gris">
+                                 <th class="text-center">Total Global:</th>
+                                 <th class="text-center">{{ $totalPieces }}</th>
+                                 <th class="text-center">{{ $totalHb }}</th>
+                                 <th class="text-center">{{ $totalQb }}</th>
+                                 <th class="text-center">{{ $totalEb }}</th>
+                             </tr>
+                         </tfoot>
+                     </table>
+                   </div>
+                   <!-- fin tabla de coordinaciones -->
+               </div>
+             </div>
+             
          </div>
       </div>
    </div>

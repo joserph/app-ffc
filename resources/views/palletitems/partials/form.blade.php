@@ -48,10 +48,7 @@
         function mifuncion(elemento) {
             var id_pallet = elemento.getAttribute('value');
             $(document).ready(function(){
-        
-        //var id = $('#id_pallet').val();
-        //alert(id_pallet);
-        
+                alert(id_pallet);
                 $(".grupo").keyup(function()
                 {
                     var hb = $('#hb_'+id_pallet).val();

@@ -55,8 +55,24 @@ class PalletController extends Controller
         $farmsList = Farm::orderBy('name', 'ASC')->pluck('name', 'id');
         $clientsList = Client::orderBy('name', 'ASC')->pluck('name', 'id');
 
-        //dd($palletItem);
-        return view('pallets.index', compact('pallets','code', 'farmsList', 'clientsList', 'counter', 'number', 'load', 'palletItem', 'farms', 'clients', 'total_container', 'total_hb', 'total_qb', 'total_eb'));
+        $resumenCarga = PalletItem::where('id_load', '=', $code)
+            ->join('clients', 'pallet_items.id_client', '=', 'clients.id')
+            ->select('clients.id', 'clients.name')
+            ->orderBy('clients.name', 'ASC')
+            ->get();
+        // Eliminamos los clientes duplicados
+        $resumenCargaAll = collect(array_unique($resumenCarga->toArray(), SORT_REGULAR));
+        // Items de carga
+        $itemsCarga = PalletItem::select('*')
+            ->where('id_load', '=', $code)
+            ->join('farms', 'pallet_items.id_farm', '=', 'farms.id')
+            ->select('farms.name', 'pallet_items.*')
+            ->orderBy('farms.name', 'ASC')
+            ->get();
+
+
+        //dd($itemsCarga);
+        return view('pallets.index', compact('resumenCargaAll', 'itemsCarga', 'pallets','code', 'farmsList', 'clientsList', 'counter', 'number', 'load', 'palletItem', 'farms', 'clients', 'total_container', 'total_hb', 'total_qb', 'total_eb'));
     }
 
     /**
