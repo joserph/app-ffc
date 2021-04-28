@@ -2,14 +2,27 @@
     <div class="col-md-12 form-group">
         {{ Form::label('id_farm', 'Finca', ['class' => 'control-label']) }}
         <div class="input-group mb-12">
-            {{ Form::select('id_farm', $farmsList, null, ['class' => 'form-control select-farm', 'placeholder' => 'Seleccione finca']) }}
+            <select class="form-control" name="id_farm" id="edit_farmsList_{{ $item2->id }}">
+                <option value="">Seleccione finca</option>
+                @foreach($farmsList as $itemFarm)
+                <option @if($item2->id_farm == $itemFarm->id) value="{{ $itemFarm->id }}" selected @endif >{{ $itemFarm->name }}</option>
+                @endforeach
+            </select>
         </div>
+        
     </div>
 
     <div class="col-md-12 form-group">
         {{ Form::label('id_client', 'Cliente', ['class' => 'control-label']) }}
         <div class="input-group mb-12">
-            {{ Form::select('id_client', $clientsList, null, ['class' => 'form-control select-client', 'placeholder' => 'Seleccione cliente']) }}
+            <div class="input-group mb-12">
+                <select class="form-control" name="id_client" id="edit_clientsList_{{ $item2->id }}">
+                    <option value="">Seleccione cliente</option>
+                    @foreach($clientsList as $itemClient)
+                    <option @if($item2->id_client == $itemClient->id) value="{{ $itemClient->id }}" selected @endif >{{ $itemClient->name }}</option>
+                    @endforeach
+                </select>
+            </div>
         </div>
     </div>
     <div class="col-md-4 form-group">
@@ -43,27 +56,6 @@
         </div>
     </div>
 </div>
-@section('scripts')
-<script>
-        function mifuncion2(elemento) {
-            var id_pallet = elemento.getAttribute('value');
-            $(document).ready(function(){
-                //alert(id_pallet);
-                $(".grupo").keyup(function()
-                {
-                    var hb = $('#edit_hb_'+id_pallet).val();
-                    var qb = $('#edit_qb_'+id_pallet).val();
-                    var eb = $('#edit_eb_'+id_pallet).val();
-                    var total = parseFloat(hb) + parseFloat(qb) + parseFloat(eb);
-                    $('#edit_total_'+id_pallet).val(parseFloat(total));
-                    console.log(total);
-                });
-            });
-        }
-    
-</script>
-
-@endsection
 
 
 

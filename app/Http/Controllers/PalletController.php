@@ -24,7 +24,7 @@ class PalletController extends Controller
         $code = $arr[1];
         $load = Load::find($code);
         
-        $pallets = Pallet::where('id_load', '=', $load->id)->get();
+        $pallets = Pallet::where('id_load', '=', $load->id)->orderBy('id', 'DESC')->get();
         
         
         $last_pallet = Pallet::where('id_load', '=', $load->id)->select('counter')->get()->last();
@@ -52,8 +52,8 @@ class PalletController extends Controller
         // Clients
         $clients = Client::all();
 
-        $farmsList = Farm::orderBy('name', 'ASC')->pluck('name', 'id');
-        $clientsList = Client::orderBy('name', 'ASC')->pluck('name', 'id');
+        $farmsList = Farm::select('id', 'name')->orderBy('name', 'ASC')->get();
+        $clientsList = Client::select('id', 'name')->orderBy('name', 'ASC')->get();
 
         $resumenCarga = PalletItem::where('id_load', '=', $code)
             ->join('clients', 'pallet_items.id_client', '=', 'clients.id')
@@ -71,7 +71,7 @@ class PalletController extends Controller
             ->get();
 
 
-        //dd($itemsCarga);
+        dd($itemsCarga);
         return view('pallets.index', compact('resumenCargaAll', 'itemsCarga', 'pallets','code', 'farmsList', 'clientsList', 'counter', 'number', 'load', 'palletItem', 'farms', 'clients', 'total_container', 'total_hb', 'total_qb', 'total_eb'));
     }
 
@@ -150,6 +150,12 @@ class PalletController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $pallet = Pallet::find($id);
+        $pallet->delete();
+
+        $load = Load::where('id', '=', $pallet->id_load)->get();
+        
+        return redirect()->route('pallets.index', $load[0]->id)
+            ->with('info', 'Paleta Eliminada con exito');
     }
 }

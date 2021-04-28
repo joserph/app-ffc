@@ -137,7 +137,7 @@
                            @if(($counter - 1) == $item->counter)
                               
                                  {!! Form::open(['route' => ['pallets.destroy', $item->id], 'method' => 'DELETE']) !!}
-                                    {!! Form::button('<i class="fas fa-trash-alt"></i> ' . 'Eliminar', ['type' => 'submit', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Eliminar finca', 'class' => 'btn btn-xs btn-danger pull-right', 'onclick' => 'return confirm("¿Seguro de eliminar finca?")']) !!}
+                                    {!! Form::button('<i class="fas fa-trash-alt"></i> ' . 'Eliminar', ['type' => 'submit', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Eliminar paleta', 'class' => 'btn btn-xs btn-danger pull-right', 'onclick' => 'return confirm("¿Seguro de eliminar finca?")']) !!}
                                  {!! Form::close() !!}
                               
                            @endif
@@ -149,7 +149,7 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                  <div class="modal-header">
-                                    <h5 class="modal-title" id="agregarItemLabel">Contenedor {{ $load->shipment }}</h5>
+                                    <h5 class="modal-title" id="agregarItemLabel">Paleta {{ $item->number }}</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                        <span aria-hidden="true">&times;</span>
                                     </button>
@@ -204,7 +204,7 @@
                      <table class="table table-sm">
                          @php
                              $totalFulls = 0; $totalHb = 0; $totalQb = 0; $totalEb = 0; $totalPcsr = 0; $totalHbr = 0; $totalQbr = 0;
-                             $totalEbr = 0; $totalFullsr = 0; $totalDevr = 0; $totalMissingr = 0;
+                             $totalEbr = 0; $totalFullsr = 0; $totalDevr = 0; $totalMissingr = 0; $totalPieces = 0;
                          @endphp
                          @foreach($resumenCargaAll as $client)
                          <thead>
@@ -229,7 +229,7 @@
                          </thead>
                          <tbody>
                              @php
-                                 $tPieces = 0; $tHb = 0; $tQb = 0; $tEb = 0; $totalPieces = 0;
+                                 $tPieces = 0; $tHb = 0; $tQb = 0; $tEb = 0; 
                              @endphp
                              @foreach($itemsCarga as $item)
                              @if($client['id'] == $item->id_client)
@@ -448,28 +448,59 @@
                         </div>
                     </div>
                 </div>
-        
-        
-        
-
-         
-
-
-
-
-
       </div>
    </div>
 </section>
 
+@endsection
 
+@section('scripts')
+<script>
 
+function mifuncion(elemento) {
+    var id_pallet = elemento.getAttribute('value');
+    $(document).ready(function(){
+        //alert(id_pallet);
+        $(".grupo").keyup(function()
+        {
+            var hb = $('#hb_'+id_pallet).val();
+            var qb = $('#qb_'+id_pallet).val();
+            var eb = $('#eb_'+id_pallet).val();
+            var total = parseFloat(hb) + parseFloat(qb) + parseFloat(eb);
+            $('#total_'+id_pallet).val(parseFloat(total));
+            console.log(total);
+        });
 
+        $('#farmsList_'+id_pallet).select2({
+            theme: 'bootstrap4',
+        });
+        $('#clientsList_'+id_pallet).select2({
+            theme: 'bootstrap4',
+        });
+    });
+}
 
-
-
-
-
-
+function mifuncion2(elemento) {
+    var id_pallet = elemento.getAttribute('value');
+    $(document).ready(function(){
+        //alert(id_pallet);
+        $(".grupo").keyup(function()
+        {
+            var hb = $('#edit_hb_'+id_pallet).val();
+            var qb = $('#edit_qb_'+id_pallet).val();
+            var eb = $('#edit_eb_'+id_pallet).val();
+            var total = parseFloat(hb) + parseFloat(qb) + parseFloat(eb);
+            $('#edit_total_'+id_pallet).val(parseFloat(total));
+            console.log(total);
+        });
+        $('#edit_farmsList_'+id_pallet).select2({
+            theme: 'bootstrap4',
+        });
+        $('#edit_clientsList_'+id_pallet).select2({
+            theme: 'bootstrap4',
+        });
+    });
+}
+</script>
 
 @endsection
