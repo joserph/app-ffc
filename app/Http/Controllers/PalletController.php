@@ -71,7 +71,7 @@ class PalletController extends Controller
             ->get();
 
 
-        dd($itemsCarga);
+        //dd($itemsCarga);
         return view('pallets.index', compact('resumenCargaAll', 'itemsCarga', 'pallets','code', 'farmsList', 'clientsList', 'counter', 'number', 'load', 'palletItem', 'farms', 'clients', 'total_container', 'total_hb', 'total_qb', 'total_eb'));
     }
 

@@ -87,44 +87,7 @@ class InvoiceHeaderController extends Controller
             ->orderBy('farms.name', 'ASC')
             ->get();
             
-        //dd($invoiceItemsAll);
-        foreach($invoiceItemsAll as $item)
-        {
-            // Buscamos los valores duplicados
-            $dupliHawb = MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->count('hawb');
-            // Validamos si hay valores duplicados, para agrupar
-            
-            if($dupliHawb > 1)
-            {
-                $fulls = ['fulls' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('fulls')];
-                $pieces = ['pieces' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('pieces')];
-                $name = ['name' => $item->name];
-                $variety = ['variety' => $item->variety->name];
-                $scientific = ['scientific_name' => $item->variety->scientific_name];
-                $hawb = ['hawb' => $item->hawb];
-                $stems = ['stems' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('stems')];
-                $bunches = ['bunches' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('bunches')];
-                $price = ['price' => $item->price];
-                $total = ['total' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('total')];
-                $client = ['client' => $item->client_confirm->name];
-            }else{
-                $fulls = ['fulls' => $item->fulls];
-                $pieces = ['pieces' => $item->pieces];
-                $name = ['name' => $item->name];
-                $variety = ['variety' => $item->variety->name];
-                $scientific = ['scientific_name' => $item->variety->scientific_name];
-                $hawb = ['hawb' => $item->hawb];
-                $stems = ['stems' => $item->stems];
-                $bunches = ['bunches' => $item->bunches];
-                $price = ['price' => $item->price];
-                $total = ['total' => $item->total];
-                $client = ['client' => $item->client_confirm->name];
-            }
-            
-            $invoiceItemsArray[] = Arr::collapse([$fulls, $pieces, $name, $variety, $scientific, $hawb, $stems, $bunches, $price, $total, $client]);
-            
-        }
-        $invoiceItems = collect(array_unique($invoiceItemsArray, SORT_REGULAR));
+        $invoiceItems = InvoiceHeader::groupEqualsMasterInvoice($invoiceItemsAll, $code);
         //dd($invoiceItems);
         $masterInvoicePdf = PDF::loadView('masterinvoice.masterInvoicePdf', compact(
             'load',
