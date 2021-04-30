@@ -1,9 +1,13 @@
 <div class="row">
-    <div class="col-md-8 form-group">
+    <div class="col-md-6 form-group">
         {{ Form::label('name', 'Nombre de la finca', ['class' => 'control-label']) }}
         <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" wire:model="name">
     </div>
-    <div class="col-md-4 form-group">
+    <div class="col-md-3 form-group">
+        {{ Form::label('tradename', 'Nombre Comercial', ['class' => 'control-label']) }}
+        <input type="text" name="tradename" class="form-control @error('tradename') is-invalid @enderror" wire:model="tradename">
+    </div>
+    <div class="col-md-3 form-group">
         {{ Form::label('phone', 'Teléfono', ['class' => 'control-label']) }}
         <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror" wire:model="phone">
     </div>

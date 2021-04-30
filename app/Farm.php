@@ -8,6 +8,7 @@ class Farm extends Model
 {
     protected $fillable = [
         'name',
+        'tradename',
         'phone',
         'address',
         'state', // Estado

@@ -5,6 +5,7 @@
     <thead>
        <tr>
           <th scope="col">Nombre</th>
+          <th scope="col">Nombre Comercial</th>
           <th scope="col">Teléfono</th>
           <th scope="col">Dirección</th>
           <th scope="col">Estado</th>
@@ -17,6 +18,7 @@
        @foreach ($farms as $farm)
          <tr>
             <td>{{ $farm->name }}</td>
+            <td>{{ $farm->tradename }}</td>
             <td>{{ $farm->phone }}</td>
             <td>{{ $farm->address }}</td>
             <td>{{ $farm->state }}</td>

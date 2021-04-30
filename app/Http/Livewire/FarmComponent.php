@@ -14,7 +14,7 @@ class FarmComponent extends Component
 
     protected $paginationTheme = 'bootstrap'; /// Importante
 
-    public $farm_id, $name, $phone, $address, $state, $city, $country;
+    public $farm_id, $name, $tradename, $phone, $address, $state, $city, $country;
     public $view = 'create';
 
     public function render()
@@ -32,6 +32,7 @@ class FarmComponent extends Component
         // Validaciones
         $this->validate([
             'name'      => 'required',
+            'tradename' => 'required',
             'phone'     => 'required',
             'address'   => 'required',
             'state'     => 'required',
@@ -41,6 +42,7 @@ class FarmComponent extends Component
 
         $farm = Farm::create([
             'name'          => $this->name,
+            'tradename'     => $this->tradename,
             'phone'         => $this->phone,
             'address'       => $this->address,
             'state'         => $this->state,
@@ -61,6 +63,7 @@ class FarmComponent extends Component
 
         $this->farm_id = $farm->id;
         $this->name = $farm->name;
+        $this->tradename = $farm->tradename;
         $this->phone = $farm->phone;
         $this->address = $farm->address;
         $this->state = $farm->state;
@@ -75,6 +78,7 @@ class FarmComponent extends Component
         // Validaciones
         $this->validate([
             'name'      => 'required',
+            'tradename' => 'required',
             'phone'     => 'required',
             'address'   => 'required',
             'state'     => 'required',
@@ -86,6 +90,7 @@ class FarmComponent extends Component
 
         $farm->update([
             'name'          => $this->name,
+            'tradename'     => $this->tradename,
             'phone'         => $this->phone,
             'address'       => $this->address,
             'state'         => $this->state,
@@ -110,6 +115,7 @@ class FarmComponent extends Component
     {
         Gate::authorize('haveaccess', 'farm.index');
         $this->name = '';
+        $this->tradename = '';
         $this->phone = '';
         $this->address = '';
         $this->state = '';
