@@ -28,6 +28,7 @@ class PalletItem extends Model
 
     public static function groupEqualsItemsCargas($itemsCargaAll, $code)
     {
+        $itemCargaArray = [];
         foreach($itemsCargaAll as $item)
         {
             // Buscamos los valores duplicados
