@@ -214,13 +214,12 @@
                          </thead>
                          <thead>
                              <tr>
-                                 <th class="text-center medium-letter">Cliente</th>
-                                 <th class="text-center medium-letter" colspan="14">{{ $client['name'] }}</th>
+                                 <th class="text-center medium-letter" colspan="5">{{ $client['name'] }}</th>
                              </tr>
                          </thead>
                          <thead>
                              <tr class="gris">
-                               <th class="text-center">Finca</th>
+                               <th class="text-center">Fincas</th>
                                <th class="text-center">PCS</th>
                                <th class="text-center">HB</th>
                                <th class="text-center">QB</th>
@@ -231,20 +230,20 @@
                              @php
                                  $tPieces = 0; $tHb = 0; $tQb = 0; $tEb = 0; 
                              @endphp
-                             @foreach($itemsCarga as $item)
-                             @if($client['id'] == $item->id_client)
+                             @foreach($itemsCarga as $key => $item)
+                             @if($client['id'] == $item['id_client'])
                              @php
-                                 $tPieces+= $item->quantity;
-                                 $tHb+= $item->hb;
-                                 $tQb+= $item->qb;
-                                 $tEb+= $item->eb;
+                                 $tPieces+= $item['quantity'];
+                                 $tHb+= $item['hb'];
+                                 $tQb+= $item['qb'];
+                                 $tEb+= $item['eb'];
                              @endphp
                              <tr>
-                                 <td class="farms">{{ $item->name }}</td>
-                                 <td class="text-center">{{ $item->quantity }}</td>
-                                 <td class="text-center">{{ $item->hb }}</td>
-                                 <td class="text-center">{{ $item->qb }}</td>
-                                 <td class="text-center">{{ $item->eb }}</td>
+                                 <td class="farms">{{ $item['farms'] }}</td>
+                                 <td class="text-center">{{ $item['quantity'] }}</td>
+                                 <td class="text-center">{{ $item['hb'] }}</td>
+                                 <td class="text-center">{{ $item['qb'] }}</td>
+                                 <td class="text-center">{{ $item['eb'] }}</td>
                              </tr>
                              
                              @endif
@@ -316,141 +315,6 @@
        </div>
    </div>
 </div>
-
-
-
-<section class="content">
-   <div class="container-fluid">
-      <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fas fa-pallet"></i> Paletas
-                            
-                                
-                            
-                        </div>
-                        <div class="panel-body">
-                            <ol class="breadcrumb">
-                                <li><a href="{{ url('/home') }}">Inicio</a></li>
-                                <li><a href="{{ route('load.index') }}">Contenedor {{ $code }}</a></li>
-                                <li><a href="{{ route('load.show', $load) }}">Paletas</a></li>
-                                <li class="active">Items de Paletas</li>
-                            </ol>
-                            
-                            @foreach ($pallets as $indexKey =>$item)
-                                <div class="panel panel-success">
-                                    <div class="panel-heading">
-                                        <i class="fas fa-pallet"></i> Paleta # {{ $item->number }}
-                                        <input type="hidden" name="prueba" id="prueba_{{ $indexKey }}" value="{{ $item->number }}">
-                                        
-                                            
-                                        
-                                    </div>
-                                    
-                                    <div class="panel-body">
-                                        <div class="table-responsive">
-                                            <table class="table table-condensed table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="text-center">Finca</th>
-                                                        <th class="text-center">Cliente</th>
-                                                        <th class="text-center">HB</th>
-                                                        <th class="text-center">QB</th>
-                                                        <th class="text-center">EB</th>
-                                                        <th class="text-center">Total</th>
-                                                        <th colspan="2" class="text-center">Aciones</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @php
-                                                        $hb = 0; $qb = 0; $eb = 0; $total = 0;
-                                                    @endphp
-                                                    @foreach ($palletItem as $item2)
-                                                        @if($item->id == $item2->id_pallet)
-                                                        @php 
-                                                            $hb+=$item2->hb;
-                                                            $qb+=$item2->qb;
-                                                            $eb+=$item2->eb;
-                                                            $total+=$item2->quantity;
-                                                        @endphp
-                                                            <tr>
-                                                                <td>
-                                                                    @foreach ($farms as $farm)
-                                                                        @if($item2->id_farm == $farm->id)
-                                                                            {{ $farm->name }}
-                                                                        @endif
-                                                                    @endforeach
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    @foreach ($clients as $client)
-                                                                        @if($item2->id_client == $client->id)
-                                                                            {{ strtoupper($client->name) }}
-                                                                        @endif
-                                                                    @endforeach
-                                                                </td>
-                                                                <td class="text-center">{{ $item2->hb }}</td>
-                                                                <td class="text-center">{{ $item2->qb }}</td>
-                                                                <td class="text-center">{{ $item2->eb }}</td>
-                                                                <td class="text-center">{{ $item2->quantity }}</td>
-                                                                <td class="text-center" width="10px">
-                                                                    <a href="{{ route('palletitems.edit', $item2->id) }}" class="btn btn-xs btn-warning" data-toggle="tooltip" data-placement="top" title="Editar item de paleta"><i class="fas fa-edit"></i> Editar</a>
-                                                                </td>
-                                                                <td class="text-center" width="10px">
-                                                                    {!! Form::open(['route' => ['palletitems.destroy', $item2->id], 'method' => 'DELETE', 'onclick' => 'return confirm("¿Seguro de eliminar item de paleta?")']) !!}
-                                                                        <button class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar item de paleta"><i class="fas fa-trash-alt"></i> Eliminar</button>
-                                                                    {!! Form::close() !!}
-                                                                </td>
-                                                            </tr>
-                                                        @endif
-                                                    @endforeach
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <th colspan="2" class="text-center">Totales</th>
-                                                        <th class="text-center">{{ $hb }}</th>
-                                                        <th class="text-center">{{ $qb }}</th>
-                                                        <th class="text-center">{{ $eb }}</th>
-                                                        <th class="text-center">{{ $total }}</th>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-                                        </div>
-        
-                                        
-                                        @if(($counter - 1) == $item->counter)
-                                            @can('pallets.destroy')
-                                                {!! Form::open(['route' => ['pallets.destroy', $item->id], 'method' => 'DELETE']) !!}
-                                                    {!! Form::button('<i class="fas fa-trash-alt"></i> ' . 'Eliminar', ['type' => 'submit', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Eliminar finca', 'class' => 'btn btn-xs btn-danger pull-right', 'onclick' => 'return confirm("¿Seguro de eliminar finca?")']) !!}
-                                                {!! Form::close() !!}
-                                            @endcan
-                                        @endif
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-        
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <button class="btn btn-default  " type="button">
-                                Total HB <span class="badge">{{ $total_hb }}</span>
-                            </button>
-                            <button class="btn btn-primary" type="button">
-                                Total QB <span class="badge">{{ $total_qb }}</span>
-                            </button>
-                            <button class="btn btn-info" type="button">
-                                Total EB <span class="badge">{{ $total_eb }}</span>
-                            </button>
-                            <button class="btn btn-success" type="button">
-                                Total Contenedor <span class="badge">{{ $total_container }}</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-      </div>
-   </div>
-</section>
 
 @endsection
 

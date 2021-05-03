@@ -26,7 +26,6 @@ class PalletController extends Controller
         
         $pallets = Pallet::where('id_load', '=', $load->id)->orderBy('id', 'DESC')->get();
         
-        
         $last_pallet = Pallet::where('id_load', '=', $load->id)->select('counter')->get()->last();
         //dd($load);
         // Total contenedor
@@ -44,9 +43,10 @@ class PalletController extends Controller
         }else{
             $counter = 1;
         }
-        //dd($counter);
+        
         $number = $code . '-' . $counter;
         $palletItem = PalletItem::where('id_load', '=', $load->id)->orderBy('farms', 'ASC')->get();
+        //dd($palletItem);
         // Farms
         $farms = Farm::all();
         // Clients
@@ -63,14 +63,14 @@ class PalletController extends Controller
         // Eliminamos los clientes duplicados
         $resumenCargaAll = collect(array_unique($resumenCarga->toArray(), SORT_REGULAR));
         // Items de carga
-        $itemsCarga = PalletItem::select('*')
+        $itemsCargaAll = PalletItem::select('*')
             ->where('id_load', '=', $code)
             ->join('farms', 'pallet_items.id_farm', '=', 'farms.id')
             ->select('farms.name', 'pallet_items.*')
             ->orderBy('farms.name', 'ASC')
             ->get();
-
-
+        
+        $itemsCarga = PalletItem::groupEqualsItemsCargas($itemsCargaAll, $code);
         //dd($itemsCarga);
         return view('pallets.index', compact('resumenCargaAll', 'itemsCarga', 'pallets','code', 'farmsList', 'clientsList', 'counter', 'number', 'load', 'palletItem', 'farms', 'clients', 'total_container', 'total_hb', 'total_qb', 'total_eb'));
     }
@@ -93,11 +93,29 @@ class PalletController extends Controller
      */
     public function store(Request $request)
     {
-        $pallet = Pallet::create($request->all());
-        if($pallet->usda == '1')
+        //dd($request->all());
+        if($request->usda == 'on')
         {
-            $id_load = Load::select('code')->where('id', '=', $pallet->id_load)->first();
-            $pallet->number = $id_load->code .'-USDA';
+            
+            $request->usda = 1;
+            
+        }
+        //dd($request->usda);
+        $pallet = Pallet::create(
+            [
+                'id_user' => $request->id_user,
+                'update_user' => $request->update_user,
+                'id_load' => $request->id_load,
+                'number1' => $request->number1,
+                'counter' => $request->counter,
+                'number' => $request->number,
+                'usda' => $request->usda
+            ]
+        );
+        if($pallet->usda == 1)
+        {
+            $id_load = Load::select('shipment')->where('id', '=', $pallet->id_load)->first();
+            $pallet->number = $id_load->shipment .'-USDA-' . $pallet->counter;
         }else{
             $pallet->number = $pallet->number . '-' . $pallet->counter;
         }
