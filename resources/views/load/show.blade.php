@@ -5,15 +5,13 @@
     <div class="container-fluid">
        <div class="row mb-2">
           <div class="col-sm-6">
-             <h1>Crear Carga
-                
-             </h1>
+             <h1>{{ $load->bl }}</h1>
           </div>
           <div class="col-sm-6">
              <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                <li class="breadcrumb-item active"><a href="{{ route('load.index') }}">Cargas</a></li>
-                <li class="breadcrumb-item active">Crear Carga</li>
+                <li class="breadcrumb-item"><a href="{{ route('load.index') }}">Cargas</a></li>
+                <li class="breadcrumb-item active">{{ $load->bl }}</li>
              </ol>
           </div>
        </div>
@@ -68,7 +66,7 @@
                 <!-- small card -->
                 <div class="small-box bg-warning">
                   <div class="inner">
-                    <h3>{{ $farmsCount }}</h3>
+                    <h3>{{ $palletsCount }}</h3>
     
                     <p>Paletas</p>
                   </div>
@@ -86,9 +84,9 @@
                 <!-- small card -->
                 <div class="small-box bg-primary">
                   <div class="inner">
-                    <h3>{{ $farmsCount }}</h3>
+                    <h3>{{ $coordinationCount }}</h3>
     
-                    <p>Coordinaciones</p>
+                    <p>Fincas Coordinadas</p>
                   </div>
                   <div class="icon">
                     <i class="fas fa-grip-vertical"></i>

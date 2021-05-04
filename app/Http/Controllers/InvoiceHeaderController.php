@@ -49,7 +49,7 @@ class InvoiceHeaderController extends Controller
         // Variedades
         $varieties = Variety::orderBy('name', 'ASC')->pluck('name', 'id');
 
-        //dd($invoiceheaders);
+        //dd($load);
 
         return view('masterinvoice.index', compact('load', 
             'invoiceheaders', 

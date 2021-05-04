@@ -55,7 +55,7 @@
                                  <td>{{ $load->shipment }}</td>
                                  <td>{{ $load->bl }}</td>
                                  <td>{{ $load->carrier }}</td>
-                                 <td>{{ $load->date }}</td>
+                                 <td>{{ date('d/m/Y', strtotime($load->date)) }}</td>
                                  <td width="45px" class="text-center">
                                     @can('haveaccess', 'load.show')
                                        <a href="{{ route('load.show', $load->id) }}" class="btn btn-outline-success btn-sm"><i class="fas fa-eye"></i></a>

@@ -10,6 +10,8 @@
          <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+               <li class="breadcrumb-item"><a href="{{ route('load.index') }}">Cargas</a></li>
+               <li class="breadcrumb-item"><a href="{{ route('load.show', $load->id) }}">{{ $load->bl }}</a></li>
                <li class="breadcrumb-item active">ISF</li>
             </ol>
          </div>
@@ -25,7 +27,7 @@
          <div class="col-md-12">
             <div class="card">
                <div class="card-header">
-                  Lista de fincas para ISF
+                  Lista de fincas para ISF contenedor #{{ $load->shipment }}
                   <a href="{{ route('isf.pdf', $code) }}" target="_blank" class="btn btn-xs btn-outline-default pull-right"><i class="far fa-file-pdf"></i></a>
                   <a href="{{ route('isf.isf10_2Pdf', $code) }}" target="_blank" class="btn btn-xs btn-outline-info pull-right"><i class="far fa-file-pdf"></i></a>
                </div>

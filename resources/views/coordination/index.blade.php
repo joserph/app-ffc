@@ -8,11 +8,12 @@
              <h1>Coordinaciones</h1>
           </div>
           <div class="col-sm-6">
-             <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                <li class="breadcrumb-item active"><a href="{{ route('load.index') }}">Cargas</a></li>
-                <li class="breadcrumb-item active">Crear Carga</li>
-             </ol>
+            <ol class="breadcrumb float-sm-right">
+               <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+               <li class="breadcrumb-item"><a href="{{ route('load.index') }}">Cargas</a></li>
+               <li class="breadcrumb-item"><a href="{{ route('load.show', $load->id) }}">{{ $load->bl }}</a></li>
+               <li class="breadcrumb-item active">Coordinaciones</li>
+            </ol>
           </div>
        </div>
     </div><!-- /.container-fluid -->
@@ -29,7 +30,7 @@
 
             <div class="card">
                <div class="card-header">
-                  Coordinaciones
+                  Coordinaciones contenedor #{{ $load->shipment }}
                </div>
                <div class="card-body">
                      <div class="row">
@@ -37,6 +38,8 @@
                           <div class="card">
                             <div class="card-body">
                               <h5 class="card-title">{{ $load->bl }}</h5>
+                              <p class="card-text">#{{ $load->shipment }}</p>
+                              <p class="card-text">{{ date('d/m/Y', strtotime($load->date)) }}</p>
                               <p class="card-text">{{ $company->name }}</p>
                               <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#agregarItem">
                                  <i class="fas fa-plus-circle"></i> Crear Item
@@ -126,7 +129,7 @@
                         @foreach($clientsCoordination as $client)
                         <thead>
                             <tr>
-                                <th colspan="15" class="sin-border"></th>
+                                <th colspan="17" class="sin-border"></th>
                             </tr>
                         </thead>
                         <thead>

@@ -36,7 +36,7 @@ class ISFController extends Controller
 
         $farmsItemsLoad = $loadCount->unique('id');
         //dd($code);
-        return view('isf.index', compact('farmsItemsLoad', 'code'));
+        return view('isf.index', compact('farmsItemsLoad', 'code', 'load'));
     }
 
     public function isfPdf()

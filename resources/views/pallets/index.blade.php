@@ -11,6 +11,8 @@
          <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+               <li class="breadcrumb-item"><a href="{{ route('load.index') }}">Cargas</a></li>
+               <li class="breadcrumb-item"><a href="{{ route('load.show', $load->id) }}">{{ $load->bl }}</a></li>
                <li class="breadcrumb-item active">Paletas</li>
             </ol>
          </div>
@@ -24,7 +26,7 @@
             @include('custom.message') 
             <div class="card">
                <div class="card-header">
-                  Paletas ingresadas en el contenedor
+                  Paletas ingresadas contenedor #{{ $load->shipment }}
                </div>
                <div class="card-body">
                   <button type="button" class="btn btn-xs btn-primary pull-right" data-toggle="modal" data-target="#myModal" data-toggle="tooltip" data-placement="top" title="Agregar nuevas paletas"><i class="fas fa-plus-circle"></i> Agregar Paleta</button>

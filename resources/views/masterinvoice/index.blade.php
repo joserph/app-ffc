@@ -12,6 +12,8 @@
          <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+               <li class="breadcrumb-item"><a href="{{ route('load.index') }}">Cargas</a></li>
+               <li class="breadcrumb-item"><a href="{{ route('load.show', $load->id) }}">{{ $load->bl }}</a></li>
                <li class="breadcrumb-item active">Factura Master</li>
             </ol>
          </div>
@@ -23,15 +25,17 @@
 <section id="invoiceitem" class="content">
    <div class="container-fluid">
       @can('haveaccess', 'masterinvoice.create')
-         <h2>Crear Factura Master</h2>
+         
          @include('custom.message') 
             
          
          @if(!$invoiceheaders)   
-         <!-- Button trigger modal -->
-         <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#createInvoiceHeader" >
-            <i class="fas fa-plus-circle"></i> Crear
-         </button>
+            <h2>Crear Factura Master</h2>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#createInvoiceHeader" >
+               <i class="fas fa-plus-circle"></i> Crear
+            </button>
+         
          @endif
  
             <!-- Modal create header invoice -->
@@ -109,6 +113,7 @@
              <b>Factura: {{ $invoiceheaders->invoice }}</b><br>
              <br>
              <b>BL:</b> {{ $invoiceheaders->bl }}<br>
+             <b>Contenedor:</b> #{{ $load->shipment }}<br>
              <b>Transportista:</b> {{ $invoiceheaders->carrier }}<br>
            </div>
            <!-- /.col -->

@@ -7,6 +7,8 @@ use App\Load;
 use App\Http\Requests\AddLoadRequest;
 use App\Http\Requests\UpdateLoadRequest;
 use App\MasterInvoiceItem;
+use App\Coordination;
+use App\Pallet;
 
 class LoadController extends Controller
 {
@@ -58,8 +60,10 @@ class LoadController extends Controller
         $farms = MasterInvoiceItem::select('id_farm')->where('id_load', '=', $id)->get();
         $farmsUnique = $farms->unique('id_farm');
         $farmsCount = $farmsUnique->count();
+        $coordinationCount = Coordination::where('id_load', '=', $id)->count();
+        $palletsCount = Pallet::where('id_load', '=', $id)->count();
         //dd($farmsCount);
-        return view('load.show', compact('load', 'loadCount', 'farmsCount'));
+        return view('load.show', compact('load', 'loadCount', 'farmsCount', 'coordinationCount', 'palletsCount'));
     }
 
     /**
