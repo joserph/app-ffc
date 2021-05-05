@@ -39,16 +39,28 @@ class PalletItemController extends Controller
      */
     public function store(Request $request)
     {
-        $palletitem = PalletItem::create($request->all());
+        //dd($request->all());
+        if($request->piso == 'value')
+        {
+            $request->piso = 1;
+        }else{
+            $request->piso = 0;
+        }
+        $palletitem = PalletItem::create([
+            'id_user' => $request->id_user,
+            'update_user' => $request->update_user,
+            'id_load' => $request->id_load,
+            'id_pallet' => $request->id_pallet,
+            'id_farm' => $request->id_farm,
+            'id_client' => $request->id_client,
+            'hb' => $request->hb,
+            'qb' => $request->qb,
+            'eb' => $request->eb,
+            'quantity' => $request->quantity,
+            'piso' => $request->piso
+        ]);
         $farm = Farm::select('name')->where('id', '=', $palletitem->id_farm)->first();
         $palletitem->farms = $farm->name;
-        if($palletitem->piso == null)
-        {
-            //dd($request->piso);
-            $palletitem->piso = 0;
-        }else{
-            $palletitem->piso = 1;
-        }
         $palletitem->save();
 
         // Crear tabla agrupada
@@ -124,6 +136,7 @@ class PalletItemController extends Controller
      */
     public function update(Request $request, $id)
     {
+        dd($request->all());
         $palletItem = PalletItem::find($id);
         $palletItem->update($request->all());
 

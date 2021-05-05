@@ -22,7 +22,7 @@
 <section class="content">
    <div class="container-fluid">
       <div class="row justify-content-center">
-         <div class="col-12">
+         <div class="col-7">
             @include('custom.message') 
             <div class="card">
                <div class="card-header">
@@ -47,6 +47,7 @@
                                  <tr>
                                     <th class="text-center">Finca</th>
                                     <th class="text-center">Cliente</th>
+                                    <th class="text-center">Piso</th>
                                     <th class="text-center">HB</th>
                                     <th class="text-center">QB</th>
                                     <th class="text-center">EB</th>
@@ -80,6 +81,11 @@
                                                       {{ strtoupper($client->name) }}
                                                    @endif
                                                 @endforeach
+                                             </td>
+                                             <td class="text-center">
+                                                @if($item2->piso == 1)
+                                                <span class="badge badge-warning">SI</span>
+                                                @endif
                                              </td>
                                              <td class="text-center">{{ $item2->hb }}</td>
                                              <td class="text-center">{{ $item2->qb }}</td>
@@ -127,7 +133,7 @@
                                  </tbody>
                                  <tfoot>
                                     <tr>
-                                       <th colspan="2" class="text-center">Totales</th>
+                                       <th colspan="3" class="text-center">Totales</th>
                                        <th class="text-center">{{ $hb }}</th>
                                        <th class="text-center">{{ $qb }}</th>
                                        <th class="text-center">{{ $eb }}</th>
@@ -195,7 +201,8 @@
                   </button>
                 </div>
              </div>
-
+            </div>
+            <div class="col-5">
              <div class="card text-white bg-dark">
                <div class="card-header">
                  Resumen de la carga.
@@ -284,8 +291,8 @@
                    <!-- fin tabla de coordinaciones -->
                </div>
              </div>
-             
-         </div>
+            </div>
+         
       </div>
    </div>
 </section>

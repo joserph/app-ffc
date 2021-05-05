@@ -52,7 +52,7 @@ class PalletController extends Controller
         // Clients
         $clients = Client::all();
 
-        $farmsList = Farm::select('id', 'name')->orderBy('name', 'ASC')->get();
+        $farmsList = Farm::select('id', 'name', 'tradename')->orderBy('name', 'ASC')->get();
         $clientsList = Client::select('id', 'name')->orderBy('name', 'ASC')->get();
 
         $resumenCarga = PalletItem::where('id_load', '=', $code)
@@ -96,9 +96,7 @@ class PalletController extends Controller
         //dd($request->all());
         if($request->usda == 'on')
         {
-            
             $request->usda = 1;
-            
         }
         //dd($request->usda);
         $pallet = Pallet::create(

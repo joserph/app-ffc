@@ -5,7 +5,7 @@
             <select class="form-control" name="id_farm" id="farmsList_{{ $item->id }}">
                 <option value="">Seleccione finca</option>
                 @foreach($farmsList as $itemFarm)
-                  <option value="{{ $itemFarm->id }}">{{ $itemFarm->name }}</option>
+                  <option value="{{ $itemFarm->id }}">{{ $itemFarm->name }} {{ $itemFarm->tradename }}</option>
                 @endforeach
             </select>
         </div>

@@ -19,7 +19,7 @@
                 <select class="form-control" name="id_client" id="edit_clientsList_{{ $item2->id }}">
                     <option value="">Seleccione cliente</option>
                     @foreach($clientsList as $itemClient)
-                    <option @if($item2->id_client == $itemClient->id) value="{{ $itemClient->id }}" selected @endif >{{ $itemClient->name }}</option>
+                        <option @if($item2->id_client == $itemClient->id) value="{{ $itemClient->id }}" selected @endif >{{ $itemClient->name }}</option>
                     @endforeach
                 </select>
             </div>
