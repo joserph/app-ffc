@@ -205,7 +205,8 @@
             <div class="col-5">
              <div class="card text-white bg-dark">
                <div class="card-header">
-                 Resumen de la carga.
+                 Resumen de la carga - #{{ $load->shipment }}
+                 <a href="{{ route('palletitems.pdf', $load) }}" target="_blank" class="btn btn-xs btn-outline-success pull-right"><i class="far fa-file-pdf"></i></a>
                </div>
                <div class="card-body">
                   <!-- tabla de coordinaciones -->
@@ -372,7 +373,9 @@ function mifuncion2(elemento) {
         $('#edit_clientsList_'+id_pallet).select2({
             theme: 'bootstrap4',
         });
+        
     });
+    
 }
 </script>
 

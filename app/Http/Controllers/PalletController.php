@@ -54,6 +54,7 @@ class PalletController extends Controller
 
         $farmsList = Farm::select('id', 'name', 'tradename')->orderBy('name', 'ASC')->get();
         $clientsList = Client::select('id', 'name')->orderBy('name', 'ASC')->get();
+        $farmsEdit = Farm::orderBy('name', 'ASC')->pluck('name', 'id');
 
         $resumenCarga = PalletItem::where('id_load', '=', $code)
             ->join('clients', 'pallet_items.id_client', '=', 'clients.id')
@@ -72,7 +73,7 @@ class PalletController extends Controller
         
         $itemsCarga = PalletItem::groupEqualsItemsCargas($itemsCargaAll, $code);
         //dd($itemsCarga);
-        return view('pallets.index', compact('resumenCargaAll', 'itemsCarga', 'pallets','code', 'farmsList', 'clientsList', 'counter', 'number', 'load', 'palletItem', 'farms', 'clients', 'total_container', 'total_hb', 'total_qb', 'total_eb'));
+        return view('pallets.index', compact('farmsEdit', 'resumenCargaAll', 'itemsCarga', 'pallets','code', 'farmsList', 'clientsList', 'counter', 'number', 'load', 'palletItem', 'farms', 'clients', 'total_container', 'total_hb', 'total_qb', 'total_eb'));
     }
 
     /**

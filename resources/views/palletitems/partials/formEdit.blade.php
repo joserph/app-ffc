@@ -5,7 +5,7 @@
             <select class="form-control" name="id_farm" id="edit_farmsList_{{ $item2->id }}">
                 <option value="">Seleccione finca</option>
                 @foreach($farmsList as $itemFarm)
-                <option @if($item2->id_farm == $itemFarm->id) value="{{ $itemFarm->id }}" selected @endif >{{ $itemFarm->name }}</option>
+                    <option value="{{ $itemFarm->id }}" {{ $itemFarm->id == $item2->id_farm ? 'selected' : '' }}>{{ $itemFarm->name }}</option>
                 @endforeach
             </select>
         </div>
@@ -19,7 +19,7 @@
                 <select class="form-control" name="id_client" id="edit_clientsList_{{ $item2->id }}">
                     <option value="">Seleccione cliente</option>
                     @foreach($clientsList as $itemClient)
-                        <option @if($item2->id_client == $itemClient->id) value="{{ $itemClient->id }}" selected @endif >{{ $itemClient->name }}</option>
+                        <option value="{{ $itemClient->id }}" {{ $itemClient->id == $item2->id_client ? 'selected' : '' }} >{{ $itemClient->name }}</option>
                     @endforeach
                 </select>
             </div>

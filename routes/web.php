@@ -132,3 +132,5 @@ Route::get('coordination-Pdf', 'CoordinationController@coordinationPdf')->name('
 Route::resource('/pallets', 'PalletController')->names('pallets');
 // Pallets Items
 Route::resource('/palletitems', 'PalletItemController')->names('palletitems');
+// Pallets Items PDF
+Route::get('palletitems-Pdf', 'PalletItemController@palletitemsPdf')->name('palletitems.pdf');

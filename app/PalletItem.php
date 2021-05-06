@@ -41,7 +41,6 @@ class PalletItem extends Model
                 $hb = ['hb' => PalletItem::where('id_load', '=', $code)->where('id_farm', '=', $item->id_farm)->where('id_client', '=', $item->id_client)->sum('hb')];
                 $qb = ['qb' => PalletItem::where('id_load', '=', $code)->where('id_farm', '=', $item->id_farm)->where('id_client', '=', $item->id_client)->sum('qb')];
                 $eb = ['eb' => PalletItem::where('id_load', '=', $code)->where('id_farm', '=', $item->id_farm)->where('id_client', '=', $item->id_client)->sum('eb')];
-                $piso = ['piso' => $item->piso];
                 $farms = ['farms' => $item->farms];
                 $id_load = ['id_load' => $item->id_load];
                 $id_user = ['id_user' => $item->id_user];
@@ -55,7 +54,6 @@ class PalletItem extends Model
                 $hb = ['hb' => $item->hb];
                 $qb = ['qb' => $item->qb];
                 $eb = ['eb' => $item->eb];
-                $piso = ['piso' => $item->piso];
                 $farms = ['farms' => $item->farms];
                 $id_load = ['id_load' => $item->id_load];
                 $id_user = ['id_user' => $item->id_user];
@@ -64,7 +62,7 @@ class PalletItem extends Model
                 $id_client = ['id_client' => $item->id_client];
                 //$id_pallet = ['id_pallet' => $item->id_pallet];
             }
-            $itemCargaArray[] = Arr::collapse([$quantity, $hb, $qb, $eb, $piso, $farms, $id_load, $id_user, $update_user, $id_farm, $id_client]);
+            $itemCargaArray[] = Arr::collapse([$quantity, $hb, $qb, $eb, $farms, $id_load, $id_user, $update_user, $id_farm, $id_client]);
         }
         //dd($itemCargaArray);
         return collect(array_unique($itemCargaArray, SORT_REGULAR));

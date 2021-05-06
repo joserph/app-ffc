@@ -8,6 +8,7 @@ use App\PalletItem;
 use App\Farm;
 use App\Pallet;
 use App\Load;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class PalletItemController extends Controller
 {
@@ -105,6 +106,44 @@ class PalletItemController extends Controller
             ->with('info', 'Item Guardado con exito');
     }
 
+    public function palletitemsPdf()
+    {
+        // Busco el ID de la carga por medio de la URL
+        $url = $_SERVER["REQUEST_URI"];
+        $arr = explode("?", $url);
+        $code = $arr[1];
+        $load = Load::find($code);
+
+        $resumenCarga = PalletItem::where('id_load', '=', $code)
+            ->join('clients', 'pallet_items.id_client', '=', 'clients.id')
+            ->select('clients.id', 'clients.name')
+            ->orderBy('clients.name', 'ASC')
+            ->get();
+        // Eliminamos los clientes duplicados
+        $resumenCargaAll = collect(array_unique($resumenCarga->toArray(), SORT_REGULAR));
+
+        // Items de carga
+        $itemsCargaAll = PalletItem::select('*')
+            ->where('id_load', '=', $code)
+            ->join('farms', 'pallet_items.id_farm', '=', 'farms.id')
+            ->select('farms.name', 'pallet_items.*')
+            ->orderBy('farms.name', 'ASC')
+            ->get();
+
+        $itemsCarga = PalletItem::groupEqualsItemsCargas($itemsCargaAll, $code);
+
+        //dd($itemsCarga);
+
+        $palletitemsPdf = PDF::loadView('palletitems.palletitemsPdf', compact(
+            'itemsCarga',
+            'load',
+            'resumenCargaAll'
+        ))->setPaper('A4');
+
+        
+        return $palletitemsPdf->stream();
+    }
+
     /**
      * Display the specified resource.
      *
@@ -136,7 +175,6 @@ class PalletItemController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request->all());
         $palletItem = PalletItem::find($id);
         $palletItem->update($request->all());
 
