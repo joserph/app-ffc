@@ -197,7 +197,7 @@
           @can('haveaccess', 'logistics')
           <li class="nav-item">
             <a href="{{ url('logistics') }}" class="nav-link">
-              <i class="nav-icon fas fa-building"></i>
+              <i class="nav-icon fas fa-warehouse"></i>
               <p>
                 Empresa de logística
                 <span class="right badge badge-danger">New</span>

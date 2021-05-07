@@ -125,6 +125,7 @@
          </button>
 
          <a href="{{ route('comercial-invoice.pdf', $load) }}" target="_blank" class="btn btn-xs btn-outline-success pull-right"><i class="far fa-file-pdf"></i></a>
+         <a href="{{ route('comercial-invoice.excel', $load) }}" target="_blank" class="btn btn-xs btn-outline-success pull-right"><i class="fas fa-file-excel"></i></a>
          <a href="{{ route('shiptment-confirmation.pdf', $load) }}" target="_blank" class="btn btn-xs btn-outline-default pull-right"><i class="far fa-file-pdf"></i></a>
          <a href="{{ route('shiptment-confirmation-internal-use.pdf', $load) }}" target="_blank" class="btn btn-xs btn-outline-info pull-right"><i class="far fa-file-pdf"></i></a>
          <!-- Button for modal editFormHeader -->

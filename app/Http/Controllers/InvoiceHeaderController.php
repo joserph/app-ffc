@@ -16,6 +16,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 use App\MasterInvoiceItem;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
+use Maatwebsite\Excel\Facades\Excel;
 
 class InvoiceHeaderController extends Controller
 {
@@ -98,6 +99,11 @@ class InvoiceHeaderController extends Controller
         ));
 
         return $masterInvoicePdf->stream();
+    }
+    
+    public function masterInvoiceExcel()
+    {
+        return Excel::download(new MasterInvoice, 'master-invoice.xlsx');
     }
 
     public function shiptmentConfirmation()
