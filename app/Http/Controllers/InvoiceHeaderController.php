@@ -17,6 +17,7 @@ use App\MasterInvoiceItem;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ExportsMasterInvoice;
 
 class InvoiceHeaderController extends Controller
 {
@@ -103,7 +104,12 @@ class InvoiceHeaderController extends Controller
     
     public function masterInvoiceExcel()
     {
-        return Excel::download(new MasterInvoice, 'master-invoice.xlsx');
+        // Busco el ID de la carga por medio de la URL
+        $url = $_SERVER["REQUEST_URI"];
+        $arr = explode("?", $url);
+        $code = $arr[1];
+
+        return Excel::download(new ExportsMasterInvoice($code), 'master-invoice.xlsx');
     }
 
     public function shiptmentConfirmation()
