@@ -109,7 +109,7 @@
                   <div class="icon">
                     <i class="fas fa-trailer"></i>
                   </div>
-                   <a href="{{ route('coordination.index', $load->id) }}" class="small-box-footer">
+                   <a href="{{ route('sketches.index', $load->id) }}" class="small-box-footer">
                     Ver Plano de carga <i class="fas fa-arrow-circle-right"></i>
                   </a>
                 </div>

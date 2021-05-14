@@ -135,3 +135,5 @@ Route::resource('/pallets', 'PalletController')->names('pallets');
 Route::resource('/palletitems', 'PalletItemController')->names('palletitems');
 // Pallets Items PDF
 Route::get('palletitems-Pdf', 'PalletItemController@palletitemsPdf')->name('palletitems.pdf');
+// Pallets Items
+Route::resource('/sketches', 'SketchController')->names('sketches');
