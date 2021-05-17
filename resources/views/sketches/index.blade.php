@@ -34,6 +34,35 @@
                     <div class="container">
                         <div class="row">
                           <div class="col">
+                            <button type="button" class="btn btn-xs btn-primary pull-right" data-toggle="modal" data-target="#myModal" data-toggle="tooltip" data-placement="top" title="Agregar nuevas paletas"><i class="fas fa-plus-circle"></i> Agregar Paleta</button>
+                            <!-- Modal Pallets -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+           <div class="modal-header">
+              <h5 class="modal-title" id="agregarItemLabel">Contenedor {{ $load->shipment }}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+              </button>
+           </div>
+          <div class="modal-body">
+              @include('custom.message')
+
+              {{ Form::open(['route' => 'pallets.store', 'class' => 'form-horizontal']) }}
+                 <div class="modal-body">
+                   
+                 </div>
+                 <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
+                       <i class="fas fa-plus-circle"></i> Crear
+                    </button>
+                 </div>
+              {{ Form::close() }}
+          </div>
+      </div>
+  </div>
+</div>
                            {{ Form::label('id_pallet', 'Paleta', ['class' => 'control-label']) }}
                            {{ Form::select('id_pallet', $palletsSelect, null, ['class' => 'form-control', 'placeholder' => 'Seleccione paleta']) }}
                           </div>
