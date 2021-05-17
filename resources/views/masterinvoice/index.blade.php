@@ -132,6 +132,11 @@
          <button type="button" class="btn btn-outline-warning float-right" data-toggle="modal" data-target="#editInvoiceHeader" >
             <i class="fas fa-edit"></i> Editar
          </button>
+         <hr>
+         <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+            <input type="checkbox" class="custom-control-input" id="infoCoordination">
+            <label class="custom-control-label" for="infoCoordination">Tomar información de la coordinación</label>
+         </div>
 
          <!-- Modal edit header invoice -->
          <div class="modal fade" id="editInvoiceHeader" tabindex="-1" aria-labelledby="editInvoiceHeaderLabel" aria-hidden="true">
@@ -334,6 +339,8 @@
                $('.client_confirm').hide();
             }
          });
+
+
     });
 
 

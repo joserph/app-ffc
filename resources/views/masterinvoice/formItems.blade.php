@@ -1,4 +1,5 @@
 <div class="row">
+    
     <div class="col-md-4 form-group">
         {{ Form::label('id_farm', 'Finca', ['class' => 'control-label', 'autofocus' => 'autofocus']) }}
         {{ Form::select('id_farm', $farms, null, ['class' => 'form-control select-farm', 'placeholder' => 'Seleccione finca', 'v-model' => 'id_farm']) }}
