@@ -21,7 +21,8 @@ class InvoiceHeader extends Model
         'total_stems',
         'total',
         'id_user',
-        'update_user'
+        'update_user',
+        'coordination'
     ];
 
     public static function groupEqualsMasterInvoice($invoiceItemsAll, $code)

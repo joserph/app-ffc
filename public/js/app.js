@@ -38895,9 +38895,37 @@ const app = new Vue({
             'fa_cl_de': '',
             'client_confim_id': ''
         },
+        fillHeader: {
+            'coordination': ''
+        },
 
     },
     methods: {
+
+        updateInfoCoordination: function(id){
+            
+            var id_load = $('#id_load').val();
+            var urlInvoiceItems = 'masterinvoices/' + id;
+            var status = '';
+            var messageCoord = '';
+            if ($('#infoCoordination').is(':checked') ) {
+                status = 'yes';
+                messageCoord = 'Se usarán las fincas de la coordinación';
+            }else{
+                status = 'no';
+                messageCoord = 'Se usarán todas las fincas';
+            }
+            this.fillHeader.coordination = status;
+
+            axios.put(urlInvoiceItems, this.fillHeader).then(response => {
+                this.getInvoiceItems();
+                
+                this.errors = [];
+                toastr.success(messageCoord);
+            })
+
+            //var infoCoord = $('#infoCoordination').val();
+        },
 
         // Invoice Items
         getInvoiceItems: function(){

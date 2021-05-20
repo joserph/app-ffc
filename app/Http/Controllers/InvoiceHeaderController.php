@@ -18,6 +18,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ExportsMasterInvoice;
+use App\Coordination;
 
 class InvoiceHeaderController extends Controller
 {
@@ -45,7 +46,18 @@ class InvoiceHeaderController extends Controller
 
         // Datos para items de la factura
         // Fincas
-        $farms = Farm::orderBy('name', 'ASC')->pluck('name', 'id');
+
+        // Buscamos las fincas coordinadas
+        $farmCoord = Coordination::where('id_load', $code)->select('id_farm')->get()->toArray();
+        if($invoiceheaders->coordination == 'yes')
+        {
+            $farms = Farm::whereIn('id', $farmCoord)->orderBy('name', 'ASC')->pluck('name', 'id');
+        }else{
+            $farms = Farm::orderBy('name', 'ASC')->pluck('name', 'id');
+        }
+        
+        //dd($farms);
+        
         // Clientes
         $clients = Client::orderBy('name', 'ASC')->pluck('name', 'id');
         // Variedades
@@ -309,17 +321,28 @@ class InvoiceHeaderController extends Controller
     public function update(Request $request, $id)
     {
         $invoiceHeader = InvoiceHeader::find($id);
-        //dd($request->all());
-        $data = request()->validate([
-            'id_load'               => 'required',
-            'bl'                    => 'required',
-            'id_company'            => 'required',
-            'id_logistics_company'  => 'required',
-            'date'                  => 'required',
-            'invoice'               => 'required|unique:invoice_headers,invoice,' . $invoiceHeader->id,
-        ]);
+        //dd($request);
         
-        $invoiceHeader->update($request->all());
+        if($request->id)
+        {
+            $data = request()->validate([
+                'id_load'               => 'required',
+                'bl'                    => 'required',
+                'id_company'            => 'required',
+                'id_logistics_company'  => 'required',
+                'date'                  => 'required',
+                'invoice'               => 'required|unique:invoice_headers,invoice,' . $invoiceHeader->id,
+            ]);
+
+            $invoiceHeader->update($request->all());
+        }else{
+            $invoiceHeader->update([
+                'coordination' => $request->coordination
+            ]);
+            $invoiceHeader->save();
+        }
+        
+        
         $load = Load::where('id', '=', $invoiceHeader->id_load)->first();
 
         return redirect()->route('masterinvoices.index', $load->id)

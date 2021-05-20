@@ -137,3 +137,6 @@ Route::resource('/palletitems', 'PalletItemController')->names('palletitems');
 Route::get('palletitems-Pdf', 'PalletItemController@palletitemsPdf')->name('palletitems.pdf');
 // Pallets Items
 Route::resource('/sketches', 'SketchController')->names('sketches');
+// infoCoordination
+Route::get('info-coordination', 'InvoiceHeaderController@infoCoordination')->name('info-coordination');
+

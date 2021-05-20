@@ -115,6 +115,7 @@
              <b>BL:</b> {{ $invoiceheaders->bl }}<br>
              <b>Contenedor:</b> #{{ $load->shipment }}<br>
              <b>Transportista:</b> {{ $invoiceheaders->carrier }}<br>
+             <b>id:</b> {{ $invoiceheaders->id }}<br>
            </div>
            <!-- /.col -->
          </div>
@@ -133,10 +134,18 @@
             <i class="fas fa-edit"></i> Editar
          </button>
          <hr>
-         <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-            <input type="checkbox" class="custom-control-input" id="infoCoordination">
-            <label class="custom-control-label" for="infoCoordination">Tomar información de la coordinación</label>
-         </div>
+
+         <div class="form-group">
+            
+            <div class="form-group">
+               <div class="form-check">
+                  <label class="form-check-label">
+                     <input class="form-check-input" {{ ($invoiceheaders->coordination == 'yes') ? 'checked' : ''}} type="checkbox" v-on:change.prevent="updateInfoCoordination({{ $invoiceheaders->id }})" id="infoCoordination">
+                  Checkbox</label>
+               </div>
+            </div>
+            
+          </div>
 
          <!-- Modal edit header invoice -->
          <div class="modal fade" id="editInvoiceHeader" tabindex="-1" aria-labelledby="editInvoiceHeaderLabel" aria-hidden="true">
