@@ -45,21 +45,29 @@ class InvoiceHeaderController extends Controller
         $company = Company::first();
 
         // Datos para items de la factura
-        // Fincas
+        
 
         // Buscamos las fincas coordinadas
         $farmCoord = Coordination::where('id_load', $code)->select('id_farm')->get()->toArray();
+        // Buscamos los clientes coordinados
+        $clientCoord = Coordination::where('id_load', $code)->select('id_client')->get()->toArray();
+
         if($invoiceheaders->coordination == 'yes')
         {
+            // Fincas
             $farms = Farm::whereIn('id', $farmCoord)->orderBy('name', 'ASC')->pluck('name', 'id');
+            // Clientes
+            $clients = Client::whereIn('id', $clientCoord)->orderBy('name', 'ASC')->pluck('name', 'id');
         }else{
+            // Fincas
             $farms = Farm::orderBy('name', 'ASC')->pluck('name', 'id');
+            // Clientes
+            $clients = Client::orderBy('name', 'ASC')->pluck('name', 'id');
         }
         
         //dd($farms);
         
-        // Clientes
-        $clients = Client::orderBy('name', 'ASC')->pluck('name', 'id');
+        
         // Variedades
         $varieties = Variety::orderBy('name', 'ASC')->pluck('name', 'id');
 
@@ -335,18 +343,17 @@ class InvoiceHeaderController extends Controller
             ]);
 
             $invoiceHeader->update($request->all());
+
+            $load = Load::where('id', '=', $invoiceHeader->id_load)->first();
+
+            return redirect()->route('masterinvoices.index', $load->id)
+                ->with('status_success', 'Factura editada con éxito');
         }else{
             $invoiceHeader->update([
                 'coordination' => $request->coordination
             ]);
             $invoiceHeader->save();
         }
-        
-        
-        $load = Load::where('id', '=', $invoiceHeader->id_load)->first();
-
-        return redirect()->route('masterinvoices.index', $load->id)
-            ->with('status_success', 'Factura editada con éxito');
     }
 
     /**

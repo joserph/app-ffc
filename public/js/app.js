@@ -38845,6 +38845,7 @@ const app = new Vue({
     created: function(){
                
         this.getInvoiceItems();
+        this.getMasterInvoices();
     },
     data: {
         // invoice Items
@@ -38898,6 +38899,7 @@ const app = new Vue({
         fillHeader: {
             'coordination': ''
         },
+        masterInvoices: [],
 
     },
     methods: {
@@ -38907,7 +38909,7 @@ const app = new Vue({
             var id_load = $('#id_load').val();
             var urlInvoiceItems = 'masterinvoices/' + id;
             var status = '';
-            var messageCoord = '';
+            //var messageCoord = '';
             if ($('#infoCoordination').is(':checked') ) {
                 status = 'yes';
                 messageCoord = 'Se usarán las fincas de la coordinación';
@@ -38918,13 +38920,22 @@ const app = new Vue({
             this.fillHeader.coordination = status;
 
             axios.put(urlInvoiceItems, this.fillHeader).then(response => {
-                this.getInvoiceItems();
-                
+                //this.getMasterInvoices();
+                location.reload();
                 this.errors = [];
                 toastr.success(messageCoord);
-            })
+            });
 
             //var infoCoord = $('#infoCoordination').val();
+        },
+
+        getMasterInvoices: function()
+        {
+            var id_load = $('#id_load').val();
+            var urlMasterInvoice = 'masterinvoices?' + id_load;
+            axios.get(urlMasterInvoice).then(response => {
+                this.masterInvoices = response.data
+            });
         },
 
         // Invoice Items

@@ -141,7 +141,7 @@
                <div class="form-check">
                   <label class="form-check-label">
                      <input class="form-check-input" {{ ($invoiceheaders->coordination == 'yes') ? 'checked' : ''}} type="checkbox" v-on:change.prevent="updateInfoCoordination({{ $invoiceheaders->id }})" id="infoCoordination">
-                  Checkbox</label>
+                  Usar fincas y clientes coordinados</label>
                </div>
             </div>
             
