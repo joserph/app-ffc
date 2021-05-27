@@ -52,7 +52,7 @@ class InvoiceHeaderController extends Controller
         // Buscamos los clientes coordinados
         $clientCoord = Coordination::where('id_load', $code)->select('id_client')->get()->toArray();
 
-        if($invoiceheaders->coordination == 'yes')
+        if($invoiceheaders && $invoiceheaders->coordination == 'yes')
         {
             // Fincas
             $farms = Farm::whereIn('id', $farmCoord)->orderBy('name', 'ASC')->pluck('name', 'id');
