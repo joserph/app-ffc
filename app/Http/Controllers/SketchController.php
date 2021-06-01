@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Load;
 use App\Sketch;
 use App\Pallet;
+use Illuminate\Support\Collection;
 
 class SketchController extends Controller
 {
@@ -26,12 +27,15 @@ class SketchController extends Controller
         $pallets = Pallet::where('id_load', $load->id)->get();
 
         // Buscamos las paletas ya guardadas
-        $palletSave = Sketch::where('id_load', $load->id)->select('id_pallet')->get();
+        $palletSave = Sketch::where('id_load', $load->id)->select('id_pallet')->get()->toArray();
+        //
         // Pallets para select
-        $palletsSelect = Pallet::where('id_load', $load->id)->pluck('number', 'id')->except($palletSave);
-        //dd($pallets);
-
-        return view('sketches.index', compact('load', 'pallets', 'palletsSelect'));
+        $palletsSelect = Pallet::where('id_load', $load->id)->pluck('number', 'id')->except($palletSave[0]);
+        // Sketch
+        $sketches = Sketch::where('id_load', $load->id)->select('space')->get()->toarray();
+        
+        //dd($palletsSelect);
+        return view('sketches.index', compact('load', 'pallets', 'palletsSelect', 'sketches'));
     }
 
     /**
@@ -52,7 +56,12 @@ class SketchController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $sketch = Sketch::create($request->all());
+
+        $load = Load::where('id', '=', $sketch->id_load)->get();
+
+        return redirect()->route('sketches.index', $load[0]->id)
+            ->with('status_success', 'Espacio agregado con éxito');
     }
 
     /**

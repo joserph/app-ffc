@@ -32,132 +32,95 @@
                 </div>
                 <div class="card-body table-responsive p-0">
                     <div class="container">
-                        <div class="row">
-                          <div class="col">
-                            <button type="button" class="btn btn-xs btn-primary pull-right" data-toggle="modal" data-target="#myModal" data-toggle="tooltip" data-placement="top" title="Agregar nuevas paletas"><i class="fas fa-plus-circle"></i> Agregar Paleta</button>
-                            <!-- Modal Pallets -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-      <div class="modal-content">
-           <div class="modal-header">
-              <h5 class="modal-title" id="agregarItemLabel">Contenedor {{ $load->shipment }}</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                 <span aria-hidden="true">&times;</span>
-              </button>
-           </div>
-          <div class="modal-body">
-              @include('custom.message')
+                      
+                          
+                      
+                      @for ($i = 1; $i <= 24; $i++)
+                      <div class="row">
+                        <div class="col">
+                          {{ $i }}
+                          
+                          <button type="button" class="btn btn-xs btn-primary pull-right" data-toggle="modal" data-target="#myModal{{ $i }}" data-toggle="tooltip" data-placement="top" title="Agregar nuevas paletas"><i class="fas fa-plus-circle"></i> Agregar Paleta - Espacio {{ $i }}</button>
+                          <!-- Modal Pallets -->
+                          <div class="modal fade" id="myModal{{ $i }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                              <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <h5 class="modal-title" id="agregarItemLabel">Contenedor {{ $load->shipment }} - Espacio {{ $i }}</h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                          </button>
+                                      </div>
+                                      <div class="modal-body">
+                                          @include('custom.message')
 
-              {{ Form::open(['route' => 'pallets.store', 'class' => 'form-horizontal']) }}
-                 <div class="modal-body">
-                   
-                 </div>
-                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
-                       <i class="fas fa-plus-circle"></i> Crear
-                    </button>
-                 </div>
-              {{ Form::close() }}
-          </div>
-      </div>
-  </div>
-</div>
-                           {{ Form::label('id_pallet', 'Paleta', ['class' => 'control-label']) }}
-                           {{ Form::select('id_pallet', $palletsSelect, null, ['class' => 'form-control', 'placeholder' => 'Seleccione paleta']) }}
-                          </div>
-                          <div class="col">
-                            2
+                                          {{ Form::open(['route' => 'sketches.store', 'class' => 'form-horizontal']) }}
+                                          <div class="modal-body">
+                                              {{ Form::hidden('id_load', $load->id) }}
+                                              {{ Form::hidden('space', $i) }}
+                                              {!! Form::hidden('id_user', \Auth::user()->id) !!}
+                                              {!! Form::hidden('update_user', \Auth::user()->id) !!}
+
+                                              {{ Form::label('id_pallet', 'Paleta', ['class' => 'control-label']) }}
+                                              {{ Form::select('id_pallet', $palletsSelect, null, ['class' => 'form-control', 'placeholder' => 'Seleccione paleta']) }}
+                                          </div>
+                                          <div class="modal-footer">
+                                              <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+                                              <button type="submit" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
+                                                  <i class="fas fa-plus-circle"></i> Crear
+                                              </button>
+                                          </div>
+                                          {{ Form::close() }}
+                                      </div>
+                                  </div>
+                              </div>
                           </div>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                              3
-                            </div>
-                            <div class="col">
-                              4
-                            </div>
+                        <div class="col">
+                          {{ $i+=1 }}
+                          @php
+                              $j = $i;
+                          @endphp
+                          <button type="button" class="btn btn-xs btn-primary pull-right" data-toggle="modal" data-target="#myModal{{ $j }}" data-toggle="tooltip" data-placement="top" title="Agregar nuevas paletas"><i class="fas fa-plus-circle"></i> Agregar Paleta - Espacio {{ $j }}</button>
+                          <!-- Modal Pallets -->
+                          <div class="modal fade" id="myModal{{ $j }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                              <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <h5 class="modal-title" id="agregarItemLabel">Contenedor {{ $load->shipment }} - Espacio {{ $j }}</h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                          </button>
+                                      </div>
+                                      <div class="modal-body">
+                                          @include('custom.message')
+
+                                          {{ Form::open(['route' => 'sketches.store', 'class' => 'form-horizontal']) }}
+                                          <div class="modal-body">
+                                              {{ Form::hidden('id_load', $load->id) }}
+                                              {{ Form::hidden('space', $j) }}
+                                              {!! Form::hidden('id_user', \Auth::user()->id) !!}
+                                              {!! Form::hidden('update_user', \Auth::user()->id) !!}
+
+                                              {{ Form::label('id_pallet', 'Paleta', ['class' => 'control-label']) }}
+                                              {{ Form::select('id_pallet', $palletsSelect, null, ['class' => 'form-control', 'placeholder' => 'Seleccione paleta']) }}
+                                          </div>
+                                          <div class="modal-footer">
+                                              <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+                                              <button type="submit" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
+                                                  <i class="fas fa-plus-circle"></i> Crear
+                                              </button>
+                                          </div>
+                                          {{ Form::close() }}
+                                      </div>
+                                  </div>
+                              </div>
                           </div>
-                      <div class="row">
-                        <div class="col">
-                          5
-                        </div>
-                        <div class="col">
-                          6
                         </div>
                       </div>
-                      <div class="row">
-                          <div class="col">
-                            7
-                          </div>
-                          <div class="col">
-                            8
-                          </div>
-                        </div>
-                    <div class="row">
-                        <div class="col">
-                          9
-                        </div>
-                        <div class="col">
-                          10
-                        </div>
-                      </div>
-                      <div class="row">
-                          <div class="col">
-                            11
-                          </div>
-                          <div class="col">
-                            12
-                          </div>
-                        </div>
-                    <div class="row">
-                        <div class="col">
-                          13
-                        </div>
-                        <div class="col">
-                          14
-                        </div>
-                      </div>
-                      <div class="row">
-                          <div class="col">
-                            15
-                          </div>
-                          <div class="col">
-                            16
-                          </div>
-                        </div>
-                    <div class="row">
-                        <div class="col">
-                          17
-                        </div>
-                        <div class="col">
-                          18
-                        </div>
-                      </div>
-                      <div class="row">
-                          <div class="col">
-                            19
-                          </div>
-                          <div class="col">
-                            20
-                          </div>
-                        </div>
-                    <div class="row">
-                        <div class="col">
-                          21
-                        </div>
-                        <div class="col">
-                          22
-                        </div>
-                      </div>
-                      <div class="row">
-                          <div class="col">
-                            23
-                          </div>
-                          <div class="col">
-                            24
-                          </div>
-                        </div>
+                      @endfor
+                      
+                </div>
                 </div>
                
                <!-- /.card-body -->
