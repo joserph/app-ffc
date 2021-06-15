@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Load;
 use App\Sketch;
 use App\Pallet;
+use App\PalletItem;
+use App\Farm;
+use App\Client;
 use Illuminate\Support\Collection;
 
 class SketchController extends Controller
@@ -34,12 +37,18 @@ class SketchController extends Controller
         $palletSave = Sketch::where('id_load', $load->id)->select('id_pallet')->get()->toArray();
         //
         // Pallets para select
-        //$palletsSelect = Pallet::where('id_load', $load->id)->pluck('number', 'id')->except($palletSave[0]);
+        $palletsSelect = Pallet::where('id_load', $load->id)->pluck('number', 'id')->except($palletSave[0]);
         // Sketch
-        $sketches = Sketch::where('id_load', $load->id)->select('space')->get()->toArray();
+        $sketches = Sketch::where('id_load', $load->id)->get();
+        // PalletItems
+        $palletsItems = PalletItem::where('id_load', '=', $load->id)->get();
+        // Farms
+        $farms = Farm::all();
+        // Clients
+        $clients = Client::all();
         
         //dd($sketches);
-        return view('sketches.index', compact('load', 'pallets', 'sketches', 'space'));
+        return view('sketches.index', compact('clients', 'load', 'farms', 'pallets', 'sketches', 'space', 'palletsSelect', 'palletsItems'));
     }
 
     public static function testView() {
@@ -64,30 +73,41 @@ class SketchController extends Controller
      */
     public function store(Request $request)
     {
-        /*$sketch = Sketch::create($request->all());
-
-        $load = Load::where('id', '=', $sketch->id_load)->get();
-
-        return redirect()->route('sketches.index', $load[0]->id)
-            ->with('status_success', 'Espacio agregado con éxito');*/
-
-        $id_load = Load::select('id')->where('id', '=', $request->id_load)->get();
-
-        //dd($id_load[0]->id);
-        // Generar espacios
-        for($i = 1; $i <= $request->quantity; $i++)
+        if($request->quantity)
         {
-            $sketch = new Sketch();
-            $sketch->id_load = $id_load[0]->id;
-            $sketch->space = $i;
-            $sketch->id_user = $request->id_user;
-            $sketch->update_user = $request->update_user;
-            $sketch->save();
-        }
-        $load = Load::where('id', '=', $sketch->id_load)->get();
+            // Generar espacios
+            $id_load = Load::select('id')->where('id', '=', $request->id_load)->get();
 
-        return redirect()->route('sketches.index', $load[0]->id)
-            ->with('status_success', 'Se generarón ' . $sketch->space . ' espacios con éxito');
+            for($i = 1; $i <= $request->quantity; $i++)
+            {
+                $sketch = new Sketch();
+                $sketch->id_load = $id_load[0]->id;
+                $sketch->space = $i;
+                $sketch->id_user = $request->id_user;
+                $sketch->update_user = $request->update_user;
+                $sketch->save();
+            }
+            $load = Load::where('id', '=', $sketch->id_load)->get();
+
+            return redirect()->route('sketches.index', $load[0]->id)
+                ->with('status_success', 'Se generarón ' . $sketch->space . ' espacios con éxito');
+
+        }else{
+            // Editar espacio.
+            $currentSpace = Sketch::find($request->id);
+            //dd($currentSpace);
+            $currentSpace->update([
+                'space' => $currentSpace->space,
+                'id_pallet' => $request->id_pallet,
+                'id_load' => $currentSpace->id_load,
+                'id_user' => $currentSpace->id_user,
+                'update_user' => $request->update_user
+            ]);
+            $load = Load::where('id', '=', $currentSpace->id_load)->get();
+
+            return redirect()->route('sketches.index', $load[0]->id)
+            ->with('status_success', 'Espacio agregado con éxito');
+        }
     }
 
     /**
