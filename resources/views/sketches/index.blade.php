@@ -21,104 +21,40 @@
 
   <!-- Main content -->
 <section class="content">
+   @include('custom.message') 
    <div class="container-fluid">
       <div class="row">
          <!-- /.col -->
          <div class="col-md-12">
+                {{ Form::open(['route' => 'sketches.store']) }}
+                    {!! Form::hidden('id_load', $load->id) !!}
+                    {!! Form::hidden('id_user', \Auth::user()->id) !!}
+                     {!! Form::hidden('update_user', \Auth::user()->id) !!}
+                    @if($space != 1)
+                    {!! Form::label('quantity', 'Seleccione la cantidad de espacios') !!}
+                    {!! Form::select('quantity', [
+                        '18' => '18', 
+                        '20' => '20',
+                        '22' => '22',
+                        '24' => '24'
+                        ], 20, ['placeholder' => 'Seleccione espacios', 'class' => 'form-control col-md-3']) !!}
+                    @endif
+                    <button type="submit" class="btn btn-sm btn-primary" @if($space == 1) disabled @endif><i class="fas fa-plus-circle"></i> Generar espacios</button>
+                {{ Form::close() }}
             <div class="card">
-               
+                
                 <div class="card-header">
                     Plano de Carga contenedor #{{ $load->shipment }}
+
+                    
+
                 </div>
                 <div class="card-body table-responsive p-0">
                     <div class="container">
                       
                           
                       
-                      @for ($i = 1; $i <= 24; $i++)
-                      <div class="row">
-                        <div class="col">
-                          {{ $i }}
-                          
-                          <button type="button" class="btn btn-xs btn-primary pull-right" data-toggle="modal" data-target="#myModal{{ $i }}" data-toggle="tooltip" data-placement="top" title="Agregar nuevas paletas"><i class="fas fa-plus-circle"></i> Agregar Paleta - Espacio {{ $i }}</button>
-                          <!-- Modal Pallets -->
-                          <div class="modal fade" id="myModal{{ $i }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                              <div class="modal-dialog" role="document">
-                                  <div class="modal-content">
-                                      <div class="modal-header">
-                                          <h5 class="modal-title" id="agregarItemLabel">Contenedor {{ $load->shipment }} - Espacio {{ $i }}</h5>
-                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                          <span aria-hidden="true">&times;</span>
-                                          </button>
-                                      </div>
-                                      <div class="modal-body">
-                                          @include('custom.message')
-
-                                          {{ Form::open(['route' => 'sketches.store', 'class' => 'form-horizontal']) }}
-                                          <div class="modal-body">
-                                              {{ Form::hidden('id_load', $load->id) }}
-                                              {{ Form::hidden('space', $i) }}
-                                              {!! Form::hidden('id_user', \Auth::user()->id) !!}
-                                              {!! Form::hidden('update_user', \Auth::user()->id) !!}
-
-                                              {{ Form::label('id_pallet', 'Paleta', ['class' => 'control-label']) }}
-                                              {{ Form::select('id_pallet', $palletsSelect, null, ['class' => 'form-control', 'placeholder' => 'Seleccione paleta']) }}
-                                          </div>
-                                          <div class="modal-footer">
-                                              <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
-                                              <button type="submit" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
-                                                  <i class="fas fa-plus-circle"></i> Crear
-                                              </button>
-                                          </div>
-                                          {{ Form::close() }}
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                        </div>
-                        <div class="col">
-                          {{ $i+=1 }}
-                          @php
-                              $j = $i;
-                          @endphp
-                          <button type="button" class="btn btn-xs btn-primary pull-right" data-toggle="modal" data-target="#myModal{{ $j }}" data-toggle="tooltip" data-placement="top" title="Agregar nuevas paletas"><i class="fas fa-plus-circle"></i> Agregar Paleta - Espacio {{ $j }}</button>
-                          <!-- Modal Pallets -->
-                          <div class="modal fade" id="myModal{{ $j }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                              <div class="modal-dialog" role="document">
-                                  <div class="modal-content">
-                                      <div class="modal-header">
-                                          <h5 class="modal-title" id="agregarItemLabel">Contenedor {{ $load->shipment }} - Espacio {{ $j }}</h5>
-                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                          <span aria-hidden="true">&times;</span>
-                                          </button>
-                                      </div>
-                                      <div class="modal-body">
-                                          @include('custom.message')
-
-                                          {{ Form::open(['route' => 'sketches.store', 'class' => 'form-horizontal']) }}
-                                          <div class="modal-body">
-                                              {{ Form::hidden('id_load', $load->id) }}
-                                              {{ Form::hidden('space', $j) }}
-                                              {!! Form::hidden('id_user', \Auth::user()->id) !!}
-                                              {!! Form::hidden('update_user', \Auth::user()->id) !!}
-
-                                              {{ Form::label('id_pallet', 'Paleta', ['class' => 'control-label']) }}
-                                              {{ Form::select('id_pallet', $palletsSelect, null, ['class' => 'form-control', 'placeholder' => 'Seleccione paleta']) }}
-                                          </div>
-                                          <div class="modal-footer">
-                                              <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
-                                              <button type="submit" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
-                                                  <i class="fas fa-plus-circle"></i> Crear
-                                              </button>
-                                          </div>
-                                          {{ Form::close() }}
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                        </div>
-                      </div>
-                      @endfor
+                     
                       
                 </div>
                 </div>

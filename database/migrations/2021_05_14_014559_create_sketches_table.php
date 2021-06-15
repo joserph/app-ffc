@@ -17,7 +17,7 @@ class CreateSketchesTable extends Migration
             $table->id();
 
             $table->integer('space')->nullable();
-            $table->foreignId('id_pallet')->references('id')->on('pallets')->onDelete('cascade');
+            $table->integer('id_pallet')->nullable();
             $table->foreignId('id_load')->references('id')->on('loads')->onDelete('cascade');
             $table->foreignId('id_user')->references('id')->on('users');
             $table->foreignId('update_user')->references('id')->on('users');

@@ -23,6 +23,10 @@ class SketchController extends Controller
         $code = $arr[1];
         $load = Load::find($code);
 
+        // Buscamos si existe los espacios en la DB.
+        $position24 = Sketch::where('id_load', '=', $load->id)->where('space', '>', '0')->get()->last();
+        $space = $position24 ? 1 : 0;
+
         // Buscamos las paletas de la carga actual.
         $pallets = Pallet::where('id_load', $load->id)->get();
 
@@ -30,12 +34,16 @@ class SketchController extends Controller
         $palletSave = Sketch::where('id_load', $load->id)->select('id_pallet')->get()->toArray();
         //
         // Pallets para select
-        $palletsSelect = Pallet::where('id_load', $load->id)->pluck('number', 'id')->except($palletSave[0]);
+        //$palletsSelect = Pallet::where('id_load', $load->id)->pluck('number', 'id')->except($palletSave[0]);
         // Sketch
-        $sketches = Sketch::where('id_load', $load->id)->select('space')->get()->toarray();
+        $sketches = Sketch::where('id_load', $load->id)->select('space')->get()->toArray();
         
-        //dd($palletsSelect);
-        return view('sketches.index', compact('load', 'pallets', 'palletsSelect', 'sketches'));
+        //dd($sketches);
+        return view('sketches.index', compact('load', 'pallets', 'sketches', 'space'));
+    }
+
+    public static function testView() {
+        return "Hello World!";
     }
 
     /**
@@ -56,12 +64,30 @@ class SketchController extends Controller
      */
     public function store(Request $request)
     {
-        $sketch = Sketch::create($request->all());
+        /*$sketch = Sketch::create($request->all());
 
         $load = Load::where('id', '=', $sketch->id_load)->get();
 
         return redirect()->route('sketches.index', $load[0]->id)
-            ->with('status_success', 'Espacio agregado con éxito');
+            ->with('status_success', 'Espacio agregado con éxito');*/
+
+        $id_load = Load::select('id')->where('id', '=', $request->id_load)->get();
+
+        //dd($id_load[0]->id);
+        // Generar espacios
+        for($i = 1; $i <= $request->quantity; $i++)
+        {
+            $sketch = new Sketch();
+            $sketch->id_load = $id_load[0]->id;
+            $sketch->space = $i;
+            $sketch->id_user = $request->id_user;
+            $sketch->update_user = $request->update_user;
+            $sketch->save();
+        }
+        $load = Load::where('id', '=', $sketch->id_load)->get();
+
+        return redirect()->route('sketches.index', $load[0]->id)
+            ->with('status_success', 'Se generarón ' . $sketch->space . ' espacios con éxito');
     }
 
     /**
