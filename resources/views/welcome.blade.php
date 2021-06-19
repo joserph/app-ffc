@@ -12,8 +12,8 @@
         <!-- Styles -->
         <style>
             html, body {
-                background-color: #fff;
-                color: #636b6f;
+                background-color: #343a40;
+                color: #fff;
                 font-family: 'Nunito', sans-serif;
                 font-weight: 200;
                 height: 100vh;
@@ -49,7 +49,7 @@
             }
 
             .links > a {
-                color: #636b6f;
+                color: #fff;
                 padding: 0 25px;
                 font-size: 13px;
                 font-weight: 600;
@@ -81,13 +81,14 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Roles y permisos
+                    Sistema de Carguera
                 </div>
 
                 <div class="links">
-                    <a href="#">Usuarios</a>
-                    <a href="#">Roles</a>
-                    <a href="#">Permisos</a>
+                    <a href="{{ url('farms') }}">Fincas</a>
+                    <a href="{{ url('clients') }}">Clientes</a>
+                    <a href="{{ url('varieties') }}">Variedades</a>
+                    <a href="{{ route('load.index') }}">Cargas</a>
                 </div>
             </div>
         </div>
