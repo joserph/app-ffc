@@ -14,4 +14,9 @@ class Sketch extends Model
         'update_user'
     ];
 
+    public function pallet()
+    {
+        return $this->belongsTo('App\Pallet', 'id_pallet');
+    }
+
 }

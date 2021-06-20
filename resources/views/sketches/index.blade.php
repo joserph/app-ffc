@@ -54,7 +54,7 @@
                         <div class="col-sm-6">
                            <div class="card card-success collapsed-card">
                               <div class="card-header">
-                                <h3 class="card-title">Espacio <span class="badge rounded-pill bg-dark">{{ $item->space }}</span> @if($item->id_pallet)<button type="button" class="btn btn-warning btn-sm">Editar</button> Paleta #<span class="badge rounded-pill bg-info text-dark">5555</span> @else <button type="button" class="btn btn-sm btn-primary pull-right" data-toggle="modal" data-target="#myModal{{ $key }}" data-toggle="tooltip" data-placement="top" title="Agregar paleta en espacio"><i class="fas fa-plus-circle"></i> Agregar Paleta en Espacio <span class="badge bg-secondary">{{ $item->space }}</span></button>@endif</h3>
+                                <h3 class="card-title">Espacio <span class="badge rounded-pill bg-dark">{{ $item->space }}</span> @if($item->id_pallet)<button type="button" class="btn btn-warning btn-sm">Editar</button> Paleta #<span class="badge rounded-pill bg-info text-dark">{{ $item->pallet->number }}</span> @else <button type="button" class="btn btn-sm btn-primary pull-right" data-toggle="modal" data-target="#myModal{{ $key }}" data-toggle="tooltip" data-placement="top" title="Agregar paleta en espacio"><i class="fas fa-plus-circle"></i> Agregar Paleta en Espacio <span class="badge bg-secondary">{{ $item->space }}</span></button>@endif</h3>
                                  
                                  <!-- Modal Pallets -->
                                     <div class="modal fade" id="myModal{{ $key }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

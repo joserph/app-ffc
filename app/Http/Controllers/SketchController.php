@@ -34,20 +34,29 @@ class SketchController extends Controller
         $pallets = Pallet::where('id_load', $load->id)->get();
 
         // Buscamos las paletas ya guardadas
-        $palletSave = Sketch::where('id_load', $load->id)->select('id_pallet')->get()->toArray();
+        $palletSave = Sketch::where('id_load', $load->id)->select('id_pallet')->get();
+        
+        $palletSaveArray = array();
+        foreach($palletSave as $key => $item)
+        {
+            if($item->id_pallet)
+            {
+                $palletSaveArray[] = $item->id_pallet;
+            }
+        }
         //
         // Pallets para select
-        $palletsSelect = Pallet::where('id_load', $load->id)->pluck('number', 'id')->except($palletSave[0]);
+        $palletsSelect = Pallet::where('id_load', $load->id)->pluck('number', 'id')->except($palletSaveArray);
         // Sketch
-        $sketches = Sketch::where('id_load', $load->id)->get();
+        $sketches = Sketch::where('id_load', $load->id)->with('pallet')->get();
         // PalletItems
         $palletsItems = PalletItem::where('id_load', '=', $load->id)->get();
         // Farms
         $farms = Farm::all();
         // Clients
         $clients = Client::all();
-        
         //dd($sketches);
+        
         return view('sketches.index', compact('clients', 'load', 'farms', 'pallets', 'sketches', 'space', 'palletsSelect', 'palletsItems'));
     }
 
