@@ -102,16 +102,29 @@ class SketchController extends Controller
                 ->with('status_success', 'Se generarón ' . $sketch->space . ' espacios con éxito');
 
         }else{
+            //dd($request->id_pallet);
             // Editar espacio.
             $currentSpace = Sketch::find($request->id);
-            //dd($currentSpace);
-            $currentSpace->update([
-                'space' => $currentSpace->space,
-                'id_pallet' => $request->id_pallet,
-                'id_load' => $currentSpace->id_load,
-                'id_user' => $currentSpace->id_user,
-                'update_user' => $request->update_user
-            ]);
+
+            if($request->id_pallet)
+            {
+                $currentSpace->update([
+                    'space' => $currentSpace->space,
+                    'id_pallet' => $request->id_pallet,
+                    'id_load' => $currentSpace->id_load,
+                    'id_user' => $currentSpace->id_user,
+                    'update_user' => $request->update_user
+                ]);
+            }else{
+                $currentSpace->update([
+                    'space' => $currentSpace->space,
+                    'id_pallet' => $request->id_pallet,
+                    'id_load' => $currentSpace->id_load,
+                    'id_user' => $currentSpace->id_user,
+                    'update_user' => $request->update_user
+                ]);
+            }
+            
             $load = Load::where('id', '=', $currentSpace->id_load)->get();
 
             return redirect()->route('sketches.index', $load[0]->id)

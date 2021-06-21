@@ -52,9 +52,24 @@
                      <div class="row">
                         @foreach ($sketches as $key => $item)
                         <div class="col-sm-6">
-                           <div class="card card-success collapsed-card">
+                           <div class="card @if($item->id_pallet) card-success @else card-default @endif collapsed-card">
                               <div class="card-header">
-                                <h3 class="card-title">Espacio <span class="badge rounded-pill bg-dark">{{ $item->space }}</span> @if($item->id_pallet)<button type="button" class="btn btn-warning btn-sm">Editar</button> Paleta #<span class="badge rounded-pill bg-info text-dark">{{ $item->pallet->number }}</span> @else <button type="button" class="btn btn-sm btn-primary pull-right" data-toggle="modal" data-target="#myModal{{ $key }}" data-toggle="tooltip" data-placement="top" title="Agregar paleta en espacio"><i class="fas fa-plus-circle"></i> Agregar Paleta en Espacio <span class="badge bg-secondary">{{ $item->space }}</span></button>@endif</h3>
+                                 <h3 class="card-title">
+                                    Espacio 
+                                    <span class="badge rounded-pill bg-dark">{{ $item->space }}</span>
+                                    @if($item->id_pallet)
+                                       <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editModal{{ $key }}" data-toggle="tooltip" data-placement="top" title="Editar paleta en espacio">
+                                          <i class="fas fa-edit"></i> Editar
+                                          
+                                       </button>
+                                       Paleta <span class="badge rounded-pill bg-info text-dark">{{ $item->pallet->number }}</span>
+                                    @else 
+                                       <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal{{ $key }}" data-toggle="tooltip" data-placement="top" title="Agregar paleta en espacio">
+                                          <i class="fas fa-plus-circle"></i> Agregar 
+                                          
+                                       </button>
+                                    @endif
+                                 </h3>
                                  
                                  <!-- Modal Pallets -->
                                     <div class="modal fade" id="myModal{{ $key }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -67,8 +82,6 @@
                                                    </button>
                                              </div>
                                              <div class="modal-body">
-                                                   @include('custom.message')
-
                                                    {{ Form::open(['route' => 'sketches.store', 'class' => 'form-horizontal']) }}
                                                    <div class="modal-body">
                                                       {!! Form::hidden('update_user', \Auth::user()->id) !!}
@@ -86,7 +99,39 @@
                                              </div>
                                           </div>
                                        </div>
-                                 </div>
+                                    </div>
+                                    <!-- /Modal Pallets -->
+
+                                    <!-- Edit modal -->
+                                    <div class="modal fade" id="editModal{{ $key }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel">
+                                       <div class="modal-dialog" role="document">
+                                          <div class="modal-content">
+                                             <div class="modal-header">
+                                                   <h5 class="modal-title text-dark" id="agregarItemLabel">Contenedor {{ $load->shipment }} - Espacio {{ $item->space }}</h5>
+                                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                   <span aria-hidden="true">&times;</span>
+                                                   </button>
+                                             </div>
+                                             <div class="modal-body">
+                                                   {{ Form::open(['route' => 'sketches.store', 'class' => 'form-horizontal']) }}
+                                                   <div class="modal-body">
+                                                      {!! Form::hidden('update_user', \Auth::user()->id) !!}
+                                                      {{ Form::hidden('id', $item->id) }}
+                                                      {{ Form::label('id_pallet', 'Paleta', ['class' => 'control-label text-dark']) }}
+                                                      {{ Form::select('id_pallet', $palletsSelect, null, ['class' => 'form-control', 'placeholder' => 'Quitar Paleta']) }}
+                                                   </div>
+                                                   <div class="modal-footer">
+                                                      <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+                                                      <button type="submit" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
+                                                         <i class="fas fa-plus-circle"></i> Crear
+                                                      </button>
+                                                   </div>
+                                                   {{ Form::close() }}
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <!-- /Edit modal -->
                                 <div class="card-tools">
                                   <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
                                   </button>
@@ -96,6 +141,7 @@
                               <!-- /.card-header -->
                               <div class="card-body" style="display: none;">
                                  <div class="table-responsive">
+                                    @if($item->id_pallet)
                                     <table class="table table-sm table table-bordered">
                                        <thead>
                                        <tr>
@@ -159,6 +205,7 @@
                                           </tr>
                                       </tfoot>
                                     </table>
+                                    @endif
                                  </div>
                                     
                                     
@@ -179,11 +226,35 @@
                <!-- /.card-body -->
             </div>
             <div class="card-footer text-muted">
-               <ul class="list-group list-group-flush">
+               <div class="container">
+                  <div class="row">
+                     @php
+                        $totalBoxes = 0;
+                     @endphp
                   @foreach ($pallets as $item)
-                     <li class="list-group-item">{{ $item->number }} Cantidad de cajas: {{ $item->quantity }} - {{ $item->usda ? 'USDA' : ''}}</li>
+                     
+                     
+                          <div class="col-sm-6">
+                           <li class="list-group-item d-flex justify-content-between align-items-center">
+                              Paleta - {{ $item->number }}
+                              <span class="badge bg-primary rounded-pill">{{ $item->quantity }} {{ $item->usda ? '- USDA' : ''}}</span>
+                              </li>
+                          </div>
+                          @php
+                              $totalBoxes+= $item->quantity;
+                              @endphp
+
                   @endforeach
-                </ul>
+                  <hr>
+
+                  <div class="col-sm-6">
+                     <li class="list-group-item list-group-item-info d-flex justify-content-between align-items-center">
+                        Total de cajas: 
+                        <span class="badge bg-dark rounded-pill">{{ $totalBoxes }}</span>
+                        </li>
+                    </div>
+               </div>
+            </div>
              </div>
             <!-- /.card -->
          </div>
