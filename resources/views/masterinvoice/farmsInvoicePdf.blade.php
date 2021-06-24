@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>COMERCIAL INVOICE </title>
+    <title>FACTURAS FINCAS {{ $invoiceheaders->bl }}</title>
     <style>
         body{
             font-family: Arial, Helvetica, sans-serif;
@@ -105,19 +105,19 @@
             <th class="medio sin-border1">Date</th>
          </tr>
          <tr>
-            <td class="sin-border4 medium-letter">ROSAS DE MULALO</td>
+            <td class="sin-border4 medium-letter">{{ $item['name'] }}</td>
             <td class="sin-border1"></td>
             <td class="sin-border1"></td>
-            <td class="text-center sin-border1 medium-letter">22/06/2021</td>
+            <td class="text-center sin-border1 medium-letter">{{ date('d/m/Y', strtotime($invoiceheaders->date)) }}</td>
          </tr>
          <tr>
-            <td class="sin-border4 medium-letter">CANNAVALLE GUACHALA S/N CAYAMBE, ECUADOR</td>
+            <td class="sin-border4 medium-letter">{{ $item['address_farm'] }} - {{ $item['city_farm'] }}.</td>
             <td class="sin-border1"></td>
             <th class="sin-border1">Country Code</th>
             <th class="sin-border1">Invoice Nº</th>
          </tr>
          <tr>
-            <td class="medium-letter">PHONE: 593-26004491</td>
+            <td class="medium-letter">PHONE: {{ $item['phone_farm'] }}</td>
             <td class="sin-border1"></td>
             <td class="sin-border1"></td>
             <td class="sin-border1"></td>
@@ -131,19 +131,19 @@
             <th class="completo sin-border2">B/L N#</th>
          </tr>
          <tr>
-            <td class="sin-border4 medium-letter">SAG-MIAS FLOWERS</td>
+            <td class="sin-border4 medium-letter">{{ $item['client'] }}</td>
             <td class="sin-border3"></td>
-            <td class="text-center medium-letter">DOLQGYQY9072 SD</td>
+            <td class="text-center medium-letter">{{ $invoiceheaders->bl }}</td>
          </tr>
          <tr>
-            <td class="sin-border4 medium-letter">732 SAN JULIAN ST LOS ANGELES CAL</td>
+            <td class="sin-border4 medium-letter">{{ $item['address_client'] }}. {{ $item['city_client'] }}, {{ $item['state_client'] }} - {{ $item['country_client'] }}.</td>
             <td class="sin-border1"></td>
             <th class="sin-border2">Carrier</td>
          </tr>
          <tr>
-            <td class="medium-letter">PHONE: 1 232 3199310</td>
+            <td class="medium-letter">PHONE: {{ $item['phone_client'] }}</td>
             <td class="sin-border3"></td>
-            <td class="text-center medium-letter">DOLE NAPORTEC</td>
+            <td class="text-center medium-letter">{{ $item['carrier'] }}</td>
          </tr>
       </table>
       <br>
@@ -154,17 +154,17 @@
             <th class="completo sin-border2">Hawb</th>
          </tr>
          <tr>
-            <td class="sin-border4 medium-letter">SOUTH AMERICAN GLOBAL SHIPING AND TRANSPORT INC</td>
+            <td class="sin-border4 medium-letter">{{ $company->name }}</td>
             <td class="sin-border3"></td>
-            <td class="text-center medium-letter">309 0140 2632</td>
+            <td class="text-center medium-letter">{{ $item['hawb'] }}</td>
          </tr>
          <tr>
-            <td class="sin-border4 medium-letter">DIRECCION:741 SAN PEDRO STREET LOS ANGELES CA 900014 US</td>
+            <td class="sin-border4 medium-letter">{{ $company->address }}. {{ $company->city }}, {{ $company->state }} - {{ $company->country }}.</td>
             <td class="sin-border1"></td>
             <th class="sin-border2">#Refrendo</th>
          </tr>
          <tr>
-            <td class="medium-letter">TELEFONOS: 2132204061</td>
+            <td class="medium-letter">PHONE: {{ $company->phone }}</td>
             <td class="sin-border3"></td>
             <td></td>
          </tr>
@@ -183,23 +183,23 @@
             <th>Price Total</th>
          </tr>
          <tr>
-            <td class="text-center medium-letter">2</td>
-            <td class="text-center medium-letter">1.00</td>
-            <td class="medium-letter">ROSES</td>
+            <td class="text-center medium-letter">{{ $item['pieces'] }}</td>
+            <td class="text-center medium-letter">{{ number_format($item['fulls'], 3, '.','') }}</td>
+            <td class="medium-letter">{{ $item['variety'] }}</td>
             <td class="text-center medium-letter">-</td>
             <td class="text-center medium-letter">-</td>
-            <td class="text-center medium-letter">26</td>
-            <td class="text-center medium-letter">650</td>
-            <td class="text-center medium-letter">0.14</td>
-            <td class="text-center medium-letter">91.00</td>
+            <td class="text-center medium-letter">{{ $item['bunches'] }}</td>
+            <td class="text-center medium-letter">{{ number_format($item['stems'], 0, '','.') }}</td>
+            <td class="text-center medium-letter">{{ number_format($item['price'], 2, ',','') }}</td>
+            <td class="text-center medium-letter">{{ number_format($item['total'], 2, ',','.') }}</td>
          </tr>
          <tr>
-            <td class="text-center medium-letter">2</td>
-            <td class="text-center medium-letter">1.00</td>
+            <td class="text-center medium-letter">{{ $item['pieces'] }}</td>
+            <td class="text-center medium-letter">{{ number_format($item['fulls'], 3, '.','') }}</td>
             <td class="text-center medium-letter" colspan="3">Total</td>
-            <td class="text-center medium-letter">26</td>
+            <td class="text-center medium-letter">{{ $item['bunches'] }}</td>
             <td class="text-center medium-letter" colspan="2"></td>
-            <td class="text-center medium-letter">91.00</td>
+            <td class="text-center medium-letter">{{ number_format($item['total'], 2, ',','.') }}</td>
          </tr>
       </table>
       <br>
@@ -212,8 +212,8 @@
             <th>Stems</th>
          </tr>
          <tr>
-            <td class="text-center medium-letter">ROSES</td>
-            <td class="text-center medium-letter">650</td>
+            <td class="text-center medium-letter">{{ $item['variety'] }}</td>
+            <td class="text-center medium-letter">{{ $item['stems'] }}</td>
          </tr>
       </table>
       <br>
@@ -226,12 +226,12 @@
          <tr>
             <td class="sin-border4"></td>
             <td class="sin-border3"></td>
-            <td class="sin-border4 medium-letter">FRESH LOGISTICS</td>
+            <td class="sin-border4 medium-letter">{{ $lc_active->name }}</td>
          </tr>
          <tr>
             <td class="sin-border4"></td>
             <td class="sin-border3"></td>
-            <td class="sin-border4 medium-letter">Av. Nicolás Baquero s/n junto al puente conector Alpachaca. </td>
+            <td class="sin-border4 medium-letter">{{ $lc_active->address }}</td>
          </tr>
          <tr>
             <td class="sin-border4"></td>
@@ -241,7 +241,7 @@
          <tr>
             <td></td>
             <td class="sin-border3"></td>
-            <td class="medium-letter">QUITO-ECUADOR</td>
+            <td class="medium-letter">{{ $lc_active->city }}-{{ $lc_active->country }}</td>
          </tr>
       </table>
       <br>

@@ -46,6 +46,18 @@ class InvoiceHeader extends Model
                 $price = ['price' => $item->price];
                 $total = ['total' => MasterInvoiceItem::where('id_load', '=', $code)->where('hawb', '=', $item->hawb)->where('variety_id', '=', $item->variety_id)->sum('total')];
                 $client = ['client' => $item->client_confirm->name];
+                // Para Facturas Fincas
+                $address_farm = ['address_farm' => $item->address];
+                $phone_farm = ['phone_farm' => $item->phone];
+                $city_farm = ['city_farm' => $item->city];
+                $address_client = ['address_client' => $item->client_confirm->address];
+                $city_client = ['city_client' => $item->client_confirm->city];
+                $state_client = ['state_client' => $item->client_confirm->state];
+                $country_client = ['country_client' => $item->client_confirm->country];
+                $phone_client = ['phone_client' => $item->client_confirm->phone];
+                $carrier = ['carrier' => $item->invoiceh->carrier];
+
+                
             }else{
                 $fulls = ['fulls' => $item->fulls];
                 $pieces = ['pieces' => $item->pieces];
@@ -58,8 +70,19 @@ class InvoiceHeader extends Model
                 $price = ['price' => $item->price];
                 $total = ['total' => $item->total];
                 $client = ['client' => $item->client_confirm->name];
+                // Para Facturas Fincas
+                $address_farm = ['address_farm' => $item->address];
+                $phone_farm = ['phone_farm' => $item->phone];
+                $city_farm = ['city_farm' => $item->city];
+                $address_client = ['address_client' => $item->client_confirm->address];
+                $city_client = ['city_client' => $item->client_confirm->city];
+                $state_client = ['state_client' => $item->client_confirm->state];
+                $country_client = ['country_client' => $item->client_confirm->country];
+                $phone_client = ['phone_client' => $item->client_confirm->phone];
+                $carrier = ['carrier' => $item->invoiceh->carrier];
+
             }
-            $invoiceItemsArray[] = Arr::collapse([$fulls, $pieces, $name, $variety, $scientific, $hawb, $stems, $bunches, $price, $total, $client]);
+            $invoiceItemsArray[] = Arr::collapse([$carrier, $phone_client, $country_client, $state_client, $city_client, $address_client, $city_farm, $phone_farm, $address_farm, $fulls, $pieces, $name, $variety, $scientific, $hawb, $stems, $bunches, $price, $total, $client]);
         }
 
         return collect(array_unique($invoiceItemsArray, SORT_REGULAR));

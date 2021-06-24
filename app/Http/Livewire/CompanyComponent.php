@@ -24,7 +24,7 @@ class CompanyComponent extends Component
         // Validaciones
         $this->validate([
             'name'      => 'required',
-            'phone'     => 'required|alpha_num',
+            'phone'     => 'required',
             'address'   => 'required',
             'state'     => 'required',
             'city'      => 'required',
@@ -67,7 +67,7 @@ class CompanyComponent extends Component
         // validaciones
         $this->validate([
             'name'      => 'required',
-            'phone'     => 'required|alpha_num',
+            'phone'     => 'required',
             'address'   => 'required',
             'state'     => 'required',
             'city'      => 'required',

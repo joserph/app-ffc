@@ -90,19 +90,32 @@ class InvoiceHeaderController extends Controller
         $code = $arr[1];
         $load = Load::find($code);
 
-        $invoiceItems = MasterInvoiceItem::where('id_load', '=', $code)
+        // Cabecera de la factura
+        $invoiceheaders = InvoiceHeader::orderBy('id', 'DESC')->where('id_load', '=', $code)->first();
+
+        // Mi empresa
+        $company = Company::first();
+
+        // Empresas de Logistica "Activa"
+        $lc_active = LogisticCompany::where('active', '=', 'yes')->first();
+
+        $invoiceItemsAll = MasterInvoiceItem::where('id_load', '=', $code)
             ->with('variety')
             ->with('invoiceh')
-            ->with('client')
+            ->with('client_confirm')
             ->join('farms', 'master_invoice_items.id_farm', '=', 'farms.id')
-            ->select('master_invoice_items.*', 'farms.name')
+            ->select('master_invoice_items.*', 'farms.name', 'farms.address', 'farms.phone', 'farms.city')
             ->orderBy('farms.name', 'ASC')
             ->get();
 
+        $invoiceItems = InvoiceHeader::groupEqualsMasterInvoice($invoiceItemsAll, $code);
         //dd($invoiceItems);
 
         $farmsInvoicePdf = PDF::loadView('masterinvoice.farmsInvoicePdf', compact(
-            'invoiceItems'
+            'invoiceItems',
+            'invoiceheaders',
+            'company',
+            'lc_active'
         ));
 
         return $farmsInvoicePdf->stream();

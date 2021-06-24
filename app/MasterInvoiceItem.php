@@ -53,4 +53,5 @@ class MasterInvoiceItem extends Model
     {
         return $this->belongsTo('App\Client', 'client_confim_id');
     }
+
 }
