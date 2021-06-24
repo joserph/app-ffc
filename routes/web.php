@@ -139,4 +139,5 @@ Route::get('palletitems-Pdf', 'PalletItemController@palletitemsPdf')->name('pall
 Route::resource('/sketches', 'SketchController')->names('sketches');
 // infoCoordination
 Route::get('info-coordination', 'InvoiceHeaderController@infoCoordination')->name('info-coordination');
-
+// Farms Invoice
+Route::get('farms-invoice-pdf', 'InvoiceHeaderController@farmsInvoicePdf')->name('farms-invoice.pdf');

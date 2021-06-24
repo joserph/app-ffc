@@ -82,6 +82,32 @@ class InvoiceHeaderController extends Controller
             'varieties'));
     }
 
+    public function farmsInvoicePdf()
+    {
+        // Busco el ID de la carga por medio de la URL
+        $url = $_SERVER["REQUEST_URI"];
+        $arr = explode("?", $url);
+        $code = $arr[1];
+        $load = Load::find($code);
+
+        $invoiceItems = MasterInvoiceItem::where('id_load', '=', $code)
+            ->with('variety')
+            ->with('invoiceh')
+            ->with('client')
+            ->join('farms', 'master_invoice_items.id_farm', '=', 'farms.id')
+            ->select('master_invoice_items.*', 'farms.name')
+            ->orderBy('farms.name', 'ASC')
+            ->get();
+
+        //dd($invoiceItems);
+
+        $farmsInvoicePdf = PDF::loadView('masterinvoice.farmsInvoicePdf', compact(
+            'invoiceItems'
+        ));
+
+        return $farmsInvoicePdf->stream();
+    }
+
     public function masterInvoicePdf()
     {
         // Busco el ID de la carga por medio de la URL
