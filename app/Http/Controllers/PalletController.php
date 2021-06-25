@@ -8,6 +8,7 @@ use App\Pallet;
 use App\Farm;
 use App\Client;
 use App\PalletItem;
+use App\Coordination;
 
 class PalletController extends Controller
 {
@@ -52,8 +53,6 @@ class PalletController extends Controller
         // Clients
         $clients = Client::all();
 
-        $farmsList = Farm::select('id', 'name', 'tradename')->orderBy('name', 'ASC')->get();
-        $clientsList = Client::select('id', 'name')->orderBy('name', 'ASC')->get();
         $farmsEdit = Farm::orderBy('name', 'ASC')->pluck('name', 'id');
 
         $resumenCarga = PalletItem::where('id_load', '=', $code)
@@ -72,8 +71,35 @@ class PalletController extends Controller
             ->get();
         
         $itemsCarga = PalletItem::groupEqualsItemsCargas($itemsCargaAll, $code);
-        //dd($itemsCarga);
-        return view('pallets.index', compact('farmsEdit', 'resumenCargaAll', 'itemsCarga', 'pallets','code', 'farmsList', 'clientsList', 'counter', 'number', 'load', 'palletItem', 'farms', 'clients', 'total_container', 'total_hb', 'total_qb', 'total_eb'));
+        // Verifico si existe un pallet con la carga actual
+        $palletsExist = Pallet::where('id_load', '=', $code)->first();
+        $palletsExist2 = Pallet::where([
+            ['id_load', '=', $code],
+            ['coordination', '=', 'yes'],
+        ])->first();
+
+        
+        // Buscamos las fincas coordinadas
+        $farmCoord = Coordination::where('id_load', $code)->select('id_farm')->get()->toArray();
+        // Buscamos los clientes coordinados
+        $clientCoord = Coordination::where('id_load', $code)->select('id_client')->get()->toArray();
+
+        if($palletsExist2)
+        {
+            // Fincas
+            $farmsList = Farm::whereIn('id', $farmCoord)->select('id', 'name', 'tradename')->orderBy('name', 'ASC')->get();
+            // Clientes
+            $clientsList = Client::whereIn('id', $clientCoord)->select('id', 'name')->orderBy('name', 'ASC')->get();
+        }else{
+            // Fincas
+            $farmsList = Farm::select('id', 'name', 'tradename')->orderBy('name', 'ASC')->get();
+            // Clientes
+            $clientsList = Client::select('id', 'name')->orderBy('name', 'ASC')->get();
+        }
+        //dd($farms);
+
+        //dd($palletsExist);
+        return view('pallets.index', compact('palletsExist2', 'farmsEdit', 'resumenCargaAll', 'itemsCarga', 'pallets','code', 'farmsList', 'clientsList', 'counter', 'number', 'load', 'palletItem', 'farms', 'clients', 'total_container', 'total_hb', 'total_qb', 'total_eb', 'palletsExist'));
     }
 
     /**
@@ -156,6 +182,26 @@ class PalletController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //dd($request->id);
+        $pallet = Pallet::find($request->id);
+        
+        if($request->coordination)
+        {
+            
+            $pallet->update([
+                'coordination' => 'yes'
+            ]);
+            $pallet->save();
+        }else{
+            $pallet->update([
+                'coordination' => 'no'
+            ]);
+            $pallet->save();
+        }
+        $load = Load::where('id', '=', $pallet->id_load)->get();
+
+        return redirect()->route('pallets.index', $load[0]->id)
+            ->with('info', 'Paleta Guardada con exito');
         //
     }
 

@@ -44,9 +44,6 @@ class InvoiceHeaderController extends Controller
         // Mi empresa
         $company = Company::first();
 
-        // Datos para items de la factura
-        
-
         // Buscamos las fincas coordinadas
         $farmCoord = Coordination::where('id_load', $code)->select('id_farm')->get()->toArray();
         // Buscamos los clientes coordinados
@@ -65,13 +62,8 @@ class InvoiceHeaderController extends Controller
             $clients = Client::orderBy('name', 'ASC')->pluck('name', 'id');
         }
         
-        //dd($farms);
-        
-        
         // Variedades
         $varieties = Variety::orderBy('name', 'ASC')->pluck('name', 'id');
-
-        //dd($load);
 
         return view('masterinvoice.index', compact('load', 
             'invoiceheaders', 

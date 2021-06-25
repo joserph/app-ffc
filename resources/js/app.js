@@ -108,6 +108,7 @@ const app = new Vue({
     },
     methods: {
 
+        // Usar las fincas y clientes de la coordinacion en la Master Invoice
         updateInfoCoordination: function(id){
             
             var id_load = $('#id_load').val();
@@ -115,6 +116,31 @@ const app = new Vue({
             var status = '';
             //var messageCoord = '';
             if ($('#infoCoordination').is(':checked') ) {
+                status = 'yes';
+                messageCoord = 'Se usarán las fincas de la coordinación';
+            }else{
+                status = 'no';
+                messageCoord = 'Se usarán todas las fincas';
+            }
+            this.fillHeader.coordination = status;
+
+            axios.put(urlInvoiceItems, this.fillHeader).then(response => {
+                //this.getMasterInvoices();
+                location.reload();
+                this.errors = [];
+                toastr.success(messageCoord);
+            });
+
+            //var infoCoord = $('#infoCoordination').val();
+        },
+
+        // Usar las fincas y clientes de la coordinacion en las Pallets
+        updateInfoCoordinationInPallets: function(id){
+            
+            var urlInvoiceItems = 'masterinvoices/' + id;
+            var status = '';
+            //var messageCoord = '';
+            if ($('#infoCoordinationPallets').is(':checked') ) {
                 status = 'yes';
                 messageCoord = 'Se usarán las fincas de la coordinación';
             }else{

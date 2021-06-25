@@ -31,6 +31,29 @@
                <div class="card-body">
                   <button type="button" class="btn btn-xs btn-primary pull-right" data-toggle="modal" data-target="#myModal" data-toggle="tooltip" data-placement="top" title="Agregar nuevas paletas"><i class="fas fa-plus-circle"></i> Agregar Paleta</button>
                   <hr>
+                  @if ($palletsExist)
+                     <div class="form-group">
+                        {{ Form::model($palletsExist, ['route' => ['pallets.update', $palletsExist->id], 'class' => 'form-horizontal', 'method' => 'PUT']) }}
+                           <div class="modal-body">
+                              <div class="form-check">
+                                 <label class="form-check-label">
+                                    {!! Form::hidden('id_load', $load->id) !!}
+                                    {!! Form::hidden('id', $palletsExist->id) !!}
+                                    {!! Form::hidden('id_user', \Auth::user()->id) !!}
+                                    {!! Form::hidden('update_user', \Auth::user()->id) !!}
+                                    <input class="form-check-input" name="coordination" {{ ($palletsExist2) ? 'checked' : ''}} type="checkbox">
+                                 Usar fincas y clientes coordinados</label>
+                                 <button type="submit" class="btn btn-outline-warning" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
+                                    <i class="fas fa-sync"></i> Actualizar
+                                 </button>
+                              </div>
+                           </div>
+                        {{ Form::close() }}
+                        
+                     </div>
+                  @endif
+                  
+                  <hr>
                   @foreach ($pallets as $indexKey =>$item)
                      <div class="card">
                         <div class="card-header">

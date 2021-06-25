@@ -137,17 +137,13 @@
          <hr>
 
          <div class="form-group">
-            
-            <div class="form-group">
-               <div class="form-check">
-                  <label class="form-check-label">
-                     <input class="form-check-input" {{ ($invoiceheaders->coordination == 'yes') ? 'checked' : ''}} type="checkbox" v-on:change.prevent="updateInfoCoordination({{ $invoiceheaders->id }})" id="infoCoordination">
-                  Usar fincas y clientes coordinados</label>
-               </div>
+            <div class="form-check">
+               <label class="form-check-label">
+                  <input class="form-check-input" {{ ($invoiceheaders->coordination == 'yes') ? 'checked' : ''}} type="checkbox" v-on:change.prevent="updateInfoCoordination({{ $invoiceheaders->id }})" id="infoCoordination">
+               Usar fincas y clientes coordinados</label>
             </div>
+         </div>
             
-          </div>
-
          <!-- Modal edit header invoice -->
          <div class="modal fade" id="editInvoiceHeader" tabindex="-1" aria-labelledby="editInvoiceHeaderLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl">
