@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>AdminLTE 3 | Fixed Navbar Layout</title>
+    <title>Sistema de Carguera</title>
 
     
     <!-- Tell the browser to be responsive to screen width -->
@@ -80,7 +80,7 @@
            alt="AdminLTE Logo"
            class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light">Roles y Permisos</span>
+      <span class="brand-text font-weight-light">Sistema de Carguera</span>
     </a>
 
     <!-- Sidebar -->

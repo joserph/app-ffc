@@ -1,5 +1,5 @@
 @can('haveaccess', 'company.index')
-<h2>My Empresa</h2>
+<h2>Mi Empresa</h2>
 <div class="table-responsive">
    <table class="table table-sm table-hover">
     <thead>

@@ -1,4 +1,4 @@
-@can('haveaccess', 'farm.index')
+@can('haveaccess', 'client.index')
 <h2>Listado de Clientes</h2>
 <div class="table-responsive">
    <table class="table table-sm table-hover">
