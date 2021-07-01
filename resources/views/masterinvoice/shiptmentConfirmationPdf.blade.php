@@ -55,10 +55,11 @@
             color: #fff;
         }
         .sin-border{
-            border-top: 1px solid white;
+            border-top: 1px solid black;
             border-right: 1px solid white;
             border-bottom: 1px solid black;
             border-left: 1px solid white;
+            height: 5px;
         }
         .box-size{
             width: 40px;
@@ -96,7 +97,7 @@
             <th colspan="3" class="small-letter text-left">{{ $load->bl }}</th>
         </tr>
     </table>
-    <br>
+    
     <table>
         @php
             $totalFulls = 0; $totalHb = 0; $totalQb = 0; $totalEb = 0;
