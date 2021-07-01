@@ -19,6 +19,7 @@ use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ExportsMasterInvoice;
 use App\Coordination;
+use App\PalletItem;
 
 class InvoiceHeaderController extends Controller
 {

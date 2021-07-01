@@ -9,6 +9,8 @@ use App\Load;
 use App\InvoiceHeader;
 use App\Http\Requests\AddMasterInvoiceItemRequest;
 use App\Http\Requests\UpdateMarterInvoiceItemRequest;
+use App\PalletItem;
+use App\Coordination;
 
 class MasterInvoiceItemController extends Controller
 {
@@ -33,6 +35,54 @@ class MasterInvoiceItemController extends Controller
     {
         //
     }
+
+    public function generarMasterPallet($load)
+    {
+        // Buscamos las fincas agregadas en los pallets
+        $farms = PalletItem::where('id_load', $load)->get();
+        // Buscamos la Invoice Header
+        $invoiceHeader = InvoiceHeader::where('id_load', $load)->first();
+        
+        //dd($farms[0]);
+        foreach($farms as $item)
+        {
+            // Buscamos informacion de las corrdinaciones.
+            $infoCoor = Coordination::where([
+                ['id_farm', '=', $item->id_farm],
+                ['id_client', '=', $item->id_client],
+                ['id_load', '=', $load],
+            ])->select('hawb', 'variety_id')->first();
+            
+            $masterInvoiceItems = MasterInvoiceItem::create(
+                [
+                    'id_invoiceh'       => $invoiceHeader->id,
+                    'id_client'         => $item->id_client,
+                    'id_farm'           => $item->id_farm,
+                    'id_load'           => $load,
+                    'variety_id'        => $infoCoor->variety_id,
+                    'hawb'              => $infoCoor->hawb,
+                    'pieces'            => $item->quantity,
+                    'hb'                => $item->hb,
+                    'qb'                => $item->qb,
+                    'eb'                => $item->eb,
+                    'stems'             => 10,
+                    'price'             => 0.01,
+                    'bunches'           => 1,
+                    'fulls'             => ($item->hb * 0.5) + ($item->qb * 0.25) + ($item->eb * 0.125),    
+                    'total'             => (10 * 0.01),
+                    'id_user'           => Auth::user()->id,
+                    'update_user'       => Auth::user()->id,
+                    'stems_p_bunches'   => 25,
+                    'fa_cl_de'          => $item->id_farm . '-' . $item->id_client . '-' . $infoCoor->variety_id,
+                    'client_confim_id'  => $item->id_client
+                ]
+            );
+        }
+
+        return redirect()->route('masterinvoices.index', $load)
+            ->with('info', 'Se agregarón las fincas Paletizadas');
+        
+    }    
 
     /**
      * Store a newly created resource in storage.

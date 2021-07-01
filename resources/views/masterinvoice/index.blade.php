@@ -135,6 +135,8 @@
             <i class="fas fa-edit"></i> Editar
          </button>
          <hr>
+         <a href="{{ route('generar-master-pallet', $load) }}" class="btn btn-xs btn-outline-success pull-right"><i class="fas fa-exchange-alt"></i></a>
+         <hr>
 
          <div class="form-group">
             <div class="form-check">

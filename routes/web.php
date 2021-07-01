@@ -141,3 +141,5 @@ Route::resource('/sketches', 'SketchController')->names('sketches');
 Route::get('info-coordination', 'InvoiceHeaderController@infoCoordination')->name('info-coordination');
 // Farms Invoice
 Route::get('farms-invoice-pdf', 'InvoiceHeaderController@farmsInvoicePdf')->name('farms-invoice.pdf');
+// Generar Master Invoice desde las Paletas.
+Route::get('/generar-master-pallet/{id}', 'MasterInvoiceItemController@generarMasterPallet')->name('generar-master-pallet');
