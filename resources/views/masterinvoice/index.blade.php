@@ -159,7 +159,7 @@
                <div class="modal-body">
                   {{ Form::model($invoiceheaders, ['route' => ['masterinvoices.update', $invoiceheaders->id], 'class' => 'form-horizontal', 'method' => 'PUT']) }}
                      <div class="modal-body">
-                        
+                        {{ Form::hidden('id', $invoiceheaders->id )}}
                         @include('masterinvoice.editFormHeader')
                      </div>
                      <div class="modal-footer">

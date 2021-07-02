@@ -85,9 +85,23 @@ class MasterInvoiceItemController extends Controller
                 ]
             );
         }
+        // Actualizamos los totales en la table Invoice Header
+        $fulls = MasterInvoiceItem::select('fulls')->where('id_load', '=', $load)->sum('fulls');
+        $bunches = MasterInvoiceItem::select('bunches')->where('id_load', '=', $load)->sum('bunches');
+        $pieces = MasterInvoiceItem::select('pieces')->where('id_load', '=', $load)->sum('pieces');
+        $stems = MasterInvoiceItem::select('stems')->where('id_load', '=', $load)->sum('stems');
+        $total_t = MasterInvoiceItem::select('total')->where('id_load', '=', $load)->sum('total');
+        $invoiceHeader = InvoiceHeader::find($invoiceHeader->id);
+        $invoiceHeader->update([
+            'total_fulls'   => $fulls,
+            'total_bunches' => $bunches,
+            'total_pieces'  => $pieces,
+            'total_stems'   => $stems,
+            'total'         => $total_t
+        ]);
 
         return redirect()->route('masterinvoices.index', $load)
-            ->with('info', 'Se agregarón las fincas Paletizadas');
+            ->with('status_success', 'Se agregarón las fincas Paletizadas');
         
     }    
 

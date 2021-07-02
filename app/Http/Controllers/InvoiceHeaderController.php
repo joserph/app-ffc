@@ -381,10 +381,16 @@ class InvoiceHeaderController extends Controller
             return redirect()->route('masterinvoices.index', $load->id)
                 ->with('status_success', 'Factura editada con éxito');
         }else{
+            
             $invoiceHeader->update([
                 'coordination' => $request->coordination
             ]);
             $invoiceHeader->save();
+
+            $load = Load::where('id', '=', $invoiceHeader->id_load)->first();
+
+            return redirect()->route('masterinvoices.index', $load->id)
+                ->with('status_success', 'Factura editada con éxito');
         }
     }
 
