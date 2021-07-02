@@ -1,5 +1,7 @@
 @extends('layouts.principal')
 
+@section('title') Factura Master | Sistema de Carguera v1.1 @stop
+
 @section('content')
 @can('haveaccess', 'logistics')
 
@@ -115,7 +117,8 @@
              <b>BL:</b> {{ $invoiceheaders->bl }}<br>
              <b>Contenedor:</b> #{{ $load->shipment }}<br>
              <b>Transportista:</b> {{ $invoiceheaders->carrier }}<br>
-             <b>id:</b> {{ $invoiceheaders->id }}<br>
+             <b>Creado por:</b> {{ ucwords($invoiceheaders->user->name) }}<br>
+             <b>Modificado por:</b> {{ ucwords($invoiceheaders->userupdate->name) }}
            </div>
            <!-- /.col -->
          </div>
@@ -135,8 +138,11 @@
             <i class="fas fa-edit"></i> Editar
          </button>
          <hr>
-         <a href="{{ route('generar-master-pallet', $load) }}" class="btn btn-xs btn-outline-success pull-right"><i class="fas fa-exchange-alt"></i></a>
-         <hr>
+         @if (!$invoiceItems)
+            <a href="{{ route('generar-master-pallet', $load) }}" class="btn btn-xs btn-outline-success pull-right"><i class="fas fa-exchange-alt"></i></a>
+            <hr>
+         @endif
+         
 
          <div class="form-group">
             <div class="form-check">

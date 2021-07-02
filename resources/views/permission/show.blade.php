@@ -1,13 +1,13 @@
 @extends('layouts.principal')
 
+@section('title') Ver Permiso ({{ $permission->name}}) | Sistema de Carguera v1.1 @stop
+
 @section('content')
 <section class="content-header">
     <div class="container-fluid">
        <div class="row mb-2">
           <div class="col-sm-6">
-             <h1>{{ $permission->name}}
-                
-             </h1>
+             <h1>Permiso ({{ $permission->name}})</h1>
           </div>
           <div class="col-sm-6">
              <ol class="breadcrumb float-sm-right">

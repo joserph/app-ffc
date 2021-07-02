@@ -1,11 +1,13 @@
 @extends('layouts.principal')
 
+@section('title') Crear Rol | Sistema de Carguera v1.1 @stop
+
 @section('content')
 <section class="content-header">
    <div class="container-fluid">
       <div class="row mb-2">
          <div class="col-sm-6">
-            <h1>Crear Role
+            <h1>Crear Rol
                
             </h1>
          </div>
@@ -25,7 +27,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card card-primary">
-                <div class="card-header">Crear Role
+                <div class="card-header">Crear Rol
                 </div>
 
                 <div class="card-body">

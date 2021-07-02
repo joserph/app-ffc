@@ -1,5 +1,7 @@
 @extends('layouts.principal')
 
+@section('title') Lista de Role(s) | Sistema de Carguera v1.1 @stop
+
 @section('content')
 <section class="content-header">
    <div class="container-fluid">

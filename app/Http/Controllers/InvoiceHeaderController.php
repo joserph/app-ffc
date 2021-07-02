@@ -37,11 +37,13 @@ class InvoiceHeaderController extends Controller
         $load = Load::find($code);
         
         // Cabecera de la factura
-        $invoiceheaders = InvoiceHeader::orderBy('id', 'DESC')->where('id_load', '=', $code)->first();
-        //dd($invoiceheaders);
+        $invoiceheaders = InvoiceHeader::orderBy('id', 'DESC')->where('id_load', '=', $code)->with('user')->with('userupdate')->first();
+        //
         // Empresas de Logistica "Activa"
         $lc_active = LogisticCompany::where('active', '=', 'yes')->first();
-
+        // Verificamos si la factura tiene items
+        $invoiceItems = MasterInvoiceItem::where('id_load', '=', $code)->get();
+        //dd($invoiceheaders);
         // Mi empresa
         $company = Company::first();
 
@@ -72,7 +74,8 @@ class InvoiceHeaderController extends Controller
             'company',
             'farms',
             'clients',
-            'varieties'));
+            'varieties',
+            'invoiceItems'));
     }
 
     public function farmsInvoicePdf()

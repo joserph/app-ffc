@@ -1,5 +1,7 @@
 @extends('layouts.principal')
 
+@section('title') Cargas | Sistema de Carguera v1.1 @stop
+
 @section('content')
 <section class="content-header">
    <div class="container-fluid">

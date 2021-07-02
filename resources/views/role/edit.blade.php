@@ -1,11 +1,13 @@
 @extends('layouts.principal')
 
+@section('title') Editar Rol | Sistema de Carguera v1.1 @stop
+
 @section('content')
 <section class="content-header">
    <div class="container-fluid">
       <div class="row mb-2">
          <div class="col-sm-6">
-            <h1>Editar Role
+            <h1>Editar Rol
                
             </h1>
          </div>
@@ -25,7 +27,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card card-warning">
-                <div class="card-header">Editar role
+                <div class="card-header">Editar rol
                 </div>
 
                 <div class="card-body">

@@ -25,6 +25,16 @@ class InvoiceHeader extends Model
         'coordination'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'id_user');
+    }
+
+    public function userupdate()
+    {
+        return $this->belongsTo('App\User', 'update_user');
+    }
+
     public static function groupEqualsMasterInvoice($invoiceItemsAll, $code)
     {
         foreach($invoiceItemsAll as $item)

@@ -1,5 +1,7 @@
 @extends('layouts.principal')
 
+@section('title') Paletas | Sistema de Carguera v1.1 @stop
+
 @section('content')
 <section class="content-header">
    <div class="container-fluid">

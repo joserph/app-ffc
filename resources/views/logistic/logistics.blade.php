@@ -1,5 +1,7 @@
 @extends('layouts.principal')
 
+@section('title') Empresa de logística | Sistema de Carguera v1.1 @stop
+
 @section('content')
 @can('haveaccess', 'logistics')
 

@@ -1,5 +1,7 @@
 @extends('layouts.principal')
 
+@section('title') Mi Empresa | Sistema de Carguera v1.1 @stop
+
 @section('content')
    @can('haveaccess', 'companies')
 
