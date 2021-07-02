@@ -22,38 +22,38 @@
 <section class="content">
    <div class="container-fluid">
       <div class="row justify-content-center">
-         <div class="col-7">
+         <div class="col-sm">
             @include('custom.message') 
-            <div class="card">
-               <div class="card-header">
-                  Paletas ingresadas contenedor #{{ $load->shipment }}
-               </div>
-               <div class="card-body">
-                  <button type="button" class="btn btn-xs btn-primary pull-right" data-toggle="modal" data-target="#myModal" data-toggle="tooltip" data-placement="top" title="Agregar nuevas paletas"><i class="fas fa-plus-circle"></i> Agregar Paleta</button>
-                  <hr>
-                  @if ($palletsExist)
-                     <div class="form-group">
-                        {{ Form::model($palletsExist, ['route' => ['pallets.update', $palletsExist->id], 'class' => 'form-horizontal', 'method' => 'PUT']) }}
-                           <div class="modal-body">
-                              <div class="form-check">
-                                 <label class="form-check-label">
-                                    {!! Form::hidden('id_load', $load->id) !!}
-                                    {!! Form::hidden('id', $palletsExist->id) !!}
-                                    {!! Form::hidden('id_user', \Auth::user()->id) !!}
-                                    {!! Form::hidden('update_user', \Auth::user()->id) !!}
-                                    <input class="form-check-input" name="coordination" {{ ($palletsExist2) ? 'checked' : ''}} type="checkbox">
-                                 Usar fincas y clientes coordinados</label>
-                                 <button type="submit" class="btn btn-outline-warning" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
-                                    <i class="fas fa-sync"></i> Actualizar
-                                 </button>
-                              </div>
-                           </div>
-                        {{ Form::close() }}
-                        
+            <h4>Paletas ingresadas contenedor #{{ $load->shipment }}</h4>
+            <button type="button" class="btn btn-xs btn-primary pull-right" data-toggle="modal" data-target="#myModal" data-toggle="tooltip" data-placement="top" title="Agregar nuevas paletas"><i class="fas fa-plus-circle"></i> Agregar Paleta</button>
+            <hr>
+            @if ($palletsExist)
+               <div class="form-group">
+                  {{ Form::model($palletsExist, ['route' => ['pallets.update', $palletsExist->id], 'class' => 'form-horizontal', 'method' => 'PUT']) }}
+                     <div class="modal-body">
+                        <div class="form-check">
+                           <label class="form-check-label">
+                              {!! Form::hidden('id_load', $load->id) !!}
+                              {!! Form::hidden('id', $palletsExist->id) !!}
+                              {!! Form::hidden('id_user', \Auth::user()->id) !!}
+                              {!! Form::hidden('update_user', \Auth::user()->id) !!}
+                              <input class="form-check-input" name="coordination" {{ ($palletsExist2) ? 'checked' : ''}} type="checkbox">
+                           Usar fincas y clientes coordinados</label>
+                           <button type="submit" class="btn btn-outline-warning" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
+                              <i class="fas fa-sync"></i> Actualizar
+                           </button>
+                        </div>
                      </div>
-                  @endif
+                  {{ Form::close() }}
                   
-                  <hr>
+               </div>
+            @endif
+            
+               
+               
+                  
+                  
+                  
                   @foreach ($pallets as $indexKey =>$item)
                      <div class="card">
                         <div class="card-header">
@@ -94,14 +94,14 @@
                                              <td>
                                                 @foreach ($farms as $farm)
                                                    @if($item2->id_farm == $farm->id)
-                                                      {{ $farm->name }}
+                                                      {{ strtoupper(Str::limit(str_replace('SAG-', '', $farm->name), '20')) }}
                                                    @endif
                                                 @endforeach
                                              </td>
                                              <td class="text-center">
                                                 @foreach ($clients as $client)
                                                    @if($item2->id_client == $client->id)
-                                                      {{ strtoupper($client->name) }}
+                                                      {{ strtoupper(Str::limit(str_replace('SAG-', '', $client->name), '8')) }}
                                                    @endif
                                                 @endforeach
                                              </td>
@@ -208,24 +208,23 @@
                     
                     <!-- End Modal Pallets Items -->
                   @endforeach
-               </div>
-               <div class="card-footer">
-                  <button class="btn btn-default  " type="button">
-                     Total HB <span class="badge">{{ $total_hb }}</span>
-                  </button>
-                  <button class="btn btn-primary" type="button">
-                     Total QB <span class="badge">{{ $total_qb }}</span>
-                  </button>
-                  <button class="btn btn-info" type="button">
-                     Total EB <span class="badge">{{ $total_eb }}</span>
-                  </button>
-                  <button class="btn btn-success" type="button">
-                     Total Contenedor <span class="badge">{{ $total_container }}</span>
-                  </button>
-                </div>
-             </div>
+               
+               
+             
+             <button class="btn btn-default  " type="button">
+               HB <span class="badge">{{ $total_hb }}</span>
+            </button>
+            <button class="btn btn-primary" type="button">
+               QB <span class="badge">{{ $total_qb }}</span>
+            </button>
+            <button class="btn btn-info" type="button">
+               EB <span class="badge">{{ $total_eb }}</span>
+            </button>
+            <button class="btn btn-success" type="button">
+               Total <span class="badge">{{ $total_container }}</span>
+            </button>
             </div>
-            <div class="col-5">
+            <div class="col-sm">
              <div class="card text-white bg-dark">
                <div class="card-header">
                  Resumen de la carga - #{{ $load->shipment }}
