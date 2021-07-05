@@ -49,6 +49,27 @@
                             </div>
                           </div>
                           <a href="{{ route('coordination.pdf', $load) }}" target="_blank" class="btn btn-xs btn-outline-success pull-right"><i class="far fa-file-pdf"></i></a>
+                          <div class="form-group col-md-12">
+                              <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                              <input type="checkbox" class="custom-control-input" id="switchCoord">
+                              <label class="custom-control-label" for="switchCoord">Transferir coordinación</label>
+                              </div>
+                           </div>
+                           <a href="#" id="ListCoord" class="btn btn-xs btn-outline-success pull-right"><i class="fas fa-exchange-alt"></i></a>
+
+                           <div class="row listaSelect">
+                              <div class="card">
+                                 <div class="card-body">
+                                    <h3>Fincas seleccionadas</h3>
+                                    <br>
+
+                                    <ul id="lista" class="list-group"></ul>
+                                 </div>
+                                 <div class="card-footer">
+                                    <a href="#" id="btnTransf" class="btn btn-xs btn-outline-info pull-right"><i class="fas fa-exchange-alt"></i> Transferir</a>
+                                 </div>
+                              </div>
+                           </div>
                         </div>
                         <div class="col-sm-6">
                           <div class="card">
@@ -142,6 +163,7 @@
                         </thead>
                         <thead>
                             <tr class="gris">
+                              <th class="text-center" id="transfLavel">Transferir</th>
                               <th class="text-center">Finca</th>
                               <th class="text-center">HAWB</th>
                               <th class="text-center">Variedad</th>
@@ -165,6 +187,7 @@
                                 $tPieces = 0; $tFulls = 0; $tHb = 0; $tQb = 0; $tEb = 0; $totalPieces = 0; $tPcsR = 0;
                                  $tHbr = 0; $tQbr = 0; $tEbr = 0; $tFullsR = 0; $tDevR = 0; $tMissingR = 0;
                             @endphp
+                            
                             @foreach($coordinations as $item)
                             @if($client['id'] == $item->id_client)
                             @php
@@ -182,6 +205,7 @@
                                  $tMissingR+= $item->missing;
                             @endphp
                             <tr>
+                               <td class="text-center"><input type="checkbox" class="transf" name="{{ $item->id }}" value="{{ $item->id }}" placeholder="{{ $item->name }} - {{ $client['name'] }} - {{ $item->pieces }}"></td>
                                 <td class="farms">{{ $item->name }}</td>
                                 <td class="text-center">{{ $item->hawb }}</td>
                                 <td class="text-center">{{ $item->variety->name }}</td>
@@ -236,6 +260,7 @@
                            </div>
                             @endif
                             @endforeach
+                            
                             @php
                                  $totalFulls+= $tFulls;
                                  $totalHb+= $tHb;
@@ -347,7 +372,76 @@
       $('#variety_id').select2({
          theme: 'bootstrap4'
       });
+
+      $(document).ready(function()
+      {
+         $('#transfCoord').hide();
+         $('#transfLavel').hide();
+         $('.transf').hide();
+         $('#btnTransf').hide();
+         $('#switchCoord').on('change', function() {
+            if ($(this).is(':checked') ) {
+               $('#transfCoord').show();
+               $('#transfLavel').show();
+               $('.transf').show();
+            } else {
+               $('#transfCoord').hide();
+               $('#transfLavel').hide();
+               $('.transf').hide();
+            }
+         });
+      });
+
+      // listar fincas selecionadas
+      var lista = document.getElementById('lista');
+      var checks_farm = document.querySelectorAll('.transf');
+      var test = [];
+
+      $('#ListCoord').click(function()
+      {
+         
+         lista.innerHTML = '';
+         checks_farm.forEach((e)=>{
+            if(e.checked == true)
+            {
+               var elemento = document.createElement('li');
+               elemento.className = 'list-group-item';
+               elemento.innerHTML = e.placeholder;
+               test.push(e.value)
+               lista.appendChild(elemento);
+               $('#btnTransf').show();
+            }
+            
+         });
+         $('#btnTransf').click(function()
+         {
+            $.ajax({
+               url: "transfer-coordination",
+               type: "POST",
+               data: test,
+               success: function(response)
+               {
+                  if(response)
+                  {
+                     $('#transfCoord').hide();
+                     $('#transfLavel').hide();
+                     $('.transf').hide();
+                     $('#btnTransf').hide();
+                     toastr.success('Transferencia exitosa');
+                  }
+               }
+            });
+         });
+         
+         for ( x in test) {
+            console.log( test[x] );
+         }
+      });
+
+      
    </script>
+
+   
 @endsection
 
 @endsection
