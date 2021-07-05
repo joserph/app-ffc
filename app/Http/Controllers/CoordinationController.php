@@ -57,7 +57,7 @@ class CoordinationController extends Controller
         return view('coordination.index', compact('farms', 'clients', 'varieties', 'load', 'company', 'coordinations', 'clientsCoordination'));
     }
 
-    public function transferCoordination(Request $request)
+    public function transferCoordination($load, $request)
     {
         dd($request);
     }

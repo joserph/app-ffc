@@ -144,4 +144,4 @@ Route::get('farms-invoice-pdf', 'InvoiceHeaderController@farmsInvoicePdf')->name
 // Generar Master Invoice desde las Paletas.
 Route::get('/generar-master-pallet/{id}', 'MasterInvoiceItemController@generarMasterPallet')->name('generar-master-pallet');
 // Transferir coordinacion
-Route::post('/transfer-coordination', 'CoordinationController@transferCoordination')->name('transfer-coordination');
+Route::get('/transfer-coordination/{id}', 'CoordinationController@transferCoordination')->name('transfer-coordination');

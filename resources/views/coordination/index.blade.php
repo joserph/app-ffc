@@ -66,7 +66,7 @@
                                     <ul id="lista" class="list-group"></ul>
                                  </div>
                                  <div class="card-footer">
-                                    <a href="#" id="btnTransf" class="btn btn-xs btn-outline-info pull-right"><i class="fas fa-exchange-alt"></i> Transferir</a>
+                                    <a href="{{ route('transfer-coordination', $load) }}" value="Hola" id="btnTransf" class="btn btn-xs btn-outline-info pull-right"><i class="fas fa-exchange-alt"></i> Transferir</a>
                                  </div>
                               </div>
                            </div>
@@ -413,7 +413,7 @@
             }
             
          });
-         $('#btnTransf').click(function()
+         /*$('#btnTransf').click(function()
          {
             $.ajax({
                url: "transfer-coordination",
@@ -431,7 +431,7 @@
                   }
                }
             });
-         });
+         });*/
          
          for ( x in test) {
             console.log( test[x] );
