@@ -68,11 +68,11 @@
                                  <a href="{{ route('user.show', $user->id) }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i> Ver</a>
                               @endcan
                            </td>
-                           {{--<td width="100px" class="text-center">
+                           <td width="100px" class="text-center">
                               @can('update', [$user, ['user.edit', 'userown.edit']])
                                  <a href="{{ route('user.edit', $user->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Editar</a>
                               @endcan
-                           </td>--}}
+                           </td>
                            <td width="120px" class="text-center">
                               @can('haveaccess', 'user.destroy')
                                  {{ Form::open(['route' => ['user.destroy', $user->id], 'method' => 'DELETE']) }}
