@@ -49,6 +49,7 @@
                             </div>
                           </div>
                           <a href="{{ route('coordination.pdf', $load) }}" target="_blank" class="btn btn-xs btn-outline-success pull-right"><i class="far fa-file-pdf"></i></a>
+                          <!--
                           <div class="form-group col-md-12">
                               <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
                               <input type="checkbox" class="custom-control-input" id="switchCoord">
@@ -69,7 +70,7 @@
                                     <a href="{{ route('transfer-coordination', $load) }}" value="Hola" id="btnTransf" class="btn btn-xs btn-outline-info pull-right"><i class="fas fa-exchange-alt"></i> Transferir</a>
                                  </div>
                               </div>
-                           </div>
+                           </div> -->
                         </div>
                         <div class="col-sm-6">
                           <div class="card">
@@ -163,7 +164,7 @@
                         </thead>
                         <thead>
                             <tr class="gris">
-                              <th class="text-center" id="transfLavel">Transferir</th>
+                              <th class="text-center transfLavel">Transferir</th>
                               <th class="text-center">Finca</th>
                               <th class="text-center">HAWB</th>
                               <th class="text-center">Variedad</th>
@@ -205,7 +206,7 @@
                                  $tMissingR+= $item->missing;
                             @endphp
                             <tr>
-                               <td class="text-center"><input type="checkbox" class="transf" name="{{ $item->id }}" value="{{ $item->id }}" placeholder="{{ $item->name }} - {{ $client['name'] }} - {{ $item->pieces }}"></td>
+                               <!--<td class="text-center"><input type="checkbox" class="transf" name="{{ $item->id }}" value="{{ $item->id }}" placeholder="{{ $item->name }} - {{ $client['name'] }} - {{ $item->pieces }}"></td>-->
                                 <td class="farms">{{ $item->name }}</td>
                                 <td class="text-center">{{ $item->hawb }}</td>
                                 <td class="text-center">{{ $item->variety->name }}</td>
@@ -376,7 +377,7 @@
       $(document).ready(function()
       {
          $('#transfCoord').hide();
-         $('#transfLavel').hide();
+         $('.transfLavel').hide();
          $('.transf').hide();
          $('#btnTransf').hide();
          $('#switchCoord').on('change', function() {
