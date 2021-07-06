@@ -70,7 +70,8 @@
                                     <a href="{{ route('transfer-coordination', $load) }}" value="Hola" id="btnTransf" class="btn btn-xs btn-outline-info pull-right"><i class="fas fa-exchange-alt"></i> Transferir</a>
                                  </div>
                               </div>
-                           </div> -->
+                           </div>
+                        -->
                         </div>
                         <div class="col-sm-6">
                           <div class="card">

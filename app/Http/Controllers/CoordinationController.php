@@ -59,7 +59,7 @@ class CoordinationController extends Controller
 
     public function transferCoordination($load, $request)
     {
-        dd($request);
+        //dd($request);
     }
 
     public function coordinationPdf()
@@ -169,7 +169,7 @@ class CoordinationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request->all());
+        //dd($request->all());
         $coordination = Coordination::find($id);
 
         $data = request()->validate([
