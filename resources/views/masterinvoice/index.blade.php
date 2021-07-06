@@ -3,7 +3,7 @@
 @section('title') Factura Master | Sistema de Carguera v1.1 @stop
 
 @section('content')
-@can('haveaccess', 'logistics')
+@can('haveaccess', 'masterinvoice.index')
 
 <section class="content-header">
    <div class="container-fluid">
@@ -134,9 +134,11 @@
          <a href="{{ route('shiptment-confirmation-internal-use.pdf', $load) }}" target="_blank" class="btn btn-xs btn-outline-info pull-right"><i class="far fa-file-pdf"></i></a>
          <a href="{{ route('farms-invoice.pdf', $load) }}" target="_blank" class="btn btn-xs btn-outline-warning pull-right"><i class="far fa-file-pdf"></i></a>
          <!-- Button for modal editFormHeader -->
+         @can('haveaccess', 'masterinvoice.create')
          <button type="button" class="btn btn-outline-warning float-right" data-toggle="modal" data-target="#editInvoiceHeader" >
             <i class="fas fa-edit"></i> Editar
          </button>
+         @endcan
          <hr>
          @if (!$invoiceItems)
             <a href="{{ route('generar-master-pallet', $load) }}" class="btn btn-xs btn-outline-success pull-right"><i class="fas fa-exchange-alt"></i></a>
