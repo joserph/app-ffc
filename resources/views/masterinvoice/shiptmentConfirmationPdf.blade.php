@@ -26,14 +26,14 @@
             width: 100%;
         }
         .small-letter{
-            font-size: 10px;
+            font-size: 9px;
             font-weight: normal;
         }
         .medium-letter{
-            font-size: 11px;
+            font-size: 10px;
         }
         .large-letter{
-            font-size: 14px;
+            font-size: 13px;
         }
         .farms{
             width: 300px;
@@ -45,11 +45,11 @@
         }
         table.sinb, th{
             border: 1px solid black;
-            height: 15px;
+            height: 14px;
         }
         table.sinb, td{
             border: 1px solid black;
-            height: 13px;
+            height: 12px;
         }
         .text-white{
             color: #fff;
@@ -59,7 +59,7 @@
             border-right: 1px solid white;
             border-bottom: 1px solid black;
             border-left: 1px solid white;
-            height: 5px;
+            height: 3px;
         }
         .box-size{
             width: 40px;
