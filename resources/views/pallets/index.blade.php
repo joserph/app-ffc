@@ -168,10 +168,40 @@
                               </table>
                            </div>
                            @if(($counter - 1) == $item->counter)
-                              
+
+                           <button type="button" class="btn btn-xs btn-warning pull-right" data-toggle="modal" data-target="#editPallet" data-toggle="tooltip" data-placement="top" title="Editar nuevas paletas"><i class="fas fa-edit"></i> Editar</button>
                                  {!! Form::open(['route' => ['pallets.destroy', $item->id], 'method' => 'DELETE']) !!}
                                     {!! Form::button('<i class="fas fa-trash-alt"></i> ' . 'Eliminar', ['type' => 'submit', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Eliminar paleta', 'class' => 'btn btn-xs btn-danger pull-right', 'onclick' => 'return confirm("¿Seguro de eliminar finca?")']) !!}
                                  {!! Form::close() !!}
+                                 
+                                 <!-- Modal Edit Pallet -->
+                                 <div class="modal fade" id="editPallet" tabindex="-1" role="dialog" aria-labelledby="editPalletLabel">
+                                    <div class="modal-dialog" role="document">
+                                       <div class="modal-content">
+                                             <div class="modal-header">
+                                                <h5 class="modal-title" id="agregarItemLabel">Contenedor {{ $load->shipment }}</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                   <span aria-hidden="true">&times;</span>
+                                                </button>
+                                             </div>
+                                          <div class="modal-body">
+                                                @include('custom.message')
+                                                {{ Form::model($item, ['route' => ['pallets.update', $item->id], 'class' => 'form-horizontal', 'method' => 'PUT']) }}
+                                                   <div class="modal-body">
+                                                      @include('pallets.partials.formEdit')
+                                                   </div>
+                                                   <div class="modal-footer">
+                                                      <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+                                                      <button type="submit" class="btn btn-outline-warning" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
+                                                         <i class="fas fa-sync"></i> Actualizar
+                                                      </button>
+                                                   </div>
+                                                {{ Form::close() }}
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <!-- /Modal Edit Pallet -->
                               
                            @endif
                         </div>
@@ -321,7 +351,7 @@
       </div>
    </div>
 </section>
-<!-- Modal Pallets -->
+<!-- Modal Create Pallets -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
    <div class="modal-dialog" role="document">
        <div class="modal-content">
@@ -349,6 +379,8 @@
        </div>
    </div>
 </div>
+<!-- /Modal Create Pallets -->
+
 
 @endsection
 

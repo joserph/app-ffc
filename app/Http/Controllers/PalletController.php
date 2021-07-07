@@ -96,9 +96,8 @@ class PalletController extends Controller
             // Clientes
             $clientsList = Client::select('id', 'name')->orderBy('name', 'ASC')->get();
         }
-        //dd($farms);
+        //dd($pallets);
 
-        //dd($palletsExist);
         return view('pallets.index', compact('palletsExist2', 'farmsEdit', 'resumenCargaAll', 'itemsCarga', 'pallets','code', 'farmsList', 'clientsList', 'counter', 'number', 'load', 'palletItem', 'farms', 'clients', 'total_container', 'total_hb', 'total_qb', 'total_eb', 'palletsExist'));
     }
 
@@ -182,27 +181,56 @@ class PalletController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //dd($request->id);
-        $pallet = Pallet::find($request->id);
         
-        if($request->coordination)
+        $pallet = Pallet::find($request->id);
+        $load = Load::where('id', '=', $pallet->id_load)->first();
+        if($request->edit_pallet)
         {
+            //dd($load);
+            // Editamos la paleta (USDA)
+            if($request->usda == 'on')
+            {
+                //$id_load = Load::select('shipment')->where('id', '=', $pallet->id_load)->first();
+                $pallet->update([
+                    'usda' => 1,
+                    'number' => $load->shipment .'-USDA-' . $pallet->counter
+                ]);
+            }else{
+                $pallet->update([
+                    'usda' => null,
+                    'number' => $load->shipment . '-' . $pallet->counter
+                ]);
+            }
             
-            $pallet->update([
-                'coordination' => 'yes'
-            ]);
             $pallet->save();
+
+            return redirect()->route('pallets.index', $load->id)
+                ->with('status_success', 'Paleta editada con exito');
         }else{
-            $pallet->update([
-                'coordination' => 'no'
-            ]);
-            $pallet->save();
+            // Agregamos o quitamos las fincas y clientes coordinados.
+            if($request->coordination)
+            {
+                $pallet->update([
+                    'coordination' => 'yes'
+                ]);
+                $pallet->save();
+            }else{
+                $pallet->update([
+                    'coordination' => 'no'
+                ]);
+                $pallet->save();
+            }
+
+            return redirect()->route('pallets.index', $load[0]->id)
+                ->with('status_success', 'Cambio en el uso de finca y clientes');
         }
-        $load = Load::where('id', '=', $pallet->id_load)->get();
+        
+        
+        
+        
 
         return redirect()->route('pallets.index', $load[0]->id)
-            ->with('info', 'Paleta Guardada con exito');
-        //
+            ->with('info', 'Paleta editada con exito');
     }
 
     /**
