@@ -140,10 +140,12 @@
          </button>
          @endcan
          <hr>
+         {{--
          @if (!$invoiceItems)
             <a href="{{ route('generar-master-pallet', $load) }}" class="btn btn-xs btn-outline-success pull-right"><i class="fas fa-exchange-alt"></i></a>
             <hr>
          @endif
+         --}}
          
 
          <div class="form-group">
