@@ -26,14 +26,14 @@
             width: 100%;
         }
         .small-letter{
-            font-size: 10px;
+            font-size: 9px;
             font-weight: normal;
         }
         .medium-letter{
-            font-size: 11px;
+            font-size: 10px;
         }
         .large-letter{
-            font-size: 14px;
+            font-size: 13px;
         }
         .farms{
             width: 300px;

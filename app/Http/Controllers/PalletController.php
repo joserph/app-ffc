@@ -119,10 +119,34 @@ class PalletController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
+        
         if($request->usda == 'on')
         {
             $request->usda = 1;
+            // Agregamos las fincas coordinadas y clientes
+            // Buscamos las fincas en coordinaciones
+            $fincasCoord = Coordination::where('id_load', $request->id_load)->get();
+            // Agregamos las fincas coordinadas
+            /*foreach($fincasCoord as $item)
+            {
+                $palletitem = PalletItem::create([
+                    'id_user' => $request->id_user,
+                    'update_user' => $request->update_user,
+                    'id_load' => $request->id_load,
+                    'id_pallet' => $request->id_pallet,
+                    'id_farm' => $request->id_farm,
+                    'id_client' => $request->id_client,
+                    'hb' => $request->hb,
+                    'qb' => $request->qb,
+                    'eb' => $request->eb,
+                    'quantity' => $request->quantity,
+                    'piso' => $request->piso
+                ]);
+                $farm = Farm::select('name')->where('id', '=', $palletitem->id_farm)->first();
+                $palletitem->farms = $farm->name;
+                $palletitem->save();
+            }*/
+            dd($fincasCoord);
         }
         //dd($request->usda);
         $pallet = Pallet::create(
