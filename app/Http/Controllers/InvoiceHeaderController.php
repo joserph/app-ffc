@@ -42,8 +42,8 @@ class InvoiceHeaderController extends Controller
         // Empresas de Logistica "Activa"
         $lc_active = LogisticCompany::where('active', '=', 'yes')->first();
         // Verificamos si la factura tiene items
-        $invoiceItems = MasterInvoiceItem::where('id_load', '=', $code)->get();
-        //dd($invoiceheaders);
+        $invoiceItems = MasterInvoiceItem::where('id_load', '=', $code)->first();
+        //dd($invoiceItems);
         // Mi empresa
         $company = Company::first();
 
