@@ -119,34 +119,9 @@ class PalletController extends Controller
      */
     public function store(Request $request)
     {
-        
         if($request->usda == 'on')
         {
             $request->usda = 1;
-            // Agregamos las fincas coordinadas y clientes
-            // Buscamos las fincas en coordinaciones
-            $fincasCoord = Coordination::where('id_load', $request->id_load)->get();
-            // Agregamos las fincas coordinadas
-            /*foreach($fincasCoord as $item)
-            {
-                $palletitem = PalletItem::create([
-                    'id_user' => $request->id_user,
-                    'update_user' => $request->update_user,
-                    'id_load' => $request->id_load,
-                    'id_pallet' => $request->id_pallet,
-                    'id_farm' => $request->id_farm,
-                    'id_client' => $request->id_client,
-                    'hb' => $request->hb,
-                    'qb' => $request->qb,
-                    'eb' => $request->eb,
-                    'quantity' => $request->quantity,
-                    'piso' => $request->piso
-                ]);
-                $farm = Farm::select('name')->where('id', '=', $palletitem->id_farm)->first();
-                $palletitem->farms = $farm->name;
-                $palletitem->save();
-            }*/
-            dd($fincasCoord);
         }
         //dd($request->usda);
         $pallet = Pallet::create(
@@ -160,6 +135,35 @@ class PalletController extends Controller
                 'usda' => $request->usda
             ]
         );
+
+        if($request->usda == 1)
+        {
+            // Buscamos las fincas en coordinaciones
+            $fincasCoord = Coordination::where('id_load', $request->id_load)->get();
+            // Agregamos las fincas coordinadas
+            //dd($fincasCoord);
+            foreach($fincasCoord as $item)
+            {
+                $palletitem = PalletItem::create([
+                    'id_user' => \Auth::user()->id,
+                    'update_user' => \Auth::user()->id,
+                    'id_load' => $item->id_load,
+                    'id_pallet' => $pallet->id,
+                    'id_farm' => $item->id_farm,
+                    'id_client' => $item->id_client,
+                    'hb' => 1,
+                    'qb' => 0,
+                    'eb' => 0,
+                    'quantity' => 1,
+                    'piso' => null
+                ]);
+                $farm = Farm::select('name')->where('id', '=', $palletitem->id_farm)->first();
+                $palletitem->farms = $farm->name;
+                $palletitem->save();
+            }
+        }
+
+
         if($pallet->usda == 1)
         {
             $id_load = Load::select('shipment')->where('id', '=', $pallet->id_load)->first();
@@ -245,7 +249,7 @@ class PalletController extends Controller
                 $pallet->save();
             }
 
-            return redirect()->route('pallets.index', $load[0]->id)
+            return redirect()->route('pallets.index', $load->id)
                 ->with('status_success', 'Cambio en el uso de finca y clientes');
         }
         

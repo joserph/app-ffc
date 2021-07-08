@@ -22,31 +22,37 @@
             </select>
         </div>
     </div>
-    <div class="col-md-4 form-group">
+</div>
+<div class="row">
+    <div class="col form-group">
         {{ Form::label('hb', 'HB', ['class' => 'control-label']) }}
         <div class="input-group mb-12">
             <input type="number" name="hb" id="hb_{{ $item->id }}" value="0" class="form-control grupo">
         </div>
     </div>
-    <div class="col-md-4 form-group">
+    <div class="col form-group">
         {{ Form::label('qb', 'QB', ['class' => 'control-label']) }}
         <div class="input-group mb-12">
             <input type="number" name="qb" id="qb_{{ $item->id }}" value="0" class="form-control grupo">
         </div>
     </div>
-    <div class="col-md-4 form-group">
+</div>
+<div class="row">
+    <div class="col form-group">
         {{ Form::label('eb', 'EB', ['class' => 'control-label']) }}
         <div class="input-group mb-12">
             <input type="number" name="eb" id="eb_{{ $item->id }}" value="0" class="form-control grupo">
         </div>
     </div>
-    <div class="col-md-6 form-group">
+    <div class="col form-group">
         {{ Form::label('quantity', 'Total', ['class' => 'control-label']) }}
         <div class="input-group mb-12">
             <input type="number" name="quantity" id="total_{{ $item->id }}" value="0" class="form-control grupo" readonly>
         </div>
     </div>
-    <div class="col-md-6 form-group">
+</div>
+<div class="row">
+    <div class="col form-group">
         {{ Form::label('piso', 'Piso', ['class' => 'control-label']) }}
         <div class="input-group mb-12">
             {{ Form::checkbox('piso', 'value', false) }}
