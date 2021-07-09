@@ -6,6 +6,7 @@
        <tr>
           <th scope="col">Nombre</th>
           <th scope="col">Teléfono</th>
+          <th scope="col">Correo</th>
           <th scope="col">Dirección</th>
           <th scope="col">Estado</th>
           <th scope="col">Ciudad</th>
@@ -19,6 +20,7 @@
          <tr>
             <td>{{ $client->name }}</td>
             <td>{{ $client->phone }}</td>
+            <td>{{ $client->email }}</td>
             <td>{{ $client->address }}</td>
             <td>{{ $client->state }}</td>
             <td>{{ $client->city }}</td>

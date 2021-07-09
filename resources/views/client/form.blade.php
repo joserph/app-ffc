@@ -1,11 +1,15 @@
 <div class="row">
-    <div class="col-md-8 form-group">
+    <div class="col-md-6 form-group">
         {{ Form::label('name', 'Nombre del cliente', ['class' => 'control-label']) }}
         <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" wire:model="name">
     </div>
-    <div class="col-md-4 form-group">
+    <div class="col-md-3 form-group">
         {{ Form::label('phone', 'Teléfono', ['class' => 'control-label']) }}
         <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror" wire:model="phone">
+    </div>
+    <div class="col-md-3 form-group">
+        {{ Form::label('email', 'Correo', ['class' => 'control-label']) }}
+        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" wire:model="email">
     </div>
     <div class="col-md-6 form-group">
         {{ Form::label('address', 'Dirección', ['class' => 'control-label']) }}

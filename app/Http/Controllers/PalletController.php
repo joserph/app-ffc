@@ -163,6 +163,10 @@ class PalletController extends Controller
             }
         }
 
+        // Total paleta
+        $total_pallet = PalletItem::where('id_pallet', '=', $pallet->id)->sum('quantity');
+        //dd($total_pallet);
+        $pallet->quantity = $total_pallet;
 
         if($pallet->usda == 1)
         {

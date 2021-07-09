@@ -55,7 +55,7 @@ class SketchController extends Controller
         $farms = Farm::all();
         // Clients
         $clients = Client::all();
-        //dd($sketches);
+        //dd($pallets);
         
         return view('sketches.index', compact('clients', 'load', 'farms', 'pallets', 'sketches', 'space', 'palletsSelect', 'palletsItems'));
     }

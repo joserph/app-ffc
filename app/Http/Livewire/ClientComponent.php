@@ -14,7 +14,7 @@ class ClientComponent extends Component
 
     protected $paginationTheme = 'bootstrap'; /// Importante
 
-    public $client_id, $name, $phone, $address, $state, $city, $country, $poa;
+    public $client_id, $name, $phone, $address, $state, $city, $country, $poa, $email;
     public $view = 'create';
     
     public function render()
@@ -29,12 +29,13 @@ class ClientComponent extends Component
         // Validaciones
         $this->validate([
             'name'      => 'required',
-            'phone'     => 'required',
+            'phone'     => '',
             'address'   => 'required',
             'state'     => 'required',
             'city'      => 'required',
             'country'   => 'required',
-            'poa'       => 'required'
+            'poa'       => 'required',
+            'email'     => 'email'
         ]);
         
         $client = Client::create([
@@ -45,6 +46,7 @@ class ClientComponent extends Component
             'city'          => $this->city,
             'country'       => $this->country,
             'poa'           => $this->poa,
+            'email'         => $this->email,
             'id_user'       => Auth::user()->id,
             'update_user'   => Auth::user()->id
         ]);
@@ -67,6 +69,7 @@ class ClientComponent extends Component
         $this->city = $client->city;
         $this->country = $client->country;
         $this->poa = $client->poa;
+        $this->email = $client->email;
 
         $this->view = 'edit';
     }
@@ -76,12 +79,13 @@ class ClientComponent extends Component
         // Validaciones
         $this->validate([
             'name'      => 'required',
-            'phone'     => 'required',
+            'phone'     => '',
             'address'   => 'required',
             'state'     => 'required',
             'city'      => 'required',
             'country'   => 'required',
-            'poa'       => 'required'
+            'poa'       => 'required',
+            'email'     => 'email'
         ]);
 
         $client = Client::find($this->client_id);
@@ -94,6 +98,7 @@ class ClientComponent extends Component
             'city'          => $this->city,
             'country'       => $this->country,
             'poa'           => $this->poa,
+            'email'         => $this->email,
             'id_user'       => $client->id_user,
             'update_user'   => Auth::user()->id
         ]);
@@ -112,6 +117,7 @@ class ClientComponent extends Component
         $this->city = '';
         $this->country = '';
         $this->poa = '';
+        $this->email = '';
 
         $this->view = 'create';
     }

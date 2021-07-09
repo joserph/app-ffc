@@ -172,14 +172,14 @@
                                                    <td>
                                                       @foreach ($farms as $farm)
                                                          @if($item2->id_farm == $farm->id)
-                                                            {{ Str::limit(strtoupper($farm->name), '17') }}
+                                                            <small>{{ Str::limit(strtoupper($farm->name), '17') }}</small>
                                                          @endif
                                                       @endforeach
                                                    </td>
                                                    <td class="text-center">
                                                       @foreach ($clients as $client)
                                                          @if($item2->id_client == $client->id)
-                                                         <small>{{ Str::limit(str_replace('SAG-', '', $client->name), '8') }}</small>
+                                                            <small>{{ Str::limit(str_replace('SAG-', '', $client->name), '8') }}</small>
                                                          @endif
                                                       @endforeach
                                                    </td>
@@ -244,7 +244,7 @@
                           </div>
                           @php
                               $totalBoxes+= $item->quantity;
-                              @endphp
+                           @endphp
 
                   @endforeach
                   <hr>
