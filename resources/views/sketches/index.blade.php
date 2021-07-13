@@ -50,7 +50,17 @@
                 </div>
                 <div class="card-body table-responsive p-0">
                   <div class="container">
-                     
+                     <div class="row">
+                        @foreach ($sketches as $key => $item)
+                        <div class="col-sm-6" style="height: 100px; border-style: solid; border-radius: 10px; border-width: 5px; padding-right: 0; padding-left: 0;">
+                           <div class="espacio" style="height: 100%; width: 100%;">
+                              <div style="height: 80%; background-color: blue">MIAS</div>
+                              <div style="height: 20%; background-color: red">MULROSES</div>
+                           </div>
+                        </div>
+                        @endforeach
+                     </div>
+                     <hr>
                      <div class="row">
                         @foreach ($sketches as $key => $item)
                         <div class="col-sm-6">

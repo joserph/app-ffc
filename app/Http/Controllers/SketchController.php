@@ -51,11 +51,11 @@ class SketchController extends Controller
         $sketches = Sketch::where('id_load', $load->id)->with('pallet')->get();
         // PalletItems
         $palletsItems = PalletItem::where('id_load', '=', $load->id)->get();
+        //dd($palletsItems);
         // Farms
         $farms = Farm::all();
         // Clients
         $clients = Client::all();
-        //dd($pallets);
         
         return view('sketches.index', compact('clients', 'load', 'farms', 'pallets', 'sketches', 'space', 'palletsSelect', 'palletsItems'));
     }
