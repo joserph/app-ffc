@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Farm;
+use App\Client;
+use App\Variety;
+use App\Load;
 
 class HomeController extends Controller
 {
@@ -23,6 +27,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $farms = Farm::count();
+        $clients = Client::count();
+        $varieties = Variety::count();
+        $loads = Load::count();
+        //dd($farms);
+        return view('home', compact('farms', 'clients', 'varieties', 'loads'));
     }
 }

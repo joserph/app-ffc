@@ -113,7 +113,7 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                Dashboard
+                Panel Usuario
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -181,7 +181,7 @@
             <a href="{{ route('load.index') }}" class="nav-link">
               <i class="nav-icon fas fa-truck-loading"></i>
               <p>
-                Cargas
+                Contenedores
               </p>
             </a>
           </li>
