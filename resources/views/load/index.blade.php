@@ -47,7 +47,8 @@
                               <th scope="col">Embarque</th>
                               <th scope="col">BL</th>
                               <th scope="col">Transportista</th>
-                              <th scope="col">Fecha</th>
+                              <th scope="col">Fecha Salida</th>
+                              <th scope="col">Fecha Llegada</th>
                               <th class="text-center" width="80px" colspan="3">@can('haveaccess', 'load.show')Ver @endcan @can('haveaccess', 'load.edit')Editar @endcan @can('haveaccess', 'load.destroy')Eliminar @endcan</th>
                            </tr>
                         </thead>
@@ -58,6 +59,7 @@
                                  <td>{{ $load->bl }}</td>
                                  <td>{{ $load->carrier }}</td>
                                  <td>{{ date('d/m/Y', strtotime($load->date)) }}</td>
+                                 <td>{{ date('d/m/Y', strtotime($load->arrival_date)) }}</td>
                                  <td width="45px" class="text-center">
                                     @can('haveaccess', 'load.show')
                                        <a href="{{ route('load.show', $load->id) }}" class="btn btn-outline-success btn-sm"><i class="fas fa-eye"></i></a>

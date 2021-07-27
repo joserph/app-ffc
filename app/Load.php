@@ -11,6 +11,7 @@ class Load extends Model
         'bl',
         'carrier',
         'date',
+        'arrival_date',
         'id_user',
         'update_user'
     ];
