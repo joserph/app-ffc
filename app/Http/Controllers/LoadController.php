@@ -20,6 +20,7 @@ class LoadController extends Controller
     public function index()
     {
         $loads = Load::orderBy('shipment', 'DESC')->paginate(15);
+        
         return view('load.index', compact('loads'));
     }
 
