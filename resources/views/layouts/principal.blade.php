@@ -181,7 +181,17 @@
             <a href="{{ route('load.index') }}" class="nav-link">
               <i class="nav-icon fas fa-truck-loading"></i>
               <p>
-                Contenedores
+                Maritimos
+              </p>
+            </a>
+          </li>
+          @endcan
+          @can('haveaccess', 'flight.index')
+          <li class="nav-item">
+            <a href="{{ route('flight.index') }}" class="nav-link">
+              <i class="nav-icon fas fa-plane"></i>
+              <p>
+                Vuelos
               </p>
             </a>
           </li>
@@ -202,7 +212,6 @@
               <i class="nav-icon fas fa-warehouse"></i>
               <p>
                 Empresa de logística
-                <span class="right badge badge-danger">New</span>
               </p>
             </a>
           </li>

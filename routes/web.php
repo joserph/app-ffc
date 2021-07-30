@@ -79,8 +79,10 @@ Route::post('user/updatepassword', 'UserController@updatePassword')->name('user.
 Route::post('user/updateprofilepicture', 'UserController@updateProfilePicture');
 // Permisos
 Route::resource('/permission', 'PermissionController')->names('permission');
-// Cargas
+// Maritimos
 Route::resource('/load', 'LoadController')->names('load');
+// Aereos
+Route::resource('/flight', 'FlightController')->names('flight');
 // Cabecera de la factura master
 Route::resource('/masterinvoices', 'InvoiceHeaderController')->names('masterinvoices');
 // Items de la factura master

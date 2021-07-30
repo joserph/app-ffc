@@ -45,7 +45,7 @@ class LoadController extends Controller
         $load = Load::create($request->all());
 
         return redirect()->route('load.index')
-            ->with('status_success', 'Carga creada con éxito');
+            ->with('status_success', 'Maritimo creado con éxito');
     }
 
     /**

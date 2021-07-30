@@ -1,21 +1,21 @@
 @extends('layouts.principal')
 
-@section('title') Crear Maritimo | Sistema de Carguera v1.1 @stop
+@section('title') Crear Vuelo | Sistema de Carguera v1.1 @stop
 
 @section('content')
 <section class="content-header">
     <div class="container-fluid">
        <div class="row mb-2">
           <div class="col-sm-6">
-             <h1>Crear Maritimo
+             <h1>Crear Vuelo
                 
              </h1>
           </div>
           <div class="col-sm-6">
              <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                <li class="breadcrumb-item active"><a href="{{ route('load.index') }}">Maritimos</a></li>
-                <li class="breadcrumb-item active">Crear Maritimo</li>
+                <li class="breadcrumb-item active"><a href="{{ route('flight.index') }}">Vuelos</a></li>
+                <li class="breadcrumb-item active">Crear Vuelo</li>
              </ol>
           </div>
        </div>
@@ -28,15 +28,15 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Crear Maritimo
+                <div class="card-header">Crear Vuelo
                 </div>
 
                 <div class="card-body">
                     
                    @include('custom.message')
 
-                     {{ Form::open(['route' => 'load.store', 'class' => 'form-horizontal']) }}
-                        @include('load.partials.form')
+                     {{ Form::open(['route' => 'flight.store', 'class' => 'form-horizontal']) }}
+                        @include('flight.partials.form')
                         <hr>
                         <div class="form-group row">
                            <div class="col-sm-12">
