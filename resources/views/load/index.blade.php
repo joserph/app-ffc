@@ -60,18 +60,20 @@
                                  $salida = strtotime($load->date);
                                  $dife = ($llegada - $salida);
                               @endphp
-                              -{{ date('d/m/Y', strtotime($dife)) }}
+                              
                               <tr>
                                  <td>{{ $load->shipment }}</td>
                                  <td>{{ $load->bl }}</td>
                                  <td>{{ $load->carrier }}</td>
                                  <td>{{ date('d/m/Y', strtotime($load->date)) }}</td>
                                  <td>{{ date('d/m/Y', strtotime($load->arrival_date)) }}</td>
-                                 <td><div class="progress mb-3">
+                                 <td>
+                                    <!--<div class="progress mb-3">
                                     <div class="progress-bar bg-success" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="15" style="width: 5%">
                                       <span class="sr-only">40% Complete (success)</span>
                                     </div>
-                                  </div></td>
+                                  </div>-->
+                                 </td>
                                  <td width="45px" class="text-center">
                                     @can('haveaccess', 'load.show')
                                        <a href="{{ route('load.show', $load->id) }}" class="btn btn-outline-success btn-sm"><i class="fas fa-eye"></i></a>
