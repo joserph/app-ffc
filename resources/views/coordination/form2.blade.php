@@ -52,11 +52,7 @@
     
     {{ Form::hidden('id_user', Auth::user()->id, ['id' => 'id_user']) }}
     {{ Form::hidden('update_user', Auth::user()->id, ['id' => 'update_user']) }}
-    @if ($load)
-        {{ Form::hidden('id_load', $load->id, ['id' => 'id_load']) }}
-    @else 
-        {{ Form::hidden('id_load', $flight->id, ['id' => 'id_load']) }}
-    @endif
+    {{ Form::hidden('id_flight', $flight->id, ['id' => 'id_flight']) }}
     
 </div>
 

@@ -51,7 +51,8 @@ class FlightController extends Controller
      */
     public function show($id)
     {
-        //
+        $flight = Flight::find($id);
+        return view('flight.show', compact('flight'));
     }
 
     /**

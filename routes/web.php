@@ -83,6 +83,7 @@ Route::resource('/permission', 'PermissionController')->names('permission');
 Route::resource('/load', 'LoadController')->names('load');
 // Aereos
 Route::resource('/flight', 'FlightController')->names('flight');
+Route::get('/flights', 'CoordinationController@flights')->name('flights');
 // Cabecera de la factura master
 Route::resource('/masterinvoices', 'InvoiceHeaderController')->names('masterinvoices');
 // Items de la factura master
@@ -103,6 +104,7 @@ Route::get('/invoicesitems/{id}', function($id){
 
 // Coordinacion
 Route::resource('/coordination', 'CoordinationController')->names('coordination');
+// Coordinaciones Aereas
 
 Route::get('/getcoordination/{id}', function($id){
     $coordination = Coordination::where('id_load', '=', $id)->get();
