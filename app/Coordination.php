@@ -33,6 +33,11 @@ class Coordination extends Model
         return $this->belongsTo('App\Farm', 'id_farm');
     }
 
+    public function client()
+    {
+        return $this->belongsTo('App\Client', 'id_client');
+    }
+
     public function variety()
     {
         return $this->belongsTo('App\Variety', 'variety_id');

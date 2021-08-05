@@ -46,9 +46,10 @@
                            <tr>
                               <th scope="col">Embarque</th>
                               <th scope="col">BL</th>
-                              <th scope="col">Transportista</th>
+                              <!--<th scope="col">Transportista</th>-->
                               <th scope="col">Fecha Salida</th>
                               <th scope="col">Fecha Llegada</th>
+                              <th scope="col">Clientes</th>
                               <th scope="col">Estatus</th>
                               <th class="text-center" width="80px" colspan="3">@can('haveaccess', 'load.show')Ver @endcan @can('haveaccess', 'load.edit')Editar @endcan @can('haveaccess', 'load.destroy')Eliminar @endcan</th>
                            </tr>
@@ -64,9 +65,16 @@
                               <tr>
                                  <td>{{ $load->shipment }}</td>
                                  <td>{{ $load->bl }}</td>
-                                 <td>{{ $load->carrier }}</td>
+                                 <!--<td>{{ $load->carrier }}</td>-->
                                  <td>{{ date('d/m/Y', strtotime($load->date)) }}</td>
                                  <td>{{ date('d/m/Y', strtotime($load->arrival_date)) }}</td>
+                                 <td>
+                                    @foreach ($coordination as $item)
+                                       @if ($load->id == $item->id_load)
+                                          <span class="badge badge-dark">{{ strtolower(Str::limit(str_replace('SAG-', '', $item->name), '10')) }}</span>
+                                       @endif
+                                    @endforeach
+                                 </td>
                                  <td>
                                     <!--<div class="progress mb-3">
                                     <div class="progress-bar bg-success" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="15" style="width: 5%">
