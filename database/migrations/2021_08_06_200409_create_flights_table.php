@@ -20,9 +20,9 @@ class CreateFlightsTable extends Migration
             $table->string('carrier')->nullable();
             $table->date('date');
             $table->date('arrival_date')->nullable();
-            $table->integer('update_user')->nullable();
             
             $table->foreignId('id_user')->references('id')->on('users');
+            $table->foreignId('update_user')->references('id')->on('users');
 
             $table->timestamps();
         });

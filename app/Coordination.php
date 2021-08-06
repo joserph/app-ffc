@@ -26,7 +26,7 @@ class Coordination extends Model
         'pieces_r',
         'fulls_r',
         'returns',
-        'id_flight'
+        'type'
     ];
 
     public function farm()

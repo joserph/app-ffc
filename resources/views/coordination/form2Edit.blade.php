@@ -50,6 +50,6 @@
     </div>
     
     {{ Form::hidden('update_user', Auth::user()->id, ['id' => 'update_user']) }}
-    {{ Form::hidden('id_flight', $flight->id, ['id' => 'id_load']) }}
+    {{ Form::hidden('id_flight', $flight->id, ['id' => 'id_flight']) }}
 </div>
 

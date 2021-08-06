@@ -36,7 +36,7 @@ class CoordinationRequest extends FormRequest
             'id_client' => 'required',
             'id_farm' => 'required',
             'id_load' => '',
-            'id_flight' => '',
+            'type' => 'required',
             'variety_id' => 'required',
             'id_user' => 'required',
             'update_user' => 'required'

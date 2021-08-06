@@ -14,8 +14,7 @@ class FlightController extends Controller
      */
     public function index()
     {
-        $flights = Flight::orderBy('date', 'DESC')->paginate(15);
-        
+        $flights = Flight::orderBy('date', 'ASC')->paginate(15);
         return view('flight.index', compact('flights'));
     }
 
@@ -26,7 +25,7 @@ class FlightController extends Controller
      */
     public function create()
     {
-        return view('flight.create');
+        //
     }
 
     /**
@@ -37,10 +36,7 @@ class FlightController extends Controller
      */
     public function store(Request $request)
     {
-        $flight = Flight::create($request->all());
-
-        return redirect()->route('flight.index')
-            ->with('status_success', 'Vuelo creado con éxito');
+        //
     }
 
     /**
@@ -51,8 +47,7 @@ class FlightController extends Controller
      */
     public function show($id)
     {
-        $flight = Flight::find($id);
-        return view('flight.show', compact('flight'));
+        //
     }
 
     /**
@@ -63,9 +58,7 @@ class FlightController extends Controller
      */
     public function edit($id)
     {
-        $flight = Flight::find($id);
-
-        return view('flight.edit', compact('flight'));
+        //
     }
 
     /**
@@ -77,12 +70,7 @@ class FlightController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $flight = Flight::find($id);
-
-        $flight->update($request->all());
-
-        return redirect()->route('flight.index')
-            ->with('status_success', 'El vuelo se actualizó con éxito');
+        //
     }
 
     /**
@@ -93,10 +81,6 @@ class FlightController extends Controller
      */
     public function destroy($id)
     {
-        $flight = Flight::find($id);
-        $flight->delete();
-
-        return redirect()->route('flight.index')
-            ->with('status_success', 'Vuelo eliminado con éxito');
+        //
     }
 }
