@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Coordination extends Model
+class Distribution extends Model
 {
     protected $fillable = [
         'hawb',
@@ -18,14 +18,15 @@ class Coordination extends Model
         'missing',
         'id_client',
         'id_farm',
-        'id_load',
+        'id_flight',
         'variety_id',
         'id_user',
         'update_user',
         'fulls',
         'pieces_r',
         'fulls_r',
-        'returns'
+        'returns',
+        'observation'
     ];
 
     public function farm()
