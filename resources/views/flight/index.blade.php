@@ -79,7 +79,7 @@
                                  <td width="45px" class="text-center">
                                     @can('haveaccess', 'flight.destroy')
                                        {{ Form::open(['route' => ['flight.destroy', $flight->id], 'method' => 'DELETE']) }}
-                                          {{ Form::button('<i class="fas fa-trash-alt"></i> ' . '', ['type' => 'submit', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Eliminar carga', 'class' => 'btn btn-sm btn-outline-danger', 'onclick' => 'return confirm("¿Seguro de eliminar la carga?")']) }}
+                                          {{ Form::button('<i class="fas fa-trash-alt"></i> ' . '', ['type' => 'submit', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Eliminar Vuelo', 'class' => 'btn btn-sm btn-outline-danger', 'onclick' => 'return confirm("¿Seguro de eliminar el vuelo?")']) }}
                                        {{ Form::close() }}
                                     @endcan
                                  </td>

@@ -25,7 +25,7 @@ class FlightController extends Controller
      */
     public function create()
     {
-        //
+        return view('flight.create');
     }
 
     /**
@@ -36,7 +36,10 @@ class FlightController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $flight = Flight::create($request->all());
+
+        return redirect()->route('flight.index')
+            ->with('status_success', 'Vuelo creado con éxito');
     }
 
     /**
@@ -47,7 +50,8 @@ class FlightController extends Controller
      */
     public function show($id)
     {
-        //
+        $flight = Flight::find($id);
+        return view('flight.show', compact('flight'));
     }
 
     /**
@@ -58,7 +62,9 @@ class FlightController extends Controller
      */
     public function edit($id)
     {
-        //
+        $flight = Flight::find($id);
+
+        return view('flight.edit', compact('flight'));
     }
 
     /**
@@ -70,7 +76,12 @@ class FlightController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $flight = Flight::find($id);
+
+        $flight->update($request->all());
+
+        return redirect()->route('flight.index')
+            ->with('status_success', 'Vuelo editado con éxito');
     }
 
     /**
@@ -81,6 +92,10 @@ class FlightController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $flight = Flight::find($id);
+        $flight->delete();
+
+        return redirect()->route('flight.index')
+            ->with('status_success', 'Vuelo eliminada con éxito');
     }
 }
