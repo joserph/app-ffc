@@ -58,33 +58,6 @@ class CoordinationController extends Controller
         return view('coordination.index', compact('farms', 'clients', 'varieties', 'load', 'company', 'coordinations', 'clientsCoordination'));
     }
 
-    public function flights()
-    {
-        // Busco el ID del vuelo por medio de la URL
-        $url = $_SERVER["REQUEST_URI"];
-        $arr = explode("?", $url);
-        $code = $arr[1];
-        $flight = Flight::find($code);
-        // Empresa
-        $company = Company::first();
-        // Buscamos los clientes que esten en esta carga, por el id_load
-        $clientsCoord = Coordination::where('id_flight', '=', $code)
-            ->join('clients', 'coordinations.id_client', '=', 'clients.id')
-            ->select('clients.id', 'clients.name')
-            ->orderBy('clients.name', 'ASC')
-            ->get();
-        // Eliminamos los clientes duplicados
-        $clientsCoordination = collect(array_unique($clientsCoord->toArray(), SORT_REGULAR));
-        // Fincas
-        $farms = Farm::orderBy('name', 'ASC')->pluck('name', 'id');
-        // Clientes
-        $clients = Client::orderBy('name', 'ASC')->pluck('name', 'id');
-        // Variedades
-        $varieties = Variety::orderBy('name', 'ASC')->pluck('name', 'id');
-
-        return view('coordination.flights', compact('flight', 'company', 'clientsCoordination', 'farms', 'clients', 'varieties'));
-    }
-
     public function transferCoordination($load, $request)
     {
         //dd($request);
@@ -160,13 +133,6 @@ class CoordinationController extends Controller
         $request['pieces_r'] = $request['hb_r'] + $request['qb_r'] + $request['eb_r'];
         // Faltantes 
         $request['missing'] = $request['pieces'] - $request['pieces_r'];
-        // Verificar si es vuelo o maritimo
-        if($request['id_load'])
-        {
-            $request['id_flight'] = null;
-        }else{
-            $request['id_load'] = 0;
-        }
         
         $coordination = Coordination::create($request->all());
 

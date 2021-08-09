@@ -247,7 +247,7 @@
                                        @include('custom.message') 
                                        {{ Form::model($item, ['route' => ['coordination.update', $item->id], 'class' => 'form-horizontal', 'method' => 'PUT']) }}
                                           <div class="modal-body">
-                                             @include('coordination.formEdit')
+                                             @include('coordination.partials.formEdit')
                                           </div>
                                           <div class="modal-footer">
                                              <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
@@ -337,7 +337,7 @@
                      @include('custom.message')
                      {{ Form::open(['route' => 'coordination.store', 'class' => 'form-horizontal']) }}
                         <div class="modal-body">
-                           @include('coordination.form')
+                           @include('coordination.partials.form')
                         </div>
                         <div class="modal-footer">
                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>

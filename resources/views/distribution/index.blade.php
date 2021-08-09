@@ -12,8 +12,8 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-               <li class="breadcrumb-item"><a href="{{ route('flight.index') }}">Aéreas</a></li>
-               <li class="breadcrumb-item"><a href="{{ route('flight.show', $flight->id) }}">{{ $flight->awb }}</a></li>
+               <li class="breadcrumb-item"><a href="{{ route('flight.index') }}">Vuelos</a></li>
+               <li class="breadcrumb-item"><a href="{{ route('flight.show', $flight->id) }}">AWB {{ $flight->awb }}</a></li>
                <li class="breadcrumb-item active">Coordinaciones Aéreas</li>
             </ol>
           </div>
@@ -32,14 +32,14 @@
 
             <div class="card">
                <div class="card-header">
-                  Coordinaciones Vuelo #{{ $flight->awb }}
+                  Coordinaciones Vuelo AWB {{ $flight->awb }}
                </div>
                <div class="card-body">
                      <div class="row">
                         <div class="col-sm-6">
                           <div class="card">
                             <div class="card-body">
-                              <h5 class="card-title">{{ $flight->awb }}</h5>
+                              <h5 class="card-title">AWB {{ $flight->awb }}</h5>
                               <p class="card-text">{{ date('d/m/Y', strtotime($flight->date)) }}</p>
                               <p class="card-text">{{ $company->name }}</p>
                               <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#agregarItem">
@@ -47,7 +47,7 @@
                               </button>
                             </div>
                           </div>
-                          <a href="{{ route('coordination.pdf', $flight) }}" target="_blank" class="btn btn-xs btn-outline-success pull-right"><i class="far fa-file-pdf"></i></a>
+                          <a href="{{ route('distribution.pdf', $flight) }}" target="_blank" class="btn btn-xs btn-outline-success pull-right"><i class="far fa-file-pdf"></i></a>
                           <!--
                           <div class="form-group col-md-12">
                               <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
@@ -89,13 +89,13 @@
                                         <th class="text-center">EB</th>
                                     </tr>
                                 </thead>
-                                 @foreach($clientsCoordination as  $key => $client)
+                                 @foreach($clientsDistribution as  $key => $client)
                                  
                                  <tbody>
                                      @php
                                          $tPieces = 0; $tFulls = 0; $tHb = 0; $tQb = 0; $tEb = 0;
                                      @endphp
-                                     @foreach($coordinations as $item)
+                                     @foreach($distributions as $item)
                                      @if($client['id'] == $item->id_client)
                                        @php
                                           $tPieces+= $item->pieces;
@@ -150,7 +150,7 @@
                             $totalFulls = 0; $totalHb = 0; $totalQb = 0; $totalEb = 0; $totalPcsr = 0; $totalHbr = 0; $totalQbr = 0;
                             $totalEbr = 0; $totalFullsr = 0; $totalDevr = 0; $totalMissingr = 0;
                         @endphp
-                        @foreach($clientsCoordination as $client)
+                        @foreach($clientsDistribution as $client)
                         <thead>
                             <tr>
                                 <th colspan="17" class="sin-border"></th>
@@ -189,7 +189,7 @@
                                  $tHbr = 0; $tQbr = 0; $tEbr = 0; $tFullsR = 0; $tDevR = 0; $tMissingR = 0;
                             @endphp
                             
-                            @foreach($coordinations as $item)
+                            @foreach($distributions as $item)
                             @if($client['id'] == $item->id_client)
                             @php
                                 $tPieces+= $item->pieces;
@@ -227,7 +227,7 @@
                                        <i class="fas fa-pencil-alt"></i>
                                     </button>
                                     <td width="20px" class="text-center">
-                                       {{ Form::open(['route' => ['coordination.destroy', $item->id], 'method' => 'DELETE']) }}
+                                       {{ Form::open(['route' => ['distribution.destroy', $item->id], 'method' => 'DELETE']) }}
                                           {{ Form::button('<i class="fas fa-trash-alt"></i> ', ['type' => 'submit', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Eliminar usuario', 'class' => 'btn btn-sm btn-outline-danger', 'onclick' => 'return confirm("¿Seguro de eliminar la coordinación?")']) }}
                                        {{ Form::close() }}
                                     </td>
@@ -244,9 +244,9 @@
                                     </div>
                                     <div class="modal-body">
                                        @include('custom.message') 
-                                       {{ Form::model($item, ['route' => ['coordination.update', $item->id], 'class' => 'form-horizontal', 'method' => 'PUT']) }}
+                                       {{ Form::model($item, ['route' => ['distribution.update', $item->id], 'class' => 'form-horizontal', 'method' => 'PUT']) }}
                                           <div class="modal-body">
-                                             @include('coordination.form2Edit')
+                                             @include('distribution.partials.formEdit')
                                           </div>
                                           <div class="modal-footer">
                                              <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
@@ -334,9 +334,9 @@
                   </div>
                   <div class="modal-body">
                      @include('custom.message')
-                     {{ Form::open(['route' => 'coordination.store', 'class' => 'form-horizontal']) }}
+                     {{ Form::open(['route' => 'distribution.store', 'class' => 'form-horizontal']) }}
                         <div class="modal-body">
-                           @include('coordination.form2')
+                           @include('distribution.partials.form')
                         </div>
                         <div class="modal-footer">
                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>

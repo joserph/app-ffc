@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CoordinationRequest extends FormRequest
+class AddDistributionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class CoordinationRequest extends FormRequest
     public function rules()
     {
         return [
-            'hawb' => 'required|unique:coordinations,hawb',
+            'hawb' => 'required|unique:distributions,hawb',
             'pieces' => '',
             'hb' => 'required',
             'qb' => 'required', 
@@ -35,10 +35,11 @@ class CoordinationRequest extends FormRequest
             'missing' => '',
             'id_client' => 'required',
             'id_farm' => 'required',
-            'id_load' => '',
+            'id_flight' => 'required',
             'variety_id' => 'required',
             'id_user' => 'required',
-            'update_user' => 'required'
+            'update_user' => 'required',
+            'observation' => ''
         ];
     }
 }

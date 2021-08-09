@@ -83,7 +83,8 @@ Route::resource('/permission', 'PermissionController')->names('permission');
 Route::resource('/load', 'LoadController')->names('load');
 // Aereos
 Route::resource('/flight', 'FlightController')->names('flight');
-Route::get('/flights', 'CoordinationController@flights')->name('flights');
+// Distribucion aereos
+Route::resource('/distribution', 'DistributionController')->names('distribution');
 // Cabecera de la factura master
 Route::resource('/masterinvoices', 'InvoiceHeaderController')->names('masterinvoices');
 // Items de la factura master
@@ -133,6 +134,8 @@ Route::get('isf10_2Pdf', 'ISFController@isf10_2Pdf')->name('isf.isf10_2Pdf');
 Route::resource('/loadingplane', 'LoadingPlaneController')->names('loadingplane');
 // Coordination PDF
 Route::get('coordination-Pdf', 'CoordinationController@coordinationPdf')->name('coordination.pdf');
+// Distrubucion PDF
+Route::get('distribution-Pdf', 'distributionController@distributionPdf')->name('distribution.pdf');
 // Pallets
 Route::resource('/pallets', 'PalletController')->names('pallets');
 // Pallets Items

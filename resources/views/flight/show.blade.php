@@ -40,7 +40,7 @@
                   <div class="icon">
                     <i class="fas fa-grip-vertical"></i>
                   </div>
-                   <a href="{{ route('flights', $flight->id) }}" class="small-box-footer">
+                   <a href="{{ route('distribution.index', $flight->id) }}" class="small-box-footer">
                     Ver coordinaciones <i class="fas fa-arrow-circle-right"></i>
                   </a>
                 </div>
