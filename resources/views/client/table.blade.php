@@ -12,6 +12,7 @@
           <th scope="col">Ciudad</th>
           <th scope="col">País</th>
           <th scope="col">POA</th>
+          <th scope="col">Color</th>
           <th class="text-center" colspan="2">@can('haveaccess', 'client.edit') Editar @endcan  @can('haveaccess', 'client.destroy')/ Eliminar @endcan</th>
        </tr>
     </thead>
@@ -26,6 +27,12 @@
             <td>{{ $client->city }}</td>
             <td>{{ $client->country }}</td>
             <td>{{ $client->poa }}</td>
+            <td>
+               <svg width="20" height="20">
+                  <circle cx="15" cy="15" r="25" stroke="black" stroke-width="4" fill="{{ $client->color }}" />
+                  Sorry, your browser does not support inline SVG.
+               </svg>
+            </td>
             <td colspan="2" class="text-center">
                @can('haveaccess', 'client.edit')
                <button wire:click="edit({{ $client->id }})" class="btn btn-sm btn-outline-warning">

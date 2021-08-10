@@ -40,4 +40,8 @@
             <label class="form-check-label" for="no">No</label>
         </div>
     </div>
+    <div class="col-md-2 form-group">
+        {{ Form::label('color', 'Color', ['class' => 'control-label']) }}
+        <input type="color" name="color" class="form-control @error('color') is-invalid @enderror" wire:model="color">
+    </div>
 </div>
