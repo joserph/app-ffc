@@ -152,3 +152,5 @@ Route::get('farms-invoice-pdf', 'InvoiceHeaderController@farmsInvoicePdf')->name
 Route::get('/generar-master-pallet/{id}', 'MasterInvoiceItemController@generarMasterPallet')->name('generar-master-pallet');
 // Transferir coordinacion
 Route::get('/transfer-coordination/{id}', 'CoordinationController@transferCoordination')->name('transfer-coordination');
+// Colors
+Route::resource('/color', 'ColorController')->names('color');

@@ -16,8 +16,7 @@ class Client extends Model
         'country',
         'poa',
         'id_user',
-        'update_user',
-        'color'
+        'update_user'
     ];
 
     public function masterinvoiceitems()

@@ -14,7 +14,7 @@ class ClientComponent extends Component
 
     protected $paginationTheme = 'bootstrap'; /// Importante
 
-    public $client_id, $name, $phone, $address, $state, $city, $country, $poa, $email, $color;
+    public $client_id, $name, $phone, $address, $state, $city, $country, $poa, $email;
     public $view = 'create';
     
     public function render()
@@ -35,8 +35,7 @@ class ClientComponent extends Component
             'city'      => 'required',
             'country'   => 'required',
             'poa'       => 'required',
-            'email'     => 'email',
-            'color'     => 'required'
+            'email'     => 'email'
         ]);
         
         $client = Client::create([
@@ -49,8 +48,7 @@ class ClientComponent extends Component
             'poa'           => $this->poa,
             'email'         => $this->email,
             'id_user'       => Auth::user()->id,
-            'update_user'   => Auth::user()->id,
-            'color'         => $this->color
+            'update_user'   => Auth::user()->id
         ]);
 
         session()->flash('create', 'El cliente "' . $client->name . '" se creo con éxito');
@@ -72,7 +70,6 @@ class ClientComponent extends Component
         $this->country = $client->country;
         $this->poa = $client->poa;
         $this->email = $client->email;
-        $this->color = $client->color;
 
         $this->view = 'edit';
     }
@@ -88,8 +85,7 @@ class ClientComponent extends Component
             'city'      => 'required',
             'country'   => 'required',
             'poa'       => 'required',
-            'email'     => 'email',
-            'color'     => 'required'
+            'email'     => 'email'
         ]);
 
         $client = Client::find($this->client_id);
@@ -104,8 +100,7 @@ class ClientComponent extends Component
             'poa'           => $this->poa,
             'email'         => $this->email,
             'id_user'       => $client->id_user,
-            'update_user'   => Auth::user()->id,
-            'color'         => $this->color
+            'update_user'   => Auth::user()->id
         ]);
 
         session()->flash('edit', 'El cliente "' . $client->name . '" se actualizó con éxito');
@@ -123,7 +118,6 @@ class ClientComponent extends Component
         $this->country = '';
         $this->poa = '';
         $this->email = '';
-        $this->color = '';
 
         $this->view = 'create';
     }
