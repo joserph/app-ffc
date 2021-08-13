@@ -7,6 +7,7 @@ use Livewire\WithPagination;
 use App\Client;
 use Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Color;
 
 class ClientComponent extends Component
 {
@@ -20,7 +21,8 @@ class ClientComponent extends Component
     public function render()
     {
         return view('livewire.client-component', [
-            'clients' => Client::orderBy('name', 'ASC')->paginate(5)
+            'clients' => Client::orderBy('name', 'ASC')->paginate(5),
+            'colors'    => Color::where('type', '=', 'client')->get()
         ]);
     }
 
