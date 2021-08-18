@@ -11,6 +11,7 @@ use App\Client;
 use App\Variety;
 use App\Http\Requests\AddDistributionRequest;
 use Barryvdh\DomPDF\Facade as PDF;
+use App\Color;
 
 class DistributionController extends Controller
 {
@@ -80,9 +81,11 @@ class DistributionController extends Controller
             ->select('farms.name', 'distributions.*')
             ->orderBy('farms.name', 'ASC')
             ->get();
+        
+        $colors = Color::where('type', '=', 'client')->get();
 
         $distributionPdf = PDF::loadView('distribution.distributionPdf', compact(
-            'flight', 'clientsDistribution', 'coordinations'
+            'flight', 'clientsDistribution', 'coordinations', 'colors'
         ))->setPaper('A4', 'landscape');
         //dd($farmsItemsLoad);
         return $distributionPdf->stream();

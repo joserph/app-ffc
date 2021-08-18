@@ -102,7 +102,7 @@
         @foreach($clientsDistribution as $client)
             <thead>
                 <tr>
-                    <th class="text-center medium-letter" colspan="15">{{ $client['name'] }}</th>
+                    <th class="text-center medium-letter" @foreach ($colors as $item) @if ($client['id'] == $item->id_type) style="background:{{ $item->color }}" @endif @endforeach colspan="15">{{ $client['name'] }}</th>
                 </tr>
             </thead>
             <thead>

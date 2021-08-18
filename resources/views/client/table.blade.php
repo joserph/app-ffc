@@ -30,7 +30,15 @@
             <td>
                @foreach ($colors as $item)
                   @if ($client->id == $item->id_type)
-                     {{ $item->color }}
+                     @if ($item->label == 'square')
+                        <span style="color: {{ $item->color }};" data-toggle="tooltip" data-placement="top" title="Etiqueta Cuadrada">
+                           <i class="fas fa-square fa-2x"></i>
+                        </span>
+                     @else 
+                        <span style="color: {{ $item->color }};" data-toggle="tooltip" data-placement="top" title="Etiqueta Punto">
+                           <i class="fas fa-circle fa-2x"></i>
+                        </span>
+                     @endif
                   @endif
                @endforeach
             </td>
