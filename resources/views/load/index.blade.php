@@ -82,7 +82,7 @@
                                     $totalEmbarq = 0;
                                  @endphp
                                  <td class="text-center">
-                                    @foreach ($coordination as $item)
+                                    @foreach ($coordinationPcs as $item)
                                        @if ($load->id == $item->id_load)
                                           @php
                                              $totalCoord += $item->pieces;
