@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateLoadRequest;
 use App\MasterInvoiceItem;
 use App\Coordination;
 use App\Pallet;
+use App\PalletItem;
 
 class LoadController extends Controller
 {
@@ -20,11 +21,11 @@ class LoadController extends Controller
     public function index()
     {
         $loads = Load::with('invoiceheader')->orderBy('shipment', 'DESC')->paginate(15);
-        $coordination = Coordination::join('clients', 'coordinations.id_client', '=', 'clients.id')->select('coordinations.id_load', 'clients.name')->orderBy('name', 'ASC')->distinct()->get(); //72
-
-        //dd($coordination);
+        $coordination = Coordination::join('clients', 'coordinations.id_client', '=', 'clients.id')->select('coordinations.id_load', 'coordinations.pieces', 'clients.name')->orderBy('name', 'ASC')->distinct()->get(); //72
+        $palletItem = PalletItem::get();
+        //dd($palletItem);
         
-        return view('load.index', compact('loads', 'coordination'));
+        return view('load.index', compact('loads', 'coordination', 'palletItem'));
     }
 
     /**

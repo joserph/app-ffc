@@ -44,13 +44,15 @@
                      <table class="table table-sm">
                         <thead class="thead-dark">
                            <tr>
-                              <th scope="col">Embarque</th>
-                              <th scope="col">BL</th>
-                              <!--<th scope="col">Transportista</th>-->
-                              <th scope="col">Fecha Salida</th>
-                              <th scope="col">Fecha Llegada</th>
-                              <th scope="col">Clientes</th>
-                              <th scope="col">Estatus</th>
+                              <th class="text-center" scope="col">Embarque</th>
+                              <th class="text-center" scope="col">BL</th>
+                              <!--<th class="text-center" scope="col">Transportista</th>-->
+                              <th class="text-center" scope="col">Fecha Salida</th>
+                              <th class="text-center" scope="col">Fecha Llegada</th>
+                              <th class="text-center" scope="col">Clientes</th>
+                              <th class="text-center" scope="col">Coordinado</th>
+                              <th class="text-center" scope="col">Embarcado</th>
+                              <th class="text-center" scope="col">Estatus</th>
                               <th class="text-center" width="80px" colspan="3">@can('haveaccess', 'load.show')Ver @endcan @can('haveaccess', 'load.edit')Editar @endcan @can('haveaccess', 'load.destroy')Eliminar @endcan</th>
                            </tr>
                         </thead>
@@ -63,17 +65,41 @@
                               @endphp
                               
                               <tr>
-                                 <td>{{ $load->shipment }}</td>
-                                 <td>{{ $load->bl }}</td>
+                                 <td class="text-center">{{ $load->shipment }}</td>
+                                 <td class="text-center">{{ $load->bl }}</td>
                                  <!--<td>{{ $load->carrier }}</td>-->
-                                 <td>{{ date('d/m/Y', strtotime($load->date)) }}</td>
-                                 <td>{{ date('d/m/Y', strtotime($load->arrival_date)) }}</td>
+                                 <td class="text-center">{{ date('d/m/Y', strtotime($load->date)) }}</td>
+                                 <td class="text-center">{{ date('d/m/Y', strtotime($load->arrival_date)) }}</td>
                                  <td>
                                     @foreach ($coordination as $item)
                                        @if ($load->id == $item->id_load)
                                           <span class="badge badge-dark">{{ strtolower(Str::limit(str_replace('SAG-', '', $item->name), '10')) }}</span>
                                        @endif
                                     @endforeach
+                                 </td>
+                                 @php
+                                    $totalCoord = 0;
+                                    $totalEmbarq = 0;
+                                 @endphp
+                                 <td class="text-center">
+                                    @foreach ($coordination as $item)
+                                       @if ($load->id == $item->id_load)
+                                          @php
+                                             $totalCoord += $item->pieces;
+                                          @endphp
+                                       @endif
+                                    @endforeach
+                                    {{ $totalCoord }}
+                                 </td>
+                                 <td class="text-center">
+                                    @foreach ($palletItem as $item2)
+                                       @if ($load->id == $item2->id_load)
+                                          @php
+                                             $totalEmbarq += $item2->quantity;
+                                          @endphp
+                                       @endif
+                                    @endforeach
+                                    {{ $totalEmbarq }}
                                  </td>
                                  <td>
                                     <!--<div class="progress mb-3">
@@ -83,6 +109,13 @@
                                   </div>-->
                                  </td>
                                  <td width="45px" class="text-center">
+                                    <!--<div class="btn-group">
+                                       <a href="{{ route('load.show', $load->id) }}" type="button" class="btn btn-outline-success btn-sm"><i class="fas fa-eye"></i></a>
+                                       <a href="{{ route('load.edit', $load->id) }}" type="button" class="btn btn-outline-warning btn-sm"><i class="fas fa-edit"></i></a>
+                                       {{ Form::open(['route' => ['load.destroy', $load->id], 'method' => 'DELETE']) }}
+                                          {{ Form::button('<i class="fas fa-trash-alt"></i> ' . '', ['type' => 'submit', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Eliminar carga', 'class' => 'btn btn-sm btn-outline-danger', 'onclick' => 'return confirm("¿Seguro de eliminar la carga?")']) }}
+                                       {{ Form::close() }}
+                                     </div>-->
                                     @can('haveaccess', 'load.show')
                                        <a href="{{ route('load.show', $load->id) }}" class="btn btn-outline-success btn-sm"><i class="fas fa-eye"></i></a>
                                     @endcan
