@@ -13,7 +13,7 @@ const mix = require('laravel-mix');
 
 mix.scripts([
    'node_modules/jquery/dist/jquery.js',
-   'node_modules/popper.js/dist/popper.js',
+   'resources/js/popper.js',
    'node_modules/bootstrap/dist/js/bootstrap.js',
    'node_modules/admin-lte/dist/js/adminlte.js',
    'node_modules/toastr/toastr.js',
