@@ -71,21 +71,20 @@
                                  <td class="text-center">{{ date('d/m/Y', strtotime($load->date)) }}</td>
                                  <td class="text-center">{{ date('d/m/Y', strtotime($load->arrival_date)) }}</td>
                                  <td>
-                                    <a tabindex="0" 
-                                       class="btn btn-lg btn-danger" 
-                                       role="button" 
-                                       data-bs-toggle="popover" 
-                                       data-bs-trigger="focus" 
-                                       title="Dismissible popover" 
-                                       data-bs-content="And here's some amazing content. It's very engaging. Right?">
-                                       Dismissible popover
-                                    </a>
-                                    @foreach ($coordination as $item)
-                                       @if ($load->id == $item->id_load)
-                                       
-                                          <span class="badge badge-dark">{{ strtolower(Str::limit(str_replace('SAG-', '', $item->name), '10')) }}</span>
-                                       @endif
-                                    @endforeach
+                                    <button 
+                                       type="button" 
+                                       class="btn btn-outline-info btn-sm test" 
+                                       data-toggle="popover" 
+                                       title="Clientes" 
+                                       data-content="
+                                       @foreach ($coordination as $item)
+                                          @if ($load->id == $item->id_load)
+                                             - {{ strtoupper(str_replace('SAG-', '', $item->name)) }}
+                                          @endif
+                                       @endforeach
+                                       "
+                                       >Ver Clientes
+                                    </button>
                                  </td>
                                  @php
                                     $totalCoord = 0;
@@ -169,9 +168,10 @@
 @endsection
 @section('scripts')
    <script>
-      var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-      var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-      return new bootstrap.Popover(popoverTriggerEl)
+      $(function () {
+         $('.test').popover({
+            container: 'body'
+         })
       })
    </script>
 @endsection

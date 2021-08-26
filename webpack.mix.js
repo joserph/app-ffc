@@ -11,8 +11,9 @@ const mix = require('laravel-mix');
  |
  */
 
-/*mix.scripts([
+mix.scripts([
    'node_modules/jquery/dist/jquery.js',
+   'node_modules/popper.js/dist/popper.js',
    'node_modules/bootstrap/dist/js/bootstrap.js',
    'node_modules/admin-lte/dist/js/adminlte.js',
    'node_modules/toastr/toastr.js',
@@ -22,7 +23,7 @@ const mix = require('laravel-mix');
    'node_modules/chosen-js/chosen.jquery.js',
    'resources/js/app.js',
    ], 'public/js/app.js')
-.sass('resources/sass/app.scss', 'public/css');*/
+.sass('resources/sass/app.scss', 'public/css');
 
 /*mix.scripts(['node_modules/jquery/dist/jquery.js',
         'node_modules/popper.js/dist/popper.js',
