@@ -48,6 +48,10 @@
         {{ Form::label('returns', 'Devolución', ['class' => 'control-label']) }}
         {{ Form::number('returns', 0, ['class' => 'form-control']) }}
     </div>
+    <div class="col-sm-4">
+        {{ Form::label('observation', 'Devolución', ['class' => 'control-label']) }}
+        {{ Form::textarea('observation', null, ['class' => 'form-control', 'rows' => '4', 'cols' => '50']) }}
+    </div>
     
     
     {{ Form::hidden('id_user', Auth::user()->id, ['id' => 'id_user']) }}

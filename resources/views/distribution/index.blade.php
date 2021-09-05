@@ -145,7 +145,7 @@
                <div class="card-footer">
                   <!-- tabla de coordinaciones -->
                   <div class="table-responsive">
-                    <table class="table table-sm">
+                    <table class="table table-sm table-bordered border-primary">
                         @php
                             $totalFulls = 0; $totalHb = 0; $totalQb = 0; $totalEb = 0; $totalPcsr = 0; $totalHbr = 0; $totalQbr = 0;
                             $totalEbr = 0; $totalFullsr = 0; $totalDevr = 0; $totalMissingr = 0;
@@ -153,13 +153,13 @@
                         @foreach($clientsDistribution as $client)
                         <thead>
                             <tr>
-                                <th colspan="17" class="sin-border"></th>
+                                <th colspan="18" class="sin-border"></th>
                             </tr>
                         </thead>
                         <thead>
                             <tr>
                                 <th class="text-center medium-letter">AWB</th>
-                                <th class="text-center medium-letter" colspan="14">{{ $client['name'] }}</th>
+                                <th class="text-center medium-letter" colspan="17">{{ $client['name'] }}</th>
                             </tr>
                         </thead>
                         <thead>
@@ -168,18 +168,19 @@
                               <th class="text-center">Finca</th>
                               <th class="text-center">HAWB</th>
                               <th class="text-center">Variedad</th>
-                              <th class="text-center">PCS</th>
-                              <th class="text-center">HB</th>
-                              <th class="text-center">QB</th>
-                              <th class="text-center">EB</th>
-                              <th class="text-center">FULL</th>
-                              <th class="text-center">PCS</th>
-                              <th class="text-center">HB</th>
-                              <th class="text-center">QB</th>
-                              <th class="text-center">EB</th>
-                              <th class="text-center">FULL</th>
-                              <th class="text-center">Dev</th>
+                              <th class="text-center table-secondary">PCS</th>
+                              <th class="text-center table-secondary">HB</th>
+                              <th class="text-center table-secondary">QB</th>
+                              <th class="text-center table-secondary">EB</th>
+                              <th class="text-center table-secondary">FULL</th>
+                              <th class="text-center table-success">PCS</th>
+                              <th class="text-center table-success">HB</th>
+                              <th class="text-center table-success">QB</th>
+                              <th class="text-center table-success">EB</th>
+                              <th class="text-center table-success">FULL</th>
+                              <th class="text-center table-warning">Dev</th>
                               <th class="text-center">Faltantes</th>
+                              <th class="text-center">Observación</th>
                               <th class="text-center" colspan="2">Aciones</th>
                             </tr>
                         </thead>
@@ -222,6 +223,7 @@
                                 <td class="text-center">{{ number_format($item->fulls_r, 3, '.','') }}</td>
                                 <td class="text-center">{{ $item->returns }}</td>
                                 <td class="text-center">{{ $item->missing }}</td>
+                                <td class="text-center text-danger"><small>{{ strtoupper($item->observation) }}</small></td>
                                 <td class="text-center">
                                     <button type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#editarItem{{ $item->id }}">
                                        <i class="fas fa-pencil-alt"></i>

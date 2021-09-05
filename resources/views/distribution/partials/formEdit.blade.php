@@ -48,6 +48,10 @@
         {{ Form::label('returns', 'Devolución', ['class' => 'control-label']) }}
         {{ Form::number('returns', null, ['class' => 'form-control']) }}
     </div>
+    <div class="col-sm-4">
+        {{ Form::label('observation', 'Devolución', ['class' => 'control-label']) }}
+        {{ Form::textarea('observation', null, ['class' => 'form-control', 'rows' => '4', 'cols' => '50']) }}
+    </div>
     
     {{ Form::hidden('update_user', Auth::user()->id, ['id' => 'update_user']) }}
     {{ Form::hidden('id_flight', $flight->id, ['id' => 'id_flight']) }}

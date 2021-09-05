@@ -57,11 +57,17 @@
             border-bottom: 1px solid black;
             border-left: 1px solid white;
         }
+        .sin-border-full{
+            border-top: 1px solid white;
+            border-right: 1px solid white;
+            border-bottom: 1px solid white;
+            border-left: 1px solid white;
+        }
         .box-size{
             width: 40px;
         }
         .hawb{
-            width: 75px;
+            width: 70px;
         }
         .pcs-bxs{
             width: 40px;
@@ -84,9 +90,27 @@
         .faltante{
             background-color: rgb(255, 255, 175);
         }
+        .text-rojo{
+            color: red;
+        }
     </style>
 </head>
 <body>
+    <table class="sin-border-full">
+        <tr>
+            <td class="sin-border-full" rowspan="3" style="width: 80%"><img src="https://freshflowercargo.com/wp-content/uploads/2020/07/cropped-cropped-FRESHFLOWERCARGO-logo-horizontal.png" alt="" width="100"></td>
+            <td class="medium-letter sin-border-full">AWB</td>
+            <td class="medium-letter sin-border-full">{{ $flight->awb }}</td>
+        </tr>
+        <tr>
+            <td class="medium-letter sin-border-full">FECHA SALIDA</td>
+            <td class="medium-letter sin-border-full">{{ date('d/m/Y', strtotime($flight->date)) }}</td>
+        </tr>
+        <tr>
+            <td class="medium-letter sin-border-full">FECHA LLEGADA</td>
+            <td class="medium-letter sin-border-full">{{ date('d/m/Y', strtotime($flight->arrival_date)) }}</td>
+        </tr>
+    </table>
     <table>
         <tr>
             <th class="medium-letter">COORDINACIONES AÉREAS - AWB {{ $flight->awb }}</th>
@@ -102,7 +126,7 @@
         @foreach($clientsDistribution as $client)
             <thead>
                 <tr>
-                    <th class="text-center medium-letter" @foreach ($colors as $item) @if ($client['id'] == $item->id_type) style="background:{{ $item->color }}" @endif @endforeach colspan="15">{{ $client['name'] }}</th>
+                    <th class="text-center medium-letter" @foreach ($colors as $item) @if ($client['id'] == $item->id_type) style="background:{{ $item->color }}" @endif @endforeach colspan="16">{{ $client['name'] }}</th>
                 </tr>
             </thead>
             <thead>
@@ -122,6 +146,7 @@
                     <th class="text-center medium-letter recibido">FULL</th>
                     <th class="text-center medium-letter devolucion">Dev</th>
                     <th class="text-center medium-letter faltante">Faltantes</th>
+                    <th class="text-center medium-letter faltante">Observación</th>
                 </tr>
             </thead>
             <tbody>
@@ -161,6 +186,7 @@
                             <td class="text-center small-letter">{{ number_format($item->fulls_r, 3, '.','') }}</td>
                             <td class="text-center small-letter">{{ $item->returns }}</td>
                             <td class="text-center small-letter">{{ $item->missing }}</td>
+                            <td class="text-center small-letter text-rojo"><small>{{ strtoupper($item->observation) }}</small></td>
                         </tr>
             
                     @endif
@@ -192,6 +218,7 @@
                     <th class="text-center medium-letter recibido">{{ number_format($tFullsR, 3, '.','') }}</th>
                     <th class="text-center medium-letter devolucion">{{ $tDevR }}</th>
                     <th class="text-center medium-letter faltante">{{ $tMissingR }}</th>
+                    <th class="text-center medium-letter faltante"></th>
                 </tr>
             </tbody>
         @endforeach
@@ -201,7 +228,7 @@
             @endphp
             
             <tr>
-                <th colspan="15" class="sin-border"></th>
+                <th colspan="16" class="sin-border"></th>
             </tr>
             <tr class="gris">
                 <th class="text-center medium-letter" colspan="3">Total Global:</th>
@@ -217,6 +244,7 @@
                 <th class="text-center medium-letter recibido">{{ number_format($totalFullsr, 3, '.','') }}</th>
                 <th class="text-center medium-letter devolucion">{{ $totalDevr }}</th>
                 <th class="text-center medium-letter faltante">{{ $totalMissingr }}</th>
+                <th class="text-center medium-letter faltante"></th>
             </tr>
         </tfoot>
 
