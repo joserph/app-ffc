@@ -23,8 +23,18 @@ class AddDistributionRequest extends FormRequest
      */
     public function rules()
     {
+        //dd($this->duplicate);
+        if($this->duplicate == 'on')
+        {
+            //dd('duplicada');
+            $hawb = 'required';
+        }else{
+            //dd('null');
+            $hawb = 'required|unique:distributions,hawb';
+        }
+        //dd(str_replace("'", '', $hawb));
         return [
-            'hawb' => 'required|unique:distributions,hawb',
+            'hawb' => $hawb,
             'pieces' => '',
             'hb' => 'required',
             'qb' => 'required', 

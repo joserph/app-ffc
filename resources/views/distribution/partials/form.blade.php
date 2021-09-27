@@ -49,8 +49,12 @@
         {{ Form::number('returns', 0, ['class' => 'form-control']) }}
     </div>
     <div class="col-sm-4">
-        {{ Form::label('observation', 'Devolución', ['class' => 'control-label']) }}
+        {{ Form::label('observation', 'Observación', ['class' => 'control-label']) }}
         {{ Form::textarea('observation', null, ['class' => 'form-control', 'rows' => '4', 'cols' => '50']) }}
+    </div>
+    <div class="col-sm-4 form-check">
+        <input type="checkbox" class="form-check-input" name="duplicate" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">Es una Guía duplicada</label>
     </div>
     
     

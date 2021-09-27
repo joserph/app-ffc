@@ -49,7 +49,7 @@
         {{ Form::number('returns', null, ['class' => 'form-control']) }}
     </div>
     <div class="col-sm-4">
-        {{ Form::label('observation', 'Devolución', ['class' => 'control-label']) }}
+        {{ Form::label('observation', 'Observación', ['class' => 'control-label']) }}
         {{ Form::textarea('observation', null, ['class' => 'form-control', 'rows' => '4', 'cols' => '50']) }}
     </div>
     
