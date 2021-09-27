@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>COORDINACION MARITIMO {{ $load->bl }}</title>
+    <title>COORDINACION MARITIMO {{ $load->bl }} - #{{ $load->shipment }}</title>
     <style>
         body{
             font-family: Arial, Helvetica, sans-serif;
@@ -29,10 +29,10 @@
             font-weight: normal;
         }
         .medium-letter{
-            font-size: 9px;
+            font-size: 8px;
         }
         .large-letter{
-            font-size: 10px;
+            font-size: 9px;
         }
         .farms{
             width: 300px;
@@ -89,7 +89,7 @@
 <body>
     <table>
         <tr>
-            <th class="medium-letter">COORDINACIONES MARITIMO - {{ $load->bl }}</th>
+            <th class="medium-letter">COORDINACIONES MARITIMO - {{ $load->bl }} - #{{ $load->shipment }}</th>
         </tr>
     </table>
     
