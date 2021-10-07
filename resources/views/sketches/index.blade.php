@@ -57,7 +57,15 @@
                   <div class="container">
                      <div class="row">
                         @foreach ($sketches as $key => $item)
-                           <div class="col" style="height: 100px; border-style: solid; border-radius: 10px; border-width: 5px; padding-right: 0; padding-left: 0;">
+                           <div class="col">
+                              @foreach ($pallets as $palle)
+                                  @if ($palle->id == $item->id_pallet)
+                                    {{$palle->counter}}
+                                  @endif
+                              @endforeach
+                           </div>
+                           <div class="col" style="height: 200px; border-style: solid; border-radius: 10px; border-width: 5px; padding-right: 0; padding-left: 0;">
+                              
                               <div class="espacio" style="height: 100%; width: 100%;">
                                  @foreach ($sketchPercent as $percent)
                                     @if ($item->id_pallet == $percent->id_pallet)

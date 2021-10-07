@@ -62,7 +62,7 @@ class SketchController extends Controller
         $sketchPercent = SketchPercent::where('id_load', $load->id)->with('client')->get();
         // Colores de los clientes
         $colors = Color::where('type', 'client')->get();
-        //dd($colors);
+        //dd($sketches);
         return view('sketches.index', compact('clients', 'load', 'farms', 'pallets', 'sketches', 'space', 'palletsSelect', 'palletsItems', 'sketchPercent', 'colors'));
     }
 
