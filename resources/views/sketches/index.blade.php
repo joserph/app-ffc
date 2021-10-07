@@ -43,6 +43,11 @@
                     @endif
                     <button type="submit" class="btn btn-sm btn-primary" @if($space == 1) disabled @endif><i class="fas fa-plus-circle"></i> Generar espacios</button>
                 {{ Form::close() }}
+                @if($space == 1)
+                {!! Form::open(['route' => ['sketches.destroy', $load->id], 'method' => 'DELETE', 'onclick' => 'return confirm("¿Seguro de revertir los espacios?")']) !!}
+                  <button class="btn btn-sm btn-outline-warning" data-toggle="tooltip" data-placement="top" title="Revertir espacios"><i class="fas fa-history"></i> Revertir Espacios</button>
+               {!! Form::close() !!}
+                @endif
             <div class="card">
                 
                 <div class="card-header">
@@ -52,18 +57,47 @@
                   <div class="container">
                      <div class="row">
                         @foreach ($sketches as $key => $item)
-                        <div class="col-sm-6" style="height: 100px; border-style: solid; border-radius: 10px; border-width: 5px; padding-right: 0; padding-left: 0;">
-                           <div class="espacio" style="height: 100%; width: 100%;">
-                              <div style="height: 80%; background-color: blue">MIAS</div>
-                              <div style="height: 20%; background-color: red">MULROSES</div>
+                           <div class="col" style="height: 100px; border-style: solid; border-radius: 10px; border-width: 5px; padding-right: 0; padding-left: 0;">
+                              <div class="espacio" style="height: 100%; width: 100%;">
+                                 @foreach ($sketchPercent as $percent)
+                                    @if ($item->id_pallet == $percent->id_pallet)
+                                             @if ($percent->percent < 10)
+                                                @php
+                                                   $newPercent = $percent->percent + 10;
+                                                @endphp
+                                             @elseif($percent->percent > 90 && $percent->percent < 100)
+                                                @php
+                                                   $newPercent = $percent->percent - 10;
+                                                @endphp
+                                             @else
+                                                @php
+                                                   $newPercent = $percent->percent;
+                                                @endphp
+                                             @endif
+                                             <div style="height: {{ $newPercent }}%; 
+                                             background-color: 
+                                             @foreach ($colors as $color)
+                                                @if ($color->id_type == $percent->id_client)
+                                                {{ $color->color}}
+                                                @endif
+                                             @endforeach
+                                             ">{{ $percent->client->name }}</div>
+                                          
+                                       
+                                    @endif
+                                 @endforeach
+                                 
+                              </div>
                            </div>
-                        </div>
+                           @if($key % 2 != 0)
+                              <div class="w-100"></div>
+                           @endif
                         @endforeach
                      </div>
                      <hr>
                      <div class="row">
                         @foreach ($sketches as $key => $item)
-                        <div class="col-sm-6">
+                        <div class="col">
                            <div class="card @if($item->id_pallet) card-success @else card-default @endif collapsed-card">
                               <div class="card-header">
                                  <h3 class="card-title">
@@ -225,6 +259,9 @@
                               <!-- /.card-body -->
                             </div>
                         </div>
+                        @if($key % 2 != 0)
+                           <div class="w-100"></div>
+                        @endif
                         @endforeach
                      </div>
                      

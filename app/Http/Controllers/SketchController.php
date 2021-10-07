@@ -10,6 +10,8 @@ use App\PalletItem;
 use App\Farm;
 use App\Client;
 use Illuminate\Support\Collection;
+use App\SketchPercent;
+use App\Color;
 
 class SketchController extends Controller
 {
@@ -50,14 +52,18 @@ class SketchController extends Controller
         // Sketch
         $sketches = Sketch::where('id_load', $load->id)->with('pallet')->get();
         // PalletItems
-        $palletsItems = PalletItem::where('id_load', '=', $load->id)->get();
-        //dd($palletsItems);
+        $palletsItems = PalletItem::where('id_load', '=', $load->id)->with('client')->get();
+        //dd($pallets);
         // Farms
         $farms = Farm::all();
         // Clients
         $clients = Client::all();
-        
-        return view('sketches.index', compact('clients', 'load', 'farms', 'pallets', 'sketches', 'space', 'palletsSelect', 'palletsItems'));
+        // Porcentaje
+        $sketchPercent = SketchPercent::where('id_load', $load->id)->with('client')->get();
+        // Colores de los clientes
+        $colors = Color::where('type', 'client')->get();
+        //dd($colors);
+        return view('sketches.index', compact('clients', 'load', 'farms', 'pallets', 'sketches', 'space', 'palletsSelect', 'palletsItems', 'sketchPercent', 'colors'));
     }
 
     public static function testView() {
@@ -84,8 +90,12 @@ class SketchController extends Controller
     {
         if($request->quantity)
         {
+            
             // Generar espacios
             $id_load = Load::select('id')->where('id', '=', $request->id_load)->get();
+
+            // Generamos los porcentajes
+            PalletItem::createSketchPercent($id_load[0]->id);
 
             for($i = 1; $i <= $request->quantity; $i++)
             {
@@ -97,6 +107,8 @@ class SketchController extends Controller
                 $sketch->save();
             }
             $load = Load::where('id', '=', $sketch->id_load)->get();
+
+            
 
             return redirect()->route('sketches.index', $load[0]->id)
                 ->with('status_success', 'Se generarón ' . $sketch->space . ' espacios con éxito');
@@ -174,6 +186,22 @@ class SketchController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Eliminar los espacios
+        $allSpaces = Sketch::where('id_load', $id)->get();
+        foreach($allSpaces as $space)
+        {
+            $spaceDelete = Sketch::find($space->id);
+            $spaceDelete->delete();
+        }
+        // Eliminar los porcentajes
+        $allPercent = SketchPercent::where('id_load', $id)->get();
+        foreach($allPercent as $percent)
+        {
+            $percentDelete = SketchPercent::find($percent->id);
+            $percentDelete->delete();
+        }
+
+        return redirect()->route('sketches.index', $id)
+            ->with('info', 'Espacios revertidos');
     }
 }
