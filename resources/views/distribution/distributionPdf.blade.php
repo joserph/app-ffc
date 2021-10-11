@@ -35,7 +35,7 @@
             font-size: 10px;
         }
         .farms{
-            width: 300px;
+            width: 280px;
         }
         
         table.sinb{
@@ -93,10 +93,37 @@
         .text-rojo{
             color: red;
         }
+        .variety{
+            width: 70px;
+        }
+        .pcs-num{
+            width: 30px;
+        }
+        .missing{
+            width: 55px;
+        }
+        .blue{
+            background-color: #00b0f0;
+        }
+        .yellow{
+            background-color: #ffff00;
+        }
+        .green{
+            background-color: #00b050;
+        }
+        .green-l{
+            background-color: #e2efda;
+        }
+        .peach{
+            background-color: #fff2cc;
+        }
     </style>
 </head>
 <body>
     <table class="sin-border-full">
+        <tr>
+            <th class="sin-border-full">COORDINACIONES AÉREAS</th>
+        </tr>
         <tr>
             <td class="sin-border-full" rowspan="3" style="width: 80%"><img src="https://freshflowercargo.com/wp-content/uploads/2020/07/cropped-cropped-FRESHFLOWERCARGO-logo-horizontal.png" alt="" width="100"></td>
             <td class="medium-letter sin-border-full">AWB</td>
@@ -112,9 +139,28 @@
         </tr>
     </table>
     <table>
-        <tr>
-            <th class="medium-letter">COORDINACIONES AÉREAS - AWB {{ $flight->awb }}</th>
-        </tr>
+        <thead>
+            <tr>
+                <th class="medium-letter" colspan="15">COORDINACIONES AÉREAS - AWB {{ $flight->awb }}</th>
+            </tr>
+            <tr class="">
+                <th class="text-center blue hawb medium-letter">HAWB</th>
+                <th class="text-center blue medium-letter farms">FINCA</th>
+                <th class="text-center blue medium-letter variety">VARIEDAD</th>
+                <th class="text-center yellow medium-letter coordinado pcs-num">PCS</th>
+                <th class="text-center yellow medium-letter coordinado pcs-num">HB</th>
+                <th class="text-center yellow medium-letter coordinado pcs-num">QB</th>
+                <th class="text-center yellow medium-letter coordinado pcs-num">EB</th>
+                <th class="text-center yellow medium-letter coordinado pcs-num">FULL</th>
+                <th class="text-center green medium-letter recibido pcs-num">PCS</th>
+                <th class="text-center green medium-letter recibido pcs-num">HB</th>
+                <th class="text-center green medium-letter recibido pcs-num">QB</th>
+                <th class="text-center green medium-letter recibido pcs-num">EB</th>
+                <th class="text-center green medium-letter recibido pcs-num">FULL</th>
+                <th class="text-center blue medium-letter faltante missing">DIFERENCIA</th>
+                <th class="text-center blue medium-letter faltante">OBSERVACIÓN</th>
+            </tr>
+        </thead>
     </table>
     
     <table>
@@ -126,29 +172,10 @@
         @foreach($clientsDistribution as $client)
             <thead>
                 <tr>
-                    <th class="text-center medium-letter" @foreach ($colors as $item) @if ($client['id'] == $item->id_type) style="background:{{ $item->color }}" @endif @endforeach colspan="16">{{ $client['name'] }}</th>
+                    <th class="text-center medium-letter" @foreach ($colors as $item) @if ($client['id'] == $item->id_type) style="background:{{ $item->color }}" @endif @endforeach colspan="15">{{ $client['name'] }}</th>
                 </tr>
             </thead>
-            <thead>
-                <tr class="gris2">
-                    <th class="text-center hawb medium-letter">Finca</th>
-                    <th class="text-center hawb medium-letter">HAWB</th>
-                    <th class="text-center medium-letter">Variedad</th>
-                    <th class="text-center medium-letter coordinado">PCS</th>
-                    <th class="text-center medium-letter coordinado">HB</th>
-                    <th class="text-center medium-letter coordinado">QB</th>
-                    <th class="text-center medium-letter coordinado">EB</th>
-                    <th class="text-center medium-letter coordinado">FULL</th>
-                    <th class="text-center medium-letter recibido">PCS</th>
-                    <th class="text-center medium-letter recibido">HB</th>
-                    <th class="text-center medium-letter recibido">QB</th>
-                    <th class="text-center medium-letter recibido">EB</th>
-                    <th class="text-center medium-letter recibido">FULL</th>
-                    <th class="text-center medium-letter devolucion">Dev</th>
-                    <th class="text-center medium-letter faltante">Faltantes</th>
-                    <th class="text-center medium-letter faltante">Observación</th>
-                </tr>
-            </thead>
+            
             <tbody>
                 @php
                     $tPieces = 0; $tFulls = 0; $tHb = 0; $tQb = 0; $tEb = 0; $totalPieces = 0; $tPcsR = 0;
@@ -171,21 +198,20 @@
                             $tMissingR+= $item->missing;
                         @endphp
                         <tr>
+                            <td class="text-center small-letter hawb">{{ $item->hawb }}</td>
                             <td class="farms small-letter">{{ $item->name }}</td>
-                            <td class="text-center small-letter">{{ $item->hawb }}</td>
-                            <td class="text-center small-letter">{{ $item->variety->name }}</td>
-                            <td class="text-center small-letter">{{ $item->pieces }}</td>
-                            <td class="text-center small-letter">{{ $item->hb }}</td>
-                            <td class="text-center small-letter">{{ $item->qb }}</td>
-                            <td class="text-center small-letter">{{ $item->eb }}</td>
-                            <td class="text-center small-letter">{{ number_format($item->fulls, 3, '.','') }}</td>
-                            <td class="text-center small-letter">{{ $item->pieces_r }}</td>
-                            <td class="text-center small-letter">{{ $item->hb_r }}</td>
-                            <td class="text-center small-letter">{{ $item->qb_r }}</td>
-                            <td class="text-center small-letter">{{ $item->eb_r }}</td>
-                            <td class="text-center small-letter">{{ number_format($item->fulls_r, 3, '.','') }}</td>
-                            <td class="text-center small-letter">{{ $item->returns }}</td>
-                            <td class="text-center small-letter">{{ $item->missing }}</td>
+                            <td class="text-center small-letter variety">{{ $item->variety->name }}</td>
+                            <td class="text-center small-letter pcs-num">{{ $item->pieces }}</td>
+                            <td class="text-center small-letter pcs-num">{{ $item->hb }}</td>
+                            <td class="text-center small-letter pcs-num">{{ $item->qb }}</td>
+                            <td class="text-center small-letter pcs-num">{{ $item->eb }}</td>
+                            <td class="text-center small-letter pcs-num">{{ number_format($item->fulls, 3, '.','') }}</td>
+                            <td class="text-center small-letter pcs-num">{{ $item->pieces_r }}</td>
+                            <td class="text-center small-letter pcs-num">{{ $item->hb_r }}</td>
+                            <td class="text-center small-letter pcs-num">{{ $item->qb_r }}</td>
+                            <td class="text-center small-letter pcs-num">{{ $item->eb_r }}</td>
+                            <td class="text-center small-letter pcs-num">{{ number_format($item->fulls_r, 3, '.','') }}</td>
+                            <td class="text-center small-letter missing">{{ $item->missing }}</td>
                             <td class="text-center small-letter text-rojo"><small>{{ strtoupper($item->observation) }}</small></td>
                         </tr>
             
@@ -204,21 +230,20 @@
                     $totalDevr+= $tDevR;
                     $totalMissingr+= $tMissingR;
                 @endphp
-                <tr class="gris">
-                    <th class="text-center text-right medium-letter" colspan="3">Total:</th>
-                    <th class="text-center medium-letter coordinado">{{ $tPieces }}</th>
-                    <th class="text-center medium-letter coordinado">{{ $tHb }}</th>
-                    <th class="text-center medium-letter coordinado">{{ $tQb }}</th>
-                    <th class="text-center medium-letter coordinado">{{ $tEb }}</th>
-                    <th class="text-center medium-letter coordinado">{{ number_format($tFulls, 3, '.','') }}</th>
-                    <th class="text-center medium-letter recibido">{{ $tPcsR }}</th>
-                    <th class="text-center medium-letter recibido">{{ $tHbr }}</th>
-                    <th class="text-center medium-letter recibido">{{ $tQbr }}</th>
-                    <th class="text-center medium-letter recibido">{{ $tEbr }}</th>
-                    <th class="text-center medium-letter recibido">{{ number_format($tFullsR, 3, '.','') }}</th>
-                    <th class="text-center medium-letter devolucion">{{ $tDevR }}</th>
-                    <th class="text-center medium-letter faltante">{{ $tMissingR }}</th>
-                    <th class="text-center medium-letter faltante"></th>
+                <tr class="">
+                    <th class="text-center medium-letter" colspan="3">SUB-TOTAL:</th>
+                    <th class="text-center green-l medium-letter">{{ $tPieces }}</th>
+                    <th class="text-center green-l medium-letter">{{ $tHb }}</th>
+                    <th class="text-center green-l medium-letter">{{ $tQb }}</th>
+                    <th class="text-center green-l medium-letter">{{ $tEb }}</th>
+                    <th class="text-center green-l medium-letter">{{ number_format($tFulls, 3, '.','') }}</th>
+                    <th class="text-center peach medium-letter">{{ $tPcsR }}</th>
+                    <th class="text-center peach medium-letter">{{ $tHbr }}</th>
+                    <th class="text-center peach medium-letter">{{ $tQbr }}</th>
+                    <th class="text-center peach medium-letter">{{ $tEbr }}</th>
+                    <th class="text-center peach medium-letter">{{ number_format($tFullsR, 3, '.','') }}</th>
+                    <th class="text-center medium-letter">{{ $tMissingR }}</th>
+                    <th class="text-center medium-letter"></th>
                 </tr>
             </tbody>
         @endforeach
@@ -228,23 +253,22 @@
             @endphp
             
             <tr>
-                <th colspan="16" class="sin-border"></th>
+                <th colspan="15" class="sin-border"></th>
             </tr>
-            <tr class="gris">
-                <th class="text-center medium-letter" colspan="3">Total Global:</th>
-                <th class="text-center medium-letter coordinado">{{ $totalPieces }}</th>
-                <th class="text-center medium-letter coordinado">{{ $totalHb }}</th>
-                <th class="text-center medium-letter coordinado">{{ $totalQb }}</th>
-                <th class="text-center medium-letter coordinado">{{ $totalEb }}</th>
-                <th class="text-center medium-letter coordinado">{{ number_format($totalFulls, 3, '.','') }}</th>
-                <th class="text-center medium-letter recibido">{{ $totalPcsr }}</th>
-                <th class="text-center medium-letter recibido">{{ $totalHbr }}</th>
-                <th class="text-center medium-letter recibido">{{ $totalQbr }}</th>
-                <th class="text-center medium-letter recibido">{{ $totalEbr }}</th>
-                <th class="text-center medium-letter recibido">{{ number_format($totalFullsr, 3, '.','') }}</th>
-                <th class="text-center medium-letter devolucion">{{ $totalDevr }}</th>
-                <th class="text-center medium-letter faltante">{{ $totalMissingr }}</th>
-                <th class="text-center medium-letter faltante"></th>
+            <tr class="">
+                <th class="text-center blue medium-letter" colspan="3">TOTAL GLOBAL:</th>
+                <th class="text-center yellow medium-letter">{{ $totalPieces }}</th>
+                <th class="text-center yellow medium-letter">{{ $totalHb }}</th>
+                <th class="text-center yellow medium-letter">{{ $totalQb }}</th>
+                <th class="text-center yellow medium-letter">{{ $totalEb }}</th>
+                <th class="text-center yellow medium-letter">{{ number_format($totalFulls, 3, '.','') }}</th>
+                <th class="text-center green medium-letter">{{ $totalPcsr }}</th>
+                <th class="text-center green medium-letter">{{ $totalHbr }}</th>
+                <th class="text-center green medium-letter">{{ $totalQbr }}</th>
+                <th class="text-center green medium-letter">{{ $totalEbr }}</th>
+                <th class="text-center green medium-letter">{{ number_format($totalFullsr, 3, '.','') }}</th>
+                <th class="text-center blue medium-letter">{{ $totalMissingr }}</th>
+                <th class="text-center medium-letter"></th>
             </tr>
         </tfoot>
 
