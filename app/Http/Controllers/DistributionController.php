@@ -77,11 +77,15 @@ class DistributionController extends Controller
         $coordinations = Distribution::select('*')
             ->where('id_flight', '=', $code)
             ->with('variety')
-            ->join('farms', 'distributions.id_farm', '=', 'farms.id')
+            ->with('farm')
+            ->join('clients', 'distributions.id_client', '=', 'clients.id')
+            ->select('clients.name', 'distributions.*')
+            ->orderBy('clients.name', 'ASC')
+            /*->join('farms', 'distributions.id_farm', '=', 'farms.id')
             ->select('farms.name', 'distributions.*')
-            ->orderBy('farms.name', 'ASC')
+            ->orderBy('farms.name', 'ASC')*/
             ->get();
-        
+        //dd($coordinations);
         $colors = Color::where('type', '=', 'client')->get();
 
         $distributionPdf = PDF::loadView('distribution.distributionPdf', compact(
