@@ -98,14 +98,14 @@
 
       header {
          position: fixed;
-         top: 0cm;
+         /*top: 0cm;
          left: 0cm;
          right: 0cm;
          height: 2cm;
          background-color: #F93855;
          color: white;
          text-align: center;
-         line-height: 30px;
+         line-height: 30px;*/
       }
 
       footer {
@@ -119,20 +119,88 @@
          text-align: center;
          line-height: 35px;
       }
+      .imgc{
+         position: fixed;
+         margin: 20px, 20px, 20px, 20px;
+      }
+      .info{
+         position: fixed;
+         margin-left: 800px;
+         margin-top: 10px;
+         color: #000;
+      }
+      .awb1{
+         width: 70px;
+         padding: 0;
+         margin: 0;
+      }
+      .sin-border-full{
+         border-top: 1px solid white;
+         border-right: 1px solid white;
+         border-bottom: 1px solid white;
+         border-left: 1px solid white;
+      }
+      .titu{
+         margin-top: 20px;
+         margin-left: 40px;
+         margin-right: 30px;
+      }
    </style>
 </head>
 <body>
    <header>
-      <h1>Coordinaciones Aéreas</h1>
+      <!--<img class="imgc" src="https://freshflowercargo.com/wp-content/uploads/2020/07/cropped-cropped-FRESHFLOWERCARGO-logo-horizontal.png" alt="" width="100">
+      <div class="info">
+         <table>
+            <thead>
+               <tr>
+                  <th class="awb1 medium-letter text-center">AWB</th>
+                  <td class="awb1 medium-letter text-center">145 0736 5201</th>
+               </tr>
+               <tr>
+                  <th class="awb1 medium-letter text-center">FECHA SALIDA</th>
+                  <td class="awb1 medium-letter text-center">23/10/2021</th>
+               </tr>
+               <tr>
+                  <th class="awb1 medium-letter text-center">FECHA LLEGADA</th>
+                  <td class="awb1 medium-letter text-center">24/10/2021</th>
+               </tr>
+            </thead>
+         </table>
+      </div>-->
+      <table class="sin-border-full titu">
+            <tr>
+                <th class="sin-border-full text-center">COORDINACIONES AÉREAS</th>
+            </tr>
+            <tr>
+                <td class="sin-border-full" rowspan="3" style="width: 80%"><img src="https://freshflowercargo.com/wp-content/uploads/2020/07/cropped-cropped-FRESHFLOWERCARGO-logo-horizontal.png" alt="" width="100"></td>
+                <td class="medium-letter sin-border-full">AWB</td>
+                <td class="medium-letter sin-border-full">{{ $flight->awb }}</td>
+            </tr>
+            <tr>
+                <td class="medium-letter sin-border-full">FECHA SALIDA</td>
+                <td class="medium-letter sin-border-full">{{ date('d/m/Y', strtotime($flight->date)) }}</td>
+            </tr>
+            <tr>
+                <td class="medium-letter sin-border-full">FECHA LLEGADA</td>
+                <td class="medium-letter sin-border-full">{{ date('d/m/Y', strtotime($flight->arrival_date)) }}</td>
+            </tr>
+        </table>
    </header>
    <main>
-      <h5>COORDINACIONES AÉREAS - AWB {{ $flight->awb }}</h5>
       <table class="table">
          <thead class="thead-dark">
+            
            <tr>
-               <th class="text-center blue hawb medium-letter">HAWB</th>
-               <th class="text-center blue medium-letter farms">FINCA</th>
-               <th class="text-center blue medium-letter variety">VARIEDAD</th>
+               <th rowspan="2" class="text-center blue hawb medium-letter">HAWB</th>
+               <th rowspan="2" class="text-center blue medium-letter farms">FINCA</th>
+               <th rowspan="2" class="text-center blue medium-letter variety">VARIEDAD</th>
+               <th colspan="5" class="text-center yellow medium-letter coordinado pcs-num">COORDINADO</th>
+               <th colspan="5" class="text-center green medium-letter recibido pcs-num">RECIBIDO</th>
+               <th rowspan="2" class="text-center blue medium-letter faltante missing">DIFERENCIA</th>
+               <th rowspan="2" class="text-center blue medium-letter faltante">OBSERVACIÓN</th>
+           </tr>
+           <tr>
                <th class="text-center yellow medium-letter coordinado pcs-num">PCS</th>
                <th class="text-center yellow medium-letter coordinado pcs-num">HB</th>
                <th class="text-center yellow medium-letter coordinado pcs-num">QB</th>
@@ -143,9 +211,7 @@
                <th class="text-center green medium-letter recibido pcs-num">QB</th>
                <th class="text-center green medium-letter recibido pcs-num">EB</th>
                <th class="text-center green medium-letter recibido pcs-num">FULL</th>
-               <th class="text-center blue medium-letter faltante missing">DIFERENCIA</th>
-               <th class="text-center blue medium-letter faltante">OBSERVACIÓN</th>
-           </tr>
+            </tr>
          </thead>
          <tbody>
             @php
