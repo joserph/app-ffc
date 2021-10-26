@@ -32,11 +32,11 @@
          page-break-before: auto;
       }
       .small-letter{
-         font-size: 8px;
+         font-size: 9px;
          font-weight: normal;
       }
       .medium-letter{
-         font-size: 9px;
+         font-size: 10px;
          font-weight: normal;
       }
       .large-letter{
@@ -149,25 +149,6 @@
 </head>
 <body>
    <header>
-      <!--<img class="imgc" src="https://freshflowercargo.com/wp-content/uploads/2020/07/cropped-cropped-FRESHFLOWERCARGO-logo-horizontal.png" alt="" width="100">
-      <div class="info">
-         <table>
-            <thead>
-               <tr>
-                  <th class="awb1 medium-letter text-center">AWB</th>
-                  <td class="awb1 medium-letter text-center">145 0736 5201</th>
-               </tr>
-               <tr>
-                  <th class="awb1 medium-letter text-center">FECHA SALIDA</th>
-                  <td class="awb1 medium-letter text-center">23/10/2021</th>
-               </tr>
-               <tr>
-                  <th class="awb1 medium-letter text-center">FECHA LLEGADA</th>
-                  <td class="awb1 medium-letter text-center">24/10/2021</th>
-               </tr>
-            </thead>
-         </table>
-      </div>-->
       <table class="sin-border-full titu">
             <tr>
                 <th class="sin-border-full text-center">COORDINACIONES AÉREAS</th>
@@ -244,7 +225,7 @@
                      @endphp
                      <tr>
                         <td class="text-center small-letter hawb">{{ $item->hawb }}</td>
-                        <td class="farms small-letter">{{ $item->farm->name }}</td>
+                        <td class="farms small-letter">{{ Str::limit($item->farm->name, 47) }}</td>
                         <td class="text-center small-letter variety">{{ $item->variety->name }}</td>
                         <td class="text-center small-letter pcs-num">{{ $item->pieces }}</td>
                         <td class="text-center small-letter pcs-num">{{ $item->hb }}</td>
