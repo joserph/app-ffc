@@ -4,7 +4,7 @@
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-   <title>COORDINACIONES AÉREAS - {{ $flight->awb }} - COMPLETO</title>
+   <title>OORDINACIONES AÉREAS - {{ $flight->awb }} - SOLO RECIBIDO</title>
    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">-->
 
    <style>
@@ -56,7 +56,7 @@
          border-left: 1px solid white;
       }
       .hawb{
-         width: 70px;
+         width: 90px;
       }
       .coordinado{
          background-color: rgb(217, 244, 255);
@@ -71,13 +71,13 @@
          color: red;
       }
       .variety{
-         width: 70px;
+         width: 90px;
       }
       .pcs-num{
-         width: 30px;
+         width: 40px;
       }
       .missing{
-         width: 55px;
+         width: 70px;
       }
       .blue{
          background-color: #00b0f0;
@@ -94,8 +94,6 @@
       .peach{
          background-color: #fff2cc;
       }
-      
-
       header {
          position: fixed;
          /*top: 0cm;
@@ -107,7 +105,6 @@
          text-align: center;
          line-height: 30px;*/
       }
-
       footer {
          position: fixed;
          bottom: 0cm;
@@ -176,17 +173,11 @@
                <th rowspan="2" class="text-center blue hawb medium-letter">HAWB</th>
                <th rowspan="2" class="text-center blue medium-letter farms">FINCA</th>
                <th rowspan="2" class="text-center blue medium-letter variety">VARIEDAD</th>
-               <th colspan="5" class="text-center yellow medium-letter coordinado pcs-num">COORDINADO</th>
                <th colspan="5" class="text-center green medium-letter recibido pcs-num">RECIBIDO</th>
                <th rowspan="2" class="text-center blue medium-letter faltante missing">DIFERENCIA</th>
                <th rowspan="2" class="text-center blue medium-letter faltante">OBSERVACIÓN</th>
            </tr>
            <tr>
-               <th class="text-center yellow medium-letter coordinado pcs-num">PCS</th>
-               <th class="text-center yellow medium-letter coordinado pcs-num">HB</th>
-               <th class="text-center yellow medium-letter coordinado pcs-num">QB</th>
-               <th class="text-center yellow medium-letter coordinado pcs-num">EB</th>
-               <th class="text-center yellow medium-letter coordinado pcs-num">FULL</th>
                <th class="text-center green medium-letter recibido pcs-num">PCS</th>
                <th class="text-center green medium-letter recibido pcs-num">HB</th>
                <th class="text-center green medium-letter recibido pcs-num">QB</th>
@@ -201,7 +192,7 @@
             @endphp
             @foreach($clientsDistribution as $client)
                <tr>
-                  <th @foreach ($colors as $item) @if ($client['id'] == $item->id_type) style="background:{{ $item->color }}" @endif @endforeach colspan="15">{{ $client['name'] }}</th>
+                  <th @foreach ($colors as $item) @if ($client['id'] == $item->id_type) style="background:{{ $item->color }}" @endif @endforeach colspan="10">{{ $client['name'] }}</th>
                </tr>
                @php
                   $count = 0; $tPieces = 0; $tFulls = 0; $tHb = 0; $tQb = 0; $tEb = 0; $totalPieces = 0; $tPcsR = 0;
@@ -227,11 +218,6 @@
                         <td class="text-center small-letter hawb">{{ $item->hawb }}</td>
                         <td class="farms small-letter">{{ Str::limit($item->farm->name, 47) }}</td>
                         <td class="text-center small-letter variety">{{ $item->variety->name }}</td>
-                        <td class="text-center small-letter pcs-num">{{ $item->pieces }}</td>
-                        <td class="text-center small-letter pcs-num">{{ $item->hb }}</td>
-                        <td class="text-center small-letter pcs-num">{{ $item->qb }}</td>
-                        <td class="text-center small-letter pcs-num">{{ $item->eb }}</td>
-                        <td class="text-center small-letter pcs-num">{{ number_format($item->fulls, 3, '.','') }}</td>
                         <td class="text-center small-letter pcs-num">{{ $item->pieces_r }}</td>
                         <td class="text-center small-letter pcs-num">{{ $item->hb_r }}</td>
                         <td class="text-center small-letter pcs-num">{{ $item->qb_r }}</td>
@@ -257,11 +243,6 @@
                @endphp
                <tr>
                   <th class="text-center medium-letter" colspan="3">SUB-TOTAL:</th>
-                  <th class="text-center green-l medium-letter">{{ $tPieces }}</th>
-                  <th class="text-center green-l medium-letter">{{ $tHb }}</th>
-                  <th class="text-center green-l medium-letter">{{ $tQb }}</th>
-                  <th class="text-center green-l medium-letter">{{ $tEb }}</th>
-                  <th class="text-center green-l medium-letter">{{ number_format($tFulls, 3, '.','') }}</th>
                   <th class="text-center peach medium-letter">{{ $tPcsR }}</th>
                   <th class="text-center peach medium-letter">{{ $tHbr }}</th>
                   <th class="text-center peach medium-letter">{{ $tQbr }}</th>
@@ -278,15 +259,10 @@
          </tbody>
          <tfoot>
             <tr>
-                <th colspan="15" class="sin-border"></th>
+                <th colspan="10" class="sin-border"></th>
             </tr>
             <tr class="">
                 <th class="text-center blue medium-letter" colspan="3">TOTAL GLOBAL:</th>
-                <th class="text-center yellow medium-letter">{{ $totalPieces }}</th>
-                <th class="text-center yellow medium-letter">{{ $totalHb }}</th>
-                <th class="text-center yellow medium-letter">{{ $totalQb }}</th>
-                <th class="text-center yellow medium-letter">{{ $totalEb }}</th>
-                <th class="text-center yellow medium-letter">{{ number_format($totalFulls, 3, '.','') }}</th>
                 <th class="text-center green medium-letter">{{ $totalPcsr }}</th>
                 <th class="text-center green medium-letter">{{ $totalHbr }}</th>
                 <th class="text-center green medium-letter">{{ $totalQbr }}</th>

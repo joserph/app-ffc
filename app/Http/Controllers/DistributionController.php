@@ -95,6 +95,84 @@ class DistributionController extends Controller
         return $distributionPdf->stream();
     }
 
+    public function distributionUncoordinatedPdf()
+    {
+        // Busco el ID de la carga por medio de la URL
+        $url = $_SERVER["REQUEST_URI"];
+        $arr = explode("?", $url);
+        $code = $arr[1];
+        // Vuelo actual
+        $flight = Flight::find($code);
+
+        // Buscamos los clientes que esten en esta carga, por el id_load
+        $clientsDistr = Distribution::where('id_flight', '=', $code)
+            ->join('clients', 'distributions.id_client', '=', 'clients.id')
+            ->select('clients.id', 'clients.name')
+            ->orderBy('clients.name', 'ASC')
+            ->get();
+        // Eliminamos los clientes duplicados
+        $clientsDistribution = collect(array_unique($clientsDistr->toArray(), SORT_REGULAR));
+        // Coordinaciones
+        $coordinations = Distribution::select('*')
+            ->where('id_flight', '=', $code)
+            ->with('variety')
+            ->with('farm')
+            ->join('clients', 'distributions.id_client', '=', 'clients.id')
+            ->select('clients.name', 'distributions.*')
+            ->orderBy('clients.name', 'ASC')
+            /*->join('farms', 'distributions.id_farm', '=', 'farms.id')
+            ->select('farms.name', 'distributions.*')
+            ->orderBy('farms.name', 'ASC')*/
+            ->get();
+        //dd($coordinations);
+        $colors = Color::where('type', '=', 'client')->get();
+
+        $distributionPdf = PDF::loadView('distribution.distributionUncoordinatedPdf', compact(
+            'flight', 'clientsDistribution', 'coordinations', 'colors'
+        ))->setPaper('A4', 'landscape');
+        //dd($farmsItemsLoad);
+        return $distributionPdf->stream();
+    }
+
+      public function distributionForDeliveryPdf()
+      {
+         // Busco el ID de la carga por medio de la URL
+        $url = $_SERVER["REQUEST_URI"];
+        $arr = explode("?", $url);
+        $code = $arr[1];
+        // Vuelo actual
+        $flight = Flight::find($code);
+
+        // Buscamos los clientes que esten en esta carga, por el id_load
+        $clientsDistr = Distribution::where('id_flight', '=', $code)
+            ->join('clients', 'distributions.id_client', '=', 'clients.id')
+            ->select('clients.id', 'clients.name')
+            ->orderBy('clients.name', 'ASC')
+            ->get();
+        // Eliminamos los clientes duplicados
+        $clientsDistribution = collect(array_unique($clientsDistr->toArray(), SORT_REGULAR));
+        // Coordinaciones
+        $coordinations = Distribution::select('*')
+            ->where('id_flight', '=', $code)
+            ->with('variety')
+            ->with('farm')
+            ->join('clients', 'distributions.id_client', '=', 'clients.id')
+            ->select('clients.name', 'distributions.*')
+            ->orderBy('clients.name', 'ASC')
+            /*->join('farms', 'distributions.id_farm', '=', 'farms.id')
+            ->select('farms.name', 'distributions.*')
+            ->orderBy('farms.name', 'ASC')*/
+            ->get();
+        //dd($coordinations);
+        $colors = Color::where('type', '=', 'client')->get();
+
+        $distributionPdf = PDF::loadView('distribution.distributionForDelivery', compact(
+            'flight', 'clientsDistribution', 'coordinations', 'colors'
+        ))->setPaper('A4');
+        //dd($farmsItemsLoad);
+        return $distributionPdf->stream();
+      }
+
     /**
      * Show the form for creating a new resource.
      *

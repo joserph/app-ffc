@@ -136,6 +136,10 @@ Route::resource('/loadingplane', 'LoadingPlaneController')->names('loadingplane'
 Route::get('coordination-Pdf', 'CoordinationController@coordinationPdf')->name('coordination.pdf');
 // Distrubucion PDF
 Route::get('distribution-Pdf', 'DistributionController@distributionPdf')->name('distribution.pdf');
+// Distrubucion PDF Sin coordinado
+Route::get('distribution-uncoordinated-Pdf', 'DistributionController@distributionUncoordinatedPdf')->name('distributionUncoordinated.pdf');
+// Distrubucion PDF para entrega
+Route::get('distribution-fordelivery-Pdf', 'DistributionController@distributionForDeliveryPdf')->name('distributionForDelivery.pdf');
 // Pallets
 Route::resource('/pallets', 'PalletController')->names('pallets');
 // Pallets Items

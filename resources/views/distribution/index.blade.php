@@ -47,7 +47,9 @@
                               </button>
                             </div>
                           </div>
-                          <a href="{{ route('distribution.pdf', $flight) }}" target="_blank" class="btn btn-xs btn-outline-success pull-right"><i class="far fa-file-pdf"></i></a>
+                          <a href="{{ route('distribution.pdf', $flight) }}" target="_blank" class="btn btn-xs btn-outline-success pull-right"><i class="far fa-file-pdf"></i> COMPLETO</a>
+                          <a href="{{ route('distributionUncoordinated.pdf', $flight) }}" target="_blank" class="btn btn-xs btn-outline-info pull-right"><i class="far fa-file-pdf"></i> SOLO RECIBIDO</a>
+                          <a href="{{ route('distributionForDelivery.pdf', $flight) }}" target="_blank" class="btn btn-xs btn-outline-primary pull-right"><i class="far fa-file-pdf"></i> PARA DELIVERY</a>
                           <!--
                           <div class="form-group col-md-12">
                               <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
