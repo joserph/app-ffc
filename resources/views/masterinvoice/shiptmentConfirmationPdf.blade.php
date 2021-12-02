@@ -1,127 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SHIPMENT CONFIRMATION {{ $load->bl }}</title>
-    <style>
-       @page {
-         margin: 0cm 0cm;
-         font-size: 1em;
-      }
-      body {
-         font-family: Arial, Helvetica, sans-serif;
-         margin: 3cm 1cm 1cm;
-      }
-        .text-center{
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>SHIPMENT CONFIRMATION {{ $load->bl }}</title>
+      <style>
+         @page {
+            margin: 0cm 0cm;
+            font-size: 1em;
+         }
+         body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 3cm 1cm 1cm;
+         }
+         .text-center{
             text-align: center;
-        }
-        .text-right{
+         }
+         .text-right{
             text-align: right;
-        }
-        .text-left{
+         }
+         .text-left{
             text-align: left;
-        }
-        table {
+         }
+         table {
             border-collapse: collapse;
             width: 100%;
             page-break-before: auto;
-        }
-        
-        
-        .small-letter{
+         }
+         .small-letter{
             font-size: 9px;
             font-weight: normal;
-        }
-        .medium-letter{
+         }
+         .medium-letter{
             font-size: 10px;
-        }
-        .large-letter{
+         }
+         .large-letter{
             font-size: 13px;
-        }
-        .farms{
+         }
+         .farms{
             width: 300px;
-        }
-        
-        table.sinb{
-            margin: 0 auto;
-            width: 60%;
-        }
-        table.sinb, th{
+         }
+         table, th{
             border: 1px solid black;
             height: 14px;
-        }
-        table.sinb, td{
+         }
+         table, td{
             border: 1px solid black;
             height: 12px;
-        }
-        .text-white{
+         }
+         .text-white{
             color: #fff;
-        }
-        .sin-border{
+         }
+         .sin-border{
             border-top: 1px solid black;
             border-right: 1px solid white;
             border-bottom: 1px solid black;
             border-left: 1px solid white;
             height: 3px;
-        }
-        .box-size{
+         }
+         .box-size{
             width: 40px;
-        }
-        .hawb{
+         }
+         .hawb{
             width: 75px;
-        }
-        .pcs-bxs{
+         }
+         .pcs-bxs{
             width: 40px;
-        }
-        .gris{
+         }
+         .gris{
             background-color: #d1cfcf;
-        }
-        header {
-         position: fixed;
-         top: 1cm;
-         left: 1cm;
-         right: 1cm;
-         height: 2cm;
-         text-align: center;
-         line-height: 3px;
-      }
+         }
+         header {
+            position: fixed;
+            top: 1cm;
+            left: 1cm;
+            right: 1cm;
+            height: 2cm;
+            text-align: center;
+            line-height: 3px;
+         }
 
-      footer {
-         position: fixed;
-         bottom: 0cm;
-         left: 0cm;
-         right: 0cm;
-         height: 2cm;
-         background-color: #F93855;
-         color: white;
-         text-align: center;
-         line-height: 35px;
-      }
+         footer {
+            position: fixed;
+            bottom: 0cm;
+            left: 0cm;
+            right: 0cm;
+            height: 2cm;
+            background-color: #F93855;
+            color: white;
+            text-align: center;
+            line-height: 35px;
+         }
+         .headTitulo{
+            padding: 5px 0 -7px 0;
+         }
+         .headDetalle{
+            padding: 2px 0 0 3px;
+         }
     </style>
 </head>
 <body>
     <header>
         <table>
             <tr>
-                <th colspan="4" class="large-letter">SHIPMENT CONFIRMATION</th>
+                <th colspan="4" class="large-letter headTitulo">SHIPMENT CONFIRMATION</th>
             </tr>
             <tr>
-                <th class="medium-letter text-left pcs-bxs">Date:</th>
-                <th class="small-letter text-left farms">{{ date('l, d F - Y', strtotime($load->date)) }}</th>
-                <th class="medium-letter text-left pcs-bxs">Pcs:</th>
-                <th class="small-letter text-left">{{ $totalPieces }}</th>
+                <th class="medium-letter text-left pcs-bxs headDetalle">Date:</th>
+                <th class="small-letter text-left farms headDetalle">{{ date('l, d F - Y', strtotime($load->date)) }}</th>
+                <th class="medium-letter text-left pcs-bxs headDetalle">Pcs:</th>
+                <th class="small-letter text-left headDetalle">{{ $totalPieces }}</th>
             </tr>
             <tr>
-                <th class="medium-letter text-left">Client:</th>
-                <th class="small-letter text-left">{{ $company->name }}</th>
-                <th class="medium-letter text-left">Carrier:</th>
-                <th class="small-letter text-left">MARITIMO</th>
+                <th class="medium-letter text-left headDetalle">Client:</th>
+                <th class="small-letter text-left headDetalle">{{ $company->name }}</th>
+                <th class="medium-letter text-left headDetalle">Carrier:</th>
+                <th class="small-letter text-left headDetalle">MARITIMO</th>
             </tr>
             <tr>
-                <th class="medium-letter text-left">Awb:</th>
-                <th colspan="3" class="small-letter text-left">{{ $load->bl }}</th>
+                <th class="medium-letter text-left headDetalle">Awb:</th>
+                <th colspan="3" class="small-letter text-left headDetalle">{{ $load->bl }}</th>
             </tr>
         </table>
     </header>
