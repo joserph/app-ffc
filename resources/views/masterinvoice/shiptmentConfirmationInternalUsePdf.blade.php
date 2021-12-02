@@ -177,13 +177,14 @@
                            <td class="small-letter text-center">{{ $item->eb }}</td>
                         </tr>
                      @endif
+                     @php
+                        $totalFulls+= $tFulls;
+                        $totalHb+= $tHb;
+                        $totalQb+= $tQb;
+                        $totalEb+= $tEb;
+                     @endphp
                   @endforeach
-                  @php
-                     $totalFulls+= $tFulls;
-                     $totalHb+= $tHb;
-                     $totalQb+= $tQb;
-                     $totalEb+= $tEb;
-                  @endphp
+                  
                   <tr class="gris">
                      <th class="small-letter text-right" colspan="3">Total:</th>
                      <th class="small-letter">{{ $tPieces }}</th>
