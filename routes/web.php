@@ -99,7 +99,7 @@ Route::get('/invoicesitems/{id}', function($id){
         ->select('master_invoice_items.*', 'farms.name')
         ->orderBy('farms.name', 'ASC')
         ->get();
-    dd($invoiceItems);
+    //dd($invoiceItems);
     return $invoiceItems;
 });
 
