@@ -131,18 +131,18 @@
                 $totalFulls = 0; $totalHb = 0; $totalQb = 0; $totalEb = 0;
             @endphp
             @foreach($clients as  $key => $client)
-            <thead>
+            
                 <tr>
                     <th colspan="8" class="sin-border"></th>
                 </tr>
-            </thead>
-            <thead>
+            
+            
                 <tr>
                     <th class="text-center medium-letter">AWB</th>
                     <th class="text-center medium-letter" colspan="7">{{ $client['name'] }}</th>
                 </tr>
-            </thead>
-            <thead>
+            
+            
                 <tr class="gris">
                     <th class="text-center medium-letter">Exporter</th>
                     <th class="text-center medium-letter hawb">Variety</th>
@@ -153,7 +153,7 @@
                     <th class="text-center medium-letter box-size">QUART</th>
                     <th class="text-center medium-letter box-size">OCT</th>
                 </tr>
-            </thead>
+            
             <tbody>
                 @php
                     $tPieces = 0; $tFulls = 0; $tHb = 0; $tQb = 0; $tEb = 0;
