@@ -92,6 +92,7 @@ class MasterInvoiceItemController extends Controller
         $stems = MasterInvoiceItem::select('stems')->where('id_load', '=', $load)->sum('stems');
         $total_t = MasterInvoiceItem::select('total')->where('id_load', '=', $load)->sum('total');
         $invoiceHeader = InvoiceHeader::find($invoiceHeader->id);
+        //dd($invoiceHeader);
         $invoiceHeader->update([
             'total_fulls'   => $fulls,
             'total_bunches' => $bunches,
