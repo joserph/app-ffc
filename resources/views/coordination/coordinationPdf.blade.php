@@ -6,9 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>COORDINACION MARITIMO {{ $load->bl }} - #{{ $load->shipment }}</title>
     <style>
-        body{
-            font-family: Arial, Helvetica, sans-serif;
+        @page {
+            margin: 0cm 0cm;
+            font-size: 1em;
         }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 2cm 1cm 1cm;
+        }
+        
         .text-center{
             text-align: center;
         }
@@ -38,20 +45,20 @@
             width: 300px;
         }
         
-        table.sinb{
-            margin: 0 auto;
-            width: 60%;
-        }
-        table.sinb, th{
-            border: 1px solid black;
-        }
-        table.sinb, td{
+        table, th, td{
             border: 1px solid black;
         }
         .text-white{
             color: #fff;
         }
         .sin-border{
+            border-top: 1px solid white;
+            border-right: 1px solid white;
+            border-bottom: 1px solid black;
+            border-left: 1px solid white;
+        }
+        .sin-border2{
+            padding: 5px;
             border-top: 1px solid white;
             border-right: 1px solid white;
             border-bottom: 1px solid black;
@@ -84,30 +91,37 @@
         .faltante{
             background-color: rgb(255, 255, 175);
         }
+        header{
+            position: fixed;
+            top: 10px;
+            left: 38px;
+            right: 38px;
+        }
+        main{
+            margin: 20px;
+            top: 30px;
+            left: 38px;
+            right: 38px;
+        }
     </style>
 </head>
 <body>
     <header>
-        <table class="sin-border-full titu">
-            <tr>
-                <th class="medium-letter">COORDINACIONES MARITIMO - {{ $load->bl }} - #{{ $load->shipment }}</th>
-            </tr>
-        </table>
+        <h3 class="text-center"><ins>COORDINACIÓN MARITIMO - {{ $load->bl }} - #{{ $load->shipment }}</ins></h3>
     </header>
     <main>
         <table class="table">
             @php
-            $totalFulls = 0; $totalHb = 0; $totalQb = 0; $totalEb = 0; $totalPcsr = 0; $totalHbr = 0; $totalQbr = 0;
-            $totalEbr = 0; $totalFullsr = 0; $totalDevr = 0; $totalMissingr = 0;
-        @endphp
+                $totalFulls = 0; $totalHb = 0; $totalQb = 0; $totalEb = 0; $totalPcsr = 0; $totalHbr = 0; $totalQbr = 0;
+                $totalEbr = 0; $totalFullsr = 0; $totalDevr = 0; $totalMissingr = 0;
+            @endphp
         
-        @foreach($clientsCoordination as $client)
-            <thead>
+            @foreach($clientsCoordination as $client)
+                
                 <tr>
                     <th class="text-center medium-letter" colspan="15">{{ $client['name'] }}</th>
                 </tr>
-            </thead>
-            <thead>
+                
                 <tr class="gris2">
                     <th class="text-center hawb medium-letter">Finca</th>
                     <th class="text-center hawb medium-letter">HAWB</th>
@@ -125,28 +139,27 @@
                     <th class="text-center medium-letter devolucion">Dev</th>
                     <th class="text-center medium-letter faltante">Faltantes</th>
                 </tr>
-            </thead>
-            <tbody>
-                @php
-                    $tPieces = 0; $tFulls = 0; $tHb = 0; $tQb = 0; $tEb = 0; $totalPieces = 0; $tPcsR = 0;
-                    $tHbr = 0; $tQbr = 0; $tEbr = 0; $tFullsR = 0; $tDevR = 0; $tMissingR = 0;
-                @endphp
-                @foreach($coordinations as $item)
-                    @if($client['id'] == $item->id_client)
-                        @php
-                            $tPieces+= $item->pieces;
-                            $tFulls+= $item->fulls;
-                            $tHb+= $item->hb;
-                            $tQb+= $item->qb;
-                            $tEb+= $item->eb;
-                            $tPcsR+= $item->pieces_r;
-                            $tHbr+= $item->hb_r;
-                            $tQbr+= $item->qb_r;
-                            $tEbr+= $item->eb_r;
-                            $tFullsR+= $item->fulls_r;
-                            $tDevR+= $item->returns;
-                            $tMissingR+= $item->missing;
-                        @endphp
+                <tbody>
+                    @php
+                        $tPieces = 0; $tFulls = 0; $tHb = 0; $tQb = 0; $tEb = 0; $totalPieces = 0; $tPcsR = 0;
+                        $tHbr = 0; $tQbr = 0; $tEbr = 0; $tFullsR = 0; $tDevR = 0; $tMissingR = 0;
+                    @endphp
+                    @foreach($coordinations as $item)
+                        @if($client['id'] == $item->id_client)
+                            @php
+                                $tPieces+= $item->pieces;
+                                $tFulls+= $item->fulls;
+                                $tHb+= $item->hb;
+                                $tQb+= $item->qb;
+                                $tEb+= $item->eb;
+                                $tPcsR+= $item->pieces_r;
+                                $tHbr+= $item->hb_r;
+                                $tQbr+= $item->qb_r;
+                                $tEbr+= $item->eb_r;
+                                $tFullsR+= $item->fulls_r;
+                                $tDevR+= $item->returns;
+                                $tMissingR+= $item->missing;
+                            @endphp
                         <tr>
                             <td class="farms small-letter">{{ $item->name }}</td>
                             <td class="text-center small-letter">{{ $item->hawb }}</td>
@@ -195,15 +208,20 @@
                     <th class="text-center medium-letter devolucion">{{ $tDevR }}</th>
                     <th class="text-center medium-letter faltante">{{ $tMissingR }}</th>
                 </tr>
-            </tbody>
-            @endforeach
-            <tfoot>
                 @php
                     $totalPieces+= $totalHb + $totalQb + $totalEb;
                 @endphp
+                <tr>
+                    <th colspan="15" class="sin-border2"></th>
+                </tr>
+            @endforeach
+            </tbody>
+                
+            <tfoot>
+                
                 
                 <tr>
-                    <th colspan="15" class="sin-border"></th>
+                    <th colspan="15" class="sin-border2"></th>
                 </tr>
                 <tr class="gris">
                     <th class="text-center medium-letter" colspan="3">Total Global:</th>
