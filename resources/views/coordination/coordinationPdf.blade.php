@@ -87,14 +87,16 @@
     </style>
 </head>
 <body>
-    <table>
-        <tr>
-            <th class="medium-letter">COORDINACIONES MARITIMO - {{ $load->bl }} - #{{ $load->shipment }}</th>
-        </tr>
-    </table>
-    
-    <table>
-        @php
+    <header>
+        <table class="sin-border-full titu">
+            <tr>
+                <th class="medium-letter">COORDINACIONES MARITIMO - {{ $load->bl }} - #{{ $load->shipment }}</th>
+            </tr>
+        </table>
+    </header>
+    <main>
+        <table class="table">
+            @php
             $totalFulls = 0; $totalHb = 0; $totalQb = 0; $totalEb = 0; $totalPcsr = 0; $totalHbr = 0; $totalQbr = 0;
             $totalEbr = 0; $totalFullsr = 0; $totalDevr = 0; $totalMissingr = 0;
         @endphp
@@ -194,32 +196,34 @@
                     <th class="text-center medium-letter faltante">{{ $tMissingR }}</th>
                 </tr>
             </tbody>
-        @endforeach
-        <tfoot>
-            @php
-                $totalPieces+= $totalHb + $totalQb + $totalEb;
-            @endphp
-            
-            <tr>
-                <th colspan="15" class="sin-border"></th>
-            </tr>
-            <tr class="gris">
-                <th class="text-center medium-letter" colspan="3">Total Global:</th>
-                <th class="text-center medium-letter coordinado">{{ $totalPieces }}</th>
-                <th class="text-center medium-letter coordinado">{{ $totalHb }}</th>
-                <th class="text-center medium-letter coordinado">{{ $totalQb }}</th>
-                <th class="text-center medium-letter coordinado">{{ $totalEb }}</th>
-                <th class="text-center medium-letter coordinado">{{ number_format($totalFulls, 3, '.','') }}</th>
-                <th class="text-center medium-letter recibido">{{ $totalPcsr }}</th>
-                <th class="text-center medium-letter recibido">{{ $totalHbr }}</th>
-                <th class="text-center medium-letter recibido">{{ $totalQbr }}</th>
-                <th class="text-center medium-letter recibido">{{ $totalEbr }}</th>
-                <th class="text-center medium-letter recibido">{{ number_format($totalFullsr, 3, '.','') }}</th>
-                <th class="text-center medium-letter devolucion">{{ $totalDevr }}</th>
-                <th class="text-center medium-letter faltante">{{ $totalMissingr }}</th>
-            </tr>
-        </tfoot>
+            @endforeach
+            <tfoot>
+                @php
+                    $totalPieces+= $totalHb + $totalQb + $totalEb;
+                @endphp
+                
+                <tr>
+                    <th colspan="15" class="sin-border"></th>
+                </tr>
+                <tr class="gris">
+                    <th class="text-center medium-letter" colspan="3">Total Global:</th>
+                    <th class="text-center medium-letter coordinado">{{ $totalPieces }}</th>
+                    <th class="text-center medium-letter coordinado">{{ $totalHb }}</th>
+                    <th class="text-center medium-letter coordinado">{{ $totalQb }}</th>
+                    <th class="text-center medium-letter coordinado">{{ $totalEb }}</th>
+                    <th class="text-center medium-letter coordinado">{{ number_format($totalFulls, 3, '.','') }}</th>
+                    <th class="text-center medium-letter recibido">{{ $totalPcsr }}</th>
+                    <th class="text-center medium-letter recibido">{{ $totalHbr }}</th>
+                    <th class="text-center medium-letter recibido">{{ $totalQbr }}</th>
+                    <th class="text-center medium-letter recibido">{{ $totalEbr }}</th>
+                    <th class="text-center medium-letter recibido">{{ number_format($totalFullsr, 3, '.','') }}</th>
+                    <th class="text-center medium-letter devolucion">{{ $totalDevr }}</th>
+                    <th class="text-center medium-letter faltante">{{ $totalMissingr }}</th>
+                </tr>
+            </tfoot>
+        </table>
+    </main>
 
-    </table>
+    
 </body>
 </html>
