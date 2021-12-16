@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Gate;
 use App\PermissionFolder\Models\Permission;
 use App\Http\Requests\AddPermissionRequest;
 use App\Http\Requests\UpdatePermissionRequest;
+use Yajra\DataTables\DataTables;
 
 class PermissionController extends Controller
 {
@@ -23,6 +24,11 @@ class PermissionController extends Controller
         //dd($permissions);
 
         return view('permission.index', compact('permissions'));
+    }
+
+    public function dataTable()
+    {
+        return DataTables::of(Permission::query())->make(true);
     }
 
     /**

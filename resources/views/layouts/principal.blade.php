@@ -17,6 +17,7 @@
     <!-- Styles -->
     <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
+    @yield('css')
     @livewireStyles
 </head>
 
@@ -247,7 +248,7 @@
 
   <footer class="main-footer">
     <div class="float-right d-none d-sm-block">
-      <b>Version</b> 3.0.3
+      <b>Version</b> 1.1
     </div>
     <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
     reserved.
@@ -289,6 +290,7 @@
 <script src="{{ asset('js/app.js') }}"></script>
 @livewireScripts
 @yield('scripts')
+
 
 </body>
 </html>

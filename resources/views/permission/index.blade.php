@@ -1,7 +1,9 @@
 @extends('layouts.principal')
 
 @section('title') Lista de Permisos | Sistema de Carguera v1.1 @stop
-
+@section('css')
+   <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">    
+@endsection
 @section('content')
 <section class="content-header">
    <div class="container-fluid">
@@ -31,9 +33,7 @@
             <div class="card">
                <div class="card-header">
                   <h3 class="card-title">Lista de Permisos</h3>
-                  <div class="card-tools">
-                     {{ $permissions->links() }}
-                  </div>
+                  
                </div>
  
                @include('custom.message') 
@@ -50,7 +50,7 @@
                            <th class="text-center" colspan="3">&nbsp;</th>
                         </tr>
                      </thead>
-                     <tbody>
+                     <tbody> 
                         @foreach ($permissions as $permission)
                            <tr>
                               <td class="text-center">{{ $permission->id }}</td>
@@ -79,6 +79,11 @@
                      </tbody>
                   </table>
                </div>
+               <div class="card-footer">
+                  <div class="card-tools text-right">
+                     {{ $permissions->links() }}
+                  </div>
+               </div>
                <!-- /.card-body -->
             </div>
             <!-- /.card -->
@@ -86,15 +91,7 @@
       </div>
    </div>
 </section>
-
-
-
-
-
-
-
-
-
-
-
+@endsection
+@section('scripts')
+    <script src="http://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 @endsection

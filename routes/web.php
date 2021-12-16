@@ -79,6 +79,8 @@ Route::post('user/updatepassword', 'UserController@updatePassword')->name('user.
 Route::post('user/updateprofilepicture', 'UserController@updateProfilePicture');
 // Permisos
 Route::resource('/permission', 'PermissionController')->names('permission');
+// Permisos Datatable
+Route::get('dataTablePermission', 'PermissionController@dataTable')->name('dataTablePermission');
 // Maritimos
 Route::resource('/load', 'LoadController')->names('load');
 // Aereos
