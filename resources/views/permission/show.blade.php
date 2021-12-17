@@ -27,10 +27,10 @@
         <div class="col-md-8">
             <div class="card">
             <div class="card-header">
-                
-                <i class="fas fa-user-lock"></i>
-                Detalle del permiso
-                
+                <i class="fas fa-user-lock"></i> Detalle del permiso
+                <div class="card-tools">
+                  <a href="{{ url()->previous() }}" class="btn btn-outline-info btn-sm "><i class="fas fa-arrow-left"></i> Atras</a>
+               </div>
             </div>
             <!-- /.card-header -->
             <div class="card-body">

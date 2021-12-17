@@ -25,6 +25,9 @@
         <div class="col-md-8">
             <div class="card card-warning">
                 <div class="card-header">Editar permiso
+                  <div class="card-tools">
+                     <a href="{{ url()->previous() }}" class="btn btn-outline-warning btn-sm "><i class="fas fa-arrow-left"></i> Atras</a>
+                  </div>
                 </div>
 
                 <div class="card-body">

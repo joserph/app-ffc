@@ -33,7 +33,7 @@
          <div class="col-md-12">
             <div class="card">
                <div class="card-header">
-                  <h3 class="card-title">Lista de Permisos</h3>
+                  <h3 class="card-title"><i class="fas fa-user-lock"></i> Lista de Permisos</h3>
                   
                </div>
  
