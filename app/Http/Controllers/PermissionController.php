@@ -20,16 +20,26 @@ class PermissionController extends Controller
     {
         Gate::authorize('haveaccess', 'permission.index');
 
-        $permissions = Permission::orderBy('id', 'DESC')->paginate(6);
+        $permissions = Permission::orderBy('id', 'DESC')->get();
         //dd($permissions);
 
         return view('permission.index', compact('permissions'));
     }
 
-    public function dataTable()
+    /*public function dataTable()
     {
-        return DataTables::of(Permission::query())->make(true);
-    }
+        return DataTables::of(Permission::select('id', 'name', 'slug', 'description', 'created_at'))
+        ->editColumn('created_at', function(Permission $permission){
+            return $permission->created_at->diffForHumans();
+        })
+        //->addColumn('show', '<a href="{{ route(\'permission.show\', $id) }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i>' .(' Ver'). '</a>')
+        //->addColumn('edit', '<a href="{{ route(\'permission.edit\', $id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i>' .(' Editar'). '</a>')
+
+        //->rawColumns(['show', 'edit'])
+        ->addColumn('btn', 'permission.partials.btn')
+        ->rawColumns(['btn'])
+        ->toJson();
+    }*/
 
     /**
      * Show the form for creating a new resource.

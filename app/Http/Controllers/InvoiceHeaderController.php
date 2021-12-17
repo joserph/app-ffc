@@ -143,7 +143,8 @@ class InvoiceHeaderController extends Controller
             ->join('farms', 'master_invoice_items.id_farm', '=', 'farms.id')
             ->orderBy('farms.name', 'ASC')
             ->get();
-            
+        
+        //dd($invoiceItemsAll);
         $invoiceItems = InvoiceHeader::groupEqualsMasterInvoice($invoiceItemsAll, $code);
         //dd($invoiceItems);
         $masterInvoicePdf = PDF::loadView('masterinvoice.masterInvoicePdf', compact(
@@ -187,6 +188,7 @@ class InvoiceHeaderController extends Controller
             ->join('farms', 'master_invoice_items.id_farm', '=', 'farms.id')
             ->orderBy('farms.name', 'ASC')
             ->get();
+        
         
         // Buscamos los duplicados
         foreach($invoiceItemsAll as $item)

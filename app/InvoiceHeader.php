@@ -66,8 +66,6 @@ class InvoiceHeader extends Model
                 $country_client = ['country_client' => $item->client_confirm->country];
                 $phone_client = ['phone_client' => $item->client_confirm->phone];
                 $carrier = ['carrier' => $item->invoiceh->carrier];
-
-                
             }else{
                 $fulls = ['fulls' => $item->fulls];
                 $pieces = ['pieces' => $item->pieces];
@@ -90,7 +88,6 @@ class InvoiceHeader extends Model
                 $country_client = ['country_client' => $item->client_confirm->country];
                 $phone_client = ['phone_client' => $item->client_confirm->phone];
                 $carrier = ['carrier' => $item->invoiceh->carrier];
-
             }
             $invoiceItemsArray[] = Arr::collapse([$carrier, $phone_client, $country_client, $state_client, $city_client, $address_client, $city_farm, $phone_farm, $address_farm, $fulls, $pieces, $name, $variety, $scientific, $hawb, $stems, $bunches, $price, $total, $client]);
         }
