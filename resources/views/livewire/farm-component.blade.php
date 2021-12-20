@@ -1,11 +1,15 @@
 <div class="row">
     <div class="col-md-12">
-        @include("farm.$view")
+        @can('haveaccess', 'farm.create')
+            @include("farm.$view")
+        @endcan
     </div>
     <div class="col-md-12">
         <hr>
     </div>
     <div class="col-md-12">
-        @include('farm.table')
+        @can('haveaccess', 'farm.index')
+            @include('farm.table')
+        @endcan
     </div>
 </div>
