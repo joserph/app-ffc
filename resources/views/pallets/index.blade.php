@@ -27,7 +27,9 @@
          <div class="col-sm">
             @include('custom.message') 
             <h4>Paletas ingresadas contenedor #{{ $load->shipment }}</h4>
-            <button type="button" class="btn btn-xs btn-primary pull-right" data-toggle="modal" data-target="#myModal" data-toggle="tooltip" data-placement="top" title="Agregar nuevas paletas"><i class="fas fa-plus-circle"></i> Agregar Paleta</button>
+            @can('haveaccess', 'pallets.create')
+               <button type="button" class="btn btn-xs btn-primary pull-right" data-toggle="modal" data-target="#myModal" data-toggle="tooltip" data-placement="top" title="Agregar nuevas paletas"><i class="fas fa-plus-circle"></i> Agregar Paleta</button>
+            @endcan
             <hr>
             @if ($palletsExist)
                <div class="form-group">
@@ -61,9 +63,12 @@
                         <div class="card-header">
                            <i class="fas fa-pallet"></i> Paleta # <span class="badge bg-dark">{{ $item->number }}</span>
                            <input type="hidden" name="prueba" id="prueba_{{ $indexKey }}" value="{{ $item->number }}">
+                           
+                           @can('haveaccess', 'palletitems.create')
                            <button type="button" onclick="mifuncion(this)" value="{{ $item->id }}" class="btn btn-xs btn-info float-right" data-toggle="modal" data-target="#addPalletItem_{{ $item->id }}" data-toggle="tooltip" data-placement="top" title="Agregar item de paleta">
                               <i class="fas fa-plus-circle"></i>
                            </button>
+                           @endcan
                         </div>
                         <div class="card-body">
                            <div class="table-responsive">
@@ -117,14 +122,18 @@
                                              <td class="text-center">{{ $item2->eb }}</td>
                                              <td class="text-center">{{ $item2->quantity }}</td>
                                              <td class="text-center" width="10px">
+                                                @can('haveaccess', 'palletitems.edit')
                                                 <button type="button" onclick="mifuncion2(this)" value="{{ $item2->id }}" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#editPalletItem{{ $item2->id }}">
                                                    <i class="fas fa-pencil-alt"></i>
                                                 </button>
+                                                @endcan
                                              </td>
                                              <td class="text-center" width="10px">
+                                                @can('haveaccess', 'palletitems.destroy')
                                                 {!! Form::open(['route' => ['palletitems.destroy', $item2->id], 'method' => 'DELETE', 'onclick' => 'return confirm("¿Seguro de eliminar item de paleta?")']) !!}
                                                    <button class="btn btn-sm btn-outline-danger" data-toggle="tooltip" data-placement="top" title="Eliminar item de paleta"><i class="fas fa-trash-alt"></i></button>
                                                 {!! Form::close() !!}
+                                                @endcan
                                              </td>
                                           </tr>
                                           <div class="modal fade" id="editPalletItem{{ $item2->id }}" tabindex="-1" aria-labelledby="editPalletItemLabel" aria-hidden="true">
@@ -168,11 +177,14 @@
                               </table>
                            </div>
                            @if(($counter - 1) == $item->counter)
-
-                           <button type="button" class="btn btn-xs btn-warning pull-right" data-toggle="modal" data-target="#editPallet" data-toggle="tooltip" data-placement="top" title="Editar nuevas paletas"><i class="fas fa-edit"></i> Editar</button>
+                           @can('haveaccess', 'pallets.edit')
+                              <button type="button" class="btn btn-xs btn-warning pull-right" data-toggle="modal" data-target="#editPallet" data-toggle="tooltip" data-placement="top" title="Editar nuevas paletas"><i class="fas fa-edit"></i> Editar</button>
+                           @endcan
+                           @can('haveaccess', 'pallets.destroy')
                                  {!! Form::open(['route' => ['pallets.destroy', $item->id], 'method' => 'DELETE']) !!}
                                     {!! Form::button('<i class="fas fa-trash-alt"></i> ' . 'Eliminar', ['type' => 'submit', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Eliminar paleta', 'class' => 'btn btn-xs btn-danger pull-right', 'onclick' => 'return confirm("¿Seguro de eliminar finca?")']) !!}
                                  {!! Form::close() !!}
+                           @endcan
                                  
                                  <!-- Modal Edit Pallet -->
                                  <div class="modal fade" id="editPallet" tabindex="-1" role="dialog" aria-labelledby="editPalletLabel">

@@ -28,6 +28,7 @@
             
             <!-- Factura Master -->
             <div class="row">
+                @can('haveaccess', 'masterinvoice.index')
                 <div class="col-lg-3 col-6">
                   <!-- small card -->
                   <div class="small-box bg-info">
@@ -44,7 +45,8 @@
                     </a>
                   </div>
                 </div>
-            
+                @endcan
+                @can('haveaccess', 'isf.index')
                <!-- ISF -->
                <div class="col-lg-3 col-6">
                  <!-- small card -->
@@ -62,7 +64,8 @@
                    </a>
                  </div>
                </div>
-
+               @endcan
+               @can('haveaccess', 'pallets.index')
                <!-- Plano de carga -->
                <div class="col-lg-3 col-6">
                 <!-- small card -->
@@ -80,7 +83,8 @@
                   </a>
                 </div>
               </div>
-
+              @endcan
+              @can('haveaccess', 'coordination.index')
               <!-- Coordinaciones -->
               <div class="col-lg-3 col-6">
                 <!-- small card -->
@@ -98,7 +102,8 @@
                   </a>
                 </div>
               </div>
-
+              @endcan
+              @can('haveaccess', 'sketches.index')
               <!-- Plano de carga -->
               <div class="col-lg-3 col-6">
                 <!-- small card -->
@@ -116,6 +121,7 @@
                   </a>
                 </div>
               </div>
+              @endcan
            </div>
 
         

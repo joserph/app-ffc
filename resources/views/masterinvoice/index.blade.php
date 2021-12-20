@@ -26,18 +26,19 @@
   <!-- Main content -->
 <section id="invoiceitem" class="content">
    <div class="container-fluid">
-      @can('haveaccess', 'masterinvoice.create')
+      
          
          @include('custom.message') 
             
          
          @if(!$invoiceheaders)   
-            <h2>Crear Factura Master</h2>
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#createInvoiceHeader" >
-               <i class="fas fa-plus-circle"></i> Crear
-            </button>
-         
+            @can('haveaccess', 'masterinvoice.create')
+               <h2>Crear Factura Master</h2>
+               <!-- Button trigger modal -->
+               <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#createInvoiceHeader" >
+                  <i class="fas fa-plus-circle"></i> Crear
+               </button>
+            @endcan
          @endif
  
             <!-- Modal create header invoice -->
@@ -68,7 +69,7 @@
                </div>
             </div>
 
-         @endcan
+         
 
          @if($invoiceheaders)
          
@@ -124,9 +125,11 @@
          </div>
          <!-- /.row -->
          <!-- Button trigger modal -->
+         @can('haveaccess', 'masterinvoicesitems.create')
          <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#agregarItem">
             <i class="fas fa-plus-circle"></i> Crear Item
          </button>
+         @endcan
 
          <a href="{{ route('comercial-invoice.pdf', $load) }}" target="_blank" class="btn btn-xs btn-outline-success pull-right"><i class="far fa-file-pdf"></i></a>
          <a href="{{ route('comercial-invoice.excel', $load) }}" target="_blank" class="btn btn-xs btn-outline-success pull-right"><i class="fas fa-file-excel"></i></a>
@@ -134,7 +137,7 @@
          <a href="{{ route('shiptment-confirmation-internal-use.pdf', $load) }}" target="_blank" class="btn btn-xs btn-outline-info pull-right"><i class="far fa-file-pdf"></i></a>
          <a href="{{ route('farms-invoice.pdf', $load) }}" target="_blank" class="btn btn-xs btn-outline-warning pull-right"><i class="far fa-file-pdf"></i></a>
          <!-- Button for modal editFormHeader -->
-         @can('haveaccess', 'masterinvoice.create')
+         @can('haveaccess', 'masterinvoice.edit')
          <button type="button" class="btn btn-outline-warning float-right" data-toggle="modal" data-target="#editInvoiceHeader" >
             <i class="fas fa-edit"></i> Editar
          </button>
@@ -213,6 +216,7 @@
          </div>
          <hr>
          <!-- Table row -->
+         @can('haveaccess', 'masterinvoicesitems.index')
          <div class="row">
            <div class="col-12 table-responsive">
              <table class="table table-striped">
@@ -251,8 +255,12 @@
                  <td class="text-center">@{{ item.price.toFixed(2) }}</td>
                  <td class="text-center">@{{ item.total.toFixed(2) }}</td>
                  <td class="text-center">
-                   <a href="#" class="btn btn-outline-warning btn-sm" v-on:click.prevent="editInvoiceItem(item)"><i class="fas fa-pencil-alt"></i></a>
-                   <a href="#" class="btn btn-outline-danger btn-sm" v-on:click.prevent="deleteInvoiveItem(item)"><i class="fas fa-trash-alt"></i></a>
+                     @can('haveaccess', 'masterinvoicesitems.edit')
+                        <a href="#" class="btn btn-outline-warning btn-sm" v-on:click.prevent="editInvoiceItem(item)"><i class="fas fa-pencil-alt"></i></a>
+                     @endcan
+                     @can('haveaccess', 'masterinvoicesitems.destroy')
+                        <a href="#" class="btn btn-outline-danger btn-sm" v-on:click.prevent="deleteInvoiveItem(item)"><i class="fas fa-trash-alt"></i></a>
+                     @endcan
                  </td>
                </tr>
                </tbody>
@@ -277,6 +285,7 @@
            </div>
            <!-- /.col -->
          </div>
+         @endcan
          <!-- /.row -->
 
          

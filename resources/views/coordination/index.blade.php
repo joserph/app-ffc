@@ -43,9 +43,11 @@
                               <p class="card-text">#{{ $load->shipment }}</p>
                               <p class="card-text">{{ date('d/m/Y', strtotime($load->date)) }}</p>
                               <p class="card-text">{{ $company->name }}</p>
+                              @can('haveaccess', 'coordination.create')
                               <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#agregarItem">
                                  <i class="fas fa-plus-circle"></i> Crear Item
                               </button>
+                              @endcan
                             </div>
                           </div>
                           <a href="{{ route('coordination.pdf', $load) }}" target="_blank" class="btn btn-xs btn-outline-success pull-right"><i class="far fa-file-pdf"></i></a>
@@ -224,13 +226,18 @@
                                 <td class="text-center">{{ $item->returns }}</td>
                                 <td class="text-center">{{ $item->missing }}</td>
                                 <td class="text-center">
+                                    @can('haveaccess', 'coordination.edit')
                                     <button type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#editarItem{{ $item->id }}">
                                        <i class="fas fa-pencil-alt"></i>
                                     </button>
+                                    @endcan
+
                                     <td width="20px" class="text-center">
+                                       @can('haveaccess', 'coordination.destroy')
                                        {{ Form::open(['route' => ['coordination.destroy', $item->id], 'method' => 'DELETE']) }}
                                           {{ Form::button('<i class="fas fa-trash-alt"></i> ', ['type' => 'submit', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Eliminar usuario', 'class' => 'btn btn-sm btn-outline-danger', 'onclick' => 'return confirm("¿Seguro de eliminar la coordinación?")']) }}
                                        {{ Form::close() }}
+                                       @endcan
                                     </td>
                                </td>
                             </tr>
