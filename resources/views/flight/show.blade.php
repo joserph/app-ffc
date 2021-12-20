@@ -29,23 +29,25 @@
             <!-- Factura Master -->
             <div class="row">
               <!-- Coordinaciones -->
+              @can('haveaccess', 'distribution.index')
               <div class="col-lg-3 col-6">
                 <!-- small card -->
                 <div class="small-box bg-primary">
                   <div class="inner">
-                    <h3>222</h3>
+                    <h3>{{ $distributionCount }}</h3>
     
-                    <p>Fincas Coordinadas</p>
+                    <p>Cajas Coordinadas</p>
                   </div>
                   <div class="icon">
-                    <i class="fas fa-grip-vertical"></i>
+                    <i class="fas fa-plane-departure"></i>
                   </div>
                    <a href="{{ route('distribution.index', $flight->id) }}" class="small-box-footer">
                     Ver coordinaciones <i class="fas fa-arrow-circle-right"></i>
                   </a>
                 </div>
               </div>
-
+              @endcan
+              @can('haveaccess', 'peso.index')
               <!-- Proyeccion de peso -->
               <div class="col-lg-3 col-6">
                 <!-- small card -->
@@ -63,6 +65,7 @@
                   </a>
                 </div>
               </div>
+              @endcan
            </div>
 
         

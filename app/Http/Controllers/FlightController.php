@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Flight;
+use App\Distribution;
 
 class FlightController extends Controller
 {
@@ -51,8 +52,9 @@ class FlightController extends Controller
     public function show($id)
     {
         $flight = Flight::find($id);
-        //dd($flight);
-        return view('flight.show', compact('flight'));
+        $distributionCount = Distribution::where('id_flight', '=', $id)->sum('pieces');
+        //dd($distributionCount);
+        return view('flight.show', compact('flight', 'distributionCount'));
     }
 
     /**

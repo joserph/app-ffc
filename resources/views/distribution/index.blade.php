@@ -42,9 +42,11 @@
                               <h5 class="card-title">AWB {{ $flight->awb }}</h5>
                               <p class="card-text">{{ date('d/m/Y', strtotime($flight->date)) }}</p>
                               <p class="card-text">{{ $company->name }}</p>
+                              @can('haveaccess', 'distribution.create')
                               <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#agregarItem">
                                  <i class="fas fa-plus-circle"></i> Crear Item
                               </button>
+                              @endcan
                             </div>
                           </div>
                           <a href="{{ route('distribution.pdf', $flight) }}" target="_blank" class="btn btn-xs btn-outline-success pull-right"><i class="far fa-file-pdf"></i> COMPLETO</a>
@@ -227,14 +229,18 @@
                                 <td class="text-center">{{ $item->missing }}</td>
                                 <td class="text-center text-danger"><small>{{ strtoupper($item->observation) }}</small></td>
                                 <td class="text-center">
+                                    @can('haveaccess', 'distribution.edit')
                                     <button type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#editarItem{{ $item->id }}">
                                        <i class="fas fa-pencil-alt"></i>
                                     </button>
+                                    @endcan
+                                    @can('haveaccess', 'distribution.destroy')
                                     <td width="20px" class="text-center">
                                        {{ Form::open(['route' => ['distribution.destroy', $item->id], 'method' => 'DELETE']) }}
                                           {{ Form::button('<i class="fas fa-trash-alt"></i> ', ['type' => 'submit', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Eliminar usuario', 'class' => 'btn btn-sm btn-outline-danger', 'onclick' => 'return confirm("¿Seguro de eliminar la coordinación?")']) }}
                                        {{ Form::close() }}
                                     </td>
+                                    @endcan
                                </td>
                             </tr>
                             <div class="modal fade" id="editarItem{{ $item->id }}" tabindex="-1" aria-labelledby="editarItemLabel" aria-hidden="true">
