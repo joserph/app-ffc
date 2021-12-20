@@ -1,4 +1,4 @@
-@can('haveaccess', 'varieties.index')
+
 <h2>Listado tipos de variedades</h2>
 <div class="table-responsive">
    <table class="table table-sm table-hover">
@@ -31,4 +31,3 @@
  </table>
  {{ $varieties->links() }}
 </div>
-@endcan
