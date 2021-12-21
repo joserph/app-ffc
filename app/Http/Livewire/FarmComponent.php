@@ -16,6 +16,7 @@ class FarmComponent extends Component
 
     public $farm_id, $name, $tradename, $phone, $address, $state, $city, $country;
     public $view = 'create';
+    public $term;
 
     public function render()
     {
@@ -23,7 +24,9 @@ class FarmComponent extends Component
         
         // Mostramos todos los registros 
         return view('livewire.farm-component', [
-            'farms' => Farm::orderBy('name', 'ASC')->paginate(10)
+            'farms' => Farm::when($this->term, function($query, $term){
+                return $query->where('name', 'LIKE', "%$term%");
+            })->orderBy('name', 'ASC')->paginate(10)
         ]);
     }
 

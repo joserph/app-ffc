@@ -1,7 +1,10 @@
 @can('haveaccess', 'farm.index')
+
 <h2>Listado de Fincas</h2>
+
 <div class="table-responsive">
-   <table class="table table-sm table-hover">
+   <input type="text" wire:model="term" class="form-control">
+   <table class="table table-sm table-hover" id="farm-table">
     <thead>
        <tr>
           <th scope="col">Nombre</th>
