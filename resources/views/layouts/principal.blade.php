@@ -217,7 +217,7 @@
             </a>
           </li>
           @endcan
-          @can('haveaccess', 'colors')
+          @can('haveaccess', 'color.index')
           <li class="nav-item">
             <a href="{{ route('color.index') }}" class="nav-link">
               <i class="nav-icon fas fa-palette"></i>

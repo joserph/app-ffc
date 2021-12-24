@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Color;
 use App\Farm;
 use App\Client;
+use Illuminate\Support\Facades\Gate;
 
 class ColorController extends Controller
 {
@@ -16,6 +17,8 @@ class ColorController extends Controller
      */
     public function index()
     {
+        Gate::authorize('haveaccess', 'color.index');
+
         $farms = Farm::orderBy('name', 'ASC')->get();
         $clients = Client::orderBy('name', 'ASC')->get();
         $colors = Color::orderBy('type', 'ASC')->paginate(15);
@@ -29,6 +32,8 @@ class ColorController extends Controller
      */
     public function create()
     {
+        Gate::authorize('haveaccess', 'color.create');
+
         $farms = Farm::pluck('name', 'id');
         $clients = Client::pluck('name', 'id');
         return view('color.create', compact('farms', 'clients'));
@@ -42,6 +47,8 @@ class ColorController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('haveaccess', 'color.create');
+
         $id_type = ($request->farm) ? $request->farm : $request->client;
         $color = Color::create([
             'type' => $request->type,
@@ -75,6 +82,8 @@ class ColorController extends Controller
      */
     public function edit($id)
     {
+        Gate::authorize('haveaccess', 'color.edit');
+
         $farms = Farm::pluck('name', 'id');
         $clients = Client::pluck('name', 'id');
         $color = Color::find($id);
@@ -90,6 +99,8 @@ class ColorController extends Controller
      */
     public function update(Request $request, $id)
     {
+        Gate::authorize('haveaccess', 'color.edit');
+
         $color = Color::find($id);
 
         $id_type = ($request->farm) ? $request->farm : $request->client;
@@ -113,6 +124,8 @@ class ColorController extends Controller
      */
     public function destroy($id)
     {
+        Gate::authorize('haveaccess', 'color.destroy');
+
         $color = Color::find($id);
         $color->delete();
 
