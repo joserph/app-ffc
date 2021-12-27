@@ -13,7 +13,11 @@ class Load extends Model
         'date',
         'arrival_date',
         'id_user',
-        'update_user'
+        'update_user',
+        'code_deep',
+        'brand_deep',
+        'code_door',
+        'brand_door'
     ];
 
     public function invoiceheader()

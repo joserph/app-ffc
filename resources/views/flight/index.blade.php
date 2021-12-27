@@ -44,12 +44,14 @@
                      <table class="table table-sm">
                         <thead class="thead-dark">
                            <tr>
-                              <th scope="col">AWB</th>
-                              <th scope="col">Transportista</th>
-                              <th scope="col">Fecha Salida</th>
-                              <th scope="col">Fecha Llegada</th>
-                              <th scope="col">Estatus</th>
-                              <th class="text-center" width="80px" colspan="3">@can('haveaccess', 'flight.show')Ver @endcan @can('haveaccess', 'flight.edit')Editar @endcan @can('haveaccess', 'flight.destroy')Eliminar @endcan</th>
+                              <th class="text-center" scope="col">AWB</th>
+                              <th class="text-center" scope="col">Transportista</th>
+                              <th class="text-center" scope="col">Código Termografo</th>
+                              <th class="text-center" scope="col">Marca Termografo</th>
+                              <th class="text-center" scope="col">Fecha Llegada</th>
+                              <th class="text-center" scope="col">Fecha Llegada</th>
+                              <th class="text-center" scope="col">Estatus</th>
+                              <th class="text-center" class="text-center" width="80px" colspan="3">@can('haveaccess', 'flight.show')Ver @endcan @can('haveaccess', 'flight.edit')Editar @endcan @can('haveaccess', 'flight.destroy')Eliminar @endcan</th>
                            </tr>
                         </thead>
                         <tbody>
@@ -57,6 +59,8 @@
                               <tr>
                                  <td>{{ $flight->awb }}</td>
                                  <td>{{ $flight->carrier }}</td>
+                                 <td>{{ $flight->code }}</td>
+                                 <td>{{ $flight->brand }}</td>
                                  <td>{{ date('d/m/Y', strtotime($flight->date)) }}</td>
                                  <td>{{ date('d/m/Y', strtotime($flight->arrival_date)) }}</td>
                                  <td>

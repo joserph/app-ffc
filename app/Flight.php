@@ -12,6 +12,8 @@ class Flight extends Model
         'date',
         'arrival_date',
         'id_user',
-        'update_user'
+        'update_user',
+        'code',
+        'brand'
     ];
 }

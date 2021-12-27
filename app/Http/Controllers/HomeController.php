@@ -7,6 +7,10 @@ use App\Farm;
 use App\Client;
 use App\Variety;
 use App\Load;
+use App\Flight;
+use App\Company;
+use App\LogisticCompany;
+use App\Color;
 
 class HomeController extends Controller
 {
@@ -31,7 +35,13 @@ class HomeController extends Controller
         $clients = Client::count();
         $varieties = Variety::count();
         $loads = Load::count();
-        //dd($farms);
-        return view('home', compact('farms', 'clients', 'varieties', 'loads'));
+        $flights = Flight::count();
+        $company = Company::count();
+        $companyName = Company::get();
+        $logisticCompany = LogisticCompany::count();
+        $logisticCompanyName = LogisticCompany::get();
+        $colors = Color::count();
+        //dd($companyName[0]->name);
+        return view('home', compact('farms', 'clients', 'varieties', 'loads', 'flights', 'company', 'companyName', 'logisticCompany', 'logisticCompanyName', 'colors'));
     }
 }

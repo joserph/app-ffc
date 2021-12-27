@@ -49,6 +49,8 @@
                               <!--<th class="text-center" scope="col">Transportista</th>-->
                               <th class="text-center" scope="col">Fecha Salida</th>
                               <th class="text-center" scope="col">Fecha Llegada</th>
+                              <th class="text-center" scope="col">Termografo Fondo</th>
+                              <th class="text-center" scope="col">Termografo Puerta</th>
                               <th class="text-center" scope="col">Clientes</th>
                               <th class="text-center" scope="col">Coordinado</th>
                               <th class="text-center" scope="col">Embarcado</th>
@@ -70,6 +72,8 @@
                                  <!--<td>{{ $load->carrier }}</td>-->
                                  <td class="text-center">{{ date('d/m/Y', strtotime($load->date)) }}</td>
                                  <td class="text-center">{{ date('d/m/Y', strtotime($load->arrival_date)) }}</td>
+                                 <td class="text-center">{{ $load->code_deep }}</td>
+                                 <td class="text-center">{{ $load->code_door }}</td>
                                  <td>
                                     <button 
                                        type="button" 
