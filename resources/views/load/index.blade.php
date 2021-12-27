@@ -72,8 +72,8 @@
                                  <!--<td>{{ $load->carrier }}</td>-->
                                  <td class="text-center">{{ date('d/m/Y', strtotime($load->date)) }}</td>
                                  <td class="text-center">{{ date('d/m/Y', strtotime($load->arrival_date)) }}</td>
-                                 <td class="text-center">{{ $load->code_deep }}</td>
-                                 <td class="text-center">{{ $load->code_door }}</td>
+                                 <td class="text-center">{{ $load->code_deep }} - {{ $load->brand_deep }}</td>
+                                 <td class="text-center">{{ $load->code_door }} - {{ $load->brand_door }}</td>
                                  <td>
                                     <button 
                                        type="button" 
