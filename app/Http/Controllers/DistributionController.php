@@ -12,6 +12,7 @@ use App\Variety;
 use App\Http\Requests\AddDistributionRequest;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Color;
+use App\Marketer;
 
 class DistributionController extends Controller
 {
@@ -44,16 +45,19 @@ class DistributionController extends Controller
         $clients = Client::orderBy('name', 'ASC')->pluck('name', 'id');
         // Variedades
         $varieties = Variety::orderBy('name', 'ASC')->pluck('name', 'id');
+        // Comercializadores
+        $marketers = Marketer::orderBy('name', 'ASC')->pluck('name', 'id');
         // Coordinaciones
         $distributions = Distribution::select('*')
             ->where('id_flight', '=', $code)
             ->with('variety')
+            ->WITH('marketer')
             ->join('farms', 'distributions.id_farm', '=', 'farms.id')
             ->select('farms.name', 'distributions.*')
             ->orderBy('farms.name', 'ASC')
             ->get();
-
-        return view('distribution.index', compact('flight', 'company', 'clientsDistribution', 'farms', 'clients', 'varieties', 'distributions'));
+        //dd($distributions);
+        return view('distribution.index', compact('flight', 'company', 'clientsDistribution', 'farms', 'clients', 'varieties', 'distributions', 'marketers'));
     }
 
     public function distributionPdf()

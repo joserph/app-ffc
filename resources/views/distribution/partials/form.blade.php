@@ -52,6 +52,10 @@
         {{ Form::label('observation', 'Observación', ['class' => 'control-label']) }}
         {{ Form::textarea('observation', null, ['class' => 'form-control', 'rows' => '4', 'cols' => '50']) }}
     </div>
+    <div class="col-md-5 form-group">
+        {{ Form::label('id_marketer', 'Comercializadora', ['class' => 'control-label']) }}
+        {{ Form::select('id_marketer', $marketers, null, ['class' => 'form-control', 'placeholder' => 'Seleccione Comercializadora']) }}
+    </div>
     <div class="col-sm-4 form-check">
         <input type="checkbox" class="form-check-input" name="duplicate" id="exampleCheck1">
         <label class="form-check-label" for="exampleCheck1">Es una Guía duplicada</label>

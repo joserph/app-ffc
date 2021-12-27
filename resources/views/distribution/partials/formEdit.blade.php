@@ -48,10 +48,16 @@
         {{ Form::label('returns', 'Devolución', ['class' => 'control-label']) }}
         {{ Form::number('returns', null, ['class' => 'form-control']) }}
     </div>
+    
     <div class="col-sm-4">
         {{ Form::label('observation', 'Observación', ['class' => 'control-label']) }}
         {{ Form::textarea('observation', null, ['class' => 'form-control', 'rows' => '4', 'cols' => '50']) }}
     </div>
+    <div class="col-md-5 form-group">
+        {{ Form::label('id_marketer', 'Comercializadora', ['class' => 'control-label']) }}
+        {{ Form::select('id_marketer', $marketers, null, ['class' => 'form-control', 'placeholder' => 'Seleccione Comercializadora']) }}
+    </div>
+    
     
     {{ Form::hidden('update_user', Auth::user()->id, ['id' => 'update_user']) }}
     {{ Form::hidden('id_flight', $flight->id, ['id' => 'id_flight']) }}

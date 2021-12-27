@@ -26,7 +26,8 @@ class Distribution extends Model
         'pieces_r',
         'fulls_r',
         'returns',
-        'observation'
+        'observation',
+        'id_marketer'
     ];
 
     public function farm()
@@ -42,5 +43,10 @@ class Distribution extends Model
     public function variety()
     {
         return $this->belongsTo('App\Variety', 'variety_id');
+    }
+
+    public function marketer()
+    {
+        return $this->belongsTo('App\Marketer', 'id_marketer');
     }
 }
