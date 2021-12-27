@@ -25,7 +25,12 @@ class FarmComponent extends Component
         // Mostramos todos los registros 
         return view('livewire.farm-component', [
             'farms' => Farm::when($this->term, function($query, $term){
-                return $query->where('name', 'LIKE', "%$term%");
+                return $query->where('name', 'LIKE', "%$term%")
+                ->orWhere('tradename', 'LIKE', "%$term%")
+                ->orWhere('address', 'LIKE', "%$term%")
+                ->orWhere('state', 'LIKE', "%$term%")
+                ->orWhere('city', 'LIKE', "%$term%")
+                ->orWhere('country', 'LIKE', "%$term%");
             })->orderBy('name', 'ASC')->paginate(10)
         ]);
     }

@@ -3,7 +3,14 @@
 <h2>Listado de Fincas</h2>
 
 <div class="table-responsive">
-   <input type="text" wire:model="term" class="form-control">
+   <div class="form-group row">
+      <label for="inputPassword" class="col-sm-1 col-form-label">Buscar</label>
+      <div class="col-sm-11">
+        <input type="text" wire:model="term" class="form-control">
+      </div>
+    </div>
+
+    
    <table class="table table-sm table-hover" id="farm-table">
     <thead>
        <tr>
