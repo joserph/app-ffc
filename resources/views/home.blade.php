@@ -139,6 +139,20 @@
             @endcan
          </div>
       </div>
+      <div class="col-lg-3 col-6">
+         <div class="small-box bg-danger">
+            <div class="inner">
+               <h3>{{ $marketers }}</h3>
+               <p>Comercializadoras</p>
+            </div>
+            <div class="icon">
+               <i class="fas fa-hand-holding-usd"></i>
+            </div>
+            @can('haveaccess', 'marketer.index')
+               <a href="{{ route('marketer.index') }}" class="small-box-footer">Ver <i class="fas fa-arrow-circle-right"></i></a>
+            @endcan
+         </div>
+      </div>
 
 
 

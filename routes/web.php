@@ -160,3 +160,5 @@ Route::get('/generar-master-pallet/{id}', 'MasterInvoiceItemController@generarMa
 Route::get('/transfer-coordination/{id}', 'CoordinationController@transferCoordination')->name('transfer-coordination');
 // Colors
 Route::resource('/color', 'ColorController')->names('color');
+// Marketers
+Route::resource('/marketer', 'MarketerController')->names('marketer');

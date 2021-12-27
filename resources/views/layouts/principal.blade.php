@@ -201,6 +201,14 @@
                                  </a>
                               </li>
                            @endcan
+                           @can('haveaccess', 'marketer.index')
+                              <li class="nav-item">
+                                 <a href="{{ route('marketer.index') }}" class="nav-link">
+                                    <i class="fas fa-hand-holding-usd"></i>
+                                    <p>Comercializadoras</p>
+                                 </a>
+                              </li>
+                           @endcan
                         </ul>
                      </nav>
                   @endguest
