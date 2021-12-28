@@ -30,7 +30,7 @@ class UpdateDistributionRequest extends FormRequest
             $hawb = 'required';
         }else{
             //dd('null');
-            $hawb = 'required|unique:distributions,hawb';
+            $hawb = 'required|unique:distributions,hawb,' . $this->distribution;
         }
         //dd(str_replace("'", '', $hawb));
         return [
