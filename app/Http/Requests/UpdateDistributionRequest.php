@@ -47,7 +47,7 @@ class UpdateDistributionRequest extends FormRequest
             'id_farm' => 'required',
             'id_flight' => 'required',
             'variety_id' => 'required',
-            'id_user' => 'required',
+            'id_user' => '',
             'update_user' => 'required',
             'observation' => ''
         ];

@@ -27,7 +27,8 @@ class Distribution extends Model
         'fulls_r',
         'returns',
         'observation',
-        'id_marketer'
+        'id_marketer',
+        'duplicate'
     ];
 
     public function farm()

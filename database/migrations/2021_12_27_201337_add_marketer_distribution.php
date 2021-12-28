@@ -30,7 +30,7 @@ class AddMarketerDistribution extends Migration
         Schema::table('distributions', function($table)
 		{
 		    $table->dropColumn('id_marketer');
-            //$table->dropColumn('duplicate');
+            $table->dropColumn('duplicate');
 		});
     }
 }

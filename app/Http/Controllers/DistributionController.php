@@ -196,7 +196,7 @@ class DistributionController extends Controller
      */
     public function store(AddDistributionRequest $request)
     {
-        dd($request);
+        //dd($request);
         // calculo de fulls
         $request['fulls'] = ($request['hb'] * 0.5) + ($request['qb'] * 0.25) + ($request['eb'] * 0.125);
         $request['fulls_r'] = ($request['hb_r'] * 0.5) + ($request['qb_r'] * 0.25) + ($request['eb_r'] * 0.125);
@@ -206,7 +206,12 @@ class DistributionController extends Controller
         // Faltantes 
         $request['missing'] = $request['pieces'] - $request['pieces_r'];
         // Duplicate AWB
-        
+        if($request['duplicate'] == 'on')
+        {
+            $request['duplicate'] = 'yes';
+        }else{
+            $request['duplicate'] = 'no';
+        }
         
         $distrubution = Distribution::create($request->all());
 
@@ -248,7 +253,7 @@ class DistributionController extends Controller
         //dd($request->all());
         $distribution = Distribution::find($id);
 
-        $data = request()->validate([
+        /*$data = request()->validate([
             'hawb'          => 'required|unique:distributions,hawb,' . $distribution->id,
             'pieces'        => '',
             'hb'            => 'required',
@@ -264,7 +269,7 @@ class DistributionController extends Controller
             'variety_id'    => 'required',
             'id_user'       => '',
             'update_user'   => 'required'
-        ]);
+        ]);*/
 
         // calculo de fulls
         $request['fulls'] = ($request['hb'] * 0.5) + ($request['qb'] * 0.25) + ($request['eb'] * 0.125);
@@ -274,6 +279,13 @@ class DistributionController extends Controller
         $request['pieces_r'] = $request['hb_r'] + $request['qb_r'] + $request['eb_r'];
         // Faltantes 
         $request['missing'] = $request['pieces'] - $request['pieces_r'];
+        // Duplicate AWB
+        if($request['duplicate'] == 'on')
+        {
+            $request['duplicate'] = 'yes';
+        }else{
+            $request['duplicate'] = 'no';
+        }
 
         $distribution->update($request->all());
         $flight = Flight::where('id', '=', $distribution->id_flight)->first();

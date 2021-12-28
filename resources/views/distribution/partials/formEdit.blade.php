@@ -57,6 +57,10 @@
         {{ Form::label('id_marketer', 'Comercializadora', ['class' => 'control-label']) }}
         {{ Form::select('id_marketer', $marketers, null, ['class' => 'form-control', 'placeholder' => 'Seleccione Comercializadora']) }}
     </div>
+    <div class="col-sm-4 form-check">
+        <input type="checkbox" class="form-check-input" name="duplicate" @if($item->duplicate == 'yes') checked @endif id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">Es una Guía duplicada</label>
+    </div>
     
     
     {{ Form::hidden('update_user', Auth::user()->id, ['id' => 'update_user']) }}
