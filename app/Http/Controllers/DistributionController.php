@@ -13,6 +13,7 @@ use App\Http\Requests\AddDistributionRequest;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Color;
 use App\Marketer;
+use App\Http\Requests\UpdateDistributionRequest;
 
 class DistributionController extends Controller
 {
@@ -195,7 +196,7 @@ class DistributionController extends Controller
      */
     public function store(AddDistributionRequest $request)
     {
-        //dd($request);
+        dd($request);
         // calculo de fulls
         $request['fulls'] = ($request['hb'] * 0.5) + ($request['qb'] * 0.25) + ($request['eb'] * 0.125);
         $request['fulls_r'] = ($request['hb_r'] * 0.5) + ($request['qb_r'] * 0.25) + ($request['eb_r'] * 0.125);
@@ -204,6 +205,8 @@ class DistributionController extends Controller
         $request['pieces_r'] = $request['hb_r'] + $request['qb_r'] + $request['eb_r'];
         // Faltantes 
         $request['missing'] = $request['pieces'] - $request['pieces_r'];
+        // Duplicate AWB
+        
         
         $distrubution = Distribution::create($request->all());
 
@@ -240,7 +243,7 @@ class DistributionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateDistributionRequest $request, $id)
     {
         //dd($request->all());
         $distribution = Distribution::find($id);

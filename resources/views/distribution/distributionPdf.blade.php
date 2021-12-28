@@ -238,7 +238,12 @@
                         <td class="text-center small-letter pcs-num">{{ $item->eb_r }}</td>
                         <td class="text-center small-letter pcs-num">{{ number_format($item->fulls_r, 3, '.','') }}</td>
                         <td class="text-center small-letter missing">{{ $item->missing }}</td>
-                        <td class="text-center small-letter text-rojo"><small>{{ strtoupper($item->observation) }}</small></td>
+                        <td class="text-center small-letter text-rojo"><small>
+                           @if($item->id_marketer)
+                              COMPRA DE {{ strtoupper($item->marketer->name) }} 
+                           @endif
+                           {{ strtoupper($item->observation) }}
+                        </small></td>
                      </tr>
                   @endif
                @endforeach

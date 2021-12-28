@@ -16,6 +16,7 @@ class AddMarketerDistribution extends Migration
         Schema::table('distributions', function($table)
 		{
             $table->integer('id_marketer')->nullable();
+            $table->enum('duplicate', ['no', 'yes'])->nullable();
 		});
     }
 
@@ -29,6 +30,7 @@ class AddMarketerDistribution extends Migration
         Schema::table('distributions', function($table)
 		{
 		    $table->dropColumn('id_marketer');
+            //$table->dropColumn('duplicate');
 		});
     }
 }

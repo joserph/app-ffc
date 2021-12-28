@@ -227,7 +227,12 @@
                                 <td class="text-center">{{ number_format($item->fulls_r, 3, '.','') }}</td>
                                 <td class="text-center">{{ $item->returns }}</td>
                                 <td class="text-center">{{ $item->missing }}</td>
-                                <td class="text-center text-danger"><small>{{ strtoupper($item->observation) }}</small></td>
+                                <td class="text-center text-danger"><small>
+                                    @if($item->id_marketer)
+                                       COMPRA DE {{ strtoupper($item->marketer->name) }} 
+                                    @endif
+                                    {{ strtoupper($item->observation) }}
+                                 </small></td>
                                 <td class="text-center">
                                     @can('haveaccess', 'distribution.edit')
                                     <button type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#editarItem{{ $item->id }}">
