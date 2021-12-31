@@ -38,7 +38,7 @@
          font-weight: normal;
       }
       .large-letter{
-         font-size: 10px;
+         font-size: 15px;
          font-weight: normal;
       }
       .farms{
@@ -147,43 +147,65 @@
          margin-left: 40px;
          margin-right: 30px;
       }
+      main{
+         margin-top: -45px;
+      }
       
    </style>
 </head>
 <body>
    <header>
-      <h1 class="text-center large-letter">DISTRIBUCIÓN DE CARGA {{ $flight->awb }}</h1>
+      <table class="sin-border-full titu">
+         <tr>
+             <th class="sin-border-full text-center">DISTRIBUCIÓN DE CARGA {{ $flight->awb }}</th>
+         </tr>
+      </table>
+      <!--<h3 class="text-center large-letter">DISTRIBUCIÓN DE CARGA {{ $flight->awb }}</h3>-->
    </header>
    <main>
       <table class="table">
-         <thead class="thead-dark">
-            
-         </thead>
          <tbody>
             @php
-               $totalHb
+               $totalPcs = 0; $totalFull = 0;
             @endphp
             @foreach($clientsDistribution as $client)
-               <tr>
-                  <th colspan="6">{{ $client['name'] }}</th>
-               </tr>
+            @php
+               $subTotal = 0; $subtotalClient = 0; $subTotalFullClient = 0; $subTotalFull = 0;
+            @endphp
+               <!-- Code para totales en clientes -->
                @foreach($coordinations as $key => $item)
                   @if($client['id'] == $item->id_client)
+                     @php
+                        $subtotalClient += $item->hb_r + $item->qb_r + $item->eb_r;
+                        $subTotalFullClient += $item->fulls_r;
+                     @endphp
+                  @endif
+               @endforeach
+               <tr>
+                  <th colspan="6" class="large-letter" @foreach ($colors as $item) @if ($client['id'] == $item->id_type) style="background:{{ $item->color }}; color: #fff;" @endif @endforeach>{{ $client['name'] }}: {{ $subtotalClient }} PCS / {{ number_format($subTotalFullClient, 3, '.','') }} FBX</th>
+               </tr>
+               @foreach($coordinations as $key => $item)
+                  
+                  @if($client['id'] == $item->id_client)
+                     @php
+                        $subTotal += $item->hb_r + $item->qb_r + $item->eb_r;
+                        $subTotalFull += $item->fulls_r;
+                     @endphp
                      <tr>
-                        <td class="hawb medium-letter">{{ $item->hawb }}</td>
+                        <td class="hawb medium-letter text-center">{{ $item->hawb }}</td>
                         <td class="farms medium-letter">{{ Str::limit($item->farm->name, 47) }}</td>
-                        <td class="variety medium-letter">{{ $item->variety->name }}</td>
-                        <td class="pcs-num medium-letter">
+                        <td class="variety medium-letter text-center">{{ $item->variety->name }}</td>
+                        <td class="pcs-num medium-letter text-center">
                            @if ($item->hb_r > 0)
                               {{ $item->hb_r }} HB
                            @endif 
                         </td>
-                        <td class="pcs-num medium-letter">
+                        <td class="pcs-num medium-letter text-center">
                            @if ($item->qb_r > 0)
                               {{ $item->qb_r }} QB
                            @endif 
                         </td>
-                        <td class="pcs-num medium-letter">
+                        <td class="pcs-num medium-letter text-center">
                            @if ($item->eb_r > 0)
                               {{ $item->eb_r }} EB
                            @endif 
@@ -193,10 +215,23 @@
                @endforeach
                <tr>
                   <th colspan="2"></th>
-                  <th>TOTAL</th>
-                  <th colspan="3"></th>
+                  <th class="medium-letter">TOTAL</th>
+                  <th colspan="3" class="medium-letter"><strong>{{ $subTotal }} PCS</strong></th>
                </tr>
+               <tr>
+                  <th colspan="6" class="sin-border-full"></th>
+              </tr>
+              <tr>
+                  <th colspan="6" class="sin-border"></th>
+               </tr>
+               @php
+                  $totalPcs += $subTotal;
+                  $totalFull += $subTotalFull;
+               @endphp
             @endforeach
+            <tr>
+               <th colspan="6" class="sin-border-full">TOTAL CARGA: {{ $totalPcs }} PCS ( {{ number_format($totalFull, 3, '.','') }} FBX )</th>
+           </tr>
          </tbody>
       </table>
    </main>
