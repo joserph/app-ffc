@@ -37,6 +37,7 @@
     <div class="col-sm-3">
         {{ Form::label('stems_p_bunches', 'Tallos por bonches', ['class' => 'control-label']) }}
         {{ Form::select('stems_p_bunches', [
+            '1' => '1',
             '5' => '5',
             '6' => '6',
             '8' => '8',
