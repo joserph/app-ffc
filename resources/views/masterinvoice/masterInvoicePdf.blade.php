@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>COMERCIAL INVOICE {{ $invoiceheaders->bl }}</title>
     <style>
-        body{
+        /*body{
             font-family: Arial, Helvetica, sans-serif;
         }
         .text-center{
@@ -31,16 +31,136 @@
         table{
             width: 100%;
         }
-        .small-letter{
+        
+        */
+        @page {
+            margin: 0cm 0cm;
+            font-size: 1em;
+         }
+         body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 3cm 1cm 1cm;
+         }
+         .text-center{
+            text-align: center;
+         }
+         .text-right{
+            text-align: right;
+         }
+         .text-left{
+            text-align: left;
+         }
+         table {
+            border-collapse: collapse;
+            width: 100%;
+            page-break-before: auto;
+         }
+         .small-letter{
             font-size: 8px;
         }
         .medium-letter{
             font-size: 12px;
         }
-        .farms{
+         
+         .farms{
             width: 220px;
         }
-        
+        .client{
+            width: 80px;
+        }
+        .gender{
+            width: 55px;
+        }
+        .c-width{
+            width: 80px;
+        }
+        .firma{
+            height: 25px;
+        }
+         
+         .text-white{
+            color: #fff;
+         }
+         .sin-border{
+            border-top: 1px solid black;
+            border-right: 1px solid white;
+            border-bottom: 1px solid black;
+            border-left: 1px solid white;
+            height: 3px;
+         }
+         .box-size{
+            width: 40px;
+         }
+         .hawb{
+            width: 75px;
+         }
+         .pcs-bxs{
+            width: 40px;
+         }
+         .gris{
+            background-color: #d1cfcf;
+         }
+         header {
+            position: fixed;
+            top: 1cm;
+            left: 1cm;
+            right: 1cm;
+            height: 2cm;
+            text-align: center;
+            line-height: 3px;
+         }
+
+         footer {
+            position: fixed;
+            bottom: 0cm;
+            left: 0cm;
+            right: 0cm;
+            height: 2cm;
+            background-color: #F93855;
+            color: white;
+            text-align: center;
+            line-height: 35px;
+         }
+         
+         /*h1{
+            font-size: 29px;
+            padding: 5px 0 -7px 0;
+        }*/
+        table, th{
+            border: 1px solid black;
+            height: 20px;
+         }
+         table, td{
+            border: 1px solid black;
+            height: 12px;
+         }
+         
+        .tHeader th{
+            height: 15px;
+            font-size: 12px;
+            text-align: center;
+            padding-top: 5px;
+        }
+        .tHeader td{
+            height: 39px;
+            font-size: 9px;
+            padding-top: 5px;
+        }
+        .tHeader2 td{
+            height: 15px;
+            font-size: 9px;
+            padding-top: 5px;
+        }
+        .tHeader3 th{
+            height: 15px;
+            font-size: 9px;
+            padding-top: 5px;
+            font-weight: bold;
+        }
+        main{
+            /*margin-top: 80px; */
+            /*position: fixed;*/
+        }
         table.sinb{
             margin: 0 auto;
             width: 60%;
@@ -52,75 +172,67 @@
         .text-white{
             color: #fff;
         }
-        .firma{
-            height: 40px;
+        header table{
+           margin-top: 5px;
         }
-        .c-width{
-            width: 80px;
-        }
-        .gender{
-            width: 55px;
-        }
-        h1{
-            font-size: 29px;
-        }
-        .client{
-            width: 80px;
+        main table{
+           margin-top: 80px;
         }
     </style>
 </head>
 <body>
-    <h1 class="text-center">MASTER INVOICE</h1>
-    <table>
-        <thead>
-            <tr>
+    <header>
+        <h1 class="text-center">MASTER INVOICE</h1>
+        <table>
+            <tr class="tHeader">
                 <th class="text-center medium-letter">Grower Name & Address / Nombre y Dirección de Cultivo</th>
                 <th class="text-center medium-letter">Foreign Purchaser / Comprador Extranjero</th>
             </tr>
-        </thead>
-        <tbody>
-            <tr>
+            <tr class="tHeader">
                 <td class="small-letter">
-                    {{ strtoupper($lc_active->name) }} RUC: {{ $lc_active->ruc }} <br>
-                    {{ strtoupper($lc_active->address) }} <br>
-                    TLF: {{ $lc_active->phone }} <br>
-                    {{ strtoupper($lc_active->city) }} - {{ strtoupper($lc_active->country) }} <br>
+                    {{ strtoupper($lc_active->name) }} RUC: {{ $lc_active->ruc }} <br><br><br>
+                    {{ strtoupper($lc_active->address) }} <br><br><br>
+                    TLF: {{ $lc_active->phone }} <br><br><br>
+                    {{ strtoupper($lc_active->city) }} - {{ strtoupper($lc_active->country) }} 
                 </td>
                 <td class="small-letter">
-                    {{ strtoupper($company->name) }} <br>
-                    {{ strtoupper($company->address) }} <br>
-                    TLF: {{ $company->phone }} <br>
-                    {{ strtoupper($company->city) }} - {{ strtoupper($company->country) }} <br>
+                    {{ strtoupper($company->name) }} <br><br><br>
+                    {{ strtoupper($company->address) }} <br><br><br>
+                    TLF: {{ $company->phone }} <br><br><br>
+                    {{ strtoupper($company->city) }} - {{ strtoupper($company->country) }} 
                 </td>
             </tr>
-        </tbody>
-    </table>
+        </table>
+        <br>
+         <table>
+            <thead>
+                  <tr class="tHeader">
+                     <th class="text-center medium-letter">Farm</th>
+                     <th class="text-center medium-letter">Date / Fecha</th>
+                     <th colspan="2" class="text-center medium-letter">Country INVOICE N°</th>
+                     <th class="text-center medium-letter">B/L N°</th>
+                     <th class="text-center medium-letter">Carrier</th>
+                  </tr>
+            </thead>
+            <tbody>
+                  <tr class="tHeader2">
+                     <td class="small-letter text-center">VF</td>
+                     <td class="small-letter text-center">{{ date('d-m-Y', strtotime($invoiceheaders->date)) }}</td>
+                     <td class="small-letter text-center">GYE</td>
+                     <td class="small-letter text-center">{{ $invoiceheaders->invoice }}</td>
+                     <td class="small-letter text-center">{{ $invoiceheaders->bl }}</td>
+                     <td class="small-letter text-center">{{ $invoiceheaders->carrier }}</td>
+                  </tr>
+            </tbody>
+         </table>
+    </header>
+    
+    
     <br>
-    <table>
-        <thead>
-            <tr>
-                <th class="text-center medium-letter">Farm</th>
-                <th class="text-center medium-letter">Date / Fecha</th>
-                <th colspan="2" class="text-center medium-letter">Country INVOICE N°</th>
-                <th class="text-center medium-letter">B/L N°</th>
-                <th class="text-center medium-letter">Carrier</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="small-letter text-center">VF</td>
-                <td class="small-letter text-center">{{ date('d-m-Y', strtotime($invoiceheaders->date)) }}</td>
-                <td class="small-letter text-center">GYE</td>
-                <td class="small-letter text-center">{{ $invoiceheaders->invoice }}</td>
-                <td class="small-letter text-center">{{ $invoiceheaders->bl }}</td>
-                <td class="small-letter text-center">{{ $invoiceheaders->carrier }}</td>
-            </tr>
-        </tbody>
-    </table>
-    <br>
-    <table>
-      <thead>
-         <tr>
+    <main>
+        <table class="table">
+      
+         <tr class="tHeader3">
              <th class="text-center small-letter">Fulls</th>
              <th class="text-center small-letter">Pcs</th>
              <th class="text-center small-letter">Bunch per box</th>
@@ -134,7 +246,7 @@
              <th class="text-center small-letter">Total Bunch</th>
              <th class="text-center small-letter">Total USD</th>
          </tr>
-     </thead>
+     
      <tbody>
          @php
              $fulls = 0; $pcs = 0; $stems = 0; $total = 0; $bunches = 0; $promBunches = 0;
@@ -178,31 +290,37 @@
       </tr>
   </tfoot>
     </table>
-
     <br>
     <table class="sinb">
-        <tbody>
-            <tr>
-                <td class="small-letter text-center">Name and title of person preparing invoice</td>
-                <td class="small-letter text-center">Freight forwarder / Agencia de carga</td>
-            </tr>
-            <tr>
-                <td class="small-letter text-center"></td>
-                <td class="small-letter text-center">{{ strtoupper($lc_active->name) }}</td>
-            </tr>
-        </tbody>
-        <tbody>
-            <tr>
-                <td class="firma"></td>
-                <td class="firma"></td>
-            </tr>
-        </tbody>
-        <tfoot>
-            <tr>
-                <th class="small-letter text-center">SIGNATURE</th>
-                <th class="small-letter text-center">NANDINA</th>
-            </tr>
-        </tfoot>
-    </table>
+      <tbody>
+          <tr>
+              <td class="small-letter text-center">Name and title of person preparing invoice</td>
+              <td class="small-letter text-center">Freight forwarder / Agencia de carga</td>
+          </tr>
+          <tr>
+              <td class="small-letter text-center"></td>
+              <td class="small-letter text-center">{{ strtoupper($lc_active->name) }}</td>
+          </tr>
+      </tbody>
+      <tbody>
+          <tr>
+              <td class="firma"></td>
+              <td class="firma"></td>
+          </tr>
+      </tbody>
+      <tfoot>
+          <tr>
+              <th class="small-letter text-center">SIGNATURE</th>
+              <th class="small-letter text-center">NANDINA</th>
+          </tr>
+      </tfoot>
+  </table>
+
+    </main>
+
+    
+    
+    
+   
 </body>
 </html>
