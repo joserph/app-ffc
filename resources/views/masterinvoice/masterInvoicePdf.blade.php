@@ -43,13 +43,15 @@
          }
          .text-center{
             text-align: center;
-         }
-         .text-right{
+        }
+        .text-right{
             text-align: right;
-         }
-         .text-left{
+            padding-right: 5px;
+        }
+        .text-left{
             text-align: left;
-         }
+            padding-left: 5px;
+        }
          table {
             border-collapse: collapse;
             width: 100%;
@@ -122,10 +124,11 @@
             line-height: 35px;
          }
          
-         /*h1{
+         h1{
             font-size: 29px;
             padding: 5px 0 -7px 0;
-        }*/
+            margin-top: -70px;
+        }
         table, th{
             border: 1px solid black;
             height: 20px;
@@ -176,35 +179,41 @@
            margin-top: 5px;
         }
         main table{
-           margin-top: 80px;
+           margin-top: 20px;
+        }
+        .tHeaderPrin{
+           margin-top: 20px;
+        }
+        table.sinb{
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <header>
+    
         <h1 class="text-center">MASTER INVOICE</h1>
-        <table>
+        <table class="tHeaderPrin">
             <tr class="tHeader">
                 <th class="text-center medium-letter">Grower Name & Address / Nombre y Dirección de Cultivo</th>
                 <th class="text-center medium-letter">Foreign Purchaser / Comprador Extranjero</th>
             </tr>
             <tr class="tHeader">
                 <td class="small-letter">
-                    {{ strtoupper($lc_active->name) }} RUC: {{ $lc_active->ruc }} <br><br><br>
-                    {{ strtoupper($lc_active->address) }} <br><br><br>
-                    TLF: {{ $lc_active->phone }} <br><br><br>
+                    {{ strtoupper($lc_active->name) }} RUC: {{ $lc_active->ruc }} <br>
+                    {{ strtoupper($lc_active->address) }} <br>
+                    TLF: {{ $lc_active->phone }} <br>
                     {{ strtoupper($lc_active->city) }} - {{ strtoupper($lc_active->country) }} 
                 </td>
                 <td class="small-letter">
-                    {{ strtoupper($company->name) }} <br><br><br>
-                    {{ strtoupper($company->address) }} <br><br><br>
-                    TLF: {{ $company->phone }} <br><br><br>
+                    {{ strtoupper($company->name) }} <br>
+                    {{ strtoupper($company->address) }} <br>
+                    TLF: {{ $company->phone }} <br>
                     {{ strtoupper($company->city) }} - {{ strtoupper($company->country) }} 
                 </td>
             </tr>
         </table>
-        <br>
-         <table>
+        
+         <table class="tHeaderPrin">
             <thead>
                   <tr class="tHeader">
                      <th class="text-center medium-letter">Farm</th>
@@ -225,10 +234,9 @@
                   </tr>
             </tbody>
          </table>
-    </header>
     
     
-    <br>
+    
     <main>
         <table class="table">
       
@@ -290,7 +298,7 @@
       </tr>
   </tfoot>
     </table>
-    <br>
+    
     <table class="sinb">
       <tbody>
           <tr>
