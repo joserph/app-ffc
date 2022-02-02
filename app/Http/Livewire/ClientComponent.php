@@ -17,11 +17,22 @@ class ClientComponent extends Component
 
     public $client_id, $name, $phone, $address, $state, $city, $country, $poa, $email;
     public $view = 'create';
+    public $term;
     
     public function render()
     {
+        Gate::authorize('haveaccess', 'clients');
+
         return view('livewire.client-component', [
-            'clients' => Client::orderBy('name', 'ASC')->paginate(5),
+            'clients' => Client::when($this->term, function($query, $term){
+                return $query->where('name', 'LIKE', "%$term%")
+                ->orWhere('address', 'LIKE', "%$term%")
+                ->orWhere('state', 'LIKE', "%$term%")
+                ->orWhere('city', 'LIKE', "%$term%")
+                ->orWhere('email', 'LIKE', "%$term%")
+                ->orWhere('phone', 'LIKE', "%$term%")
+                ->orWhere('country', 'LIKE', "%$term%");
+            })->orderBy('name', 'ASC')->paginate(5),
             'colors'    => Color::where('type', '=', 'client')->get()
         ]);
     }

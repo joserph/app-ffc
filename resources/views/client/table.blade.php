@@ -1,6 +1,12 @@
 @can('haveaccess', 'client.index')
 <h2>Listado de Clientes</h2>
 <div class="table-responsive">
+   <div class="form-group row">
+      <label for="inputPassword" class="col-sm-1 col-form-label">Buscar</label>
+      <div class="col-sm-11">
+        <input type="text" wire:model="term" class="form-control">
+      </div>
+    </div>
    <table class="table table-sm table-hover">
     <thead>
        <tr>
