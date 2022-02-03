@@ -15,16 +15,18 @@ class ExportsMasterInvoice implements FromView, WithStyles
 {
     public function styles(Worksheet $sheet)
     {
-        $sheet->getStyle('B2')->getFont()->setBold(true);
+        $sheet->getStyle('A1:L1')->getFont()->setBold(true);
         $sheet->mergeCells('A1:L1');
         $sheet->getStyle('A1:L1')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
         $sheet->getStyle('A1:L1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
         $sheet->mergeCells('A2:F2');
+        $sheet->getStyle('A2:F2')->getFont()->setBold(true);
         $sheet->getStyle('A2:F2')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
         $sheet->getStyle('A2:F2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
         $sheet->mergeCells('G2:L2');
+        $sheet->getStyle('G2:L2')->getFont()->setBold(true);
         $sheet->getStyle('G2:L2')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
         $sheet->getStyle('G2:L2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 

@@ -70,12 +70,12 @@
     </style>
 </head>
 <body>
-    <h1 class="text-center" colspan="12">MASTER INVOICE</h1>
+    <h1>MASTER INVOICE</h1>
     <table>
         <thead>
             <tr>
-                <th colspan="6">Grower Name and Address / Nombre y Dirección de Cultivo</th>
-                <th colspan="6">Foreign Purchaser / Comprador Extranjero</th>
+                <th>Grower Name and Address / Nombre y Dirección de Cultivo</th>
+                <th>Foreign Purchaser / Comprador Extranjero</th>
             </tr>
         </thead>
         <tbody>

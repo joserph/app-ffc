@@ -164,8 +164,20 @@ class InvoiceHeaderController extends Controller
         $url = $_SERVER["REQUEST_URI"];
         $arr = explode("?", $url);
         $code = $arr[1];
-
+        
         return Excel::download(new ExportsMasterInvoice($code), 'master-invoice.xlsx');
+        //dd('hola');
+        /*Excel::create('company', function($excel)
+        {
+            $excel->sheet('company', function($sheet)
+            {
+                $sheet->loadView('ExportCompany');
+            });
+        })->export('xlsx');*/
+        
+        
+            
+        
     }
 
     public function shiptmentConfirmation()
