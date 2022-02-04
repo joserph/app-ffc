@@ -55,7 +55,7 @@
                               <th class="text-center" scope="col">Clientes</th>
                               <th class="text-center" scope="col">Coordinado</th>
                               <th class="text-center" scope="col">Embarcado</th>
-                              <th class="text-center" scope="col">Estatus</th>
+                              <!--<th class="text-center" scope="col">Estatus</th>-->
                               <th class="text-center" width="80px" colspan="3">@can('haveaccess', 'load.show')Ver @endcan @can('haveaccess', 'load.edit')Editar @endcan @can('haveaccess', 'load.destroy')Eliminar @endcan</th>
                            </tr>
                         </thead>
@@ -116,13 +116,13 @@
                                     @endforeach
                                     {{ $totalEmbarq }}
                                  </td>
-                                 <td>
-                                    <!--<div class="progress mb-3">
+                                 <!--<td>
+                                    <div class="progress mb-3">
                                     <div class="progress-bar bg-success" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="15" style="width: 5%">
                                       <span class="sr-only">40% Complete (success)</span>
                                     </div>
-                                  </div>-->
-                                 </td>
+                                  </div>
+                                 </td>-->
                                  <td width="45px" class="text-center">
                                     <!--<div class="btn-group">
                                        <a href="{{ route('load.show', $load->id) }}" type="button" class="btn btn-outline-success btn-sm"><i class="fas fa-eye"></i></a>
