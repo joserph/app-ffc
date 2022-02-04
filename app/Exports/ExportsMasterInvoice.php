@@ -38,7 +38,6 @@ class ExportsMasterInvoice implements FromView, WithStyles
 
         $sheet->getStyle('A15:L15')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
         $sheet->getStyle('A15:L15')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        
     }
 
     public function __construct(int $code)
