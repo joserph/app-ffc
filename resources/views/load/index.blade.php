@@ -45,6 +45,7 @@
                         <thead class="thead-dark">
                            <tr>
                               <th class="text-center" scope="col">Embarque</th>
+                              <th class="text-center" scope="col">Año</th>
                               <th class="text-center" scope="col">BL</th>
                               <!--<th class="text-center" scope="col">Transportista</th>-->
                               <th class="text-center" scope="col">Fecha Salida</th>
@@ -68,6 +69,7 @@
                               
                               <tr>
                                  <td class="text-center">{{ $load->shipment }}</td>
+                                 <td class="text-center">{{ date('Y', strtotime($load->date)) }}</td>
                                  <td class="text-center">{{ $load->bl }}</td>
                                  <!--<td>{{ $load->carrier }}</td>-->
                                  <td class="text-center">{{ date('d/m/Y', strtotime($load->date)) }}</td>
