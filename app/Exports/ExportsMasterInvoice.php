@@ -15,6 +15,7 @@ class ExportsMasterInvoice implements FromView, WithStyles
 {
     public function styles(Worksheet $sheet)
     {
+        // Titulo
         $sheet->getStyle('A1:L1')->getFont()->setBold(true);
         $sheet->mergeCells('A1:L1');
         $sheet->getStyle('A1:L1')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
