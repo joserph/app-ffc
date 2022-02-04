@@ -24,7 +24,8 @@ class UpdateLoadRequest extends FormRequest
     public function rules()
     {
         return [
-            'shipment'  => 'required|numeric|unique:loads,shipment,' . $this->load,
+            //'shipment'  => 'required|numeric|unique:loads,shipment,' . $this->load,
+            'shipment'  => 'required|numeric',
             'bl'        => 'max:19|unique:loads,bl,' . $this->load,
             'carrier'   => 'required',
             'date'      => 'required'
