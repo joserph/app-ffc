@@ -165,7 +165,7 @@ class InvoiceHeaderController extends Controller
         $arr = explode("?", $url);
         $code = $arr[1];
         
-        return Excel::download(new ExportsMasterInvoice($code), 'master-invoice.xlsx');
+        return Excel::download(new ExportsMasterInvoice($code), 'master-invoice-' . $code .'.xlsx');
         //dd('hola');
         /*Excel::create('company', function($excel)
         {

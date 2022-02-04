@@ -10,71 +10,38 @@ use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\FromArray;
+use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithCustomStartCell;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
 
-class ExportsMasterInvoice implements FromView, WithStyles
+class ExportsMasterInvoice extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder implements FromCollection, WithHeadings, WithCustomValueBinder, WithStyles
 {
     public function styles(Worksheet $sheet)
     {
-        // Titulo
         $sheet->getStyle('A1:L1')->getFont()->setBold(true);
         $sheet->mergeCells('A1:L1');
         $sheet->getStyle('A1:L1')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
         $sheet->getStyle('A1:L1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-
-        $sheet->mergeCells('A2:F2');
-        $sheet->getStyle('A2:F2')->getFont()->setBold(true);
-        $sheet->getStyle('A2:F2')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-        $sheet->getStyle('A2:F2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-
-        $sheet->mergeCells('G2:L2');
-        $sheet->getStyle('G2:L2')->getFont()->setBold(true);
-        $sheet->getStyle('G2:L2')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-        $sheet->getStyle('G2:L2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-
-        $sheet->getStyle('A11:L11')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-        $sheet->getStyle('A11:L11')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-
-        $sheet->getStyle('A12:L12')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-        $sheet->getStyle('A12:L12')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-
-        $sheet->getStyle('A15:L15')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-        $sheet->getStyle('A15:L15')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
     }
 
-    public function __construct(int $code)
+    public function collection()
     {
-        $this->code = $code;
+        return Company::all();
     }
 
-    public function view(): View
+    public function headings(): array
     {
-        // Cabecera de la factura
-        $invoiceheaders = InvoiceHeader::orderBy('id', 'DESC')->where('id_load', '=', $this->code)->first();
-        
-        // Empresas de Logistica "Activa"
-        $lc_active = LogisticCompany::where('active', '=', 'yes')->first();
-
-        // Mi empresa
-        $company = Company::first();
-
-        $invoiceItemsAll = MasterInvoiceItem::select('*')
-            ->where('id_load', '=', $this->code)
-            ->with('variety')
-            ->with('invoiceh')
-            ->with('client')
-            ->with('client_confirm')
-            ->join('farms', 'master_invoice_items.id_farm', '=', 'farms.id')
-            ->orderBy('farms.name', 'ASC')
-            ->get();
-
-        $invoiceItems = InvoiceHeader::groupEqualsMasterInvoice($invoiceItemsAll, $this->code);
-        //dd($invoiceItems);
-
-        return view('exports.masterInvoicesItemExcel', [
-            'invoiceItems' => $invoiceItems,
-            'invoiceheaders' => $invoiceheaders,
-            'lc_active' => $lc_active,
-            'company' => $company
-        ]);
+        return [
+           ['MASTER INVOICE'],
+           ['Second row', 'Second row'],
+        ];
     }
+
+    
+
+    
+    
 }
