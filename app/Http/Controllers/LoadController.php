@@ -20,7 +20,7 @@ class LoadController extends Controller
      */
     public function index()
     {
-        $loads = Load::with('invoiceheader')->orderBy('shipment', 'DESC')->paginate(15);
+        $loads = Load::with('invoiceheader')->orderBy('date', 'DESC')->orderBy('shipment', 'DESC')->paginate(15);
         $coordination = Coordination::join('clients', 'coordinations.id_client', '=', 'clients.id')->select('coordinations.id_load', 'clients.name')->orderBy('name', 'ASC')->distinct()->get(); //72
         $palletItem = PalletItem::get();
         $coordinationPcs = Coordination::join('clients', 'coordinations.id_client', '=', 'clients.id')->select('coordinations.id_load', 'coordinations.pieces', 'clients.name')->orderBy('name', 'ASC')->distinct()->get(); //72
