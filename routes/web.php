@@ -138,6 +138,7 @@ Route::resource('/loadingplane', 'LoadingPlaneController')->names('loadingplane'
 Route::get('coordination-Pdf', 'CoordinationController@coordinationPdf')->name('coordination.pdf');
 // Distrubucion PDF
 Route::get('distribution-Pdf', 'DistributionController@distributionPdf')->name('distribution.pdf');
+Route::get('distribution-excel/{id}', 'DistributionController@distributionExcel')->name('distribution.excel');
 // Distrubucion PDF Sin coordinado
 Route::get('distribution-uncoordinated-Pdf', 'DistributionController@distributionUncoordinatedPdf')->name('distributionUncoordinated.pdf');
 // Distrubucion PDF para entrega

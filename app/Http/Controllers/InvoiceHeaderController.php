@@ -20,6 +20,8 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ExportsMasterInvoice;
 use App\Coordination;
 use App\PalletItem;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class InvoiceHeaderController extends Controller
 {
@@ -160,12 +162,27 @@ class InvoiceHeaderController extends Controller
     
     public function masterInvoiceExcel()
     {
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', 'Hello World !');
+
+        $writer = new Xlsx($spreadsheet);
+        //$writer->save('hello world.xlsx');
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="myfile.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output');
         // Busco el ID de la carga por medio de la URL
-        $url = $_SERVER["REQUEST_URI"];
+        /*$url = $_SERVER["REQUEST_URI"];
         $arr = explode("?", $url);
         $code = $arr[1];
         
-        return Excel::download(new ExportsMasterInvoice($code), 'master-invoice-' . $code .'.xlsx');
+        return Excel::download(new ExportsMasterInvoice($code), 'master-invoice-' . $code .'.xlsx');*/
+
         //dd('hola');
         /*Excel::create('company', function($excel)
         {

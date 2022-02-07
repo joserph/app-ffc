@@ -14,6 +14,8 @@ use Barryvdh\DomPDF\Facade as PDF;
 use App\Color;
 use App\Marketer;
 use App\Http\Requests\UpdateDistributionRequest;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class DistributionController extends Controller
 {
@@ -59,6 +61,81 @@ class DistributionController extends Controller
             ->get();
         //dd($distributions);
         return view('distribution.index', compact('flight', 'company', 'clientsDistribution', 'farms', 'clients', 'varieties', 'distributions', 'marketers'));
+    }
+
+    public function distributionExcel($code)
+    {
+        $flight = Flight::find($code);
+        //dd($flight);
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        // Titulo
+        $sheet->getStyle('A2:P2')->getFont()->setBold(true);
+        $sheet->mergeCells('A2:P2');
+        $sheet->getStyle('A2:P2')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('A2:P2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A2:P2')->getFont()->setSize(24);
+        $sheet->setCellValue('A2', 'COORDINACIONES AÉREAS');
+        // Guia
+        $sheet->mergeCells('L3:M3');
+        $sheet->getStyle('L3:M3')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('L3:M3')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->setCellValue('L3', 'AWB');
+
+        $sheet->getStyle('N3:O3')->getFont()->setBold(true);
+        $sheet->mergeCells('N3:O3');
+        $sheet->getStyle('N3:O3')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('N3:O3')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->setCellValue('N3', str_replace('AWB', '', $flight->awb) );
+        // Fecha Salida
+        $sheet->mergeCells('L4:M4');
+        $sheet->getStyle('L4:M4')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('L4:M4')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->setCellValue('L4', 'FECHA SALIDA');
+
+        $sheet->getStyle('N4:O4')->getFont()->setBold(true);
+        $sheet->mergeCells('N4:O4');
+        $sheet->getStyle('N4:O4')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('N4:O4')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->setCellValue('N4', date('d/m/Y', strtotime($flight->date)) );
+        // Fecha Llegada
+        $sheet->mergeCells('L5:M5');
+        $sheet->getStyle('L5:M5')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('L5:M5')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->setCellValue('L5', 'FECHA LLEGADA');
+
+        $sheet->getStyle('N5:O5')->getFont()->setBold(true);
+        $sheet->mergeCells('N5:O5');
+        $sheet->getStyle('N5:O5')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('N5:O5')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->setCellValue('N5', date('d/m/Y', strtotime($flight->arrival_date)) );
+        // Head coordinado
+        $sheet->mergeCells('E7:I7');
+        $sheet->getStyle('E7:I7')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('E7:I7')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->setCellValue('E7', 'COORDINADO');
+        // Head RECIBIDO
+        $sheet->mergeCells('J7:N7');
+        $sheet->getStyle('J7:N7')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('J7:N7')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $spreadsheet->getActiveSheet()->getStyle('J7:N7')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+        ->getStartColor()->setRGB('F9FF00');
+        $sheet->setCellValue('J7', 'COORDINADO');
+
+
+
+
+
+        $writer = new Xlsx($spreadsheet);
+        //$writer->save('hello world.xlsx');
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="myfile.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output');
     }
 
     public function distributionPdf()
