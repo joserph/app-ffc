@@ -175,7 +175,30 @@ class DistributionController extends Controller
             ->get();
         // Eliminamos los clientes duplicados
         $clientsDistribution = collect(array_unique($clientsDistr->toArray(), SORT_REGULAR));
+        // colors
+        $colors = Color::where('type', '=', 'client')->get();
         
+        $fila = 9;
+        foreach($clientsDistribution as $key => $client)
+        {
+            $sheet->mergeCells('B'. $fila .':P' .$fila);
+            $sheet->getStyle('B'. $fila .':P' .$fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('B'. $fila .':P' .$fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            foreach($colors as $color)
+            {
+                if($color->id_type == $client['id'])
+                {
+                    $colorFila = str_replace('#', '', $color->color);
+                    $spreadsheet->getActiveSheet()->getStyle('B'. $fila .':P' .$fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    ->getStartColor()->setRGB($colorFila);
+                    //dd(str_replace('#', '', $color->color));
+                }
+            }
+            
+            //dd($client['name']);
+            $sheet->setCellValue('B' . $fila, $client['name']);
+            $fila++;
+        }
         
 
 
