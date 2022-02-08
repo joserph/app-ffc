@@ -70,6 +70,14 @@ class DistributionController extends Controller
 
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
+        $styleArray = [
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['rgb' => '000000'],
+                ],
+            ],
+        ];
         // Titulo
         $sheet->getStyle('A2:P2')->getFont()->setBold(true);
         $sheet->mergeCells('A2:P2');
@@ -114,14 +122,65 @@ class DistributionController extends Controller
         $sheet->mergeCells('E7:I7');
         $sheet->getStyle('E7:I7')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
         $sheet->getStyle('E7:I7')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $spreadsheet->getActiveSheet()->getStyle('E7:I7')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+        ->getStartColor()->setRGB('F4F804');
+        $sheet->getStyle('E7:I7')->applyFromArray($styleArray);
         $sheet->setCellValue('E7', 'COORDINADO');
         // Head RECIBIDO
         $sheet->mergeCells('J7:N7');
         $sheet->getStyle('J7:N7')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
         $sheet->getStyle('J7:N7')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $spreadsheet->getActiveSheet()->getStyle('J7:N7')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-        ->getStartColor()->setRGB('F9FF00');
-        $sheet->setCellValue('J7', 'COORDINADO');
+        ->getStartColor()->setRGB('10780D');
+        $sheet->getStyle('J7:N7')->applyFromArray($styleArray);
+        $sheet->setCellValue('J7', 'RECIBIDO');
+        // HEAD
+        $sheet->setCellValue('B8', 'HAWB');
+        $sheet->setCellValue('C8', 'RESUMEN CLIENTES');
+        $sheet->setCellValue('D8', 'VARIEDADES');
+        $spreadsheet->getActiveSheet()->getStyle('B8:D8')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+        ->getStartColor()->setRGB('00B0F0');
+        $sheet->getStyle('B8:D8')->applyFromArray($styleArray);
+
+        $sheet->setCellValue('E8', 'HB');
+        $sheet->setCellValue('F8', 'QB');
+        $sheet->setCellValue('G8', 'EB');
+        $sheet->setCellValue('H8', 'TOTAL PCS');
+        $sheet->setCellValue('I8', 'FBX');
+        $spreadsheet->getActiveSheet()->getStyle('E8:I8')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+        ->getStartColor()->setRGB('F4F804');
+        $sheet->getStyle('E8:I8')->applyFromArray($styleArray);
+
+        $sheet->setCellValue('J8', 'HB');
+        $sheet->setCellValue('K8', 'QB');
+        $sheet->setCellValue('L8', 'EB');
+        $sheet->setCellValue('M8', 'TOTAL PCS');
+        $sheet->setCellValue('N8', 'FBX');
+        $spreadsheet->getActiveSheet()->getStyle('J8:N8')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+        ->getStartColor()->setRGB('10780D');
+        $sheet->getStyle('J8:N8')->applyFromArray($styleArray);
+
+        $sheet->setCellValue('O8', 'DIFERENCIA');
+        $sheet->setCellValue('P8', 'OBSERVACIONES');
+        $spreadsheet->getActiveSheet()->getStyle('O8:P8')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+        ->getStartColor()->setRGB('00B0F0');
+        $sheet->getStyle('O8:P8')->applyFromArray($styleArray);
+
+        // CLIENTES
+        // Buscamos los clientes que esten en esta carga, por el id_load
+        $clientsDistr = Distribution::where('id_flight', '=', $code)
+            ->join('clients', 'distributions.id_client', '=', 'clients.id')
+            ->select('clients.id', 'clients.name')
+            ->orderBy('clients.name', 'ASC')
+            ->get();
+        // Eliminamos los clientes duplicados
+        $clientsDistribution = collect(array_unique($clientsDistr->toArray(), SORT_REGULAR));
+        
+        
+
+
+        
+
 
 
 
