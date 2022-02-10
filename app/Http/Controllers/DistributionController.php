@@ -177,27 +177,61 @@ class DistributionController extends Controller
         $clientsDistribution = collect(array_unique($clientsDistr->toArray(), SORT_REGULAR));
         // colors
         $colors = Color::where('type', '=', 'client')->get();
+        // Coordinaciones
+        $coordinations = Distribution::select('*')
+            ->where('id_flight', '=', $code)
+            ->with('variety')
+            ->with('farm')
+            ->join('clients', 'distributions.id_client', '=', 'clients.id')
+            ->select('clients.name', 'distributions.*')
+            ->orderBy('clients.name', 'ASC')
+            /*->join('farms', 'distributions.id_farm', '=', 'farms.id')
+            ->select('farms.name', 'distributions.*')
+            ->orderBy('farms.name', 'ASC')*/
+            ->get();
         
         $fila = 9;
         foreach($clientsDistribution as $key => $client)
         {
-            $sheet->mergeCells('B'. $fila .':P' .$fila);
-            $sheet->getStyle('B'. $fila .':P' .$fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-            $sheet->getStyle('B'. $fila .':P' .$fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            
             foreach($colors as $color)
             {
                 if($color->id_type == $client['id'])
                 {
+                    
                     $colorFila = str_replace('#', '', $color->color);
                     $spreadsheet->getActiveSheet()->getStyle('B'. $fila .':P' .$fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()->setRGB($colorFila);
                     //dd(str_replace('#', '', $color->color));
+                    
+                    
                 }
             }
+            $sheet->mergeCells('B'. $fila .':P' .$fila);
+            $sheet->getStyle('B'. $fila .':P' .$fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('B'. $fila .':P' .$fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->setCellValue('B' . $fila, $client['name']);
             
             //dd($client['name']);
-            $sheet->setCellValue('B' . $fila, $client['name']);
-            $fila++;
+            
+            
+            $filaDos = $fila +1;
+            foreach($coordinations as $coord)
+            {
+                if($coord->id_client == $client['id'])
+                {
+                    $sheet->setCellValue('B' . $filaDos, $coord->hawb);
+                    $sheet->getStyle('B' . $filaDos)->getFont()->setBold(true);
+                    $sheet->setCellValue('C' . $filaDos, $coord->hawb);
+                    $sheet->getStyle('C' . $filaDos)->getFont()->setBold(true);
+                    $sheet->setCellValue('D' . $filaDos, $coord->hawb);
+                    $sheet->getStyle('D' . $filaDos)->getFont()->setBold(true);
+                    //dd($filaDos);
+                    $filaDos++;
+                }
+                //
+            }
+            $fila = $filaDos;
         }
         
 
