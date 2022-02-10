@@ -78,13 +78,37 @@ class DistributionController extends Controller
                 ],
             ],
         ];
+        $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(2);
+        $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(18);
+        $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(43);
+        $spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(16);
+        $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(10);
+        $spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(10);
+        $spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(10);
+        $spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(10);
+        $spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(10);
+        $spreadsheet->getActiveSheet()->getColumnDimension('J')->setWidth(10);
+        $spreadsheet->getActiveSheet()->getColumnDimension('K')->setWidth(10);
+        $spreadsheet->getActiveSheet()->getColumnDimension('L')->setWidth(10);
+        $spreadsheet->getActiveSheet()->getColumnDimension('M')->setWidth(10);
+        $spreadsheet->getActiveSheet()->getColumnDimension('N')->setWidth(10);
+        $spreadsheet->getActiveSheet()->getColumnDimension('O')->setWidth(12);
+        $spreadsheet->getActiveSheet()->getColumnDimension('P')->setWidth(40);
+        $spreadsheet->getActiveSheet()->getRowDimension('8')->setRowHeight(30);
+
+
+        $sheet->getStyle('B7:P7')->getFont()->setBold(true);
+        $sheet->getStyle('B8:P8')->getFont()->setBold(true);
+        $sheet->getStyle('B8:P8')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('B8:P8')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
         // Titulo
-        $sheet->getStyle('A2:P2')->getFont()->setBold(true);
-        $sheet->mergeCells('A2:P2');
-        $sheet->getStyle('A2:P2')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-        $sheet->getStyle('A2:P2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('A2:P2')->getFont()->setSize(24);
-        $sheet->setCellValue('A2', 'COORDINACIONES AÉREAS');
+        $sheet->getStyle('B2:P2')->getFont()->setBold(true);
+        $sheet->mergeCells('B2:P2');
+        $sheet->getStyle('B2:P2')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('B2:P2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('B2:P2')->getFont()->setSize(24);
+        $sheet->setCellValue('B2', 'COORDINACIONES AÉREAS');
         // Guia
         $sheet->mergeCells('L3:M3');
         $sheet->getStyle('L3:M3')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
@@ -123,7 +147,7 @@ class DistributionController extends Controller
         $sheet->getStyle('E7:I7')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
         $sheet->getStyle('E7:I7')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $spreadsheet->getActiveSheet()->getStyle('E7:I7')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-        ->getStartColor()->setRGB('F4F804');
+        ->getStartColor()->setRGB('FFFF00');
         $sheet->getStyle('E7:I7')->applyFromArray($styleArray);
         $sheet->setCellValue('E7', 'COORDINADO');
         // Head RECIBIDO
@@ -131,12 +155,12 @@ class DistributionController extends Controller
         $sheet->getStyle('J7:N7')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
         $sheet->getStyle('J7:N7')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $spreadsheet->getActiveSheet()->getStyle('J7:N7')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-        ->getStartColor()->setRGB('10780D');
+        ->getStartColor()->setRGB('00B050');
         $sheet->getStyle('J7:N7')->applyFromArray($styleArray);
         $sheet->setCellValue('J7', 'RECIBIDO');
         // HEAD
         $sheet->setCellValue('B8', 'HAWB');
-        $sheet->setCellValue('C8', 'RESUMEN CLIENTES');
+        $sheet->setCellValue('C8', 'FINCAS');
         $sheet->setCellValue('D8', 'VARIEDADES');
         $spreadsheet->getActiveSheet()->getStyle('B8:D8')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
         ->getStartColor()->setRGB('00B0F0');
@@ -148,7 +172,7 @@ class DistributionController extends Controller
         $sheet->setCellValue('H8', 'TOTAL PCS');
         $sheet->setCellValue('I8', 'FBX');
         $spreadsheet->getActiveSheet()->getStyle('E8:I8')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-        ->getStartColor()->setRGB('F4F804');
+        ->getStartColor()->setRGB('FFFF00');
         $sheet->getStyle('E8:I8')->applyFromArray($styleArray);
 
         $sheet->setCellValue('J8', 'HB');
@@ -157,7 +181,7 @@ class DistributionController extends Controller
         $sheet->setCellValue('M8', 'TOTAL PCS');
         $sheet->setCellValue('N8', 'FBX');
         $spreadsheet->getActiveSheet()->getStyle('J8:N8')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-        ->getStartColor()->setRGB('10780D');
+        ->getStartColor()->setRGB('00B050');
         $sheet->getStyle('J8:N8')->applyFromArray($styleArray);
 
         $sheet->setCellValue('O8', 'DIFERENCIA');
@@ -191,9 +215,10 @@ class DistributionController extends Controller
             ->get();
         
         $fila = 9;
+        $totalFulls = 0; $totalHb = 0; $totalQb = 0; $totalEb = 0; $totalPcsr = 0; $totalHbr = 0; $totalQbr = 0;
+        $totalEbr = 0; $totalFullsr = 0; $totalDevr = 0; $totalMissingr = 0;
         foreach($clientsDistribution as $key => $client)
         {
-            
             foreach($colors as $color)
             {
                 if($color->id_type == $client['id'])
@@ -201,38 +226,230 @@ class DistributionController extends Controller
                     
                     $colorFila = str_replace('#', '', $color->color);
                     $spreadsheet->getActiveSheet()->getStyle('B'. $fila .':P' .$fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-                    ->getStartColor()->setRGB($colorFila);
-                    //dd(str_replace('#', '', $color->color));
-                    
-                    
+                        ->getStartColor()->setRGB($colorFila);
                 }
             }
+            // Totales variable
+            $count = 0; $tPieces = 0; $tFulls = 0; $tHb = 0; $tQb = 0; $tEb = 0; $totalPieces = 0; $tPcsR = 0;
+            $tHbr = 0; $tQbr = 0; $tEbr = 0; $tFullsR = 0; $tDevR = 0; $tMissingR = 0;
+
             $sheet->mergeCells('B'. $fila .':P' .$fila);
             $sheet->getStyle('B'. $fila .':P' .$fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
             $sheet->getStyle('B'. $fila .':P' .$fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('B'. $fila .':P' .$fila)->applyFromArray($styleArray);
+            $spreadsheet->getActiveSheet()->getRowDimension($fila)->setRowHeight(25);
+            $sheet->getStyle('B'. $fila .':P' .$fila)->getFont()->setSize(18);
             $sheet->setCellValue('B' . $fila, $client['name']);
+            $sheet->getStyle('B'. $fila .':P' .$fila)->getFont()->setBold(true);
             
-            //dd($client['name']);
-            
-            
-            $filaDos = $fila +1;
+            $filaDos = $fila + 1;
             foreach($coordinations as $coord)
             {
                 if($coord->id_client == $client['id'])
                 {
+                    $tPieces+= $coord->pieces;
+                    $tFulls+= $coord->fulls;
+                    $tHb+= $coord->hb;
+                    $tQb+= $coord->qb;
+                    $tEb+= $coord->eb;
+                    $tPcsR+= $coord->pieces_r;
+                    $tHbr+= $coord->hb_r;
+                    $tQbr+= $coord->qb_r;
+                    $tEbr+= $coord->eb_r;
+                    $tFullsR+= $coord->fulls_r;
+                    $tDevR+= $coord->returns;
+                    $tMissingR+= $coord->missing;
+
+                    $sheet->getStyle('B'. $filaDos)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+                    $sheet->getStyle('B'. $filaDos)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                    $sheet->getStyle('D'. $filaDos)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+                    $sheet->getStyle('D'. $filaDos)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                    $sheet->getStyle('P'. $filaDos)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+                    $sheet->getStyle('P'. $filaDos)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                    $sheet->getStyle('C'. $filaDos)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+                    $spreadsheet->getActiveSheet()->getRowDimension($filaDos)->setRowHeight(20);
+                    /*$spreadsheet->getActiveSheet()->getStyle('P'. $filaDos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                        ->getStartColor()->setRGB('FF0000');*/
+                    $spreadsheet->getActiveSheet()->getStyle('P'. $filaDos)
+                        ->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_RED);
+                    
+                    $sheet->getStyle('E'. $filaDos .':O' .$filaDos)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+                    $sheet->getStyle('E'. $filaDos .':O' .$filaDos)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                    $spreadsheet->getActiveSheet()->getStyle('I' . $filaDos)->getNumberFormat()->setFormatCode('#,##0.000');
+                    $spreadsheet->getActiveSheet()->getStyle('N' . $filaDos)->getNumberFormat()->setFormatCode('#,##0.000');
+                    
+
+
                     $sheet->setCellValue('B' . $filaDos, $coord->hawb);
-                    $sheet->getStyle('B' . $filaDos)->getFont()->setBold(true);
-                    $sheet->setCellValue('C' . $filaDos, $coord->hawb);
-                    $sheet->getStyle('C' . $filaDos)->getFont()->setBold(true);
-                    $sheet->setCellValue('D' . $filaDos, $coord->hawb);
-                    $sheet->getStyle('D' . $filaDos)->getFont()->setBold(true);
+                    
+                    $sheet->setCellValue('C' . $filaDos, $coord->farm->name);
+                    
+                    
+                    $sheet->setCellValue('D' . $filaDos, $coord->variety->name);
+
+                    $sheet->setCellValue('E' . $filaDos, $coord->hb);
+                    
+                    $sheet->setCellValue('F' . $filaDos, $coord->qb);
+                    
+                    $sheet->setCellValue('G' . $filaDos, $coord->eb);
+
+                    //$sheet->setCellValue('H' . $filaDos, $coord->pieces);
+                    $sheet->setCellValue('H' . $filaDos, '=SUM(E' . $filaDos . ':G' . $filaDos . ')');
+                    
+                    $sheet->setCellValue('I' . $filaDos, '=+(E' . $filaDos . '*0.5)+(F' . $filaDos . '*0.25)+(G' . $filaDos . '*0.125)');
+                    
+                    $sheet->setCellValue('J' . $filaDos, $coord->hb_r);
+
+                    $sheet->setCellValue('K' . $filaDos, $coord->qb_r);
+                    
+                    $sheet->setCellValue('L' . $filaDos, $coord->eb_r);
+                    
+                    $sheet->setCellValue('M' . $filaDos, '=SUM(J' . $filaDos . ':L' . $filaDos . ')');
+
+                    $sheet->setCellValue('N' . $filaDos, '=+(J' . $filaDos . '*0.5)+(K' . $filaDos . '*0.25)+(L' . $filaDos . '*0.125)');
+                    
+                    $sheet->setCellValue('O' . $filaDos, '=+H' . $filaDos . '-M' . $filaDos);
+                    
+                    if($coord->id_marketer)
+                    {
+                        $observation = 'COMPRA DE ' . $coord->marketer->name . ' ' . $coord->observation;
+                    }else{
+                        $observation = $coord->observation;
+                    }
+                    $sheet->setCellValue('P' . $filaDos, $observation);
+                    $sheet->getStyle('B'. $filaDos .':P' .$filaDos)->applyFromArray($styleArray);
                     //dd($filaDos);
                     $filaDos++;
+                    
                 }
                 //
+                
             }
-            $fila = $filaDos;
+            
+            $totalFulls+= $tFulls;
+            $totalHb+= $tHb;
+            $totalQb+= $tQb;
+            $totalEb+= $tEb;
+            $totalPcsr+= $tPcsR;
+            $totalHbr+= $tHbr;
+            $totalQbr+= $tQbr;
+            $totalEbr+= $tEbr;
+            $totalFullsr+= $tFullsR;
+            $totalDevr+= $tDevR;
+            $totalMissingr+= $tMissingR;
+
+            // Imprimimos SubTotales
+            $numCell = $filaDos;
+            
+            $sheet->mergeCells('B'. $numCell .':D' .$numCell);
+            $sheet->getStyle('B'. $numCell .':D' .$numCell)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('B'. $numCell .':D' .$numCell)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('E'. $numCell .':O' .$numCell)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('E'. $numCell .':O' .$numCell)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $spreadsheet->getActiveSheet()->getStyle('B'. $numCell .':D' .$numCell)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()->setRGB('FFFFFF');
+            $spreadsheet->getActiveSheet()->getStyle('E'. $numCell .':I' .$numCell)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()->setRGB('E2EFDA');
+            $spreadsheet->getActiveSheet()->getStyle('J'. $numCell .':N' .$numCell)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()->setRGB('FFF2CC');
+            $sheet->getStyle('B'. $numCell .':P' .$numCell)->getFont()->setBold(true);
+            $sheet->getStyle('B'. $numCell .':D' .$numCell)->applyFromArray($styleArray);
+            $spreadsheet->getActiveSheet()->getRowDimension($numCell)->setRowHeight(20);
+            //$spreadsheet->getActiveSheet()->getStyle('I' . $numCell)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Shared\StringHelper::setDecimalSeparator(','));
+            //$spreadsheet->getActiveSheet()->getStyle('I' . $numCell)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+            $spreadsheet->getActiveSheet()->getStyle('I' . $numCell)->getNumberFormat()->setFormatCode('#,##0.000');
+            $spreadsheet->getActiveSheet()->getStyle('N' . $numCell)->getNumberFormat()->setFormatCode('#,##0.000');
+            $sheet->setCellValue('B' . $numCell, 'SUB-TOTAL');
+
+            //$sheet->setCellValue('C' . $numCell, 'SUB-TOTAL');
+
+            $sheet->setCellValue('D' . $numCell, '');
+
+            $sheet->setCellValue('E' . $numCell, '=SUM(E' . ($fila + 1) . ':E' . ($numCell - 1) . ')');
+
+            $sheet->setCellValue('F' . $numCell, '=SUM(F' . ($fila + 1) . ':F' . ($numCell - 1) . ')');
+
+            $sheet->setCellValue('G' . $numCell, '=SUM(G' . ($fila + 1) . ':G' . ($numCell - 1) . ')');
+
+            $sheet->setCellValue('H' . $numCell, '=SUM(H' . ($fila + 1) . ':H' . ($numCell - 1) . ')');
+
+            $sheet->setCellValue('I' . $numCell, '=SUM(I' . ($fila + 1) . ':I' . ($numCell - 1) . ')');
+
+            $sheet->setCellValue('J' . $numCell, '=SUM(J' . ($fila + 1) . ':J' . ($numCell - 1) . ')');
+
+            $sheet->setCellValue('K' . $numCell, '=SUM(K' . ($fila + 1) . ':K' . ($numCell - 1) . ')');
+
+            $sheet->setCellValue('L' . $numCell, '=SUM(L' . ($fila + 1) . ':L' . ($numCell - 1) . ')');
+
+            $sheet->setCellValue('M' . $numCell, '=SUM(M' . ($fila + 1) . ':M' . ($numCell - 1) . ')');
+
+            $sheet->setCellValue('N' . $numCell, '=SUM(N' . ($fila + 1) . ':N' . ($numCell - 1) . ')');
+
+            $sheet->setCellValue('O' . $numCell, '=SUM(O' . ($fila + 1) . ':O' . ($numCell - 1) . ')');
+
+            $sheet->setCellValue('P' . $numCell, '');
+            
+            $sheet->getStyle('B'. $numCell .':P' .$numCell)->applyFromArray($styleArray);
+
+            $totalPieces+= $totalHb + $totalQb + $totalEb;
+
+            // Espacio en blanco
+            $space = $numCell + 1;
+            //
+            $spreadsheet->getActiveSheet()->getStyle('B'. $space .':P' .$space)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()->setRGB('FFFFFF');
+            $sheet->setCellValue('B' . $space, '');
+            $fila = $space + 1;
+            //dd($fila);
         }
+        
+        
+
+        $spreadsheet->getActiveSheet()->getStyle('B'. $fila .':P' .$fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()->setRGB('FFFFFF');
+        $numCellTotal = $fila + 1;
+        $spreadsheet->getActiveSheet()->getStyle('B'. $numCellTotal .':P' .$numCellTotal)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()->setRGB('FFFFFF');
+        $sheet->mergeCells('B'. $numCellTotal .':D' .$numCellTotal);
+        $sheet->getStyle('B'. $numCellTotal .':D' .$numCellTotal)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('B'. $numCellTotal .':D' .$numCellTotal)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('E'. $numCellTotal .':O' .$numCellTotal)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('E'. $numCellTotal .':O' .$numCellTotal)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $spreadsheet->getActiveSheet()->getStyle('B'. $numCellTotal .':D' .$numCellTotal)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()->setRGB('00B0F0');
+        $spreadsheet->getActiveSheet()->getStyle('E'. $numCellTotal .':I' .$numCellTotal)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()->setRGB('FFFF00');
+        $spreadsheet->getActiveSheet()->getStyle('J'. $numCellTotal .':N' .$numCellTotal)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()->setRGB('00B050');
+        $spreadsheet->getActiveSheet()->getStyle('O'. $numCellTotal)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()->setRGB('00B0F0');
+        $sheet->getStyle('B'. $numCellTotal .':P' .$numCellTotal)->getFont()->setBold(true);
+        $sheet->getStyle('B'. $numCellTotal .':O' .$numCellTotal)->applyFromArray($styleArray);
+
+        $sheet->setCellValue('B' . $numCellTotal, 'TOTAL');
+
+        $sheet->setCellValue('E' . $numCellTotal, $totalHb);
+
+        $sheet->setCellValue('F' . $numCellTotal, $totalQb);
+
+        $sheet->setCellValue('G' . $numCellTotal, $totalEb);
+
+        $sheet->setCellValue('H' . $numCellTotal, $totalPieces);
+
+        $sheet->setCellValue('I' . $numCellTotal, $totalFulls);
+
+        $sheet->setCellValue('J' . $numCellTotal, $totalHbr);
+
+        $sheet->setCellValue('K' . $numCellTotal, $totalQbr);
+
+        $sheet->setCellValue('L' . $numCellTotal, $totalEbr);
+
+        $sheet->setCellValue('M' . $numCellTotal, $totalPcsr);
+
+        $sheet->setCellValue('N' . $numCellTotal, $totalFullsr);
+        
+        $sheet->setCellValue('O' . $numCellTotal, $totalMissingr);
+
         
 
 
