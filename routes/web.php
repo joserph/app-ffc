@@ -149,6 +149,8 @@ Route::resource('/pallets', 'PalletController')->names('pallets');
 Route::resource('/palletitems', 'PalletItemController')->names('palletitems');
 // Pallets Items PDF
 Route::get('palletitems-Pdf', 'PalletItemController@palletitemsPdf')->name('palletitems.pdf');
+// Pallets Items excel (Plano de Carga)
+Route::get('palletitems-excel/{id}', 'PalletItemController@palletitemsExcel')->name('palletitems.excel');
 // Pallets Items
 Route::resource('/sketches', 'SketchController')->names('sketches');
 // infoCoordination

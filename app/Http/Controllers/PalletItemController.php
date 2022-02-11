@@ -10,6 +10,9 @@ use App\Pallet;
 use App\Load;
 use App\SketchPercent;
 use Barryvdh\DomPDF\Facade as PDF;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use App\Color;
 
 class PalletItemController extends Controller
 {
@@ -75,6 +78,96 @@ class PalletItemController extends Controller
         return redirect()->route('pallets.index', $load[0]->id)
             ->with('info', 'Item Guardado con exito');
     }
+
+    public function palletitemsExcel($codeLoad)
+    {
+        
+        $load = Load::find($codeLoad);
+        // CLIENTES
+        $resumenCarga = PalletItem::where('id_load', '=', $codeLoad)
+            ->join('clients', 'pallet_items.id_client', '=', 'clients.id')
+            ->select('clients.id', 'clients.name')
+            ->orderBy('clients.name', 'ASC')
+            ->get();
+        $colors = Color::where('type', '=', 'client')->get();
+        // Eliminamos los clientes duplicados
+        $clientsLoad = collect(array_unique($resumenCarga->toArray(), SORT_REGULAR));
+        //dd($load);
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $styleArray = [
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['rgb' => '000000'],
+                ],
+            ],
+        ];
+        $style = [
+            'alignment' => array(
+                'wrapText' => TRUE,
+                'textRotation' => '90',
+                'readorder' => \PhpOffice\PhpSpreadsheet\Style\Alignment::READORDER_RTL,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+            ),
+        ];
+
+        $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(25);
+        $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(4);
+
+        //$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(200);
+        //MARCACIONES
+        $sheet->getStyle('A2:B2')->getFont()->setBold(true);
+        $sheet->mergeCells('A2:B2');
+        $sheet->getStyle('A2:B2')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('A2:B2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A2:B2')->getFont()->setSize(11);
+        $sheet->getStyle('A2:B2')->applyFromArray($styleArray);
+        $sheet->setCellValue('A2', 'MARCACIONES');
+        
+        // LOOP
+        $fila = 3;
+        foreach($clientsLoad as $client)
+        {
+            $sheet->setCellValue('A' . $fila, $client['name']);
+            foreach($colors as $color)
+            {
+                if($color->id_type == $client['id'])
+                {
+                    
+                    $colorFila = str_replace('#', '', $color->color);
+                    $spreadsheet->getActiveSheet()->getStyle('B'. $fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                        ->getStartColor()->setRGB($colorFila);
+                    $sheet->getStyle('A' . $fila . ':B' . $fila)->applyFromArray($styleArray);
+                }
+            }
+
+            $fila++;
+           
+        }
+        $blCell = $fila;
+        $sheet->mergeCells('A' . $blCell . ':B' . ($blCell+20));
+        //$sheet->getStyle('A' . $blCell)->getAlignment()->setTextRotation(0);
+        /*$sheet->getStyle('A' . $blCell . ':B' . ($blCell+20))->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('A' . $blCell . ':B' . ($blCell+20))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);*/
+        $sheet->getStyle('A' . $blCell . ':B' . ($blCell+20))->applyFromArray($style);
+        $sheet->setCellValue('A' . $blCell, $load->bl);
+        
+
+
+
+        $writer = new Xlsx($spreadsheet);
+        //$writer->save('hello world.xlsx');
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="PLANO DE CARGA ' . $load->bl . '.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output');
+    }
+
 
     public function palletitemsPdf()
     {
