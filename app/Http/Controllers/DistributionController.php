@@ -16,6 +16,7 @@ use App\Marketer;
 use App\Http\Requests\UpdateDistributionRequest;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Illuminate\Support\Arr;
 
 class DistributionController extends Controller
 {
@@ -243,7 +244,9 @@ class DistributionController extends Controller
             $sheet->getStyle('B'. $fila .':P' .$fila)->getFont()->setBold(true);
             
             $filaDos = $fila + 1;
-            foreach($coordinations as $coord)
+            $arrSubTotal = array();
+            $indice = 0;
+            foreach($coordinations as $key => $coord)
             {
                 if($coord->id_client == $client['id'])
                 {
@@ -283,7 +286,6 @@ class DistributionController extends Controller
                     $sheet->setCellValue('B' . $filaDos, $coord->hawb);
                     
                     $sheet->setCellValue('C' . $filaDos, $coord->farm->name);
-                    
                     
                     $sheet->setCellValue('D' . $filaDos, $coord->variety->name);
 
@@ -360,7 +362,12 @@ class DistributionController extends Controller
             $spreadsheet->getActiveSheet()->getStyle('I' . $numCell)->getNumberFormat()->setFormatCode('#,##0.000');
             $spreadsheet->getActiveSheet()->getStyle('N' . $numCell)->getNumberFormat()->setFormatCode('#,##0.000');
             $sheet->setCellValue('B' . $numCell, 'SUB-TOTAL');
-
+            
+            //$subtotalVal = ["$indice" => $numCell];
+            //array_push($arrSubTotal, $numCell);
+            $arrSubTotal[] = $numCell;
+            //print_r($arrSubTotal);
+            
             //$sheet->setCellValue('C' . $numCell, 'SUB-TOTAL');
 
             $sheet->setCellValue('D' . $numCell, '');
@@ -400,10 +407,26 @@ class DistributionController extends Controller
                 ->getStartColor()->setRGB('FFFFFF');
             $sheet->setCellValue('B' . $space, '');
             $fila = $space + 1;
-            //dd($fila);
+
+            // Arreglo para guardar los Subtotales
+            
+            foreach($arrSubTotal as $t)
+            {
+                print_r($t . '-');
+                $arrSubTotal2[] = $t;
+            }
+            //
+            
         }
         
-        
+        //dd($arrSubTotal2);
+
+        $cadena = '';
+        foreach($arrSubTotal2 as $tot)
+        {
+            $cadena .= 'B' . $tot . '+';
+        }
+        dd($cadena);
 
         $spreadsheet->getActiveSheet()->getStyle('B'. $fila .':P' .$fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()->setRGB('FFFFFF');
