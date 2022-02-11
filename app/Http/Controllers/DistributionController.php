@@ -235,6 +235,8 @@ class DistributionController extends Controller
                     $colorFila = str_replace('#', '', $color->color);
                     $spreadsheet->getActiveSheet()->getStyle('B'. $fila .':P' .$fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                         ->getStartColor()->setRGB($colorFila);
+                    $spreadsheet->getActiveSheet()->getStyle('B'. $fila)
+                        ->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_WHITE);
                 }
             }
             // Totales variable
