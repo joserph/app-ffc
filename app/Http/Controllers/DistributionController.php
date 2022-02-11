@@ -97,6 +97,13 @@ class DistributionController extends Controller
         $spreadsheet->getActiveSheet()->getColumnDimension('P')->setWidth(40);
         $spreadsheet->getActiveSheet()->getRowDimension('8')->setRowHeight(30);
 
+        $letra = 'A';
+        for($letra; $letra <= 'T'; $letra++)
+        {
+            $spreadsheet->getActiveSheet()->getStyle($letra . '1:' . $letra . '150')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()->setRGB('FFFFFF');
+        }
+
 
         $sheet->getStyle('B7:P7')->getFont()->setBold(true);
         $sheet->getStyle('B8:P8')->getFont()->setBold(true);
@@ -348,8 +355,8 @@ class DistributionController extends Controller
             $sheet->getStyle('B'. $numCell .':D' .$numCell)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('E'. $numCell .':O' .$numCell)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
             $sheet->getStyle('E'. $numCell .':O' .$numCell)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-            $spreadsheet->getActiveSheet()->getStyle('B'. $numCell .':D' .$numCell)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-            ->getStartColor()->setRGB('FFFFFF');
+            /*$spreadsheet->getActiveSheet()->getStyle('B'. $numCell .':D' .$numCell)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()->setRGB('FFFFFF');*/
             $spreadsheet->getActiveSheet()->getStyle('E'. $numCell .':I' .$numCell)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()->setRGB('E2EFDA');
             $spreadsheet->getActiveSheet()->getStyle('J'. $numCell .':N' .$numCell)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
@@ -403,8 +410,8 @@ class DistributionController extends Controller
             // Espacio en blanco
             $space = $numCell + 1;
             //
-            $spreadsheet->getActiveSheet()->getStyle('B'. $space .':P' .$space)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-                ->getStartColor()->setRGB('FFFFFF');
+            /*$spreadsheet->getActiveSheet()->getStyle('B'. $space .':P' .$space)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()->setRGB('FFFFFF');*/
             $sheet->setCellValue('B' . $space, '');
             $fila = $space + 1;
 
@@ -412,7 +419,7 @@ class DistributionController extends Controller
             
             foreach($arrSubTotal as $t)
             {
-                print_r($t . '-');
+                //print_r($t . '-');
                 $arrSubTotal2[] = $t;
             }
             //
@@ -421,18 +428,18 @@ class DistributionController extends Controller
         
         //dd($arrSubTotal2);
 
-        $cadena = '';
+        /*$cadena = '';
         foreach($arrSubTotal2 as $tot)
         {
-            $cadena .= 'B' . $tot . '+';
-        }
-        dd($cadena);
+            $cadena .= '+B' . $tot;
+        }*/
+        //dd($cadena);
 
-        $spreadsheet->getActiveSheet()->getStyle('B'. $fila .':P' .$fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-            ->getStartColor()->setRGB('FFFFFF');
+        /*$spreadsheet->getActiveSheet()->getStyle('B'. $fila .':P' .$fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()->setRGB('FFFFFF');*/
         $numCellTotal = $fila + 1;
-        $spreadsheet->getActiveSheet()->getStyle('B'. $numCellTotal .':P' .$numCellTotal)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-            ->getStartColor()->setRGB('FFFFFF');
+        /*$spreadsheet->getActiveSheet()->getStyle('B'. $numCellTotal .':P' .$numCellTotal)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()->setRGB('FFFFFF');*/
         $sheet->mergeCells('B'. $numCellTotal .':D' .$numCellTotal);
         $sheet->getStyle('B'. $numCellTotal .':D' .$numCellTotal)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
         $sheet->getStyle('B'. $numCellTotal .':D' .$numCellTotal)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
@@ -446,12 +453,30 @@ class DistributionController extends Controller
             ->getStartColor()->setRGB('00B050');
         $spreadsheet->getActiveSheet()->getStyle('O'. $numCellTotal)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()->setRGB('00B0F0');
+        $spreadsheet->getActiveSheet()->getRowDimension($numCellTotal)->setRowHeight(20);
+        $spreadsheet->getActiveSheet()->getStyle('I' . $numCellTotal)->getNumberFormat()->setFormatCode('#,##0.000');
+        $spreadsheet->getActiveSheet()->getStyle('N' . $numCellTotal)->getNumberFormat()->setFormatCode('#,##0.000');
         $sheet->getStyle('B'. $numCellTotal .':P' .$numCellTotal)->getFont()->setBold(true);
         $sheet->getStyle('B'. $numCellTotal .':O' .$numCellTotal)->applyFromArray($styleArray);
 
         $sheet->setCellValue('B' . $numCellTotal, 'TOTAL');
 
-        $sheet->setCellValue('E' . $numCellTotal, $totalHb);
+        // SUMAR TODOS LOS SUBTOTALES DESDE LA CELDA E HASTA LA O.
+        
+        $i = 'E';
+        for($i; $i <= 'O'; $i++)
+        {
+            $cadena = '';
+            //$cadena2 .= $i;
+            foreach($arrSubTotal2 as $tot)
+            {
+                $cadena .= '+' . $i . $tot;
+            }
+            $sheet->setCellValue($i . $numCellTotal, '=' . $cadena);
+        }
+        //dd($cadena2);
+
+        /*$sheet->setCellValue('E' . $numCellTotal, '=' . $cadena);
 
         $sheet->setCellValue('F' . $numCellTotal, $totalQb);
 
@@ -471,12 +496,21 @@ class DistributionController extends Controller
 
         $sheet->setCellValue('N' . $numCellTotal, $totalFullsr);
         
-        $sheet->setCellValue('O' . $numCellTotal, $totalMissingr);
+        $sheet->setCellValue('O' . $numCellTotal, $totalMissingr);*/
 
         
 
 
-        
+        $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+        $drawing->setName('Paid');
+        $drawing->setDescription('Paid');
+        $drawing->setPath('images/logo-ffc-new.png'); // put your path and image here
+        $drawing->setCoordinates('B2');
+        $drawing->setOffsetX(50);
+        $drawing->setRotation(0);
+        //$drawing->getShadow()->setVisible(true);
+        //$drawing->getShadow()->setDirection(45);
+        $drawing->setWorksheet($spreadsheet->getActiveSheet());
 
 
 
