@@ -13,6 +13,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\Color;
+use App\Client;
 
 class PalletItemController extends Controller
 {
@@ -92,7 +93,15 @@ class PalletItemController extends Controller
         $colors = Color::where('type', '=', 'client')->get();
         // Eliminamos los clientes duplicados
         $clientsLoad = collect(array_unique($resumenCarga->toArray(), SORT_REGULAR));
-        //dd($load);
+        // PALLETS
+        $pallets = Pallet::where('id_load', '=', $codeLoad)->orderBy('id', 'ASC')->get();
+        $palletItem = PalletItem::where('id_load', '=', $codeLoad)->with('client')->with('farm')->orderBy('farms', 'ASC')->get();
+        // Farms
+        //$farms = Farm::all();
+        // Clients
+        //$clients = Client::all();
+
+        //dd($palletItem);
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         $styleArray = [
@@ -113,8 +122,25 @@ class PalletItemController extends Controller
             ),
         ];
 
-        $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(25);
+        $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(26);
         $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(4);
+        $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(2);
+        $spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(8);
+        $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(21);
+        $spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(8);
+        $spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(21);
+        $spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(5);
+        $spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(7);
+        $spreadsheet->getActiveSheet()->getColumnDimension('J')->setWidth(50);
+        $spreadsheet->getActiveSheet()->getColumnDimension('K')->setWidth(24);
+        $spreadsheet->getActiveSheet()->getColumnDimension('L')->setWidth(5);
+        $spreadsheet->getActiveSheet()->getColumnDimension('M')->setWidth(5);
+        $spreadsheet->getActiveSheet()->getColumnDimension('N')->setWidth(5);
+        $spreadsheet->getActiveSheet()->getColumnDimension('O')->setWidth(5);
+        $spreadsheet->getActiveSheet()->getColumnDimension('P')->setWidth(45);
+        $spreadsheet->getActiveSheet()->getColumnDimension('Q')->setWidth(5);
+        $spreadsheet->getActiveSheet()->getColumnDimension('R')->setWidth(5);
+        $spreadsheet->getActiveSheet()->getColumnDimension('S')->setWidth(5);
 
         //$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(200);
         //MARCACIONES
@@ -152,7 +178,132 @@ class PalletItemController extends Controller
         /*$sheet->getStyle('A' . $blCell . ':B' . ($blCell+20))->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
         $sheet->getStyle('A' . $blCell . ':B' . ($blCell+20))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);*/
         $sheet->getStyle('A' . $blCell . ':B' . ($blCell+20))->applyFromArray($style);
+        $sheet->getStyle('A' . $blCell . ':B' . ($blCell+20))->getFont()->setSize(28);
         $sheet->setCellValue('A' . $blCell, $load->bl);
+        
+        // PLANO
+        $sheet->getStyle('D2:G69')->getFont()->setBold(true);
+        $sheet->mergeCells('D2:E2');
+        $sheet->getStyle('D2:G69')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('D2:G69')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('D2:G69')->applyFromArray($styleArray);
+        $sheet->setCellValue('D2', 'LADO CHOFER');
+
+        //$sheet->getStyle('F2:G2')->getFont()->setBold(true);
+        $sheet->mergeCells('F2:G2');
+        /*$sheet->getStyle('F2:G2')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('F2:G2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('F2:G2')->applyFromArray($styleArray);*/
+        $sheet->setCellValue('F2', 'LADO CO-PILOTO');
+
+        $sheet->setCellValue('D3', 'PALETA');
+        $sheet->setCellValue('E3', 'CLIENTE');
+        $sheet->setCellValue('F3', 'PALETA');
+        $sheet->setCellValue('G3', 'CLIENTE');
+
+        $i = 'D';
+        for($i; $i <= 'G'; $i++)
+        {
+            
+            for($f = 4; $f <= 69; $f+=6)
+            {
+                //dd('F= ' . $f . 'Letra =' . $i);
+                $sheet->mergeCells($i . $f . ':' . $i . ($f + 5));
+            }
+            //$sheet->setCellValue($i . $numCellTotal, '=' . $cadena);
+        }
+
+        // PALLETS
+        $sheet->mergeCells('I1:N1');
+        $sheet->getStyle('I1:N3')->getFont()->setBold(true);
+        $sheet->getStyle('I1:N3')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('I1:N3')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('I1:N3')->applyFromArray($styleArray);
+
+        $sheet->getStyle('I1:N1')->getFont()->setSize(20);
+        $spreadsheet->getActiveSheet()->getStyle('I1:N1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                        ->getStartColor()->setRGB('C6E0B4');
+        $sheet->setCellValue('I1', $load->bl);
+
+        $sheet->mergeCells('I2:N2');
+        $sheet->setCellValue('I2', 'PIEZAS EMBARCADAS');
+        $sheet->setCellValue('I3', 'PALETA');
+        $sheet->setCellValue('J3', 'FINCA');
+        $sheet->setCellValue('K3', 'CLIENTE');
+        $sheet->setCellValue('L3', 'HB');
+        $sheet->setCellValue('M3', 'QB');
+        $sheet->setCellValue('N3', 'EB');
+        // LOOP PALETAS Y FINCAS
+        /*$k = 'I';
+        for($k; $k <= 'N'; $k++)
+        {
+            $j = 4;
+            foreach($pallets as $pallet)
+            {
+                
+                foreach($palletItem as $pItem)
+                {
+                    if($pallet->id == $pItem->id_pallet)
+                    {
+                        dd($k . $j);
+                        $sheet->setCellValue($k . $j, $pallet->counter);
+                        $sheet->setCellValue($k . $j, $pItem->farm->name);
+                    }
+                }
+                
+                $j++;
+            }
+            
+        }*/
+        $j = 4;
+        $count = 0;
+        foreach($pallets as $pallet)
+        {
+            foreach($palletItem as $pItem)
+            {
+                $k = 'I';
+                if($pallet->id == $pItem->id_pallet)
+                {
+                    
+                    for($k; $k <= 'N'; $k++)
+                    {
+                        //dd($pallet->counter);
+                        if($count != $pallet->counter)
+                        {
+                            $sheet->getStyle($k . $j)->applyFromArray($styleArray);
+
+                            $sheet->setCellValue($k . $j, $pallet->counter);
+                        }
+                        $count = $pallet->counter;
+                        $k++;
+                        $sheet->getStyle($k . $j)->applyFromArray($styleArray);
+                        $sheet->setCellValue($k . $j, $pItem->farm->name);
+                        $k++;
+                        $sheet->getStyle($k . $j)->applyFromArray($styleArray);
+                        $sheet->setCellValue($k . $j, $pItem->client->name);
+                        $k++;
+                        $sheet->getStyle($k . $j)->applyFromArray($styleArray);
+                        $sheet->setCellValue($k . $j, $pItem->hb);
+                        $k++;
+                        $sheet->getStyle($k . $j)->applyFromArray($styleArray);
+                        $sheet->setCellValue($k . $j, $pItem->qb);
+                        $k++;
+                        $sheet->getStyle($k . $j)->applyFromArray($styleArray);
+                        $sheet->setCellValue($k . $j, $pItem->eb);
+                    }
+                    $j++;
+                }
+                //$sheet->setCellValue($k . $j, '--');
+            }
+            $space = $j;
+            //
+            /*$spreadsheet->getActiveSheet()->getStyle('B'. $space .':P' .$space)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()->setRGB('FFFFFF');*/
+            $sheet->setCellValue('I' . $space, '');
+            $j = $space + 1;
+            
+        }
+        
         
 
 

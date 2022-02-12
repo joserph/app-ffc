@@ -17,9 +17,9 @@ class PalletItem extends Model
         return $this->belongsTo('App\User', 'id_user');
     }
 
-    public function farms()
+    public function farm()
     {
-        return $this->hasMany('App\Farm', 'id_farm');
+        return $this->belongsTo('App\Farm', 'id_farm');
     }
 
     /*public function clients()
