@@ -96,6 +96,16 @@ class PalletItemController extends Controller
         // PALLETS
         $pallets = Pallet::where('id_load', '=', $codeLoad)->orderBy('id', 'ASC')->get();
         $palletItem = PalletItem::where('id_load', '=', $codeLoad)->with('client')->with('farm')->orderBy('farms', 'ASC')->get();
+        // Items de carga
+        /*$itemsCargaAll = PalletItem::select('*')
+            ->where('id_load', '=', $codeLoad)
+            ->join('farms', 'pallet_items.id_farm', '=', 'farms.id')
+            ->select('farms.name', 'pallet_items.*')
+            ->orderBy('farms.name', 'ASC')
+            ->get();*/
+
+        $itemsFarms = PalletItem::groupEqualsItemsCargas($palletItem, $codeLoad);
+        //dd($itemsCarga);
         // Farms
         //$farms = Farm::all();
         // Clients
@@ -222,7 +232,7 @@ class PalletItemController extends Controller
 
         $sheet->getStyle('I1:N1')->getFont()->setSize(20);
         $spreadsheet->getActiveSheet()->getStyle('I1:N1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-                        ->getStartColor()->setRGB('C6E0B4');
+            ->getStartColor()->setRGB('C6E0B4');
         $sheet->setCellValue('I1', $load->bl);
 
         $sheet->mergeCells('I2:N2');
@@ -257,6 +267,7 @@ class PalletItemController extends Controller
         }*/
         $j = 4;
         $count = 0;
+        //dd($pallets);
         foreach($pallets as $pallet)
         {
             foreach($palletItem as $pItem)
@@ -271,8 +282,19 @@ class PalletItemController extends Controller
                         if($count != $pallet->counter)
                         {
                             $sheet->getStyle($k . $j)->applyFromArray($styleArray);
-
-                            $sheet->setCellValue($k . $j, $pallet->counter);
+                            $sheet->getStyle($k . $j)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+                            $sheet->getStyle($k . $j)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                            $sheet->getStyle($k . $j)->getFont()->setBold(true);
+                            if(strpos($pallet->number, 'USDA'))
+                            {
+                                $sheet->setCellValue($k . $j, 'USDA');
+                                $spreadsheet->getActiveSheet()->getStyle($k . $j)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                                    ->getStartColor()->setRGB('FFFF00');
+                            }else{
+                                $sheet->setCellValue($k . $j, $pallet->counter);
+                            }
+                            
+                            
                         }
                         $count = $pallet->counter;
                         $k++;
@@ -280,16 +302,28 @@ class PalletItemController extends Controller
                         $sheet->setCellValue($k . $j, $pItem->farm->name);
                         $k++;
                         $sheet->getStyle($k . $j)->applyFromArray($styleArray);
-                        $sheet->setCellValue($k . $j, $pItem->client->name);
+                        $sheet->setCellValue($k . $j, str_replace('SAG-', '', $pItem->client->name));
                         $k++;
                         $sheet->getStyle($k . $j)->applyFromArray($styleArray);
-                        $sheet->setCellValue($k . $j, $pItem->hb);
+                        if($pItem->hb != 0)
+                        {
+                            $sheet->setCellValue($k . $j, $pItem->hb);
+                        }
+                        
                         $k++;
                         $sheet->getStyle($k . $j)->applyFromArray($styleArray);
-                        $sheet->setCellValue($k . $j, $pItem->qb);
+                        if($pItem->qb != 0)
+                        {
+                            $sheet->setCellValue($k . $j, $pItem->qb);
+                        }
+                        
                         $k++;
                         $sheet->getStyle($k . $j)->applyFromArray($styleArray);
-                        $sheet->setCellValue($k . $j, $pItem->eb);
+                        if($pItem->eb != 0)
+                        {
+                            $sheet->setCellValue($k . $j, $pItem->eb);
+                        }
+                        
                     }
                     $j++;
                 }
@@ -303,6 +337,101 @@ class PalletItemController extends Controller
             $j = $space + 1;
             
         }
+
+        // TOTAL LOOP PALETAS
+        $sheet->getStyle('J' . $j . ':N' . $j)->applyFromArray($styleArray);
+        $sheet->getStyle('J' . $j . ':N' . $j)->getFont()->setBold(true);
+        $sheet->getStyle('J' . $j . ':N' . $j)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('J' . $j . ':N' . $j)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->mergeCells('J' . $j . ':K' . $j);
+        $sheet->setCellValue('J' . $j, 'TOTAL');
+
+        
+        $sheet->setCellValue('L' . $j, '=SUM(L4:L' . ($j-1) . ')');
+        $sheet->setCellValue('M' . $j, '=SUM(M4:M' . ($j-1) . ')');
+        $sheet->setCellValue('N' . $j, '=SUM(N4:N' . ($j-1) . ')');
+        $j++;
+        $sheet->getStyle('L' . $j . ':N' . $j)->applyFromArray($styleArray);
+        $sheet->getStyle('L' . $j . ':N' . $j)->getFont()->setBold(true);
+        $sheet->getStyle('L' . $j . ':N' . $j)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('L' . $j . ':N' . $j)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->mergeCells('L' . ($j) . ':N' . ($j));
+        $sheet->setCellValue('L' . $j, '=L' . ($j-1) . '+M' . ($j-1) . '+N' . ($j-1));
+
+        
+        // RESUMEN DE CLIENTES Y FINCAS
+        $sheet->mergeCells('P2:S2');
+        $sheet->getStyle('P2:S3')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('P2:S3')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('P2:S3')->applyFromArray($styleArray);
+        $sheet->getStyle('P2:S3')->getFont()->setBold(true);
+        $sheet->setCellValue('P2', 'TOTAL DE PIEZAS ENVIADAS');
+        $sheet->setCellValue('P3', 'FINCA');
+        $sheet->setCellValue('Q3', 'HB');
+        $sheet->setCellValue('R3', 'QB');
+        $sheet->setCellValue('S3', 'EB');
+
+        $l = 4;
+        //dd($itemsFarms);
+        foreach($clientsLoad as $resumClient)
+        {
+            $sheet->mergeCells('P' . $l . ':S' . $l);
+            $sheet->getStyle('P' . $l . ':S' . $l)->getFont()->setBold(true);
+            $sheet->getStyle('P' . $l . ':S' . $l)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('P' . $l . ':S' . $l)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('P' . $l . ':S' . $l)->applyFromArray($styleArray);
+            $sheet->setCellValue('P' . $l, str_replace('SAG-', '', $resumClient['name']));
+            $ll = $l + 1;
+            
+            
+            foreach($itemsFarms as $itemFarm)
+            {
+                if($itemFarm['id_client'] == $resumClient['id'])
+                {
+                    for($m = 'P'; $m <= 'S'; $m++)
+                    {
+                        //dd($itemFarm['farms']);
+                        $sheet->getStyle($m . $ll)->applyFromArray($styleArray);
+                        $sheet->setCellValue($m . $ll, $itemFarm['farms']);
+                        $m++;
+                        $sheet->getStyle($m . $ll)->applyFromArray($styleArray);
+                        if($itemFarm['hb'] != 0)
+                        {
+                            $sheet->setCellValue($m . $ll, $itemFarm['hb']);
+                        }
+                        $m++;
+                        $sheet->getStyle($m . $ll)->applyFromArray($styleArray);
+                        if($itemFarm['qb'] != 0)
+                        {
+                            $sheet->setCellValue($m . $ll, $itemFarm['qb']);
+                        }
+                        $m++;
+                        $sheet->getStyle($m . $ll)->applyFromArray($styleArray);
+                        if($itemFarm['eb'] != 0)
+                        {
+                            $sheet->setCellValue($m . $ll, $itemFarm['eb']);
+                        }
+                        $m++;
+                        
+                    }
+                    $ll++;
+                }
+            }
+            $l = $ll;
+        }
+
+        // TOTAL HB, QB Y EB
+        $sheet->getStyle('Q' . $l . ':S' . ($l+1))->applyFromArray($styleArray);
+        $sheet->getStyle('Q' . $l . ':S' . ($l+1))->getFont()->setBold(true);
+        $sheet->getStyle('Q' . $l . ':S' . ($l+1))->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('Q' . $l . ':S' . ($l+1))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->setCellValue('Q' . $l, '=SUM(Q5:Q' . ($l-1) . ')');
+        $sheet->setCellValue('R' . $l, '=SUM(R5:R' . ($l-1) . ')');
+        $sheet->setCellValue('S' . $l, '=SUM(S5:S' . ($l-1) . ')');
+        $l++;
+        $sheet->mergeCells('Q' . ($l) . ':S' . ($l));
+        $sheet->setCellValue('Q' . $l, '=Q' . ($l-1) . '+R' . ($l-1) . '+S' . ($l-1));
+        
         
         
 
