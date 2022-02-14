@@ -165,3 +165,5 @@ Route::get('/transfer-coordination/{id}', 'CoordinationController@transferCoordi
 Route::resource('/color', 'ColorController')->names('color');
 // Marketers
 Route::resource('/marketer', 'MarketerController')->names('marketer');
+// Weight Distribution
+Route::resource('/weight-distribution', 'WeightDistributionController')->names('weight-distribution');

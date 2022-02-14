@@ -60,7 +60,7 @@
                   <div class="icon">
                      <i class="fas fa-balance-scale-right"></i>
                   </div>
-                   <a href="#" class="small-box-footer">
+                   <a href="{{ route('weight-distribution.index', $flight->id) }}" class="small-box-footer">
                     Ver Proyeccion de peso <i class="fas fa-arrow-circle-right"></i>
                   </a>
                 </div>
