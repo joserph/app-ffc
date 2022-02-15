@@ -5,15 +5,15 @@
     </div>
     <div class="col-sm-2">
         {{ Form::label('large', 'Largo', ['class' => 'control-label']) }}
-        {{ Form::number('large', 0, ['class' => 'form-control']) }}
+        {{ Form::text('large', 0, ['class' => 'form-control']) }}
     </div>
     <div class="col-sm-2">
         {{ Form::label('width', 'Ancho', ['class' => 'control-label']) }}
-        {{ Form::number('width', 0, ['class' => 'form-control']) }}
+        {{ Form::text('width', 0, ['class' => 'form-control']) }}
     </div>
     <div class="col-sm-2">
         {{ Form::label('high', 'Alto', ['class' => 'control-label']) }}
-        {{ Form::number('high', 0, ['class' => 'form-control']) }}
+        {{ Form::text('high', 0, ['class' => 'form-control']) }}
     </div>
     
     {{ Form::hidden('id_user', Auth::user()->id, ['id' => 'id_user']) }}

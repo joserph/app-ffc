@@ -73,7 +73,10 @@ class WeightDistributionController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        $distribution = Distribution::find($request->id_distribution);
+        $average = $request->report_w / $distribution->fulls;
+        
+        dd($average);
     }
 
     /**
