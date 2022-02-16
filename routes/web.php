@@ -167,3 +167,5 @@ Route::resource('/color', 'ColorController')->names('color');
 Route::resource('/marketer', 'MarketerController')->names('marketer');
 // Weight Distribution
 Route::resource('/weight-distribution', 'WeightDistributionController')->names('weight-distribution');
+// Packing
+Route::resource('/packing', 'PackingController')->names('packing');

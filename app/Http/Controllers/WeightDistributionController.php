@@ -75,6 +75,7 @@ class WeightDistributionController extends Controller
     {
         $distribution = Distribution::find($request->id_distribution);
         $average = $request->report_w / $distribution->fulls;
+        $request['average'] = $request->report_w / $distribution->fulls;
         
         dd($average);
     }

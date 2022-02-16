@@ -209,6 +209,14 @@
                                  </a>
                               </li>
                            @endcan
+                           @can('haveaccess', 'packing.index')
+                              <li class="nav-item">
+                                 <a href="{{ route('packing.index') }}" class="nav-link">
+                                    <i class="fas fa-box"></i>
+                                    <p>Observaciones Empaques</p>
+                                 </a>
+                              </li>
+                           @endcan
                         </ul>
                      </nav>
                   @endguest

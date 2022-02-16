@@ -153,6 +153,20 @@
             @endcan
          </div>
       </div>
+      <div class="col-lg-3 col-6">
+         <div class="small-box bg-primary">
+            <div class="inner">
+               <h3>{{ $packings }}</h3>
+               <p>Observaciones Empaques</p>
+            </div>
+            <div class="icon">
+               <i class="fas fa-box"></i>
+            </div>
+            @can('haveaccess', 'packing.index')
+               <a href="{{ route('packing.index') }}" class="small-box-footer">Ver <i class="fas fa-arrow-circle-right"></i></a>
+            @endcan
+         </div>
+      </div>
 
 
 
