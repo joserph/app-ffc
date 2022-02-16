@@ -50,4 +50,9 @@ class Distribution extends Model
     {
         return $this->belongsTo('App\Marketer', 'id_marketer');
     }
+
+    public function weights()
+    {
+        return $this->hasMany('App\WeightDistribution', 'id_distribution');
+    }
 }

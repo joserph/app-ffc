@@ -9,6 +9,8 @@ use App\Client;
 use App\Farm;
 use App\Variety;
 use App\Marketer;
+use App\Packing;
+use App\WeightDistribution;
 
 
 class WeightDistributionController extends Controller
@@ -30,7 +32,8 @@ class WeightDistributionController extends Controller
         $distributions = Distribution::select('*')
             ->where('id_flight', '=', $code)
             ->with('variety')
-            ->WITH('marketer')
+            ->with('marketer')
+            ->with('weights')
             ->join('farms', 'distributions.id_farm', '=', 'farms.id')
             ->select('farms.name', 'distributions.*')
             ->orderBy('farms.name', 'ASC')
@@ -51,8 +54,12 @@ class WeightDistributionController extends Controller
         $varieties = Variety::orderBy('name', 'ASC')->pluck('name', 'id');
         // Comercializadores
         $marketers = Marketer::orderBy('name', 'ASC')->pluck('name', 'id');
-        //dd($clients);
-        return view('weightdistribution.index', compact('flight', 'distributions', 'clients', 'clientsDistribution', 'farms', 'varieties', 'marketers'));
+        // Pakings
+        $packings = Packing::orderBy('description', 'ASC')->pluck('description', 'id');
+        // weight Distribution
+        $weightDistribution = WeightDistribution::where('id_flight', '=', $flight->id)->get();
+        //dd($distributions);
+        return view('weightdistribution.index', compact('flight', 'distributions', 'clients', 'clientsDistribution', 'farms', 'varieties', 'marketers', 'packings', 'weightDistribution'));
     }
 
     /**
@@ -76,8 +83,13 @@ class WeightDistributionController extends Controller
         $distribution = Distribution::find($request->id_distribution);
         $average = $request->report_w / $distribution->fulls;
         $request['average'] = $request->report_w / $distribution->fulls;
-        
-        dd($average);
+
+        //dd($request->all());
+        $weightDistribution = WeightDistribution::create($request->all());
+
+        return redirect()->route('weight-distribution.index', $distribution->id_flight)
+            ->with('status_success', 'Peso agregada con éxito');
+        //dd($average);
     }
 
     /**

@@ -128,10 +128,10 @@
                                     {{ strtoupper($item->observation) }}
                                  </small></td>
                                  <td></td>
+                                 <td>{{ $item->weights[0]->report_w }}</td>
                                  <td></td>
                                  <td></td>
                                  <td></td>
-                                 <td>.</td>
                                 <td class="text-center">
                                     @can('haveaccess', 'distribution.edit')
                                     <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#createItem{{ $item->id }}">
