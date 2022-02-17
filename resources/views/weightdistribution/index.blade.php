@@ -33,6 +33,7 @@
             <div class="card">
                <div class="card-header">
                   PROYECCION DE PESO {{ $flight->awb }}
+                  <a href="{{ route('weight-distribution.excel', $flight->id) }}" target="_blank" class="btn btn-xs btn-outline-success float-right"><i class="fas fa-file-excel"></i> PROYECCIÓN DE PESO</a>
                </div>
                
                <div class="card-body">

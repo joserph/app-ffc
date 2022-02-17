@@ -167,5 +167,6 @@ Route::resource('/color', 'ColorController')->names('color');
 Route::resource('/marketer', 'MarketerController')->names('marketer');
 // Weight Distribution
 Route::resource('/weight-distribution', 'WeightDistributionController')->names('weight-distribution');
+Route::get('weight-distribution-excel/{id}', 'WeightDistributionController@weightDistributionExcel')->name('weight-distribution.excel');
 // Packing
 Route::resource('/packing', 'PackingController')->names('packing');

@@ -11,6 +11,8 @@ use App\Variety;
 use App\Marketer;
 use App\Packing;
 use App\WeightDistribution;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 
 class WeightDistributionController extends Controller
@@ -69,7 +71,74 @@ class WeightDistributionController extends Controller
         return view('weightdistribution.index', compact('flight', 'distributions', 'clients', 'clientsDistribution', 'farms', 'varieties', 'marketers', 'packings', 'weightDistribution'));
     }
 
-    
+    public function weightDistributionExcel($codeDist)
+    {
+        $flight = Flight::find($codeDist);
+
+        // Buscamos los clientes que esten en esta carga, por el id_load
+        $clientsDistr = Distribution::where('id_flight', '=', $codeDist)
+            ->join('clients', 'distributions.id_client', '=', 'clients.id')
+            ->select('clients.id', 'clients.name')
+            ->orderBy('clients.name', 'ASC')
+            ->get();
+        // Eliminamos los clientes duplicados
+        $clientsDistribution = collect(array_unique($clientsDistr->toArray(), SORT_REGULAR));
+
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(22);
+        $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(12);
+        $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(12);
+        $spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(10);
+        $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(10);
+        $spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(10);
+        $spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(65);
+        $spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(10);
+        $spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(10);
+        $spreadsheet->getActiveSheet()->getColumnDimension('J')->setWidth(10);
+        $spreadsheet->getActiveSheet()->getColumnDimension('K')->setWidth(10);
+        $spreadsheet->getActiveSheet()->getColumnDimension('L')->setWidth(55);
+
+        // Titulo
+        $sheet->getStyle('A8:L8')->getFont()->setBold(true);
+        $sheet->mergeCells('A8:L8');
+        $sheet->getStyle('A8:L8')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('A8:L8')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->setCellValue('A8', 'PROYECCION DE PESO ' . $flight->awb);
+        // Cabecera
+        $sheet->setCellValue('A9', 'HAWB');
+        $sheet->setCellValue('B9', 'Reported Weight');
+        $sheet->setCellValue('C9', 'Promedio');
+        $sheet->setCellValue('D9', 'Largo');
+        $sheet->setCellValue('E9', 'Ancho');
+        $sheet->setCellValue('F9', 'Alto');
+        $sheet->setCellValue('G9', 'Resumen de Clientes');
+        $sheet->setCellValue('H9', 'HB');
+        $sheet->setCellValue('I9', 'QB');
+        $sheet->setCellValue('J9', 'EB');
+        $sheet->setCellValue('K9', 'FBX');
+        $sheet->setCellValue('L9', 'Observaciones');
+
+        // CLIENTES
+        foreach($clientsDistribution as $client)
+        {
+            $sheet->setCellValue('A10', $client['name']);
+        }
+
+        
+
+
+        $writer = new Xlsx($spreadsheet);
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="PROYECCIÓN DE PASO ' . $flight->awb . '.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output');
+    }
 
     /**
      * Show the form for creating a new resource.
