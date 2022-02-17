@@ -33,7 +33,8 @@ class WeightDistributionController extends Controller
             ->where('id_flight', '=', $code)
             ->with('variety')
             ->with('marketer')
-            ->with('weights')
+            ->with('weight')
+            //->join('weight_distributions', 'weight_distributions.id_distribution', '=', 'distributions.id')
             ->join('farms', 'distributions.id_farm', '=', 'farms.id')
             ->select('farms.name', 'distributions.*')
             ->orderBy('farms.name', 'ASC')
@@ -57,10 +58,18 @@ class WeightDistributionController extends Controller
         // Pakings
         $packings = Packing::orderBy('description', 'ASC')->pluck('description', 'id');
         // weight Distribution
-        $weightDistribution = WeightDistribution::where('id_flight', '=', $flight->id)->get();
-        //dd($distributions);
+        $weightDistribution = WeightDistribution::where('id_flight', '=', $flight->id)->with('packing')->get();
+        foreach($distributions as $dist)
+        {
+            //dd($dist->weight[0]['report_w']);
+        }
+        $dis = $distributions->toArray();
+        //dd($dis[0]['weight'][0]['large']);
+        //dd($dis);
         return view('weightdistribution.index', compact('flight', 'distributions', 'clients', 'clientsDistribution', 'farms', 'varieties', 'marketers', 'packings', 'weightDistribution'));
     }
+
+    
 
     /**
      * Show the form for creating a new resource.
@@ -123,7 +132,16 @@ class WeightDistributionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $weightDistribution = WeightDistribution::find($id);
+
+        $distribution = Distribution::find($request->id_distribution);
+        $average = $request->report_w / $distribution->fulls;
+        $request['average'] = $request->report_w / $distribution->fulls;
+
+        $weightDistribution->update($request->all());
+
+        return redirect()->route('weight-distribution.index', $distribution->id_flight)
+            ->with('status_success', 'Peso editado con éxito');
     }
 
     /**

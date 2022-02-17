@@ -20,7 +20,6 @@
         {{ Form::select('observation', $packings, null, ['class' => 'form-control', 'placeholder' => 'Seleccione Observación']) }}
     </div>
 
-    {{ Form::hidden('id_user', Auth::user()->id, ['id' => 'id_user']) }}
     {{ Form::hidden('update_user', Auth::user()->id, ['id' => 'update_user']) }}
     {{ Form::hidden('id_flight', $flight->id, ['id' => 'id_flight']) }}
     {{ Form::hidden('id_distribution', $item['id'], ['id' => 'id_distribution']) }}

@@ -18,4 +18,9 @@ class WeightDistribution extends Model
         'id_user', 
         'update_user'
     ];
+
+    public function packing()
+    {
+        return $this->belongsTo('App\Packing', 'observation');
+    }
 }

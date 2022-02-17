@@ -7,14 +7,14 @@
     <div class="container-fluid">
        <div class="row mb-2">
           <div class="col-sm-6">
-             <h1>Coordinaciones Aéreas</h1>
+             <h1>Pesos Aéreos</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
                <li class="breadcrumb-item"><a href="{{ route('flight.index') }}">Vuelos</a></li>
                <li class="breadcrumb-item"><a href="{{ route('flight.show', $flight->id) }}">AWB {{ $flight->awb }}</a></li>
-               <li class="breadcrumb-item active">Coordinaciones Aéreas</li>
+               <li class="breadcrumb-item active">Pesos Aéreos</li>
             </ol>
           </div>
        </div>
@@ -32,7 +32,7 @@
 
             <div class="card">
                <div class="card-header">
-                  Coordinaciones Vuelo AWB {{ $flight->awb }}
+                  PROYECCION DE PESO {{ $flight->awb }}
                </div>
                
                <div class="card-body">
@@ -40,107 +40,130 @@
                   <div class="table-responsive">
                     <table class="table table-sm table-bordered border-primary">
                         @php
-                            $totalFulls = 0; $totalHb = 0; $totalQb = 0; $totalEb = 0; $totalPcsr = 0; $totalHbr = 0; $totalQbr = 0;
-                            $totalEbr = 0; $totalFullsr = 0; $totalDevr = 0; $totalMissingr = 0;
+                            $totalHbr = 0; 
+                            $totalQbr = 0;
+                            $totalEbr = 0; 
+                            $totalFullsr = 0; 
+                            $totalRepotWeight = 0;
                         @endphp
                         @foreach($clientsDistribution as $client)
                         <thead>
                             <tr>
-                                <th colspan="22" class="sin-border"></th>
+                                <th colspan="13" class="sin-border"></th>
                             </tr>
                         </thead>
                         <thead>
                             <tr>
-                                <th class="text-center medium-letter">AWB</th>
-                                <th class="text-center medium-letter" colspan="21">{{ $client['name'] }}</th>
+                                <th class="text-center medium-letter table-success" colspan="13">{{ $client['name'] }}</th>
                             </tr>
                         </thead>
                         <thead>
                             <tr class="gris">
-                              <th class="text-center transfLavel">Transferir</th>
-                              <th class="text-center">Finca</th>
-                              <th class="text-center">HAWB</th>
-                              <th class="text-center">Variedad</th>
-                              <th class="text-center table-secondary">PCS</th>
-                              <th class="text-center table-secondary">HB</th>
-                              <th class="text-center table-secondary">QB</th>
-                              <th class="text-center table-secondary">EB</th>
-                              <th class="text-center table-secondary">FULL</th>
-                              <th class="text-center table-success">PCS</th>
-                              <th class="text-center table-success">HB</th>
-                              <th class="text-center table-success">QB</th>
-                              <th class="text-center table-success">EB</th>
-                              <th class="text-center table-success">FULL</th>
-                              <th class="text-center table-warning">Dev</th>
-                              <th class="text-center">Faltantes</th>
-                              <th class="text-center">Observación</th>
-                              <th class="text-center"></th>
+                              <th class="text-center" style="width: 115px">HAWB</th>
                               <th class="text-center">Reported Weight</th>
+                              <th class="text-center">Promedio</th>
                               <th class="text-center">Largo</th>
                               <th class="text-center">Ancho</th>
                               <th class="text-center">Alto</th>
-                              <th class="text-center">Aciones</th>
+                              <th class="text-center">Resumen de Clientes</th>
+                              <th class="text-center">HB</th>
+                              <th class="text-center">QB</th>
+                              <th class="text-center">EB</th>
+                              <th class="text-center">Fulls</th>
+                              <th class="text-center">Observaciones</th>
+                              <th class="text-center" colspan="2" style="width: 80px">Aciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             @php
-                                $tPieces = 0; $tFulls = 0; $tHb = 0; $tQb = 0; $tEb = 0; $totalPieces = 0; $tPcsR = 0;
-                                 $tHbr = 0; $tQbr = 0; $tEbr = 0; $tFullsR = 0; $tDevR = 0; $tMissingR = 0;
+                                 $tHbr = 0; 
+                                 $tQbr = 0; 
+                                 $tEbr = 0; 
+                                 $tFullsR = 0; 
+                                 $subRepotWeight = 0;
+                                 $subAverage = 0;
                             @endphp
                             
                             @foreach($distributions as $item)
-                            @if($client['id'] == $item->id_client)
+                            @if($client['id'] == $item['id_client'])
                             @php
-                                $tPieces+= $item->pieces;
-                                $tFulls+= $item->fulls;
-                                $tHb+= $item->hb;
-                                $tQb+= $item->qb;
-                                $tEb+= $item->eb;
-                                $tPcsR+= $item->pieces_r;
-                                 $tHbr+= $item->hb_r;
-                                 $tQbr+= $item->qb_r;
-                                 $tEbr+= $item->eb_r;
-                                 $tFullsR+= $item->fulls_r;
-                                 $tDevR+= $item->returns;
-                                 $tMissingR+= $item->missing;
+                                 $tHbr+= $item['hb_r'];
+                                 $tQbr+= $item['qb_r'];
+                                 $tEbr+= $item['eb_r'];
+                                 $tFullsR+= $item['fulls_r'];
                             @endphp
                             <tr>
-                               <!--<td class="text-center"><input type="checkbox" class="transf" name="{{ $item->id }}" value="{{ $item->id }}" placeholder="{{ $item->name }} - {{ $client['name'] }} - {{ $item->pieces }}"></td>-->
-                                <td class="farms">{{ $item->name }}</td>
-                                <td class="text-center">{{ $item->hawb }}</td>
-                                <td class="text-center">{{ $item->variety->name }}</td>
-                                <td class="text-center">{{ $item->pieces }}</td>
-                                <td class="text-center">{{ $item->hb }}</td>
-                                <td class="text-center">{{ $item->qb }}</td>
-                                <td class="text-center">{{ $item->eb }}</td>
-                                <td class="text-center">{{ number_format($item->fulls, 3, '.','') }}</td>
-                                <td class="text-center">{{ $item->pieces_r }}</td>
-                                <td class="text-center">{{ $item->hb_r }}</td>
-                                <td class="text-center">{{ $item->qb_r }}</td>
-                                <td class="text-center">{{ $item->eb_r }}</td>
-                                <td class="text-center">{{ number_format($item->fulls_r, 3, '.','') }}</td>
-                                <td class="text-center">{{ $item->returns }}</td>
-                                <td class="text-center">{{ $item->missing }}</td>
-                                <td class="text-center text-danger"><small>
-                                    @if($item->id_marketer)
-                                       COMPRA DE {{ strtoupper($item->marketer->name) }} 
-                                    @endif
-                                    {{ strtoupper($item->observation) }}
-                                 </small></td>
-                                 <td></td>
-                                 <td>{{ $item->weights[0]->report_w }}</td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
+                                <td class="text-center">{{ $item['hawb'] }}</td>
                                 <td class="text-center">
-                                    @can('haveaccess', 'distribution.edit')
-                                    <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#createItem{{ $item->id }}">
-                                       <i class="fas fa-plus"></i>
-                                    </button>
+                                 @foreach($weightDistribution as $weight)
+                                    @if($weight->id_distribution == $item['id'])
+                                       @php $subRepotWeight+= $weight->report_w; @endphp
+                                       {{ number_format($weight->report_w, 2, '.','') }}
+                                    @endif
+                                 @endforeach
+                                </td>
+                                <td class="text-center">
+                                 @foreach($weightDistribution as $weight)
+                                    @if($weight->id_distribution == $item['id'])
+                                       @php $subAverage+= $weight->average; @endphp
+                                       {{ number_format($weight->average, 2, '.','') }}
+                                    @endif
+                                 @endforeach
+                                </td>
+                                
+                                <td class="text-center">
+                                 @foreach($weightDistribution as $weight)
+                                    @if($weight->id_distribution == $item['id'])
+                                       {{ number_format($weight->large, 2, '.','') }}
+                                    @endif
+                                 @endforeach
+                                </td>
+                                <td class="text-center">
+                                 @foreach($weightDistribution as $weight)
+                                    @if($weight->id_distribution == $item['id'])
+                                       {{ number_format($weight->width, 2, '.','') }}
+                                    @endif
+                                 @endforeach
+                                </td>
+                                <td class="text-center">
+                                 @foreach($weightDistribution as $weight)
+                                    @if($weight->id_distribution == $item['id'])
+                                       {{ number_format($weight->high, 2, '.','') }}
+                                    @endif
+                                 @endforeach
+                                </td>
+                                <td>{{ $item['name'] }}</td>
+                                <td class="text-center">{{ $item['hb_r'] }}</td>
+                                <td class="text-center">{{ $item['qb_r'] }}</td>
+                                <td class="text-center">{{ $item['eb_r'] }}</td>
+                                <td class="text-center">{{ number_format($item['fulls_r'], 3, '.','') }}</td>
+                                <td class="text-center">
+                                    @foreach($weightDistribution as $weight)
+                                       @if($weight->id_distribution == $item['id'])
+                                          {{ $weight->packing->description }}
+                                       @endif
+                                    @endforeach
+                                </td>
+                                
+                                <td class="text-center">
+                                 @if ($item['weight'] == '[]')
+                                    @can('haveaccess', 'distribution.create')
+                                       <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#createItem{{ $item['id'] }}">
+                                          <i class="fas fa-plus"></i>
+                                       </button>
                                     @endcan
+                                 @else
+                                    @can('haveaccess', 'distribution.edit')
+                                       <button type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#editItem{{ $item['id'] }}">
+                                          <i class="fas fa-edit"></i>
+                                       </button>
+                                    @endcan
+                                 @endif
+
+                                    
                                </td>
                             </tr>
-                            <div class="modal fade" id="createItem{{ $item->id }}" tabindex="-1" aria-labelledby="createItemLabel" aria-hidden="true">
+                            <div class="modal fade" id="createItem{{ $item['id'] }}" tabindex="-1" aria-labelledby="createItemLabel" aria-hidden="true">
                               <div class="modal-dialog modal-xl">
                                  <div class="modal-content">
                                     <div class="modal-header">
@@ -166,60 +189,73 @@
                                  </div>
                               </div>
                            </div>
+                           <div class="modal fade" id="editItem{{ $item['id'] }}" tabindex="-1" aria-labelledby="editItemLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-xl">
+                                 <div class="modal-content">
+                                    <div class="modal-header">
+                                       <h5 class="modal-title" id="editItemLabel">Editar Peso</h5>
+                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                       </button>
+                                    </div>
+                                    <div class="modal-body">
+                                       @include('custom.message') 
+                                       @foreach($weightDistribution as $weight)
+                                          @if($weight->id_distribution == $item['id'])
+                                             {{ Form::model($weight, ['route' => ['weight-distribution.update', $weight->id], 'class' => 'form-horizontal', 'method' => 'PUT']) }}
+                                                <div class="modal-body">
+                                                   @include('weightdistribution.partials.formEdit')
+                                                </div>
+                                                <div class="modal-footer">
+                                                   <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+                                                   <button type="submit" class="btn btn-outline-warning" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
+                                                      <i class="fas fa-sync"></i> Actualizar
+                                                   </button>
+                                                </div>
+                                             {{ Form::close() }}
+                                          @endif
+                                       @endforeach
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
                             @endif
                             @endforeach
                             
                             @php
-                                 $totalFulls+= $tFulls;
-                                 $totalHb+= $tHb;
-                                 $totalQb+= $tQb;
-                                 $totalEb+= $tEb;
-                                 $totalPcsr+= $tPcsR;
                                  $totalHbr+= $tHbr;
                                  $totalQbr+= $tQbr;
                                  $totalEbr+= $tEbr;
                                  $totalFullsr+= $tFullsR;
-                                 $totalDevr+= $tDevR;
-                                 $totalMissingr+= $tMissingR;
+                                 $totalRepotWeight+= $subRepotWeight;
                               @endphp
                            <tr class="gris">
-                              <th class="text-center text-right" colspan="3">Total:</th>
-                              <th class="text-center">{{ $tPieces }}</th>
-                              <th class="text-center">{{ $tHb }}</th>
-                              <th class="text-center">{{ $tQb }}</th>
-                              <th class="text-center">{{ $tEb }}</th>
-                              <th class="text-center">{{ number_format($tFulls, 3, '.','') }}</th>
-                              <th class="text-center">{{ $tPcsR }}</th>
+                              <th class="text-center"></th>
+                              <th class="text-center">{{ number_format($subRepotWeight, 2, '.','') }}</th>
+                              <th class="text-center">{{ number_format($subAverage, 2, '.','') }}</th>
+                              <th class="text-center" colspan="4"></th>
                               <th class="text-center">{{ $tHbr }}</th>
                               <th class="text-center">{{ $tQbr }}</th>
                               <th class="text-center">{{ $tEbr }}</th>
                               <th class="text-center">{{ number_format($tFullsR, 3, '.','') }}</th>
-                              <th class="text-center">{{ $tDevR }}</th>
-                              <th class="text-center">{{ $tMissingR }}</th>
+                              <th class="text-center" colspan="2"></th>
                            </tr>
                         </tbody>
                         <tfoot>
                         @endforeach
-                        @php
-                            $totalPieces+= $totalHb + $totalQb + $totalEb;
-                        @endphp
+                        
                             <tr>
                                 <th colspan="8" class="sin-border"></th>
                             </tr>
                             <tr class="gris">
-                                <th class="text-center" colspan="3">Total Global:</th>
-                                <th class="text-center">{{ $totalPieces }}</th>
-                                <th class="text-center">{{ $totalHb }}</th>
-                                <th class="text-center">{{ $totalQb }}</th>
-                                <th class="text-center">{{ $totalEb }}</th>
-                                <th class="text-center">{{ number_format($totalFulls, 3, '.','') }}</th>
-                                <th class="text-center">{{ $totalPcsr }}</th>
-                                <th class="text-center">{{ $totalHbr }}</th>
-                                <th class="text-center">{{ $totalQbr }}</th>
-                                <th class="text-center">{{ $totalEbr }}</th>
-                                <th class="text-center">{{ number_format($totalFullsr, 3, '.','') }}</th>
-                                <th class="text-center">{{ $totalDevr }}</th>
-                                <th class="text-center">{{ $totalMissingr }}</th>
+                              <th class="text-center">KG</th>
+                              <th class="text-center">{{ number_format($totalRepotWeight, 2, '.','') }}</th>
+                              <th class="text-center" colspan="5"></th>
+                              <th class="text-center">{{ $totalHbr }}</th>
+                              <th class="text-center">{{ $totalQbr }}</th>
+                              <th class="text-center">{{ $totalEbr }}</th>
+                              <th class="text-center">{{ number_format($totalFullsr, 3, '.','') }}</th>
+                              <th class="text-center" colspan="2"></th>
                             </tr>
                         </tfoot>
                     </table>
