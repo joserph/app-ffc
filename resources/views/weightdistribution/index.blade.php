@@ -148,13 +148,13 @@
                                 
                                 <td class="text-center">
                                  @if ($item['weight'] == '[]')
-                                    @can('haveaccess', 'distribution.create')
+                                    @can('haveaccess', 'weight-distribution.create')
                                        <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#createItem{{ $item['id'] }}">
                                           <i class="fas fa-plus"></i>
                                        </button>
                                     @endcan
                                  @else
-                                    @can('haveaccess', 'distribution.edit')
+                                    @can('haveaccess', 'weight-distribution.edit')
                                        <button type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#editItem{{ $item['id'] }}">
                                           <i class="fas fa-edit"></i>
                                        </button>

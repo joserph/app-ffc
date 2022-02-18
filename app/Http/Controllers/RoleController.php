@@ -20,7 +20,7 @@ class RoleController extends Controller
     {
         Gate::authorize('haveaccess', 'role.index');
 
-        $roles = Role::orderBy('id', 'DESC')->paginate(2);
+        $roles = Role::orderBy('id', 'DESC')->paginate(10);
 
         return view('role.index', compact('roles'));
     }

@@ -24,7 +24,7 @@ class UserController extends Controller
     {
         Gate::authorize('haveaccess', 'user.index');
 
-        $users = User::with('roles')->orderBy('id', 'DESC')->paginate(2);
+        $users = User::with('roles')->orderBy('id', 'DESC')->paginate(10);
         //return $users;
         return view('user.index', compact('users'));
     }
