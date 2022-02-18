@@ -47,7 +47,7 @@
                 </div>
               </div>
               @endcan
-              @can('haveaccess', 'peso.index')
+              @can('haveaccess', 'weight-distribution.index')
               <!-- Proyeccion de peso -->
               <div class="col-lg-3 col-6">
                 <!-- small card -->
