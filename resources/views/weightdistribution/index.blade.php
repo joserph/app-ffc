@@ -72,7 +72,7 @@
                               <th class="text-center">EB</th>
                               <th class="text-center">Fulls</th>
                               <th class="text-center">Observaciones</th>
-                              <th class="text-center" colspan="2" style="width: 80px">Aciones</th>
+                              <th class="text-center" colspan="2" style="width: 80px">Acción</th>
                             </tr>
                         </thead>
                         <tbody>

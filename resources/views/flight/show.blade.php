@@ -53,12 +53,12 @@
                 <!-- small card -->
                 <div class="small-box bg-secondary">
                   <div class="inner">
-                    <h3>111</h3>
+                    <h3>{{ number_format($weightCount, 2, '.','') . ' KG' }}</h3>
     
                     <p>Proyeccion de peso</p>
                   </div>
                   <div class="icon">
-                     <i class="fas fa-balance-scale-right"></i>
+                    <i class="fas fa-weight"></i>
                   </div>
                    <a href="{{ route('weight-distribution.index', $flight->id) }}" class="small-box-footer">
                     Ver Proyeccion de peso <i class="fas fa-arrow-circle-right"></i>

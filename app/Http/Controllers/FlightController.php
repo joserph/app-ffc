@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Flight;
 use App\Distribution;
+use App\WeightDistribution;
 
 class FlightController extends Controller
 {
@@ -53,8 +54,9 @@ class FlightController extends Controller
     {
         $flight = Flight::find($id);
         $distributionCount = Distribution::where('id_flight', '=', $id)->sum('pieces');
+        $weightCount = WeightDistribution::where('id_flight', '=', $id)->sum('report_w');
         //dd($distributionCount);
-        return view('flight.show', compact('flight', 'distributionCount'));
+        return view('flight.show', compact('flight', 'distributionCount', 'weightCount'));
     }
 
     /**
