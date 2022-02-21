@@ -150,7 +150,7 @@
                                  @if ($item['weight'] == '[]')
                                     @can('haveaccess', 'weight-distribution.create')
                                        <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#createItem{{ $item['id'] }}">
-                                          <i class="fas fa-plus"></i>
+                                          <i class="fas fa-plus-circle"></i>
                                        </button>
                                     @endcan
                                  @else

@@ -151,6 +151,8 @@ Route::resource('/palletitems', 'PalletItemController')->names('palletitems');
 Route::get('palletitems-Pdf', 'PalletItemController@palletitemsPdf')->name('palletitems.pdf');
 // Pallets Items excel (Plano de Carga)
 Route::get('palletitems-excel/{id}', 'PalletItemController@palletitemsExcel')->name('palletitems.excel');
+// Informes 
+Route::get('reports-client-excel/{id}', 'PalletItemController@reportsClientExcel')->name('reports-client.excel');
 // Pallets Items
 Route::resource('/sketches', 'SketchController')->names('sketches');
 // infoCoordination

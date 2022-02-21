@@ -30,6 +30,7 @@
             @can('haveaccess', 'pallets.create')
                <button type="button" class="btn btn-xs btn-primary pull-right" data-toggle="modal" data-target="#myModal" data-toggle="tooltip" data-placement="top" title="Agregar nuevas paletas"><i class="fas fa-plus-circle"></i> Agregar Paleta</button>
             @endcan
+            <a href="{{ route('reports-client.excel', $load->id) }}" target="_blank" class="btn btn-xs btn-outline-success float-right"><i class="fas fa-file-excel"></i> INFORMES</a>
             <a href="{{ route('palletitems.excel', $load->id) }}" target="_blank" class="btn btn-xs btn-outline-success float-right"><i class="fas fa-file-excel"></i> PLANO DE CARGA</a>
             <hr>
             @if ($palletsExist)

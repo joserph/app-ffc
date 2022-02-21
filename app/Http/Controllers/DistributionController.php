@@ -506,7 +506,7 @@ class DistributionController extends Controller
         $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
         $drawing->setName('Paid');
         $drawing->setDescription('Paid');
-        $drawing->setPath('images/logo-ffc-new.png'); // put your path and image here
+        $drawing->setPath('images/logo-ffc.png'); // put your path and image here
         $drawing->setCoordinates('B2');
         $drawing->setOffsetX(50);
         $drawing->setRotation(0);

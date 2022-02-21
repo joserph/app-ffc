@@ -339,7 +339,7 @@ class WeightDistributionController extends Controller
         $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
         $drawing->setName('Paid');
         $drawing->setDescription('Paid');
-        $drawing->setPath('images/logo-ffc-new.png'); // put your path and image here
+        $drawing->setPath('images/logo-ffc.png'); // put your path and image here
         $drawing->setCoordinates('A2');
         $drawing->setOffsetX(50);
         $drawing->setRotation(0);
@@ -354,7 +354,7 @@ class WeightDistributionController extends Controller
         $writer = new Xlsx($spreadsheet);
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="PROYECCIÓN DE PASO ' . $flight->awb . '.xlsx"');
+        header('Content-Disposition: attachment;filename="PROYECCIÓN DE PESO ' . $flight->awb . '.xlsx"');
         header('Cache-Control: max-age=0');
 
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
