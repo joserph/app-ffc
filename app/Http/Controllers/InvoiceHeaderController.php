@@ -45,12 +45,13 @@ class InvoiceHeaderController extends Controller
         $lc_active = LogisticCompany::where('active', '=', 'yes')->first();
         // Verificamos si la factura tiene items
         $invoiceItems = MasterInvoiceItem::where('id_load', '=', $code)->first();
-        //dd($invoiceItems);
+        //
         // Mi empresa
         $company = Company::first();
 
         // Buscamos las fincas coordinadas
         $farmCoord = Coordination::where('id_load', $code)->select('id_farm')->get()->toArray();
+        //dd($farmCoord);
         // Buscamos los clientes coordinados
         $clientCoord = Coordination::where('id_load', $code)->select('id_client')->get()->toArray();
 

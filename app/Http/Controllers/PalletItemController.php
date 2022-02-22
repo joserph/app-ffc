@@ -16,6 +16,7 @@ use App\Color;
 use App\Client;
 use App\LogisticCompany;
 use App\Company;
+use App\MasterInvoiceItem;
 
 class PalletItemController extends Controller
 {
@@ -98,11 +99,21 @@ class PalletItemController extends Controller
 
         $company = Company::first();
 
-        $palletItem = PalletItem::where('id_load', '=', $codeLoad)->with('client')->with('farm')->orderBy('farms', 'ASC')->get();
+        //$palletItem = PalletItem::where('id_load', '=', $codeLoad)->with('client')->with('farm')->orderBy('farms', 'ASC')->get();
 
-        $itemsFarms = PalletItem::groupEqualsItemsCargas($palletItem, $codeLoad);
+        //$itemsFarms = PalletItem::groupEqualsItemsCargas($palletItem, $codeLoad);
 
-        dd($itemsFarms);
+        //$invoiceItems = MasterInvoiceItem::where('id_load', '=', $codeLoad)->with('farm')->first();
+        $itemsFarms = MasterInvoiceItem::where('id_load', '=', $codeLoad)
+            ->with('variety')
+            ->with('invoiceh')
+            ->with('client')
+            ->join('farms', 'master_invoice_items.id_farm', '=', 'farms.id')
+            ->select('master_invoice_items.*', 'farms.name')
+            ->orderBy('farms.name', 'ASC')
+            ->get();
+
+        //dd($invoiceItems);
         $spreadsheet = new Spreadsheet();
         $val = 0;
         foreach($clientsLoad as $client)
@@ -252,15 +263,53 @@ class PalletItemController extends Controller
             $sheet->setCellValue('I19', 'TEMPERATURA');
             // LOOP DE FINCAS
             $fila = 20;
-            foreach($itemsFarms as $farm)
+            //dd($itemsFarms);
+            foreach($itemsFarms as $item)
             {
-                if($client['id'] == $farm['id_client'])
+                //dd($item->hawb);
+                if($client['id'] == $item->id_client)
                 {
-                    $sheet->setCellValue('A' . $fila, $farm['farms']);
-                    $sheet->setCellValue('A' . $fila, $farm['farms']);
+                    $sheet->setCellValue('A' . $fila, $item->name);
+                    $sheet->setCellValue('B' . $fila, $item->hawb);
+                    $sheet->setCellValue('C' . $fila, $item->variety->name);
+                    $sheet->setCellValue('D' . $fila, $item->pieces);
+                    $sheet->setCellValue('E' . $fila, $item->fulls);
+                    $sheet->setCellValue('F' . $fila, $item->hb);
+                    $sheet->setCellValue('G' . $fila, $item->qb);
+                    $sheet->setCellValue('H' . $fila, $item->eb);
+                    $sheet->setCellValue('I' . $fila, '1.5°');
                     $fila++;
                 }
             }
+            $sheet->mergeCells('A' . $fila . ':C' . $fila);
+            $sheet->setCellValue('A' . $fila, '');
+            $sheet->setCellValue('D' . $fila, 'TOTAL PCS');
+            $sheet->setCellValue('E' . $fila, 'TOTAL PCS');
+            $sheet->setCellValue('F' . $fila, 'TOTAL PCS');
+            $sheet->setCellValue('G' . $fila, 'TOTAL PCS');
+            $sheet->setCellValue('H' . $fila, 'TOTAL PCS');
+            // CABECERA OBSERVACIONES
+            $fila++;
+            $sheet->mergeCells('A' . $fila . ':I' . $fila);
+            $spreadsheet->getActiveSheet()->getStyle('A' . $fila . ':I' . $fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()->setRGB('CFCDCD');
+            $sheet->getStyle('A' . $fila . ':I' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('A' . $fila . ':I' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('A' . $fila . ':I' . $fila)->getFont()->setBold(true);
+            $sheet->setCellValue('A' . $fila, 'OBSERVACIONES');
+            // DETALLES DE DESPACHO
+            $fila++;
+            $sheet->getStyle('A' . $fila . ':I' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('A' . $fila . ':I' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('A' . $fila . ':I' . $fila)->getFont()->setBold(true);
+            $sheet->mergeCells('A' . $fila . ':B' . $fila);
+            $sheet->setCellValue('A' . $fila, 'DETALLES DE DESPACHO POR PALETS:');
+            $sheet->setCellValue('C' . $fila, 'PCS');
+            $sheet->setCellValue('D' . $fila, 'HB');
+            $sheet->setCellValue('E' . $fila, 'QB');
+            $sheet->setCellValue('F' . $fila, 'EB');
+            $sheet->mergeCells('G' . $fila . ':I' . $fila);
+            $sheet->setCellValue('G' . $fila, 'OBSERVACIONES');
 
 
             $val++;
