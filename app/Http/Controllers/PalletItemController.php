@@ -99,8 +99,9 @@ class PalletItemController extends Controller
 
         $company = Company::first();
 
-        //$palletItem = PalletItem::where('id_load', '=', $codeLoad)->with('client')->with('farm')->orderBy('farms', 'ASC')->get();
-
+        $palletItem = PalletItem::where('id_load', '=', $codeLoad)->with('client')->with('farm')->orderBy('farms', 'ASC')->get();
+        $pallets = Pallet::where('id_load', '=', $codeLoad)->get();
+        //dd($palletItem);
         //$itemsFarms = PalletItem::groupEqualsItemsCargas($palletItem, $codeLoad);
 
         //$invoiceItems = MasterInvoiceItem::where('id_load', '=', $codeLoad)->with('farm')->first();
@@ -113,7 +114,7 @@ class PalletItemController extends Controller
             ->orderBy('farms.name', 'ASC')
             ->get();
 
-        //dd($invoiceItems);
+        //dd($palletItem);
         $spreadsheet = new Spreadsheet();
         $val = 0;
         foreach($clientsLoad as $client)
@@ -310,10 +311,27 @@ class PalletItemController extends Controller
             $sheet->setCellValue('F' . $fila, 'EB');
             $sheet->mergeCells('G' . $fila . ':I' . $fila);
             $sheet->setCellValue('G' . $fila, 'OBSERVACIONES');
+            // LOOP DE PALETAS
+            $fila++;
+            foreach($palletItem as $itemP)
+            {
+                foreach($pallets as $pallet)
+                {
+                    if($itemP->id_pallet == $pallet->id && $itemP->id_client == $client['id'])
+                    {
+                        if($pallet->counter) // HAY QUE HACER UN SUM DE LAS FINCAS DE UN MISMO CLIENTE EN UNA PALETA
+                        //dd($pallet->counter);
+                        $sheet->setCellValue('B' . $fila, 'PALLET #' . $pallet->counter);
+                        $fila++;
+                    }
+                }
+            }
+            
 
 
             $val++;
         }
+        //dd($itemsFarms);
         $writer = new Xlsx($spreadsheet);
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
