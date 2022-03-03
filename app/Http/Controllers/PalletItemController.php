@@ -359,7 +359,13 @@ class PalletItemController extends Controller
         $clientsLoad = collect(array_unique($resumenCarga->toArray(), SORT_REGULAR));
         // PALLETS
         $pallets = Pallet::where('id_load', '=', $codeLoad)->orderBy('id', 'ASC')->get();
-        $palletItem = PalletItem::where('id_load', '=', $codeLoad)->with('client')->with('farm')->orderBy('farms', 'ASC')->get();
+        //$palletItem = PalletItem::where('id_load', '=', $codeLoad)->with('client')->with('farm')->orderBy('farms', 'ASC')->get();
+        $palletItem = PalletItem::where('id_load', '=', $load->id)
+            ->join('clients', 'pallet_items.id_client', '=', 'clients.id')
+            ->select('pallet_items.*', 'clients.id', 'clients.name')
+            ->orderBy('clients.name', 'ASC')
+            ->orderBy('pallet_items.farms', 'ASC')
+            ->get();
         // Items de carga
         /*$itemsCargaAll = PalletItem::select('*')
             ->where('id_load', '=', $codeLoad)
@@ -369,7 +375,7 @@ class PalletItemController extends Controller
             ->get();*/
 
         $itemsFarms = PalletItem::groupEqualsItemsCargas($palletItem, $codeLoad);
-        //dd($itemsCarga);
+        //dd($palletItem);
         // Farms
         //$farms = Farm::all();
         // Clients
@@ -430,7 +436,8 @@ class PalletItemController extends Controller
         $fila = 3;
         foreach($clientsLoad as $client)
         {
-            $sheet->setCellValue('A' . $fila, $client['name']);
+            //$sheet->setCellValue('A' . $fila, $client['name']);
+            $sheet->setCellValue('A' . $fila, str_replace('SAG-', '', $client['name']));
             foreach($colors as $color)
             {
                 if($color->id_type == $client['id'])
@@ -457,6 +464,11 @@ class PalletItemController extends Controller
         
         // PLANO
         $sheet->getStyle('D2:G69')->getFont()->setBold(true);
+        $sheet->getStyle('D4:G69')->getFont()->setSize(14);
+        $spreadsheet->getActiveSheet()->getStyle('E4:E69')
+            ->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_WHITE);
+        $spreadsheet->getActiveSheet()->getStyle('G4:G69')
+            ->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_WHITE);
         $sheet->mergeCells('D2:E2');
         $sheet->getStyle('D2:G69')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
         $sheet->getStyle('D2:G69')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);

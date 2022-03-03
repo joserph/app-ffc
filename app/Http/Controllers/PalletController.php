@@ -46,13 +46,19 @@ class PalletController extends Controller
         }
         
         $number = $code . '-' . $counter;
-        $palletItem = PalletItem::where('id_load', '=', $load->id)->orderBy('farms', 'ASC')->get();
+        $palletItem = PalletItem::where('id_load', '=', $load->id)
+            ->join('clients', 'pallet_items.id_client', '=', 'clients.id')
+            ->select('pallet_items.*', 'clients.id', 'clients.name')
+            ->orderBy('clients.name', 'ASC')
+            ->orderBy('pallet_items.farms', 'ASC')
+            ->get();
+        //$palletItem = PalletItem::where('id_load', '=', $load->id)->orderBy('farms', 'ASC')->get();
         //dd($palletItem);
         // Farms
-        $farms = Farm::all();
+        $farms = Farm::orderBy('name', 'ASC')->get();
         // Clients
-        $clients = Client::all();
-
+        $clients = Client::orderBy('name', 'ASC')->get();
+        //dd($clients);
         $farmsEdit = Farm::orderBy('name', 'ASC')->pluck('name', 'id');
 
         $resumenCarga = PalletItem::where('id_load', '=', $code)
