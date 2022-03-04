@@ -35,7 +35,7 @@ class ColorController extends Controller
         Gate::authorize('haveaccess', 'color.create');
 
         $farms = Farm::pluck('name', 'id');
-        $clients = Client::pluck('name', 'id');
+        $clients = Client::orderBy('name', 'ASC')->pluck('name', 'id');
         return view('color.create', compact('farms', 'clients'));
     }
 
