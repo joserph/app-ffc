@@ -354,7 +354,7 @@ class PalletItemController extends Controller
             ->select('clients.id', 'clients.name')
             ->orderBy('clients.name', 'ASC')
             ->get();
-        $colors = Color::where('type', '=', 'client')->get();
+        $colors = Color::where('type', '=', 'client')->where('load_type', 'maritimo')->get();
         // Eliminamos los clientes duplicados
         $clientsLoad = collect(array_unique($resumenCarga->toArray(), SORT_REGULAR));
         // PALLETS
@@ -375,7 +375,7 @@ class PalletItemController extends Controller
             ->get();*/
 
         $itemsFarms = PalletItem::groupEqualsItemsCargas($palletItem, $codeLoad);
-        //dd($palletItem);
+        //dd($colors);
         // Farms
         //$farms = Farm::all();
         // Clients
