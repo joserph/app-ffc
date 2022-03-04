@@ -16,7 +16,8 @@ class FlightController extends Controller
      */
     public function index()
     {
-        $flights = Flight::orderBy('date', 'ASC')->paginate(15);
+        $flights = Flight::orderBy('date', 'DESC')->paginate(15);
+        //dd($flights);
         return view('flight.index', compact('flights'));
     }
 

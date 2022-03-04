@@ -60,8 +60,10 @@ class DistributionController extends Controller
             ->select('farms.name', 'distributions.*')
             ->orderBy('farms.name', 'ASC')
             ->get();
-        //dd($distributions);
-        return view('distribution.index', compact('flight', 'company', 'clientsDistribution', 'farms', 'clients', 'varieties', 'distributions', 'marketers'));
+        // Colores
+        $colors = Color::where('load_type', 'aereo')->get();
+        //dd($colors);
+        return view('distribution.index', compact('flight', 'company', 'clientsDistribution', 'farms', 'clients', 'varieties', 'distributions', 'marketers', 'colors'));
     }
 
     public function distributionExcel($code)
@@ -208,7 +210,8 @@ class DistributionController extends Controller
         // Eliminamos los clientes duplicados
         $clientsDistribution = collect(array_unique($clientsDistr->toArray(), SORT_REGULAR));
         // colors
-        $colors = Color::where('type', '=', 'client')->get();
+        //$colors = Color::where('type', '=', 'client')->get();
+        $colors = Color::where('type', '=', 'client')->where('load_type', 'aereo')->get();
         // Coordinaciones
         $coordinations = Distribution::select('*')
             ->where('id_flight', '=', $code)
@@ -559,8 +562,10 @@ class DistributionController extends Controller
             ->select('farms.name', 'distributions.*')
             ->orderBy('farms.name', 'ASC')*/
             ->get();
-        //dd($coordinations);
-        $colors = Color::where('type', '=', 'client')->get();
+        
+        //$colors = Color::where('type', '=', 'client')->get();
+        $colors = Color::where('type', '=', 'client')->where('load_type', 'aereo')->get();
+        //dd($colors);
 
         $distributionPdf = PDF::loadView('distribution.distributionPdf', compact(
             'flight', 'clientsDistribution', 'coordinations', 'colors'
@@ -599,7 +604,8 @@ class DistributionController extends Controller
             ->orderBy('farms.name', 'ASC')*/
             ->get();
         //dd($coordinations);
-        $colors = Color::where('type', '=', 'client')->get();
+        //$colors = Color::where('type', '=', 'client')->get();
+        $colors = Color::where('type', '=', 'client')->where('load_type', 'aereo')->get();
 
         $distributionPdf = PDF::loadView('distribution.distributionUncoordinatedPdf', compact(
             'flight', 'clientsDistribution', 'coordinations', 'colors'
@@ -638,7 +644,8 @@ class DistributionController extends Controller
             ->orderBy('farms.name', 'ASC')*/
             ->get();
         //dd($coordinations);
-        $colors = Color::where('type', '=', 'client')->get();
+        //$colors = Color::where('type', '=', 'client')->get();
+        $colors = Color::where('type', '=', 'client')->where('load_type', 'aereo')->get();
 
         $distributionPdf = PDF::loadView('distribution.distributionForDelivery', compact(
             'flight', 'clientsDistribution', 'coordinations', 'colors'

@@ -87,7 +87,7 @@
                                  @endphp
                                  <thead>
                                     <tr class="gris">
-                                        <th>Cliente</th>
+                                        <th>Clientes</th>
                                         <th class="text-center">PCS</th>
                                         <th class="text-center">HB</th>
                                         <th class="text-center">QB</th>
@@ -118,8 +118,12 @@
                                        $totalQb+= $tQb;
                                        $totalEb+= $tEb;
                                     @endphp
-                                    <tr>
-                                       <td>{{ $client['name'] }}</td>
+                                    <tr @foreach ($colors as $color)
+                                        @if ($color->id_type == $client['id'])
+                                        style="background-color: {{ $color->color }}; color: #FFFFFF;"
+                                        @endif
+                                    @endforeach >
+                                       <td><strong>{{ $client['name'] }}</strong></td>
                                        <td class="text-center">{{ $tPieces }}</td>
                                        <td class="text-center">{{ $tHb }}</td>
                                        <td class="text-center">{{ $tQb }}</td>
@@ -162,7 +166,11 @@
                             </tr>
                         </thead>
                         <thead>
-                            <tr>
+                            <tr @foreach ($colors as $color)
+                            @if ($color->id_type == $client['id'])
+                            style="background-color: {{ $color->color }}; color: #FFFFFF;"
+                            @endif
+                        @endforeach>
                                 <th class="text-center medium-letter">AWB</th>
                                 <th class="text-center medium-letter" colspan="17">{{ $client['name'] }}</th>
                             </tr>

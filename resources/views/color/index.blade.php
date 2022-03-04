@@ -91,7 +91,13 @@
                                     @endif
                                  </td>
                                  <td>
-                                    {{ $color->load_type }}
+                                    @if ($color->load_type == 'aereo')
+                                       <span class="badge badge-info">AÉREO</span>
+                                    @else
+                                       <span class="badge badge-dark">MARÍTIMO</span>
+                                    @endif
+                                    
+                                    
                                  </td>
                                  <td width="45px" class="text-center">
                                     @can('haveaccess', 'color.edit')
