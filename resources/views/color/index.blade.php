@@ -93,7 +93,7 @@
                                  <td>
                                     @if ($color->load_type == 'aereo')
                                        <span class="badge badge-info">AÉREO</span>
-                                    @else
+                                    @elseif($color->load_type == 'maritimo')
                                        <span class="badge badge-dark">MARÍTIMO</span>
                                     @endif
                                     
