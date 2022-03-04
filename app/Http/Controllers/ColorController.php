@@ -56,7 +56,8 @@ class ColorController extends Controller
             'color' => $request->color,
             'label' => $request->label,
             'id_user' => $request->id_user,
-            'update_user' => $request->update_user
+            'update_user' => $request->update_user,
+            'load_type' => $request->load_type
         ]);
 
         return redirect()->route('color.index')
@@ -109,7 +110,8 @@ class ColorController extends Controller
             'id_type' => $id_type,
             'color' => $request->color,
             'label' => $request->label,
-            'update_user' => $request->update_user
+            'update_user' => $request->update_user,
+            'load_type' => $request->load_type
         ]);
 
         return redirect()->route('color.index')

@@ -28,6 +28,13 @@
          'point' => 'Punto'
          ], null, ['class' => 'form-control', 'placeholder' => 'Seleccione Etiqueta']) }}
    </div>
+   <div class="form-group col-md-3">
+      {{ Form::label('load_type', 'Tipo de Carga') }}
+      {{ Form::select('load_type', [
+         'aereo' => 'Aéreo',
+         'maritimo' => 'Marítimo'
+         ], null, ['class' => 'form-control', 'placeholder' => 'Seleccione Tipo de Carga']) }}
+   </div>
     {{ Form::hidden('update_user', Auth::user()->id) }}
  </div>
  @section('scripts')

@@ -48,6 +48,7 @@
                               <th scope="col">Nombre</th>
                               <th scope="col">Color</th>
                               <th scope="col">Etiqueta</th>
+                              <th scope="col">Tipo de Carga</th>
                               <th class="text-center" width="80px" colspan="2">@can('haveaccess', 'color.edit')Editar @endcan @can('haveaccess', 'color.destroy')Eliminar @endcan</th>
                            </tr>
                         </thead>
@@ -88,6 +89,9 @@
                                     @else 
                                        <h5><span class="badge badge-warning">Punto</span></h5>
                                     @endif
+                                 </td>
+                                 <td>
+                                    {{ $color->load_type }}
                                  </td>
                                  <td width="45px" class="text-center">
                                     @can('haveaccess', 'color.edit')

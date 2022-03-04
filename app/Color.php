@@ -12,6 +12,7 @@ class Color extends Model
         'color',
         'label',
         'id_user',
-        'update_user'
+        'update_user',
+        'load_type'
     ];
 }
