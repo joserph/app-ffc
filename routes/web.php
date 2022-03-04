@@ -172,3 +172,5 @@ Route::resource('/weight-distribution', 'WeightDistributionController')->names('
 Route::get('weight-distribution-excel/{id}', 'WeightDistributionController@weightDistributionExcel')->name('weight-distribution.excel');
 // Packing
 Route::resource('/packing', 'PackingController')->names('packing');
+// Pick Up Orders
+Route::resource('/pickuporder', 'PickUpOrderController')->names('pickuporder');
