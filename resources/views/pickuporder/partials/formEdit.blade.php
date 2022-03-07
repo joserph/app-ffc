@@ -37,7 +37,6 @@
        {{ Form::text('drop_off_address', null, ['class' => 'form-control']) }}
     </div>
     {{ Form::hidden('carrier_num', null) }}
-    {{ Form::hidden('id_user', Auth::user()->id) }}
     {{ Form::hidden('update_user', Auth::user()->id) }}
  </div>
      

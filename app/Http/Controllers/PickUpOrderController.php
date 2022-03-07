@@ -43,10 +43,40 @@ class PickUpOrderController extends Controller
      */
     public function store(Request $request)
     {
-        // Busco si existe un Pick Up
         Gate::authorize('haveaccess', 'pickuporder.create');
+        // Busco si existe un Pick Up
+        $searchCarrier = PickUpOrder::first();
+        //dd($searchCarrier);
+        if(empty($searchCarrier))
+        {
+            $carrier = 15;
+            //dd($carrier);
+        }else{
+            $allPickUpOrder = PickUpOrder::get();
+            $searchCarrier = $allPickUpOrder->last();
+            //dd($searchCarrier->carrier_num);
+            $carrier = $searchCarrier->carrier_num + 1;
+        }
+        $pickuporder = PickUpOrder::create(
+            [
+                'date' => $request->date,
+                'loading_date' => $request->loading_date,
+                'loading_hour' => $request->loading_hour,
+                'carrier_company' => $request->carrier_company,
+                'driver_name' => $request->driver_name,
+                'pick_up_location' => $request->pick_up_location,
+                'pick_up_address' => $request->pick_up_address,
+                'consigned_to' => $request->consigned_to,
+                'drop_off_address' => $request->drop_off_address,
+                'carrier_num' => $carrier,
+                'id_user' => $request->id_user,
+                'update_user' => $request->update_user
+            ]
+        );
+        
+        //dd($pickuporder);
 
-        $pickuporder = PickUpOrder::create($request->all());
+        //$pickuporder = PickUpOrder::create($request->all());
 
         return redirect()->route('pickuporder.index')
             ->with('status_success', 'Pink Up Order guardado con éxito');
@@ -60,7 +90,11 @@ class PickUpOrderController extends Controller
      */
     public function show($id)
     {
-        //
+        Gate::authorize('haveaccess', 'pickuporder.show');
+
+        $pickuporder = PickUpOrder::find($id);
+
+        return view('pickuporder.show', compact('pickuporder'));
     }
 
     /**
@@ -71,7 +105,11 @@ class PickUpOrderController extends Controller
      */
     public function edit($id)
     {
-        //
+        Gate::authorize('haveaccess', 'pickuporder.edit');
+
+        $pickuporder = PickUpOrder::find($id);
+
+        return view('pickuporder.edit', compact('pickuporder'));
     }
 
     /**
@@ -83,7 +121,13 @@ class PickUpOrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Gate::authorize('haveaccess', 'pickuporder.edit');
+
+        $pickuporder = PickUpOrder::find($id);
+        $pickuporder->update($request->all());
+
+        return redirect()->route('pickuporder.index')
+            ->with('status_success', 'Pick up order actualizado con éxito');
     }
 
     /**
@@ -94,6 +138,10 @@ class PickUpOrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Gate::authorize('haveaccess', 'pickuporder.destroy');
+
+        $pickuporder->delete();
+
+        return back()->with('status_success', 'Eliminado correctamente');
     }
 }
