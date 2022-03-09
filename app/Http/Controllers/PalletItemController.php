@@ -795,6 +795,7 @@ class PalletItemController extends Controller
     public function update(Request $request, $id)
     {
         $palletItem = PalletItem::find($id);
+        //dd($id);
         
         $palletItem->update($request->all());
 

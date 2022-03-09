@@ -48,7 +48,7 @@ class PalletController extends Controller
         $number = $code . '-' . $counter;
         $palletItem = PalletItem::where('id_load', '=', $load->id)
             ->join('clients', 'pallet_items.id_client', '=', 'clients.id')
-            ->select('pallet_items.*', 'clients.id', 'clients.name')
+            ->select('pallet_items.*', 'clients.name')
             ->orderBy('clients.name', 'ASC')
             ->orderBy('pallet_items.farms', 'ASC')
             ->get();
@@ -222,6 +222,7 @@ class PalletController extends Controller
         
         $pallet = Pallet::find($request->id);
         $load = Load::where('id', '=', $pallet->id_load)->first();
+        //dd($load);
         if($request->edit_pallet)
         {
             //dd($load);
