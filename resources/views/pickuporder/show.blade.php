@@ -61,7 +61,40 @@
             </div>
         </div>
         <hr>
-        
+        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#agregarItem">
+            <i class="fas fa-plus-circle"></i> Crear Item
+        </button>
+
+        @include('custom.message')
+
+        <div class="modal fade" id="agregarItem" tabindex="-1" aria-labelledby="agregarItemLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <h5 class="modal-title" id="agregarItemLabel">Agregar item de Pick Up Order</h5>
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                     </button>
+                  </div>
+                  <div class="modal-body">
+                     @include('custom.message')
+                     {{ Form::open(['route' => 'pickuporderitem.store', 'class' => 'form-horizontal']) }}
+                        <div class="modal-body">
+                           @include('pickuporderItem.partials.form')
+                        </div>
+                        <div class="modal-footer">
+                           <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+                           <button type="submit" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
+                              <i class="fas fa-plus-circle"></i> Crear
+                           </button>
+                        </div>
+                     {{ Form::close() }}
+                  </div>
+               </div>
+            </div>
+        </div>
+
+
     </div>
 </section>
 @endsection

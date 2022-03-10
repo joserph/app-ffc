@@ -15,6 +15,16 @@ class CreatePickUpOrderItemsTable extends Migration
     {
         Schema::create('pick_up_order_items', function (Blueprint $table) {
             $table->id();
+
+            $table->string('awb');
+            $table->string('description');
+            $table->string('pieces');
+            $table->string('pallets');
+
+            $table->foreignId('id_pickup')->references('id')->on('pick_up_orders');
+            $table->foreignId('id_user')->references('id')->on('users');
+            $table->foreignId('update_user')->references('id')->on('users');
+
             $table->timestamps();
         });
     }
