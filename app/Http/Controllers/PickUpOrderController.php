@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\PickUpOrder;
 use Illuminate\Support\Facades\Gate;
+use App\PickUpOrderItem;
 
 class PickUpOrderController extends Controller
 {
@@ -94,7 +95,9 @@ class PickUpOrderController extends Controller
 
         $pickuporder = PickUpOrder::find($id);
 
-        return view('pickuporder.show', compact('pickuporder'));
+        $pickuporderItems = PickUpOrderItem::where('id_pickup', $pickuporder->id)->get();
+        //dd($pickuporderItems);
+        return view('pickuporder.show', compact('pickuporder', 'pickuporderItems'));
     }
 
     /**

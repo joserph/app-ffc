@@ -19,8 +19,8 @@ class CreatePickUpOrdersTable extends Migration
             $table->date('date');
             $table->date('loading_date');
             $table->time('loading_hour');
-            $table->string('carrier_company');
-            $table->string('driver_name');
+            $table->string('carrier_company')->nullable();
+            $table->string('driver_name')->nullable();
             $table->integer('carrier_num');
             $table->string('pick_up_location');
             $table->string('pick_up_address');

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use App\PickUpOrderItem;
+use App\PickUpOrder;
 
 class PickUpOrderItemController extends Controller
 {
@@ -38,7 +41,7 @@ class PickUpOrderItemController extends Controller
 
         $pickuporderitem = PickUpOrderItem::create($request->all());
 
-        return redirect()->route('pickuporderitem.index')
+        return redirect()->route('pickuporder.show', $pickuporderitem->id_pickup)
             ->with('status_success', 'Pink Up Order Item guardado con éxito');
     }
 
@@ -73,7 +76,14 @@ class PickUpOrderItemController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Gate::authorize('haveaccess', 'pickuporderitem.edit');
+
+        $pickuporderitem = PickUpOrderItem::find($id);
+
+        $pickuporderitem->update($request->all());
+
+        return redirect()->route('pickuporder.show', $pickuporderitem->id_pickup)
+            ->with('status_success', 'Pink Up Order Item actualizado con éxito');
     }
 
     /**
@@ -84,6 +94,13 @@ class PickUpOrderItemController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $pickuporderitem = PickUpOrderItem::find($id);
+
+        $pickuporder = PickUpOrder::find($pickuporderitem->id_pickup);
+
+        $pickuporderitem->delete();
+
+        return redirect()->route('pickuporder.show', $pickuporder->id)
+            ->with('status_success', 'Pink Up Order Item Eliminado con éxito');
     }
 }
