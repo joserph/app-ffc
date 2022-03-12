@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\PickUpOrderItem;
 use App\PickUpOrder;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class PickUpOrderItemController extends Controller
 {
@@ -17,6 +18,19 @@ class PickUpOrderItemController extends Controller
     public function index()
     {
         //
+    }
+
+    public function pickuporderPdf($id_pickup)
+    {   
+        $headpickup = PickUpOrder::find($id_pickup);
+
+        $pickupitem = PickUpOrderItem::where('id_pickup', $id_pickup)->get();
+        //dd($pickupitem);
+        $pickuporderPdf = PDF::loadView('pickuporderItem.pickuporderPdf', compact(
+            'headpickup', 'pickupitem'
+        ))->setPaper('A4');
+
+        return $pickuporderPdf->stream();
     }
 
     /**

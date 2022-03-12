@@ -176,3 +176,5 @@ Route::resource('/packing', 'PackingController')->names('packing');
 Route::resource('/pickuporder', 'PickUpOrderController')->names('pickuporder');
 // Pick Up Orders Items
 Route::resource('/pickuporderitem', 'PickUpOrderItemController')->names('pickuporderitem');
+// Pick Up Order PDF
+Route::get('pickuporder-Pdf/{id}', 'PickUpOrderItemController@pickuporderPdf')->name('pickuporder.pdf');

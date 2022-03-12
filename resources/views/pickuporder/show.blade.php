@@ -57,8 +57,8 @@
                     <b>Carrier Company:</b> {{ $pickuporder->carrier_company }}<br>
                     <b>Diver Name:</b> {{ $pickuporder->driver_name }}
                 </div>
-        
             </div>
+            <a href="{{ route('pickuporder.pdf', $pickuporder) }}" target="_blank" class="btn btn-xs btn-outline-success pull-right"><i class="far fa-file-pdf"></i> Descargar</a>
         </div>
         <hr>
         <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#agregarItem">
