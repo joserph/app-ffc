@@ -56,169 +56,87 @@
             font-style: italic;
         }
 
-      /*.farms{
-         width: 280px;
-      }
-      table, th, td{
-         border: 1px solid black;
-      }
-      .sin-border{
-         border-top: 1px solid white;
-         border-right: 1px solid white;
-         border-bottom: 1px solid black;
-         border-left: 1px solid white;
-      }
-      .hawb{
-         width: 70px;
-      }
-      .coordinado{
-         background-color: rgb(217, 244, 255);
-      }
-      .recibido{
-         background-color: rgb(191, 255, 231);
-      }
-      .faltante{
-         background-color: rgb(255, 255, 175);
-      }
-      .text-rojo{
-         color: red;
-      }
-      .variety{
-         width: 70px;
-      }
-      .pcs-num{
-         width: 30px;
-      }
-      .missing{
-         width: 55px;
-      }
-      .blue{
-         background-color: #00b0f0;
-      }
-      .yellow{
-         background-color: #ffff00;
-      }
-      .green{
-         background-color: #00b050;
-      }
-      .green-l{
-         background-color: #e2efda;
-      }
-      .peach{
-         background-color: #fff2cc;
-      }
-      
-
-      header {
-         position: fixed;
-         top: 0cm;
-         left: 0cm;
-         right: 0cm;
-         height: 2cm;
-         background-color: #F93855;
-         color: white;
-         text-align: center;
-         line-height: 30px;
-      }
-
-      footer {
-         position: fixed;
-         bottom: 0cm;
-         left: 0cm;
-         right: 0cm;
-         height: 2cm;
-         background-color: #F93855;
-         color: white;
-         text-align: center;
-         line-height: 35px;
-      }
-      .imgc{
-         position: fixed;
-         margin: 20px, 20px, 20px, 20px;
-      }
-      .info{
-         position: fixed;
-         margin-left: 800px;
-         margin-top: 10px;
-         color: #000;
-      }
-      .awb1{
-         width: 70px;
-         padding: 0;
-         margin: 0;
-      }
-      .sin-border-full{
-         border-top: 1px solid white;
-         border-right: 1px solid white;
-         border-bottom: 1px solid white;
-         border-left: 1px solid white;
-      }
-      .titu{
-         margin-top: 20px;
-         margin-left: 40px;
-         margin-right: 30px;
-      }*/
         .head1{
-            /*padding: 20px;*/
+            padding: 2px;
             
         }
+        .headDate1{
+            display: inline;
+            font-size: 10px;
+        }
         .headDate{
-            width: 40%;
+            width: 47.4%;
+            border: 3px solid;
+            border-radius: 10px;
+            display: inline-block;
+            padding: 0px;
+            list-style:none;
+        }
+        .headDate2{
+            width: 47.2%;
             border: 3px solid;
             border-radius: 10px;
             display: inline-block;
             padding: 0px;
             margin: 10px;
             list-style:none;
+        }
+        .headD1{
+            height: 0;
+            color: #fff;
         }
         .headD{
             border: 1px solid;
             border-top-color: #000;
             display: block;
-            padding: 0.75rem 1.25rem;
+            padding: 0.45rem 1rem;
         }
-        /*.card{
-            position: relative;
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-direction: column;
-            flex-direction: column;
-            min-width: 0;
-            word-wrap: break-word;
-            background-color: #fff;
-            background-clip: border-box;
-            border: 1px solid rgba(0,0,0,.125);
-            border-radius: 10px;
+        .headT2{
+            background-color: #000;
         }
-        .list-group{
-            border-bottom-width: 0;
-            border-bottom-right-radius: 10px;
-            border-bottom-left-radius: 10px;
+        .headT1{
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            padding-bottom: 14px;
+            padding-top: 14px;
+            font-size: 13px;
         }
-        .list-group-flush{
-            border-radius: 10px;
+        .headT{
+            padding-bottom: 18px;
+            padding-top: 18px;
+            padding-left: 10px;
+            padding-right: 10px;
+            /*height: 80px;*/
+            width: 100%;
+            /*margin-bottom: -10px;
+            margin-top: -10px;*/
+            text-align: justify;
         }
-        .list-group-item{
-            position: relative;
-            display: block;
-            padding: 0.75rem 1.25rem;
-            background-color: #fff;
-            border: 1px solid rgba(0,0,0,.125);
-        }*/
-        .headDate2{
-            width: 40%;
+        .location{
+            width: 48.8%;
             border: 3px solid;
             border-radius: 10px;
             display: inline-block;
-            padding: 0px;
-            margin: 10px;
+            margin: 1px;
             list-style:none;
-            
         }
-        .headT{
-            display: inline-block;
-            padding: 50px;
+        .loc{
+            background-color: #000;
+            color: #fff;
+            padding-bottom: 14px;
+            padding-top: 14px;
+            font-size: 13px;
         }
+        .address{
+            padding-bottom: 18px;
+            padding-top: 18px;
+            padding-left: 10px;
+            padding-right: 10px;
+            width: 100%;
+            text-align: justify;
+        }
+        
    </style>
 </head>
 <body>
@@ -227,25 +145,35 @@
         <p class="addreestitle">741 San Pedro Street, Los Angeles, CA 90014</p>
         <h2 class="title">ORIGINAL PICK UP ORDER</h2>
         <div class="head1">
-            <ul class="headDate">
-                <li class="headD">asjdasjdias</li>
-                <li class="headD">asjdasjdias</li>
-                <li class="headD">asjdasjdias</li>
-                <li class="headD">asjdasjdias</li>
-            </ul>
-            <div class="headDate2">
-                <div class="headT">asjdasjdias</div>
-                <div class="headT">asjdasjdias</div>
+            <div class="headDate1">
+                <ul class="headDate">
+                    <li class="headD">DATE: 01-22-2022</li>
+                    <li class="headD">LOADING STARTING DATE: 01-02-2022 / 11:00 AM</li>
+                    <li class="headD">CARRIER COMPANY: Parakeet Llc.</li>
+                    <li class="headD">DRIVER'S NAME: José Ávila</li>
+                </ul>
+            </div>
+            <div class="headDate1">
+                <div class="headDate2">
+                    <div class="headT1">IMPORTANT NOTE</div>
+                    <div class="headT">THE MERCHADISE DESCRIBED BELOW, AS WELL AS THE INFORMATION IN THIS DOCUMENT, MUST BE HANDLED WITH EXTREME RESPONSIBILITY.</div>
+                </div>
             </div>
         </div>
-        <div class="card" style="width: 18rem;">
-            <ul class="list-group list-group-flush">
-                
-              <li class="list-group-item">An item</li>
-              <li class="list-group-item">A second item</li>
-              <li class="list-group-item">A third item</li>
-            </ul>
+        <br>
+        <div class="head1">
+            <div class="headDate1">
+                <div class="location">
+                    <div class="loc">IMPORTANT NOTE</div>
+                    <div class="address">ADDRESS: <span>3400 NV 74th Ave,</span></div>
+                </div>  
+                <div class="location">
+                    <div class="loc">IMPORTANT NOTE</div>
+                    <div class="address">THE MERCHADISE DESCRIBED BELOW, AS WELL AS THE INFORMATION IN THIS DOCUMENT, MUST BE HANDLED WITH EXTREME RESPONSIBILITY.</div>
+                </div>
+            </div>
         </div>
+
         
         <table>
             <th>
