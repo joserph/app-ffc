@@ -24,8 +24,16 @@ class CreatePickUpOrdersTable extends Migration
             $table->integer('carrier_num');
             $table->string('pick_up_location');
             $table->string('pick_up_address');
+            $table->string('city_pu');
+            $table->string('state_pu');
+            $table->string('zip_code_pu');
+            $table->string('country_pu');
             $table->string('consigned_to');
             $table->string('drop_off_address');
+            $table->string('city_do');
+            $table->string('state_do');
+            $table->string('zip_code_do');
+            $table->string('country_do');
 
             $table->foreignId('id_user')->references('id')->on('users');
             $table->foreignId('update_user')->references('id')->on('users');

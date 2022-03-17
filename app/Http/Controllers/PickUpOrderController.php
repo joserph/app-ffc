@@ -60,18 +60,26 @@ class PickUpOrderController extends Controller
         }
         $pickuporder = PickUpOrder::create(
             [
-                'date' => $request->date,
-                'loading_date' => $request->loading_date,
-                'loading_hour' => $request->loading_hour,
-                'carrier_company' => $request->carrier_company,
-                'driver_name' => $request->driver_name,
-                'pick_up_location' => $request->pick_up_location,
-                'pick_up_address' => $request->pick_up_address,
-                'consigned_to' => $request->consigned_to,
-                'drop_off_address' => $request->drop_off_address,
-                'carrier_num' => $carrier,
-                'id_user' => $request->id_user,
-                'update_user' => $request->update_user
+                'date'              => $request->date,
+                'loading_date'      => $request->loading_date,
+                'loading_hour'      => $request->loading_hour,
+                'carrier_company'   => $request->carrier_company,
+                'driver_name'       => $request->driver_name,
+                'pick_up_location'  => $request->pick_up_location,
+                'pick_up_address'   => $request->pick_up_address,
+                'city_pu'           => $request->city_pu,
+                'state_pu'          => $request->state_pu,
+                'zip_code_pu'       => $request->zip_code_pu,
+                'country_pu'        => $request->country_pu,
+                'consigned_to'      => $request->consigned_to,
+                'drop_off_address'  => $request->drop_off_address,
+                'city_do'           => $request->city_do,
+                'state_do'          => $request->state_do,
+                'zip_code_do'       => $request->zip_code_do,
+                'country_do'        => $request->country_do,
+                'carrier_num'       => $carrier,
+                'id_user'           => $request->id_user,
+                'update_user'       => $request->update_user
             ]
         );
         

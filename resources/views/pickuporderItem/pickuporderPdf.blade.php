@@ -73,7 +73,7 @@
             list-style:none;
         }
         .headDate2{
-            width: 47.2%;
+            width: 47.25%;
             border: 3px solid;
             border-radius: 10px;
             display: inline-block;
@@ -126,9 +126,10 @@
             color: #fff;
             padding-bottom: 14px;
             padding-top: 14px;
+            padding-left: 10px;
             font-size: 13px;
         }
-        .address{
+        .address, .address_{
             padding-bottom: 18px;
             padding-top: 18px;
             padding-left: 10px;
@@ -136,7 +137,75 @@
             width: 100%;
             text-align: justify;
         }
-        
+        .address span{
+            margin-left: 60px;
+        }
+        .address_ span{
+            margin-left: 110px;
+        }
+        .num_carrier{
+            text-align: right;
+            color: red;
+        }
+        /*table, tr {
+            width: 100%;
+            border: 1px solid;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+        th {
+            background-color: #04AA6D;
+            color: white;
+        }*/
+        table {
+            border-collapse: separate;
+            border-spacing: 0;
+            min-width: 350px;
+        }
+        table tr th,
+        table tr td {
+            border-right: 1px solid #000;
+            border-bottom: 1px solid #000;
+            padding: 15px;
+            text-align: center;
+        }
+
+        table tr th:first-child,
+        table tr td:first-child {
+            border-left: 1px solid #000;
+        }
+        table tr th:first-child,
+        table tr td:first-child {
+            border-left: 1px solid #000;
+        }
+        table tr th {
+            background: #000;
+            text-align: center;
+            border-top: solid 1px #000;
+            color: #fff;
+        }
+
+        /* top-left border-radius */
+        table tr:first-child th:first-child {
+            border-top-left-radius: 6px;
+        }
+
+        /* top-right border-radius */
+        table tr:first-child th:last-child {
+            border-top-right-radius: 6px;
+        }
+
+        /* bottom-left border-radius */
+        table tr:last-child td:first-child {
+            border-bottom-left-radius: 6px;
+        }
+
+        /* bottom-right border-radius */
+        table tr:last-child td:last-child {
+            border-bottom-right-radius: 6px;
+        }
    </style>
 </head>
 <body>
@@ -144,6 +213,7 @@
         <img src="images/logo-ffc.png" alt="">
         <p class="addreestitle">741 San Pedro Street, Los Angeles, CA 90014</p>
         <h2 class="title">ORIGINAL PICK UP ORDER</h2>
+        <p class="num_carrier">CARRIER #14</p>
         <div class="head1">
             <div class="headDate1">
                 <ul class="headDate">
@@ -164,31 +234,64 @@
         <div class="head1">
             <div class="headDate1">
                 <div class="location">
-                    <div class="loc">IMPORTANT NOTE</div>
-                    <div class="address">ADDRESS: <span>3400 NV 74th Ave,</span></div>
+                    <div class="loc">PICK UP LOCATIONS: <span>FLORAL LOGISTICS</span></div>
+                    <div class="address">ADDRESS: <br>
+                        <span>3400 NV 74th Ave,</span> <br><span>Miami, FL 33122</span> <br><span>United States</span>
+                    </div>
                 </div>  
                 <div class="location">
-                    <div class="loc">IMPORTANT NOTE</div>
-                    <div class="address">THE MERCHADISE DESCRIBED BELOW, AS WELL AS THE INFORMATION IN THIS DOCUMENT, MUST BE HANDLED WITH EXTREME RESPONSIBILITY.</div>
+                    <div class="loc">CONSIGNED TO: <span>SOUTH AMERICAN GLOBAL</span></div>
+                    <div class="address_">DROP OFF ADDRESS: <br>
+                        <span>3400 NV 74th Ave,</span> <br><span>Miami, FL 33122</span> <br><span>United States</span>
+                    </div>
                 </div>
             </div>
         </div>
 
         
-        <table>
-            <th>
-                <td>DATE:</td>
-            </th>
+        <table class="tabla">
+            <thead>
+                <tr>
+                    <th>AWB NUMBER</th>
+                    <th>DESCRIPTION</th>
+                    <th># OF PIECES</th>
+                    <th>#OF PALLETS</th>
+                </tr>
+            </thead>
+            <tbody>
+                @php
+                    $t_pieces = 0;
+                    $t_pallets = 0;
+                @endphp
+                @foreach ($pickupitem as $item)
+                    <tr>
+                        <td>{{ $item->awb }}</td>
+                        <td>{{ $item->description }}</td>
+                        <td>{{ $item->pieces }}</td>
+                        <td>{{ $item->pallets }}</td>
+                    </tr>
+                    @php
+                        $t_pieces += $item->pieces;
+                        $t_pallets += $item->pallets;
+                    @endphp
+                @endforeach
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        @if ($t_pieces != null)
+                            {{ $t_pieces }}
+                        @endif
+                    </td>
+                    <td>
+                        @if ($t_pallets != null)
+                            {{ $t_pallets }}
+                        @endif
+                    </td>
+                </tr>
+            </tbody>
             
-            <th>
-                <td>LOADING STARTING</td>
-            </th>
-            <th>
-                <td>CARRIERS COMPANY</td>
-            </th>
-            <th>
-                <td>DRIVER'S NAME:</td>
-            </th>
+
         </table>
     </header>
     <main>
