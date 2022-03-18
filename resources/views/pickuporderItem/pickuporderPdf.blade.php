@@ -168,7 +168,7 @@
         table tr td {
             border-right: 1px solid #000;
             border-bottom: 1px solid #000;
-            padding: 15px;
+            padding: 10px;
             text-align: center;
         }
 
@@ -205,6 +205,74 @@
         /* bottom-right border-radius */
         table tr:last-child td:last-child {
             border-bottom-right-radius: 6px;
+        }
+        footer{
+            position: fixed;
+            bottom: 0cm;
+            left: 0cm;
+            right: -2cm;
+            height: 6cm;
+            background-color: #125478;
+            color: #fff;
+            text-align: center;
+            line-height: 35px;
+            display: inline;
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+        .f_signed{
+            border: 1px solid #000;
+            border-radius: 5px;
+            width: 49.6%;
+            /*padding: 10px;
+            margin: 10px;
+            height: 90px;*/
+            margin-bottom: 50px;
+            display: inline-block;
+            
+        }
+        .sign{
+            text-align: left;
+            margin-top: -10px;
+            margin-left: 10px;
+        }
+        .disp{
+            text-align: left;
+            margin-top: -10px;
+            margin-left: 40px;
+        }
+        .manager{
+            text-align: right;
+            margin-bottom: 5px;
+            margin-right: 10px;
+        }
+        .dispat{
+            border: 1px solid #000;
+            border-radius: 5px;
+            width: 49.6%;
+            /*padding: 10px;
+            margin: 10px;
+            height: 90px;*/
+            margin-bottom: 50px;
+            display: inline-block;
+        }
+        .spacio{
+            
+        }
+        .date{
+            text-align: left;
+            margin-bottom: 5px;
+            margin-right: 10px;
+            margin-left: 40px;
+            margin-top: -10px;
+        }
+        .date span{
+            margin-left: 100px;
+        }
+        .time{
+            text-align: right;
+            margin-bottom: 5px;
+            margin-right: 10px;
         }
    </style>
 </head>
@@ -276,8 +344,11 @@
                     @endphp
                 @endforeach
                 <tr>
+                    <td colspan="4"></td>
+                </tr>
+                <tr>
                     <td></td>
-                    <td></td>
+                    <td>TOTAL:</td>
                     <td>
                         @if ($t_pieces != null)
                             {{ $t_pieces }}
@@ -290,9 +361,26 @@
                     </td>
                 </tr>
             </tbody>
-            
-
         </table>
+        <br>
+        <footer>
+            <div class="f_signed">
+                <p class="sign">Signed by dispatcher:</p>
+                <p class="spacio">-</p>
+                <p class="manager">José Gabriel Hidalgo C.</p>
+            </div>
+            <div class="dispat">
+                <p class="disp">Signed by dispatcher:</p>
+                <p class="spacio">-</p>
+                <hr>
+                <p class="date">Date: <span>Time:</span></p>
+            </div>
+            <!--<div class="f_signed">
+                <p class="dis">Dispatched in Good Order By:</p>
+            </div>-->
+        </footer>
+        
+
     </header>
     <main>
       
