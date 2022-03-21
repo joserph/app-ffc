@@ -274,6 +274,57 @@
             margin-bottom: 5px;
             margin-right: 10px;
         }
+        .f_inland{
+            position: relative;
+            /*border: 1px solid #000;
+            border-radius: 2px;*/
+            width: 49.6%;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .prep{
+            position: relative;
+            margin-left: -500px;
+            margin-top: -50px;
+            border: 1px solid #000;
+            border-radius: 2px;
+            width: 120px;
+            padding: 0cm;
+        }
+        .prepaid{
+            margin-top: -50px;
+            padding: 0cm;
+            margin: 0cm;
+            font-size: 12px;
+            padding-top: 1px;
+        }
+        .f_inland img{
+            position: relative;
+            margin-right: 1790px;
+            margin-top: 190px;
+        }
+        .prepaid_botton{
+            padding: 0cm;
+            margin: 0cm;
+            font-size: 12px;
+            margin-top: -20px;
+            /*margin-bottom: -20px*/
+        }
+        .f_delivery{
+            border: 1px solid #000;
+            border-radius: 2px;
+            margin-right: 200px;
+            margin-top: -390px;
+            font-size: 18px;
+        }
+        .f_delivery img{
+            position: relative;
+            margin-right: 1000px;
+            margin-top: -890px;
+        }
+        .dis{
+
+        }
    </style>
 </head>
 <body>
@@ -369,15 +420,24 @@
                 <p class="spacio">-</p>
                 <p class="manager">José Gabriel Hidalgo C.</p>
             </div>
+            
             <div class="dispat">
                 <p class="disp">Signed by dispatcher:</p>
                 <p class="spacio">-</p>
                 <hr>
                 <p class="date">Date: <span>Time:</span></p>
             </div>
-            <!--<div class="f_signed">
+            <div class="f_inland">
+                <img src="images/arrow.png" alt="" width="200">
+                <div class="prep">
+                    <p class="prepaid">PREPAID/COLLECT</p>
+                    <p class="prepaid_botton">Prepaid</p>
+                </div>
+            </div>
+            <div class="f_delivery">
+                <img src="images/arrow.png" alt="" width="1000">
                 <p class="dis">Dispatched in Good Order By:</p>
-            </div>-->
+            </div>
         </footer>
         
 
