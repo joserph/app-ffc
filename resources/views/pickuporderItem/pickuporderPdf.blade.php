@@ -313,9 +313,8 @@
         .f_delivery{
             border: 1px solid #000;
             border-radius: 2px;
-            margin-right: 200px;
-            margin-top: -390px;
-            font-size: 18px;
+            margin-right: -300px;
+            margin-top: -350px;
         }
         .f_delivery img{
             position: relative;
@@ -323,7 +322,8 @@
             margin-top: -890px;
         }
         .dis{
-
+            font-size: 13px;
+            color: yellow;
         }
    </style>
 </head>
@@ -436,7 +436,7 @@
             </div>
             <div class="f_delivery">
                 <img src="images/arrow.png" alt="" width="1000">
-                <p class="dis">Dispatched in Good Order By:</p>
+                <p class="dis">DELIVERY CLERK: <br> DISPATCH TO CARRIER <br> SHOWN ABOVE</B></p>
             </div>
         </footer>
         
