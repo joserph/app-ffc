@@ -314,7 +314,20 @@
             border: 1px solid #000;
             border-radius: 2px;
             margin-right: -300px;
-            margin-top: -350px;
+            margin-top: -450px;
+        }
+        .f_delivery2{
+            position: relative;
+            border: 1px solid #000;
+            border-radius: 2px;
+            margin-right: 0;
+            margin-top: 0;
+        }
+        .f_delivery3{
+            border: 1px solid #000;
+            border-radius: 2px;
+            margin-right: -300px;
+            margin-top: -750px;
         }
         .f_delivery img{
             position: relative;
@@ -323,7 +336,20 @@
         }
         .dis{
             font-size: 13px;
+            color: red;
+            margin-top: -70px;
+        }
+        .dis2{
+            position: relative;
+            font-size: 18px;
             color: yellow;
+            margin-top: 50px;
+        }
+        .dis3{
+            position: relative;
+            font-size: 15px;
+            color: blue;
+            margin-top: -170px;
         }
    </style>
 </head>
@@ -435,8 +461,9 @@
                 </div>
             </div>
             <div class="f_delivery">
-                <img src="images/arrow.png" alt="" width="1000">
-                <p class="dis">DELIVERY CLERK: <br> DISPATCH TO CARRIER <br> SHOWN ABOVE</B></p>
+                <p class="dis">DELIVERY CLERK:</p>
+                <p class="dis2">DELIVERY CLERK:</p><br>
+                <p class="dis3">DELIVERY CLERK:</p>
             </div>
         </footer>
         
