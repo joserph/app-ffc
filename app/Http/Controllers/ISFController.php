@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\MasterInvoiceItem;
 use App\Load;
 use Barryvdh\DomPDF\Facade as PDF;
+use App\LogisticCompany;
+use App\Company;
 
 class ISFController extends Controller
 {
@@ -73,9 +75,14 @@ class ISFController extends Controller
         $arr = explode("?", $url);
         $code = $arr[1];
         $load = Load::find($code);
+        $logistic_company = LogisticCompany::where('active', 'yes')->first();
+        $my_company = Company::first();
+        //dd($logistic_company);
 
         $isf10_2Pdf = PDF::loadView('isf.isf10_2Pdf', compact(
-            'load'
+            'load',
+            'logistic_company',
+            'my_company'
         ))->setPaper('A4');
         //dd($farmsItemsLoad);
         return $isf10_2Pdf->stream();
