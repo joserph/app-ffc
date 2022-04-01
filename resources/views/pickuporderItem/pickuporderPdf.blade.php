@@ -8,40 +8,40 @@
    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">-->
    <style>
         @page {
-         margin: 0cm 0cm;
-         font-size: 1em;
-      }
+            margin: 0cm 0cm;
+            font-size: 1em;
+        }
 
-      body {
-         font-family: Arial, Helvetica, sans-serif;
-         margin: 3cm 1cm 1cm;
-      }
-      .text-center{
-         text-align: center;
-      }
-      .text-right{
-         text-align: right;
-      }
-      .text-left{
-         text-align: left;
-      }
-      table {
-         border-collapse: collapse;
-         width: 100%;
-         page-break-before: auto;
-      }
-      .small-letter{
-         font-size: 9px;
-         font-weight: normal;
-      }
-      .medium-letter{
-         font-size: 10px;
-         font-weight: normal;
-      }
-      .large-letter{
-         font-size: 10px;
-         font-weight: normal;
-      }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 3cm 1cm 1cm;
+        }
+        .text-center{
+            text-align: center;
+        }
+        .text-right{
+            text-align: right;
+        }
+        .text-left{
+            text-align: left;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            page-break-before: auto;
+        }
+        .small-letter{
+            font-size: 9px;
+            font-weight: normal;
+        }
+        .medium-letter{
+            font-size: 10px;
+            font-weight: normal;
+        }
+        .large-letter{
+            font-size: 10px;
+            font-weight: normal;
+        }
         /* USADO */
         img{
             margin-top: -30px;
@@ -55,7 +55,6 @@
             text-align: center;
             font-style: italic;
         }
-
         .head1{
             padding: 2px;
             
@@ -136,6 +135,7 @@
             padding-right: 10px;
             width: 100%;
             text-align: justify;
+            font-size: 12px;
         }
         .address span{
             margin-left: 60px;
@@ -168,7 +168,7 @@
         table tr td {
             border-right: 1px solid #000;
             border-bottom: 1px solid #000;
-            padding: 10px;
+            padding: 5px;
             text-align: center;
         }
 
@@ -212,7 +212,7 @@
             left: 0cm;
             right: -2cm;
             height: 6cm;
-            background-color: #125478;
+            /*background-color: #125478;*/
             color: #fff;
             text-align: center;
             line-height: 35px;
@@ -235,19 +235,22 @@
             text-align: left;
             margin-top: -10px;
             margin-left: 10px;
+            color: #000;
         }
         .disp{
             text-align: left;
             margin-top: -10px;
             margin-left: 40px;
+            color: #000;
         }
         .manager{
             text-align: right;
             margin-bottom: 5px;
             margin-right: 10px;
+            color: #000;
         }
         .dispat{
-            border: 1px solid #000;
+            /*border: 1px solid #000;*/
             border-radius: 5px;
             width: 49.6%;
             /*padding: 10px;
@@ -255,6 +258,9 @@
             height: 90px;*/
             margin-bottom: 50px;
             display: inline-block;
+        }
+        .dispat hr{
+            color: #000;
         }
         .spacio{
             
@@ -265,6 +271,7 @@
             margin-right: 10px;
             margin-left: 40px;
             margin-top: -10px;
+            color: #000;
         }
         .date span{
             margin-left: 100px;
@@ -297,6 +304,7 @@
             margin: 0cm;
             font-size: 12px;
             padding-top: 1px;
+            color: #000;
         }
         .f_inland img{
             position: relative;
@@ -309,25 +317,13 @@
             font-size: 12px;
             margin-top: -20px;
             /*margin-bottom: -20px*/
+            color: #000;
         }
         .f_delivery{
-            border: 1px solid #000;
+            /*border: 1px solid #000;*/
             border-radius: 2px;
-            margin-right: -300px;
+            margin-right: -200px;
             margin-top: -450px;
-        }
-        .f_delivery2{
-            position: relative;
-            border: 1px solid #000;
-            border-radius: 2px;
-            margin-right: 0;
-            margin-top: 0;
-        }
-        .f_delivery3{
-            border: 1px solid #000;
-            border-radius: 2px;
-            margin-right: -300px;
-            margin-top: -750px;
         }
         .f_delivery img{
             position: relative;
@@ -336,26 +332,28 @@
         }
         .dis{
             font-size: 13px;
-            color: red;
-            margin-top: -70px;
+            color: #000;
+            margin-top: 150px;
         }
         .dis2{
             position: relative;
-            font-size: 18px;
-            color: yellow;
-            margin-top: 50px;
+            font-size: 13px;
+            color: #000;
+            margin-top: -15px;
+            margin-right: 18px;
         }
         .dis3{
             position: relative;
-            font-size: 15px;
-            color: blue;
-            margin-top: -170px;
+            font-size: 13px;
+            color: #000;
+            margin-top: -100px;
+            margin-right: -35px;
         }
    </style>
 </head>
 <body>
     <header>
-        <img src="images/logo-ffc.png" alt="">
+        <img src="images/sagsat-logo-.png" alt="" width="300">
         <p class="addreestitle">741 San Pedro Street, Los Angeles, CA 90014</p>
         <h2 class="title">ORIGINAL PICK UP ORDER</h2>
         <p class="num_carrier">CARRIER #14</p>
@@ -448,7 +446,7 @@
             </div>
             
             <div class="dispat">
-                <p class="disp">Signed by dispatcher:</p>
+                <p class="disp">Dispatched in Good Order By:</p>
                 <p class="spacio">-</p>
                 <hr>
                 <p class="date">Date: <span>Time:</span></p>
@@ -462,8 +460,8 @@
             </div>
             <div class="f_delivery">
                 <p class="dis">DELIVERY CLERK:</p>
-                <p class="dis2">DELIVERY CLERK:</p><br>
-                <p class="dis3">DELIVERY CLERK:</p>
+                <p class="dis2">SHOWN ABOVE</p><br>
+                <p class="dis3">DISPATCH TO CARRIER</p>
             </div>
         </footer>
         
