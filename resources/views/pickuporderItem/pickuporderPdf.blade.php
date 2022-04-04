@@ -64,20 +64,24 @@
             font-size: 10px;
         }
         .headDate{
-            width: 47.4%;
+            width: 49%;
             border: 3px solid;
             border-radius: 10px;
             display: inline-block;
             padding: 0px;
             list-style:none;
+            font-size: 12px;
+        }
+        .headDate span{
+            color: red;
         }
         .headDate2{
-            width: 47.25%;
+            width: 48%;
             border: 3px solid;
             border-radius: 10px;
             display: inline-block;
             padding: 0px;
-            margin: 10px;
+            margin: 1px;
             list-style:none;
         }
         .headD1{
@@ -88,7 +92,7 @@
             border: 1px solid;
             border-top-color: #000;
             display: block;
-            padding: 0.45rem 1rem;
+            padding: 0.45rem 1.1rem;
         }
         .headT2{
             background-color: #000;
@@ -139,9 +143,11 @@
         }
         .address span{
             margin-left: 60px;
+            color: red;
         }
         .address_ span{
             margin-left: 110px;
+            color: red;
         }
         .num_carrier{
             text-align: right;
@@ -211,11 +217,11 @@
             bottom: 0cm;
             left: 0cm;
             right: -2cm;
-            height: 6cm;
+            height: 7cm;
             /*background-color: #125478;*/
             color: #fff;
             text-align: center;
-            line-height: 35px;
+            line-height: 30px; /*OJO */
             display: inline;
             padding-left: 40px;
             padding-right: 40px;
@@ -227,7 +233,7 @@
             /*padding: 10px;
             margin: 10px;
             height: 90px;*/
-            margin-bottom: 50px;
+            margin-bottom: 1px;
             display: inline-block;
             
         }
@@ -292,24 +298,25 @@
         .prep{
             position: relative;
             margin-left: -500px;
-            margin-top: -50px;
+            margin-top: -55px;
             border: 1px solid #000;
             border-radius: 2px;
             width: 120px;
             padding: 0cm;
         }
         .prepaid{
+            position: relative;
             margin-top: -50px;
             padding: 0cm;
             margin: 0cm;
             font-size: 12px;
-            padding-top: 1px;
+            padding-top: -10px;
             color: #000;
         }
         .f_inland img{
             position: relative;
             margin-right: 1790px;
-            margin-top: 190px;
+            margin-top: 170px;
         }
         .prepaid_botton{
             padding: 0cm;
@@ -333,37 +340,43 @@
         .dis{
             font-size: 13px;
             color: #000;
-            margin-top: 150px;
+            margin-top: 180px;
         }
         .dis2{
             position: relative;
             font-size: 13px;
             color: #000;
-            margin-top: -15px;
-            margin-right: 18px;
+            margin-top: -30px;
+            margin-right: -35px;
         }
         .dis3{
             position: relative;
             font-size: 13px;
             color: #000;
-            margin-top: -100px;
-            margin-right: -35px;
+            margin-top: -60px;
+            margin-right: 18px;
+        }
+        .item{
+            color: red;
+        }
+        .tabla{
+            font-size: 12px;
         }
    </style>
 </head>
 <body>
     <header>
-        <img src="images/sagsat-logo-.png" alt="" width="300">
+        <img src="images/sagsat-logo-.png" alt="" width="320">
         <p class="addreestitle">741 San Pedro Street, Los Angeles, CA 90014</p>
         <h2 class="title">ORIGINAL PICK UP ORDER</h2>
         <p class="num_carrier">CARRIER #14</p>
         <div class="head1">
             <div class="headDate1">
                 <ul class="headDate">
-                    <li class="headD">DATE: 01-22-2022</li>
-                    <li class="headD">LOADING STARTING DATE: 01-02-2022 / 11:00 AM</li>
-                    <li class="headD">CARRIER COMPANY: Parakeet Llc.</li>
-                    <li class="headD">DRIVER'S NAME: José Ávila</li>
+                    <li class="headD">DATE: <span>01-22-2022</span></li>
+                    <li class="headD">LOADING STARTING DATE: <span>01-02-2022 / 11:00 AM</span></li>
+                    <li class="headD">CARRIER COMPANY: <span>Parakeet Llc.</span></li>
+                    <li class="headD">DRIVER'S NAME: <span>José Ávila</span></li>
                 </ul>
             </div>
             <div class="headDate1">
@@ -406,12 +419,15 @@
                     $t_pieces = 0;
                     $t_pallets = 0;
                 @endphp
+                <tr>
+                    <td colspan="4" style="text-align: left">FLORAL LOGISTICS:</td>
+                </tr>
                 @foreach ($pickupitem as $item)
                     <tr>
-                        <td>{{ $item->awb }}</td>
-                        <td>{{ $item->description }}</td>
-                        <td>{{ $item->pieces }}</td>
-                        <td>{{ $item->pallets }}</td>
+                        <td class="item">{{ $item->awb }}</td>
+                        <td class="item">{{ $item->description }}</td>
+                        <td class="item">{{ $item->pieces }}</td>
+                        <td class="item">{{ $item->pallets }}</td>
                     </tr>
                     @php
                         $t_pieces += $item->pieces;
@@ -422,14 +438,14 @@
                     <td colspan="4"></td>
                 </tr>
                 <tr>
-                    <td></td>
-                    <td>TOTAL:</td>
-                    <td>
+                    <td class="item"></td>
+                    <td class="item">TOTAL:</td>
+                    <td class="item">
                         @if ($t_pieces != null)
                             {{ $t_pieces }}
                         @endif
                     </td>
-                    <td>
+                    <td class="item">
                         @if ($t_pallets != null)
                             {{ $t_pallets }}
                         @endif
@@ -460,8 +476,8 @@
             </div>
             <div class="f_delivery">
                 <p class="dis">DELIVERY CLERK:</p>
-                <p class="dis2">SHOWN ABOVE</p><br>
-                <p class="dis3">DISPATCH TO CARRIER</p>
+                <p class="dis2">DISPATCH TO CARRIER</p><br>
+                <p class="dis3">SHOWN ABOVE</p>
             </div>
         </footer>
         
