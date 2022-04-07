@@ -127,141 +127,143 @@ class PalletItemController extends Controller
             // Formatos celdas
             $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(25);
             $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(15);
-            $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(10);
-            $spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(5);
+            $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(14);
+            $spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(10);
             $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(5);
             $spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(5);
             $spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(5);
             $spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(5);
-            $spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(30);
+            $spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(5);
+            $spreadsheet->getActiveSheet()->getColumnDimension('J')->setWidth(20);
 
             // Titulo
-            $sheet->mergeCells('A1:I1');
+            $sheet->mergeCells('A1:J1');
             $sheet->getStyle('A1')->getFont()->setSize(18);
             $sheet->getStyle('A1')->getFont()->setBold(true);
-            $sheet->getStyle('A1:I1')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-            $sheet->getStyle('A1:I1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('A1:J1')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('A1:J1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
             $sheet->setCellValue('A1', $client['name']);
             // Cabecera Shipper
-            $spreadsheet->getActiveSheet()->getStyle('A2:I2')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            $spreadsheet->getActiveSheet()->getStyle('A2:J2')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()->setRGB('CFCDCD');
-            $sheet->mergeCells('A2:F2');
+            $sheet->mergeCells('A2:E2');
             $sheet->setCellValue('A2', 'SHIPPER');
-            $sheet->mergeCells('G2:I2');
-            $sheet->setCellValue('G2', 'BL N°');
+            $sheet->mergeCells('F2:J2');
+            $sheet->setCellValue('F2', 'BL N°');
             //Shipper
-            $sheet->mergeCells('A3:F3');
+            $sheet->mergeCells('A3:E3');
             $sheet->setCellValue('A3', $logistic->name);
-            $sheet->mergeCells('A4:F4');
+            $sheet->mergeCells('A4:E4');
             $sheet->setCellValue('A4', 'RUC: ' . $logistic->ruc);
-            $sheet->mergeCells('A5:F5');
+            $sheet->mergeCells('A5:E5');
             $sheet->setCellValue('A5', 'DIRECCIÓN ' . $logistic->address);
-            $sheet->mergeCells('A6:F6');
+            $sheet->mergeCells('A6:E6');
             $sheet->setCellValue('A6', 'TELÉFONO: ' . $logistic->phone);
             // BL N°
-            $sheet->mergeCells('G3:I4');
-            $sheet->getStyle('G3')->getFont()->setSize(16);
-            $sheet->setCellValue('G3', $load->bl);
-            $spreadsheet->getActiveSheet()->getStyle('G5:H5')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            $sheet->mergeCells('F3:J4');
+            $sheet->getStyle('F3')->getFont()->setSize(16);
+            $sheet->setCellValue('F3', $load->bl);
+            $spreadsheet->getActiveSheet()->getStyle('F5:H5')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()->setRGB('CFCDCD');
-            $sheet->mergeCells('G5:H5');
-            $sheet->setCellValue('G5', 'PIEZAS');
-            $sheet->setCellValue('I5', '14'); /*** COLOCAR VALOR CALCULADO  ***/ 
-            $spreadsheet->getActiveSheet()->getStyle('G6:H6')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            $sheet->mergeCells('F5:I5');
+            $sheet->setCellValue('F5', 'PIEZAS');
+            $sheet->setCellValue('J5', '14'); /*** COLOCAR VALOR CALCULADO  ***/ 
+            $spreadsheet->getActiveSheet()->getStyle('F6:H6')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()->setRGB('CFCDCD');
-            $sheet->mergeCells('G6:H6');
-            $sheet->setCellValue('G6', 'FULLES');
-            $sheet->setCellValue('I6', '7.00');
+            $sheet->mergeCells('F6:I6');
+            $sheet->setCellValue('F6', 'FULLES');
+            $sheet->setCellValue('J6', '7.00');/*** COLOCAR VALOR CALCULADO  ***/ 
             // CABECERA CONSIGNE
             $spreadsheet->getActiveSheet()->getStyle('A7:I7')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()->setRGB('CFCDCD');
-            $sheet->mergeCells('A7:F7');
+            $sheet->mergeCells('A7:E7');
             $sheet->setCellValue('A7', 'CONSIGNE');
-            $sheet->mergeCells('G7:I7');
-            $sheet->setCellValue('G7', 'PLACE OF RECEPT BY PRE CARRIER');
+            $sheet->mergeCells('F7:J7');
+            $sheet->setCellValue('F7', 'PLACE OF RECEPT BY PRE CARRIER');
             // CONSIGNE
-            $sheet->mergeCells('A8:F8');
+            $sheet->mergeCells('A8:E8');
             $sheet->setCellValue('A8', $company->name);
-            $sheet->mergeCells('A9:F9');
+            $sheet->mergeCells('A9:E9');
             $sheet->setCellValue('A9', 'DIRECCIÓN: ' . $company->address);
-            $sheet->mergeCells('A10:F10');
+            $sheet->mergeCells('A10:E10');
             $sheet->setCellValue('A10', $company->city . ' ' . $company->state . ' - ' . $company->country);
-            $sheet->mergeCells('A11:F11');
+            $sheet->mergeCells('A11:E11');
             $sheet->setCellValue('A11', 'TELÉFONO: ' . $company->phone);
             //PLACE OF RECEPT BY PRE CARRIER 
-            $sheet->mergeCells('G8:I8');
-            $sheet->setCellValue('G8', 'TABABELA');
-            $spreadsheet->getActiveSheet()->getStyle('G9:I9')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            $sheet->mergeCells('F8:J8');
+            $sheet->setCellValue('F8', 'TABABELA');
+            $spreadsheet->getActiveSheet()->getStyle('F9:J9')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()->setRGB('CFCDCD');
-            $sheet->mergeCells('G9:I9');
-            $sheet->setCellValue('G9', 'EXPORT CARRIER');
-            $sheet->mergeCells('G10:I11');
-            $sheet->setCellValue('G10', $load->carrier);
+            $sheet->mergeCells('F9:J9');
+            $sheet->setCellValue('F9', 'EXPORT CARRIER');
+            $sheet->mergeCells('F10:J11');
+            $sheet->setCellValue('F10', $load->carrier);
             // CABECERA MARCACIÓN
             $spreadsheet->getActiveSheet()->getStyle('A12:I12')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()->setRGB('CFCDCD');
-            $sheet->mergeCells('A12:F12');
+            $sheet->mergeCells('A12:E12');
             $sheet->setCellValue('A12', 'MARCACIÓN');
-            $sheet->mergeCells('G12:I12');
-            $sheet->setCellValue('G12', 'PORT OF LOADING');
+            $sheet->mergeCells('F12:J12');
+            $sheet->setCellValue('F12', 'PORT OF LOADING');
             // MARCACIÓN
-            $spreadsheet->getActiveSheet()->getStyle('A13:F13')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            $spreadsheet->getActiveSheet()->getStyle('A13:E13')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()->setRGB('CFCDCD');
             $sheet->mergeCells('A13:B13');
             $sheet->setCellValue('A13', $client['name']);
-            $sheet->mergeCells('C13:F13');
+            $sheet->mergeCells('C13:E13');
             $sheet->setCellValue('C13', 'RESUMEN DE ENTREGA');
-            $sheet->mergeCells('G13:I13');
-            $sheet->setCellValue('G13', 'GUAYAQUIL');
+            $sheet->mergeCells('F13:J13');
+            $sheet->setCellValue('F13', 'GUAYAQUIL');
             // TIPOS DE PALETAS
             $sheet->setCellValue('A14', 'PALLETS NORMAL * 18 PCS');
             $sheet->setCellValue('A15', 'PALLETS MIXTAS *17 PCS');
             $sheet->setCellValue('A16', 'PALLETS MIXTA *16 PCS');
             $sheet->setCellValue('A17', 'PALLETS NORMAL *15 PCS');
             // CANTIDAD DE PIEAZAS
-            $sheet->mergeCells('B14:F14');
+            $sheet->mergeCells('B14:E14');
             $sheet->setCellValue('B14', '');
-            $sheet->mergeCells('B15:F15');
+            $sheet->mergeCells('B15:E15');
             $sheet->setCellValue('B15', '');
-            $sheet->mergeCells('B16:F16');
+            $sheet->mergeCells('B16:E16');
             $sheet->setCellValue('B16', '');
-            $sheet->mergeCells('B17:F17');
+            $sheet->mergeCells('B17:E17');
             $sheet->setCellValue('B17', '');
             // FOREING PORT OF DISCHARGE 	
-            $spreadsheet->getActiveSheet()->getStyle('G14:I14')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            $spreadsheet->getActiveSheet()->getStyle('F14:J14')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()->setRGB('CFCDCD');	
-            $sheet->mergeCells('G14:I14');
-            $sheet->setCellValue('G14', 'FOREING PORT OF DISCHARGE');
-            $sheet->mergeCells('G15:I15');
-            $sheet->setCellValue('G15', 'SAN DIEGO, CA - UNITED STATES');
-            $spreadsheet->getActiveSheet()->getStyle('G16:I16')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            $sheet->mergeCells('F14:J14');
+            $sheet->setCellValue('F14', 'FOREING PORT OF DISCHARGE');
+            $sheet->mergeCells('F15:J15');
+            $sheet->setCellValue('F15', 'SAN DIEGO, CA - UNITED STATES');
+            $spreadsheet->getActiveSheet()->getStyle('F16:J16')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()->setRGB('CFCDCD');	
-            $sheet->mergeCells('G16:I16');
-            $sheet->setCellValue('G16', 'FOR TRANSSHIPMENT TO DESTINO');
-            $sheet->mergeCells('G17:I17');
-            $sheet->setCellValue('G17', strtoupper($company->city) . ', ' . strtoupper($company->state) . ' - UNITED STATES');
+            $sheet->mergeCells('F16:J16');
+            $sheet->setCellValue('F16', 'FOR TRANSSHIPMENT TO DESTINO');
+            $sheet->mergeCells('F17:J17');
+            $sheet->setCellValue('F17', strtoupper($company->city) . ', ' . strtoupper($company->state) . ' - UNITED STATES');
             // CABECERA DESCRIPCION
-            $sheet->mergeCells('A18:I18');
+            $sheet->mergeCells('A18:J18');
             $sheet->getStyle('A18')->getFont()->setSize(14);
             $sheet->getStyle('A18')->getFont()->setBold(true);
-            $sheet->getStyle('A18:I18')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-            $sheet->getStyle('A18:I18')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('A18:J18')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('A18:J18')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
             $sheet->setCellValue('A18', 'DESCRIPCIÓN DE LAS CAJAS ENVIADAS');
             // CABECERA DETALLE FINCA
-            $spreadsheet->getActiveSheet()->getStyle('A19:I19')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            $spreadsheet->getActiveSheet()->getStyle('A19:J19')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()->setRGB('CFCDCD');
-            $sheet->getStyle('A19:I19')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-            $sheet->getStyle('A19:I19')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-            $sheet->getStyle('A19:I19')->getFont()->setBold(true);
+            $sheet->getStyle('A19:J19')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('A19:J19')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('A19:J19')->getFont()->setBold(true);
+            $sheet->mergeCells('A19:B19');
             $sheet->setCellValue('A19', 'FINCA');
-            $sheet->setCellValue('B19', 'HAWB');
-            $sheet->setCellValue('C19', 'DETALLE');
-            $sheet->setCellValue('D19', 'PCS');
-            $sheet->setCellValue('E19', 'FBX');
-            $sheet->setCellValue('F19', 'HB');
-            $sheet->setCellValue('G19', 'QB');
-            $sheet->setCellValue('H19', 'EB');
-            $sheet->setCellValue('I19', 'TEMPERATURA');
+            $sheet->setCellValue('C19', 'HAWB');
+            $sheet->setCellValue('D19', 'DETALLE');
+            $sheet->setCellValue('E19', 'PCS');
+            $sheet->setCellValue('F19', 'FBX');
+            $sheet->setCellValue('G19', 'HB');
+            $sheet->setCellValue('H19', 'QB');
+            $sheet->setCellValue('I19', 'EB');
+            $sheet->setCellValue('J19', 'TEMPERATURA');
             // LOOP DE FINCAS
             $fila = 20;
             //dd($itemsFarms);
@@ -270,15 +272,16 @@ class PalletItemController extends Controller
                 //dd($item->hawb);
                 if($client['id'] == $item->id_client)
                 {
+                    $sheet->mergeCells('A' . $fila . ':B' . $fila);
                     $sheet->setCellValue('A' . $fila, $item->name);
-                    $sheet->setCellValue('B' . $fila, $item->hawb);
-                    $sheet->setCellValue('C' . $fila, $item->variety->name);
-                    $sheet->setCellValue('D' . $fila, $item->pieces);
-                    $sheet->setCellValue('E' . $fila, $item->fulls);
-                    $sheet->setCellValue('F' . $fila, $item->hb);
-                    $sheet->setCellValue('G' . $fila, $item->qb);
-                    $sheet->setCellValue('H' . $fila, $item->eb);
-                    $sheet->setCellValue('I' . $fila, '1.5°');
+                    $sheet->setCellValue('C' . $fila, $item->hawb);
+                    $sheet->setCellValue('D' . $fila, $item->variety->name);
+                    $sheet->setCellValue('E' . $fila, $item->pieces);
+                    $sheet->setCellValue('F' . $fila, $item->fulls);
+                    $sheet->setCellValue('G' . $fila, $item->hb);
+                    $sheet->setCellValue('H' . $fila, $item->qb);
+                    $sheet->setCellValue('I' . $fila, $item->eb);
+                    $sheet->setCellValue('J' . $fila, '1.5°');
                     $fila++;
                 }
             }
