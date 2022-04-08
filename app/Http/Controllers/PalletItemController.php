@@ -285,47 +285,56 @@ class PalletItemController extends Controller
                     $fila++;
                 }
             }
-            $sheet->mergeCells('A' . $fila . ':C' . $fila);
+            $sheet->mergeCells('A' . $fila . ':D' . $fila);
             $sheet->setCellValue('A' . $fila, '');
-            $sheet->setCellValue('D' . $fila, 'TOTAL PCS');
             $sheet->setCellValue('E' . $fila, 'TOTAL PCS');
-            $sheet->setCellValue('F' . $fila, 'TOTAL PCS');
-            $sheet->setCellValue('G' . $fila, 'TOTAL PCS');
-            $sheet->setCellValue('H' . $fila, 'TOTAL PCS');
+            $sheet->setCellValue('F' . $fila, 'TOTAL FULL');
+            $sheet->setCellValue('G' . $fila, 'TOTAL HB');
+            $sheet->setCellValue('H' . $fila, 'TOTAL QB');
+            $sheet->setCellValue('I' . $fila, 'TOTAL EB');
+            $sheet->setCellValue('J' . $fila, '');
             // CABECERA OBSERVACIONES
             $fila++;
-            $sheet->mergeCells('A' . $fila . ':I' . $fila);
+            $sheet->mergeCells('A' . $fila . ':J' . $fila);
             $spreadsheet->getActiveSheet()->getStyle('A' . $fila . ':I' . $fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()->setRGB('CFCDCD');
-            $sheet->getStyle('A' . $fila . ':I' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-            $sheet->getStyle('A' . $fila . ':I' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-            $sheet->getStyle('A' . $fila . ':I' . $fila)->getFont()->setBold(true);
+            $sheet->getStyle('A' . $fila . ':J' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('A' . $fila . ':J' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('A' . $fila . ':J' . $fila)->getFont()->setBold(true);
             $sheet->setCellValue('A' . $fila, 'OBSERVACIONES');
             // DETALLES DE DESPACHO
             $fila++;
-            $sheet->getStyle('A' . $fila . ':I' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-            $sheet->getStyle('A' . $fila . ':I' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-            $sheet->getStyle('A' . $fila . ':I' . $fila)->getFont()->setBold(true);
-            $sheet->mergeCells('A' . $fila . ':B' . $fila);
+            $sheet->getStyle('A' . $fila . ':J' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('A' . $fila . ':J' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('A' . $fila . ':J' . $fila)->getFont()->setBold(true);
+            $sheet->mergeCells('A' . $fila . ':C' . $fila);
             $sheet->setCellValue('A' . $fila, 'DETALLES DE DESPACHO POR PALETS:');
-            $sheet->setCellValue('C' . $fila, 'PCS');
-            $sheet->setCellValue('D' . $fila, 'HB');
-            $sheet->setCellValue('E' . $fila, 'QB');
-            $sheet->setCellValue('F' . $fila, 'EB');
-            $sheet->mergeCells('G' . $fila . ':I' . $fila);
-            $sheet->setCellValue('G' . $fila, 'OBSERVACIONES');
+            $sheet->setCellValue('D' . $fila, 'PCS');
+            $sheet->setCellValue('E' . $fila, 'HB');
+            $sheet->setCellValue('F' . $fila, 'QB');
+            $sheet->setCellValue('G' . $fila, 'EB');
+            $sheet->mergeCells('H' . $fila . ':J' . $fila);
+            $sheet->setCellValue('H' . $fila, 'OBSERVACIONES');
             // LOOP DE PALETAS
             $fila++;
-            foreach($palletItem as $itemP)
+            //dd($palletItem);
+            $acumu = 0;
+            foreach($pallets as $pallet)
             {
-                foreach($pallets as $pallet)
+                $pallet_counter = $pallet->counter;
+                foreach($palletItem as $itemP)
                 {
                     if($itemP->id_pallet == $pallet->id && $itemP->id_client == $client['id'])
                     {
-                        if($pallet->counter) // HAY QUE HACER UN SUM DE LAS FINCAS DE UN MISMO CLIENTE EN UNA PALETA
+                        
+                        if($pallet->counter == $pallet_counter)// HAY QUE HACER UN SUM DE LAS FINCAS DE UN MISMO CLIENTE EN UNA PALETA
+                        {
+                            $acumu += $palletItem->quantity;
+                        }else{
+                            $sheet->setCellValue('C' . $fila, 'PALLET #' . $pallet->counter);
+                            $fila++;
+                        }
                         //dd($pallet->counter);
-                        $sheet->setCellValue('B' . $fila, 'PALLET #' . $pallet->counter);
-                        $fila++;
                     }
                 }
             }
