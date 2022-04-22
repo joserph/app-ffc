@@ -101,7 +101,7 @@ class PalletItemController extends Controller
 
         $palletItem = PalletItem::where('id_load', '=', $codeLoad)->with('client')->with('farm')->orderBy('farms', 'ASC')->get();
         $pallets = Pallet::where('id_load', '=', $codeLoad)->get();
-        //dd($palletItem);
+        //dd($load);
         //$itemsFarms = PalletItem::groupEqualsItemsCargas($palletItem, $codeLoad);
 
         //$invoiceItems = MasterInvoiceItem::where('id_load', '=', $codeLoad)->with('farm')->first();
@@ -117,8 +117,10 @@ class PalletItemController extends Controller
         //dd($palletItem);
         $spreadsheet = new Spreadsheet();
         $val = 0;
+        
         foreach($clientsLoad as $client)
         {
+            $pcs_t = 0;
             $spreadsheet->createSheet();
             $spreadsheet->setActiveSheetIndex($val);
             $sheet = $spreadsheet->getActiveSheet();
@@ -310,6 +312,7 @@ class PalletItemController extends Controller
             $sheet->mergeCells('A' . $fila . ':C' . $fila);
             $sheet->setCellValue('A' . $fila, 'DETALLES DE DESPACHO POR PALETS:');
             $sheet->setCellValue('D' . $fila, 'PCS');
+            $pcs_t = $fila;
             $sheet->setCellValue('E' . $fila, 'HB');
             $sheet->setCellValue('F' . $fila, 'QB');
             $sheet->setCellValue('G' . $fila, 'EB');
@@ -317,32 +320,67 @@ class PalletItemController extends Controller
             $sheet->setCellValue('H' . $fila, 'OBSERVACIONES');
             // LOOP DE PALETAS
             $fila++;
-            //dd($palletItem);
-            $acumu = 0;
+            //dd($pcs_t);
+            
             foreach($pallets as $pallet)
             {
-                $pallet_counter = $pallet->counter;
+                //$pallet_counter = $pallet->counter;
+                $acumu = 0;
+                $acum_hb = 0;
+                $acum_qb = 0;
+                $acum_eb = 0;
                 foreach($palletItem as $itemP)
                 {
-                    if($itemP->id_pallet == $pallet->id && $itemP->id_client == $client['id'])
+                    if($itemP->id_client == $client['id'])
                     {
-                        
-                        if($pallet->counter == $pallet_counter)// HAY QUE HACER UN SUM DE LAS FINCAS DE UN MISMO CLIENTE EN UNA PALETA
+                        if($itemP->id_pallet == $pallet->id)
                         {
-                            $acumu += $palletItem->quantity;
-                        }else{
-                            $sheet->setCellValue('C' . $fila, 'PALLET #' . $pallet->counter);
-                            $fila++;
+                            $acumu += $itemP->quantity;
+                            $acum_hb += $itemP->hb;
+                            $acum_qb += $itemP->qb;
+                            $acum_eb += $itemP->eb;
                         }
-                        //dd($pallet->counter);
                     }
                 }
+                if($acumu != 0)
+                {
+                    $sheet->mergeCells('A' . $fila . ':B' . $fila);
+                    $sheet->setCellValue('C' . $fila, 'PALLET #' . $pallet->counter);
+                    $sheet->setCellValue('D' . $fila, '=SUM(E' . $fila . ':G' . $fila . ')');
+                    $sheet->setCellValue('E' . $fila, $acum_hb);
+                    $sheet->setCellValue('F' . $fila, $acum_qb);
+                    $sheet->setCellValue('G' . $fila, $acum_eb);
+                    $sheet->mergeCells('H' . $fila . ':J' . $fila);
+                    $sheet->setCellValue('H' . $fila, 'PALLETS NORMAL * 18 PCS');
+                    $fila++;
+                }
             }
-            
+            // TOTALES
+            $sheet->mergeCells('A' . $fila . ':C' . $fila);
+            $sheet->setCellValue('A' . $fila, 'TOTAL PIEZAS');
+            $sheet->setCellValue('D' . $fila, '=SUM(D' . ($pcs_t + 1) . ':D' . ($fila - 1) . ')');
+            $sheet->setCellValue('E' . $fila, '=SUM(E' . ($pcs_t + 1) . ':E' . ($fila - 1) . ')');
+            $sheet->setCellValue('F' . $fila, '=SUM(F' . ($pcs_t + 1) . ':F' . ($fila - 1) . ')');
+            $sheet->setCellValue('G' . $fila, '=SUM(G' . ($pcs_t + 1) . ':G' . ($fila - 1) . ')');
+            $sheet->mergeCells('H' . $fila . ':J' . $fila);
+            $fila++;
+            // ESPACIO PIE
+            $sheet->mergeCells('A' . $fila . ':J' . $fila);
+            $fila++;
+            // PIE SALIDA Y DEVOLUCIONES
+            $sheet->setCellValue('A' . $fila, 'SALIDA UIO');
+            $sheet->setCellValue('B' . $fila, $load->date);
+            $sheet->setCellValue('D' . $fila, 'DEVOLUCIONES');
+            $fila++;
+            $sheet->setCellValue('A' . $fila, 'LLEGADA LAX');
+            $sheet->setCellValue('B' . $fila, $load->arrival_date);
+            $sheet->setCellValue('D' . $fila, 'NO HAY DEVOLUCIONES');
+            $fila++;
 
 
             $val++;
         }
+        
         //dd($itemsFarms);
         $writer = new Xlsx($spreadsheet);
 
