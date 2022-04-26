@@ -125,6 +125,22 @@ class PalletItemController extends Controller
             $spreadsheet->setActiveSheetIndex($val);
             $sheet = $spreadsheet->getActiveSheet();
             $sheet->setTitle($client['name']);
+            $styleArrayBorderThick = [
+                'borders' => [
+                    'outline' => [
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM,
+                        'color' => ['rgb' => '000000'],
+                    ],
+                ],
+            ];
+            $styleArrayBorderThin = [
+                'borders' => [
+                    'allBorders' => [
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                        'color' => ['rgb' => '000000'],
+                    ],
+                ],
+            ];
 
             // Formatos celdas
             $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(25);
@@ -140,6 +156,7 @@ class PalletItemController extends Controller
 
             // Titulo
             $sheet->mergeCells('A1:J1');
+            $sheet->getStyle('A1:J1')->applyFromArray($styleArrayBorderThick);
             $sheet->getStyle('A1')->getFont()->setSize(18);
             $sheet->getStyle('A1')->getFont()->setBold(true);
             $sheet->getStyle('A1:J1')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
@@ -149,10 +166,17 @@ class PalletItemController extends Controller
             $spreadsheet->getActiveSheet()->getStyle('A2:J2')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()->setRGB('CFCDCD');
             $sheet->mergeCells('A2:E2');
+            $sheet->getStyle('A2:E2')->applyFromArray($styleArrayBorderThick);
             $sheet->setCellValue('A2', 'SHIPPER');
             $sheet->mergeCells('F2:J2');
+            $sheet->getStyle('F2:J2')->applyFromArray($styleArrayBorderThick);
             $sheet->setCellValue('F2', 'BL N°');
+            $sheet->getStyle('F2')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('F2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
             //Shipper
+            $spreadsheet->getActiveSheet()->getStyle('A3:E6')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()->setRGB('FFFFFF');
+            $sheet->getStyle('A3:E6')->applyFromArray($styleArrayBorderThick);
             $sheet->mergeCells('A3:E3');
             $sheet->setCellValue('A3', $logistic->name);
             $sheet->mergeCells('A4:E4');
@@ -163,6 +187,10 @@ class PalletItemController extends Controller
             $sheet->setCellValue('A6', 'TELÉFONO: ' . $logistic->phone);
             // BL N°
             $sheet->mergeCells('F3:J4');
+            $sheet->getStyle('F3:J6')->applyFromArray($styleArrayBorderThin);
+            $sheet->getStyle('F3:J6')->applyFromArray($styleArrayBorderThick);
+            $sheet->getStyle('F3:J6')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('F3:J6')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('F3')->getFont()->setSize(16);
             $sheet->setCellValue('F3', $load->bl);
             $spreadsheet->getActiveSheet()->getStyle('F5:H5')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
@@ -173,17 +201,23 @@ class PalletItemController extends Controller
             $spreadsheet->getActiveSheet()->getStyle('F6:H6')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()->setRGB('CFCDCD');
             $sheet->mergeCells('F6:I6');
+            
             $sheet->setCellValue('F6', 'FULLES');
             $sheet->setCellValue('J6', '7.00');/*** COLOCAR VALOR CALCULADO  ***/ 
             // CABECERA CONSIGNE
             $spreadsheet->getActiveSheet()->getStyle('A7:I7')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()->setRGB('CFCDCD');
             $sheet->mergeCells('A7:E7');
+            $sheet->getStyle('A7:E7')->applyFromArray($styleArrayBorderThick);
             $sheet->setCellValue('A7', 'CONSIGNE');
             $sheet->mergeCells('F7:J7');
+            $sheet->getStyle('F7:J7')->applyFromArray($styleArrayBorderThick);
             $sheet->setCellValue('F7', 'PLACE OF RECEPT BY PRE CARRIER');
             // CONSIGNE
             $sheet->mergeCells('A8:E8');
+            $spreadsheet->getActiveSheet()->getStyle('A8:E11')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()->setRGB('FFFFFF');
+            $sheet->getStyle('A8:E11')->applyFromArray($styleArrayBorderThick);
             $sheet->setCellValue('A8', $company->name);
             $sheet->mergeCells('A9:E9');
             $sheet->setCellValue('A9', 'DIRECCIÓN: ' . $company->address);
@@ -193,6 +227,9 @@ class PalletItemController extends Controller
             $sheet->setCellValue('A11', 'TELÉFONO: ' . $company->phone);
             //PLACE OF RECEPT BY PRE CARRIER 
             $sheet->mergeCells('F8:J8');
+            $sheet->getStyle('F8:J11')->applyFromArray($styleArrayBorderThin);
+            $sheet->getStyle('F8:J11')->applyFromArray($styleArrayBorderThick);
+            $sheet->getStyle('F8:J11')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
             $sheet->setCellValue('F8', 'TABABELA');
             $spreadsheet->getActiveSheet()->getStyle('F9:J9')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()->setRGB('CFCDCD');
@@ -204,13 +241,18 @@ class PalletItemController extends Controller
             $spreadsheet->getActiveSheet()->getStyle('A12:I12')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()->setRGB('CFCDCD');
             $sheet->mergeCells('A12:E12');
+            $sheet->getStyle('A12:E12')->applyFromArray($styleArrayBorderThick);
             $sheet->setCellValue('A12', 'MARCACIÓN');
             $sheet->mergeCells('F12:J12');
+            $sheet->getStyle('F12:J12')->applyFromArray($styleArrayBorderThick);
             $sheet->setCellValue('F12', 'PORT OF LOADING');
             // MARCACIÓN
             $spreadsheet->getActiveSheet()->getStyle('A13:E13')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()->setRGB('CFCDCD');
             $sheet->mergeCells('A13:B13');
+            $sheet->getStyle('A13:E13')->applyFromArray($styleArrayBorderThick);
+            $sheet->getStyle('A13:E13')->getFont()->setSize(14);
+            $sheet->getStyle('A13:E13')->getFont()->setBold(true);
             $sheet->setCellValue('A13', $client['name']);
             $sheet->mergeCells('C13:E13');
             $sheet->setCellValue('C13', 'RESUMEN DE ENTREGA');
