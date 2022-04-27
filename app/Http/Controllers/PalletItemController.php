@@ -121,9 +121,26 @@ class PalletItemController extends Controller
         foreach($clientsLoad as $client)
         {
             $pcs_t = 0;
+            
             $spreadsheet->createSheet();
             $spreadsheet->setActiveSheetIndex($val);
+
+            
+
+
             $sheet = $spreadsheet->getActiveSheet();
+
+            //Page margins
+            $sheet->getPageMargins()->setTop(0.5);
+            $sheet->getPageMargins()->setRight(0.75);
+            $sheet->getPageMargins()->setLeft(0.75);
+            $sheet->getPageMargins()->setBottom(1);
+
+            //Use fit to page for the horizontal direction
+            $sheet->getPageSetup()->setFitToWidth(1);
+            $sheet->getPageSetup()->setFitToHeight(0);
+
+
             $sheet->setTitle($client['name']);
             $styleArrayBorderThick = [
                 'borders' => [
@@ -141,6 +158,14 @@ class PalletItemController extends Controller
                     ],
                 ],
             ];
+            $styleArrayAllBorderMedium = [
+                'borders' => [
+                    'allBorders' => [
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM,
+                        'color' => ['rgb' => '000000'],
+                    ],
+                ],
+            ];
 
             // Formatos celdas
             $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(25);
@@ -148,11 +173,11 @@ class PalletItemController extends Controller
             $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(14);
             $spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(10);
             $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(5);
-            $spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(5);
+            $spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(8);
             $spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(5);
             $spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(5);
             $spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(5);
-            $spreadsheet->getActiveSheet()->getColumnDimension('J')->setWidth(20);
+            $spreadsheet->getActiveSheet()->getColumnDimension('J')->setWidth(17);
 
             // Titulo
             $sheet->mergeCells('A1:J1');
@@ -182,7 +207,7 @@ class PalletItemController extends Controller
             $sheet->mergeCells('A4:E4');
             $sheet->setCellValue('A4', 'RUC: ' . $logistic->ruc);
             $sheet->mergeCells('A5:E5');
-            $sheet->setCellValue('A5', 'DIRECCIÓN ' . $logistic->address);
+            $sheet->setCellValue('A5', 'DIRECCIÓN: ' . $logistic->address);
             $sheet->mergeCells('A6:E6');
             $sheet->setCellValue('A6', 'TELÉFONO: ' . $logistic->phone);
             // BL N°
@@ -197,13 +222,13 @@ class PalletItemController extends Controller
                 ->getStartColor()->setRGB('CFCDCD');
             $sheet->mergeCells('F5:I5');
             $sheet->setCellValue('F5', 'PIEZAS');
-            $sheet->setCellValue('J5', '14'); /*** COLOCAR VALOR CALCULADO  ***/ 
+            
             $spreadsheet->getActiveSheet()->getStyle('F6:H6')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()->setRGB('CFCDCD');
             $sheet->mergeCells('F6:I6');
             
             $sheet->setCellValue('F6', 'FULLES');
-            $sheet->setCellValue('J6', '7.00');/*** COLOCAR VALOR CALCULADO  ***/ 
+            
             // CABECERA CONSIGNE
             $spreadsheet->getActiveSheet()->getStyle('A7:I7')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()->setRGB('CFCDCD');
@@ -220,9 +245,9 @@ class PalletItemController extends Controller
             $sheet->getStyle('A8:E11')->applyFromArray($styleArrayBorderThick);
             $sheet->setCellValue('A8', $company->name);
             $sheet->mergeCells('A9:E9');
-            $sheet->setCellValue('A9', 'DIRECCIÓN: ' . $company->address);
+            $sheet->setCellValue('A9', 'DIRECCIÓN: ' . strtoupper($company->address));
             $sheet->mergeCells('A10:E10');
-            $sheet->setCellValue('A10', $company->city . ' ' . $company->state . ' - ' . $company->country);
+            $sheet->setCellValue('A10', strtoupper($company->city) . ' ' . strtoupper($company->state) . ' - ' . strtoupper($company->country));
             $sheet->mergeCells('A11:E11');
             $sheet->setCellValue('A11', 'TELÉFONO: ' . $company->phone);
             //PLACE OF RECEPT BY PRE CARRIER 
@@ -258,10 +283,20 @@ class PalletItemController extends Controller
             $sheet->setCellValue('C13', 'RESUMEN DE ENTREGA');
             $sheet->mergeCells('F13:J13');
             $sheet->setCellValue('F13', 'GUAYAQUIL');
+            $sheet->getStyle('F13:J17')->applyFromArray($styleArrayBorderThin);
+            $sheet->getStyle('F13:J17')->applyFromArray($styleArrayBorderThick);
             // TIPOS DE PALETAS
+            $spreadsheet->getActiveSheet()->getStyle('A14:E17')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()->setRGB('FFFFFF');
+            $spreadsheet->getActiveSheet()->getStyle('B14:E17')
+                ->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_RED);
+            $sheet->getStyle('B14:E17')->getFont()->setBold(true);
+            $sheet->getStyle('A14:A17')->applyFromArray($styleArrayBorderThin);
+            $sheet->getStyle('A14:E17')->applyFromArray($styleArrayBorderThick);
+            
             $sheet->setCellValue('A14', 'PALLETS NORMAL * 18 PCS');
             $sheet->setCellValue('A15', 'PALLETS MIXTAS *17 PCS');
-            $sheet->setCellValue('A16', 'PALLETS MIXTA *16 PCS');
+            $sheet->setCellValue('A16', 'PALLETS MIXTAS *16 PCS');
             $sheet->setCellValue('A17', 'PALLETS NORMAL *15 PCS');
             // CANTIDAD DE PIEAZAS
             $sheet->mergeCells('B14:E14');
@@ -287,12 +322,14 @@ class PalletItemController extends Controller
             $sheet->setCellValue('F17', strtoupper($company->city) . ', ' . strtoupper($company->state) . ' - UNITED STATES');
             // CABECERA DESCRIPCION
             $sheet->mergeCells('A18:J18');
+            $sheet->getStyle('A18:J18')->applyFromArray($styleArrayBorderThick);
             $sheet->getStyle('A18')->getFont()->setSize(14);
             $sheet->getStyle('A18')->getFont()->setBold(true);
             $sheet->getStyle('A18:J18')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
             $sheet->getStyle('A18:J18')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
             $sheet->setCellValue('A18', 'DESCRIPCIÓN DE LAS CAJAS ENVIADAS');
             // CABECERA DETALLE FINCA
+            $sheet->getStyle('A19:J19')->applyFromArray($styleArrayAllBorderMedium);
             $spreadsheet->getActiveSheet()->getStyle('A19:J19')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()->setRGB('CFCDCD');
             $sheet->getStyle('A19:J19')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
@@ -319,24 +356,41 @@ class PalletItemController extends Controller
                     $sheet->mergeCells('A' . $fila . ':B' . $fila);
                     $sheet->setCellValue('A' . $fila, $item->name);
                     $sheet->setCellValue('C' . $fila, $item->hawb);
-                    $sheet->setCellValue('D' . $fila, $item->variety->name);
-                    $sheet->setCellValue('E' . $fila, $item->pieces);
-                    $sheet->setCellValue('F' . $fila, $item->fulls);
+                    $sheet->getStyle('C' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+                    $sheet->getStyle('C' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                    $sheet->setCellValue('D' . $fila, strtoupper($item->variety->name));
+                    $sheet->setCellValue('E' . $fila, '=G' . $fila . '+H' . $fila . '+I' . $fila);
+                    $sheet->getStyle('E' . $fila . ':J' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+                    $sheet->getStyle('E' . $fila . ':J' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                    $sheet->setCellValue('F' . $fila, '=(G' . $fila . '*0.5)+(H' . $fila . '*0.25)+(I' . $fila . '*0.125)');
+                    $spreadsheet->getActiveSheet()->getStyle('F' . $fila)->getNumberFormat()->setFormatCode('#,##0.000');
                     $sheet->setCellValue('G' . $fila, $item->hb);
                     $sheet->setCellValue('H' . $fila, $item->qb);
                     $sheet->setCellValue('I' . $fila, $item->eb);
-                    $sheet->setCellValue('J' . $fila, '1.5°');
+                    $sheet->setCellValue('J' . $fila, '1.5°C');
                     $fila++;
                 }
             }
+            $sheet->getStyle('A20:J' . $fila)->applyFromArray($styleArrayBorderThin);
+            $sheet->getStyle('A20:J' . $fila)->applyFromArray($styleArrayBorderThick);
+            $sheet->getStyle('A' . $fila . ':J' . $fila)->applyFromArray($styleArrayAllBorderMedium);
+            $sheet->getStyle('A' . $fila . ':J' . $fila)->getFont()->setBold(true);
+            $sheet->getStyle('A' . $fila . ':J' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('A' . $fila . ':J' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
             $sheet->mergeCells('A' . $fila . ':D' . $fila);
             $sheet->setCellValue('A' . $fila, '');
-            $sheet->setCellValue('E' . $fila, 'TOTAL PCS');
-            $sheet->setCellValue('F' . $fila, 'TOTAL FULL');
-            $sheet->setCellValue('G' . $fila, 'TOTAL HB');
-            $sheet->setCellValue('H' . $fila, 'TOTAL QB');
-            $sheet->setCellValue('I' . $fila, 'TOTAL EB');
+            $spreadsheet->getActiveSheet()->getStyle('E' . $fila . ':I' . $fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()->setRGB('CFCDCD');
+            $sheet->setCellValue('E' . $fila, '=SUM(E20:E' . ($fila - 1) . ')');
+            $sheet->setCellValue('F' . $fila, '=SUM(F20:F' . ($fila - 1) . ')');
+            $spreadsheet->getActiveSheet()->getStyle('F' . $fila)->getNumberFormat()->setFormatCode('#,##0.000');
+            $sheet->setCellValue('G' . $fila, '=SUM(G20:G' . ($fila - 1) . ')');
+            $sheet->setCellValue('H' . $fila, '=SUM(H20:H' . ($fila - 1) . ')');
+            $sheet->setCellValue('I' . $fila, '=SUM(I20:I' . ($fila - 1) . ')');
             $sheet->setCellValue('J' . $fila, '');
+            $sheet->setCellValue('J5', '=+E' . $fila);/*** COLOCAR VALOR CALCULADO PIEZAS  ***/ 
+            $sheet->setCellValue('J6', '=+F' . $fila); /*** COLOCAR VALOR CALCULADO FULLES  ***/ 
+            $spreadsheet->getActiveSheet()->getStyle('J6')->getNumberFormat()->setFormatCode('#,##0.000');
             // CABECERA OBSERVACIONES
             $fila++;
             $sheet->mergeCells('A' . $fila . ':J' . $fila);
@@ -345,9 +399,11 @@ class PalletItemController extends Controller
             $sheet->getStyle('A' . $fila . ':J' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
             $sheet->getStyle('A' . $fila . ':J' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('A' . $fila . ':J' . $fila)->getFont()->setBold(true);
+            $sheet->getStyle('A' . $fila . ':J' . $fila)->applyFromArray($styleArrayBorderThick);
             $sheet->setCellValue('A' . $fila, 'OBSERVACIONES');
             // DETALLES DE DESPACHO
             $fila++;
+            $sheet->getStyle('A' . $fila . ':J' . $fila)->applyFromArray($styleArrayAllBorderMedium);
             $sheet->getStyle('A' . $fila . ':J' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
             $sheet->getStyle('A' . $fila . ':J' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('A' . $fila . ':J' . $fila)->getFont()->setBold(true);
@@ -397,9 +453,24 @@ class PalletItemController extends Controller
                     $fila++;
                 }
             }
+            $sheet->getStyle('A' . ($pcs_t + 1) . ':J' . ($fila - 1))->applyFromArray($styleArrayBorderThin);
+            $sheet->getStyle('A' . ($pcs_t + 1) . ':J' . ($fila - 1))->applyFromArray($styleArrayBorderThick);
+            $sheet->getStyle('D' . ($pcs_t + 1) . ':J' . ($fila - 1))->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('D' . ($pcs_t + 1) . ':J' . ($fila - 1))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $spreadsheet->getActiveSheet()->getStyle('A' . ($pcs_t + 1) . ':A' . ($fila - 1))
+                ->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_RED);
+            $sheet->getStyle('A' . ($pcs_t + 1) . ':A' . ($fila - 1))->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('A' . ($pcs_t + 1) . ':A' . ($fila - 1))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
+            $sheet->getStyle('A' . ($pcs_t + 1) . ':A' . ($fila - 1))->getFont()->setBold(true);
             // TOTALES
+            $sheet->getStyle('A' . $fila . ':J' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('A' . $fila . ':J' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('A' . $fila . ':J' . $fila)->getFont()->setBold(true);
+            $sheet->getStyle('A' . $fila . ':J' . $fila)->applyFromArray($styleArrayAllBorderMedium);
             $sheet->mergeCells('A' . $fila . ':C' . $fila);
             $sheet->setCellValue('A' . $fila, 'TOTAL PIEZAS');
+            $spreadsheet->getActiveSheet()->getStyle('D' . $fila . ':G' . $fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()->setRGB('CFCDCD');
             $sheet->setCellValue('D' . $fila, '=SUM(D' . ($pcs_t + 1) . ':D' . ($fila - 1) . ')');
             $sheet->setCellValue('E' . $fila, '=SUM(E' . ($pcs_t + 1) . ':E' . ($fila - 1) . ')');
             $sheet->setCellValue('F' . $fila, '=SUM(F' . ($pcs_t + 1) . ':F' . ($fila - 1) . ')');
@@ -408,16 +479,84 @@ class PalletItemController extends Controller
             $fila++;
             // ESPACIO PIE
             $sheet->mergeCells('A' . $fila . ':J' . $fila);
+            $spreadsheet->getActiveSheet()->getStyle('A' . $fila . ':J' . $fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()->setRGB('CFCDCD');
+            $sheet->getStyle('A' . $fila . ':J' . $fila)->applyFromArray($styleArrayAllBorderMedium);
             $fila++;
             // PIE SALIDA Y DEVOLUCIONES
+            $aux_fila = $fila;
+            $spreadsheet->getActiveSheet()->getStyle('A' . $fila . ':J' . $fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()->setRGB('CFCDCD');
             $sheet->setCellValue('A' . $fila, 'SALIDA UIO');
             $sheet->setCellValue('B' . $fila, $load->date);
+            $sheet->mergeCells('D' . $fila . ':J' . $fila);
+            $spreadsheet->getActiveSheet()->getStyle('D' . $fila . ':J' . $fila)
+                ->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_RED);
+            $sheet->getStyle('D' . $fila . ':J' . $fila)->getFont()->setBold(true);
             $sheet->setCellValue('D' . $fila, 'DEVOLUCIONES');
             $fila++;
+            $spreadsheet->getActiveSheet()->getStyle('A' . $fila . ':J' . $fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()->setRGB('CFCDCD');
             $sheet->setCellValue('A' . $fila, 'LLEGADA LAX');
             $sheet->setCellValue('B' . $fila, $load->arrival_date);
+            $sheet->mergeCells('D' . $fila . ':J' . $fila);
+            $sheet->getStyle('D' . $fila . ':J' . $fila)->getFont()->setBold(true);
             $sheet->setCellValue('D' . $fila, 'NO HAY DEVOLUCIONES');
             $fila++;
+            $spreadsheet->getActiveSheet()->getStyle('A' . $fila . ':J' . $fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()->setRGB('CFCDCD');
+            $sheet->getStyle('A' . $aux_fila . ':J' . $fila)->applyFromArray($styleArrayBorderThick);
+
+            $fila++;
+            $sheet->getStyle('A' . $fila . ':J' . $fila)->getFont()->setBold(true);
+            $sheet->setCellValue('A' . $fila, 'REALIZADO POR:');
+            // SALTO DE PAGINA
+            $spreadsheet->getActiveSheet()->setBreak('J' . $fila, \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet::BREAK_ROW); /* new */
+            // RESPALDO FOTOGRAFICO
+            $fila++;
+            $sheet->mergeCells('A' . $fila . ':J' . $fila);
+            $sheet->getStyle('A' . $fila . ':J' . $fila)->applyFromArray($styleArrayAllBorderMedium);
+            $sheet->getStyle('A' . $fila . ':J' . $fila)->getFont()->setSize(16);
+            $sheet->getStyle('A' . $fila . ':J' . $fila)->getFont()->setBold(true);
+            $sheet->getStyle('A' . $fila . ':J' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('A' . $fila . ':J' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->setCellValue('A' . $fila, 'RESPALDO FOTOGRÁFICO');
+            // USDA
+            $fila++;
+            $sheet->getStyle('A' . $fila . ':J' . $fila)->applyFromArray($styleArrayAllBorderMedium);
+            $sheet->mergeCells('A' . $fila . ':B' . $fila);
+            $sheet->getStyle('A' . $fila . ':B' . $fila)->getFont()->setSize(14);
+            $sheet->getStyle('A' . $fila . ':B' . $fila)->getFont()->setBold(true);
+            $sheet->getStyle('A' . $fila . ':B' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('A' . $fila . ':B' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->setCellValue('A' . $fila, 'U.S.D.A.');
+            $sheet->getStyle('A' . $fila . ':B' . ($fila + 25))->applyFromArray($styleArrayBorderThick);
+            $spreadsheet->getActiveSheet()->getStyle('A' . $fila . ':B' . ($fila + 25))->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()->setRGB('FFFFFF');
+            // REGISTRO DE TEMPERATURA 1,0ºC
+            $sheet->mergeCells('C' . $fila . ':F' . $fila);
+            $sheet->getStyle('C' . $fila . ':F' . $fila)->getFont()->setSize(14);
+            $sheet->getStyle('C' . $fila . ':F' . $fila)->getFont()->setBold(true);
+            $sheet->getStyle('C' . $fila . ':F' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('C' . $fila . ':F' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->setCellValue('C' . $fila, 'REGISTRO DE TEMPERATURA');
+            $sheet->getStyle('C' . $fila . ':F' . ($fila + 11))->applyFromArray($styleArrayBorderThick);
+            $spreadsheet->getActiveSheet()->getStyle('C' . $fila . ':F' . ($fila + 11))->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()->setRGB('FFFFFF');
+            // FILTRO DE ETILENO 
+            $sheet->mergeCells('G' . $fila . ':J' . $fila);
+            $sheet->getStyle('G' . $fila . ':J' . $fila)->getFont()->setSize(14);
+            $sheet->getStyle('G' . $fila . ':J' . $fila)->getFont()->setBold(true);
+            $sheet->getStyle('G' . $fila . ':J' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('G' . $fila . ':J' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->setCellValue('G' . $fila, 'FILTRO DE ETILENO');
+            $sheet->getStyle('G' . $fila . ':J' . ($fila + 11))->applyFromArray($styleArrayBorderThick);
+            $spreadsheet->getActiveSheet()->getStyle('G' . $fila . ':J' . ($fila + 11))->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()->setRGB('FFFFFF');
+            // SALTO DE PAGINA
+            $sheet->getStyle('A' . $fila . ':J' . ($fila + 55))->applyFromArray($styleArrayBorderThick);
+            $spreadsheet->getActiveSheet()->setBreak('J' . ($fila + 55), \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet::BREAK_ROW); /* new */
+
 
 
             $val++;
