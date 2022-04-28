@@ -178,3 +178,5 @@ Route::resource('/pickuporder', 'PickUpOrderController')->names('pickuporder');
 Route::resource('/pickuporderitem', 'PickUpOrderItemController')->names('pickuporderitem');
 // Pick Up Order PDF
 Route::get('pickuporder-Pdf/{id}', 'PickUpOrderItemController@pickuporderPdf')->name('pickuporder.pdf');
+// Varieties Flowers
+Route::resource('/varietiesflowers', 'VaietiesFlowersController')->names('varietiesflowers');

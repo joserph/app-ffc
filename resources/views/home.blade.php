@@ -167,6 +167,20 @@
             @endcan
          </div>
       </div>
+      <div class="col-lg-3 col-6">
+         <div class="small-box bg-info">
+            <div class="inner">
+               <h3>{{ $varietiesflowers }}</h3>
+               <p>Variedades Flores</p>
+            </div>
+            <div class="icon">
+               <i class="fab fa-canadian-maple-leaf"></i>
+            </div>
+            @can('haveaccess', 'varietiesflowers.index')
+               <a href="{{ route('varietiesflowers.index') }}" class="small-box-footer">Ver <i class="fas fa-arrow-circle-right"></i></a>
+            @endcan
+         </div>
+      </div>
 
 
 

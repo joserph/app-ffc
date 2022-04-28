@@ -217,6 +217,14 @@
                                  </a>
                               </li>
                            @endcan
+                           @can('haveaccess', 'varietiesflowers.index')
+                              <li class="nav-item">
+                                 <a href="{{ route('varietiesflowers.index') }}" class="nav-link">
+                                    <i class="fab fa-canadian-maple-leaf"></i>
+                                    <p>Variedades Flores</p>
+                                 </a>
+                              </li>
+                           @endcan
                         </ul>
                      </nav>
                   @endguest
