@@ -124,10 +124,6 @@ class PalletItemController extends Controller
             
             $spreadsheet->createSheet();
             $spreadsheet->setActiveSheetIndex($val);
-
-            
-
-
             $sheet = $spreadsheet->getActiveSheet();
 
             //Page margins
@@ -139,7 +135,6 @@ class PalletItemController extends Controller
             //Use fit to page for the horizontal direction
             $sheet->getPageSetup()->setFitToWidth(1);
             $sheet->getPageSetup()->setFitToHeight(0);
-
 
             $sheet->setTitle($client['name']);
             $styleArrayBorderThick = [
@@ -557,16 +552,13 @@ class PalletItemController extends Controller
             $sheet->getStyle('A' . $fila . ':J' . ($fila + 55))->applyFromArray($styleArrayBorderThick);
             $spreadsheet->getActiveSheet()->setBreak('J' . ($fila + 55), \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet::BREAK_ROW); /* new */
 
-
-
             $val++;
         }
-        
         //dd($itemsFarms);
         $writer = new Xlsx($spreadsheet);
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="INFORMES.xlsx"');
+        header('Content-Disposition: attachment;filename="INFORMES CLIENTES ' . $load->bl . '.xlsx"');
         header('Cache-Control: max-age=0');
 
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
