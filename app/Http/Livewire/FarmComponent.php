@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Farm;
+use App\User;
 use Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -31,7 +32,8 @@ class FarmComponent extends Component
                 ->orWhere('state', 'LIKE', "%$term%")
                 ->orWhere('city', 'LIKE', "%$term%")
                 ->orWhere('country', 'LIKE', "%$term%");
-            })->orderBy('name', 'ASC')->paginate(10)
+            })->orderBy('name', 'ASC')->with('user')->paginate(10),
+            'users' => User::orderBy('name', 'ASC')->get()
         ]);
     }
 

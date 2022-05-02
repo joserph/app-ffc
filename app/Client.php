@@ -23,4 +23,9 @@ class Client extends Model
     {
         return $this->hasMany('App\MasterInvoiceItem', 'id_client');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'id_user');
+    }
 }

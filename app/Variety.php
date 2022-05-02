@@ -12,4 +12,9 @@ class Variety extends Model
         'id_user', 
         'update_user'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'id_user');
+    }
 }

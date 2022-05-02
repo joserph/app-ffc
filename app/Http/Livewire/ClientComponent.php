@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Client;
+use App\User;
 use Auth;
 use Illuminate\Support\Facades\Gate;
 use App\Color;
@@ -32,8 +33,9 @@ class ClientComponent extends Component
                 ->orWhere('email', 'LIKE', "%$term%")
                 ->orWhere('phone', 'LIKE', "%$term%")
                 ->orWhere('country', 'LIKE', "%$term%");
-            })->orderBy('name', 'ASC')->paginate(5),
-            'colors'    => Color::where('type', '=', 'client')->get()
+            })->orderBy('name', 'ASC')->with('user')->paginate(10),
+            'colors'    => Color::where('type', '=', 'client')->get(),
+            'users' => User::orderBy('name', 'ASC')->get()
         ]);
     }
 

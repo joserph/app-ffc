@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Variety;
 use Livewire\WithPagination;
 use Auth;
+use App\User;
 
 class VarietyComponent extends Component
 {
@@ -19,7 +20,8 @@ class VarietyComponent extends Component
     public function render()
     {
         return view('livewire.variety-component', [
-            'varieties' => Variety::orderBy('name', 'ASC')->paginate(5)
+            'varieties' => Variety::orderBy('name', 'ASC')->with('user')->paginate(10),
+            'users' => User::orderBy('name', 'ASC')->get()
         ]);
     }
 
