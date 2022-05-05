@@ -161,6 +161,14 @@ class PalletItemController extends Controller
                     ],
                 ],
             ];
+            $styleArrayBorderThin2 = [
+                'borders' => [
+                    'outline' => [
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                        'color' => ['rgb' => '000000'],
+                    ],
+                ],
+            ];
 
             // Formatos celdas
             $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(25);
@@ -289,10 +297,10 @@ class PalletItemController extends Controller
             $sheet->getStyle('A14:A17')->applyFromArray($styleArrayBorderThin);
             $sheet->getStyle('A14:E17')->applyFromArray($styleArrayBorderThick);
             
-            $sheet->setCellValue('A14', 'PALLETS NORMAL * 18 PCS');
-            $sheet->setCellValue('A15', 'PALLETS MIXTAS *17 PCS');
-            $sheet->setCellValue('A16', 'PALLETS MIXTAS *16 PCS');
-            $sheet->setCellValue('A17', 'PALLETS NORMAL *15 PCS');
+            $sheet->setCellValue('A14', 'PALLETS NORMAL * 21 PCS');
+            $sheet->setCellValue('A15', 'PALLETS NORMAL * 18 PCS');
+            $sheet->setCellValue('A16', 'PALLETS MIXTAS *17 PCS');
+            $sheet->setCellValue('A17', 'PALLETS GRANDES *15 PCS');
             // CANTIDAD DE PIEAZAS
             $sheet->mergeCells('B14:E14');
             $sheet->setCellValue('B14', '');
@@ -362,7 +370,7 @@ class PalletItemController extends Controller
                     $sheet->setCellValue('G' . $fila, $item->hb);
                     $sheet->setCellValue('H' . $fila, $item->qb);
                     $sheet->setCellValue('I' . $fila, $item->eb);
-                    $sheet->setCellValue('J' . $fila, '1.5°C');
+                    $sheet->setCellValue('J' . $fila, '1.0°C');
                     $fila++;
                 }
             }
@@ -398,7 +406,7 @@ class PalletItemController extends Controller
             $sheet->setCellValue('A' . $fila, 'OBSERVACIONES');
             // DETALLES DE DESPACHO
             $fila++;
-            $sheet->getStyle('A' . $fila . ':J' . $fila)->applyFromArray($styleArrayAllBorderMedium);
+            $sheet->getStyle('A' . $fila . ':J' . $fila)->applyFromArray($styleArrayBorderThin);
             $sheet->getStyle('A' . $fila . ':J' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
             $sheet->getStyle('A' . $fila . ':J' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('A' . $fila . ':J' . $fila)->getFont()->setBold(true);
@@ -413,7 +421,7 @@ class PalletItemController extends Controller
             $sheet->setCellValue('H' . $fila, 'OBSERVACIONES');
             // LOOP DE PALETAS
             $fila++;
-            //dd($pcs_t);
+            //dd($pallets);
             
             foreach($pallets as $pallet)
             {
@@ -437,33 +445,50 @@ class PalletItemController extends Controller
                 }
                 if($acumu != 0)
                 {
-                    $sheet->mergeCells('A' . $fila . ':B' . $fila);
-                    $sheet->setCellValue('C' . $fila, 'PALLET #' . $pallet->counter);
+                    //$sheet->mergeCells('A' . $fila . ':B' . $fila);
+                    $sheet->getStyle('A' . ($fila) . ':B' . ($fila))->applyFromArray($styleArrayBorderThin2);
+                    if(strpos($pallet->number, 'USDA'))
+                    {
+                        $sheet->setCellValue('C' . $fila, 'U.S.D.A.');
+                    }else{
+                        $sheet->setCellValue('C' . $fila, 'PALLET #' . $pallet->counter);
+                    }
+                    
                     $sheet->setCellValue('D' . $fila, '=SUM(E' . $fila . ':G' . $fila . ')');
                     $sheet->setCellValue('E' . $fila, $acum_hb);
                     $sheet->setCellValue('F' . $fila, $acum_qb);
                     $sheet->setCellValue('G' . $fila, $acum_eb);
                     $sheet->mergeCells('H' . $fila . ':J' . $fila);
-                    $sheet->setCellValue('H' . $fila, 'PALLETS NORMAL * 18 PCS');
+                    if($acum_hb > 18)
+                    {
+                        $sheet->setCellValue('H' . $fila, 'PALLETS NORMAL * 21 PCS');
+                    }else{
+                        $sheet->setCellValue('H' . $fila, 'PALLETS NORMAL * 18 PCS');
+                    }
+                    
                     $fila++;
                 }
             }
-            $sheet->getStyle('A' . ($pcs_t + 1) . ':J' . ($fila - 1))->applyFromArray($styleArrayBorderThin);
-            $sheet->getStyle('A' . ($pcs_t + 1) . ':J' . ($fila - 1))->applyFromArray($styleArrayBorderThick);
+            //$sheet->getStyle('A' . ($pcs_t + 1) . ':B' . ($fila - 1))->applyFromArray($styleArrayBorderThin2);
+            $spreadsheet->getActiveSheet()->getStyle('A' . ($pcs_t + 1) . ':B' . ($fila - 1))->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()->setRGB('FFFFFF');
+            $sheet->getStyle('C' . ($pcs_t + 1) . ':J' . ($fila - 1))->applyFromArray($styleArrayBorderThin);
+            
             $sheet->getStyle('D' . ($pcs_t + 1) . ':J' . ($fila - 1))->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
             $sheet->getStyle('D' . ($pcs_t + 1) . ':J' . ($fila - 1))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-            $spreadsheet->getActiveSheet()->getStyle('A' . ($pcs_t + 1) . ':A' . ($fila - 1))
+            $spreadsheet->getActiveSheet()->getStyle('B' . ($pcs_t + 1) . ':B' . ($fila - 1))
                 ->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_RED);
-            $sheet->getStyle('A' . ($pcs_t + 1) . ':A' . ($fila - 1))->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-            $sheet->getStyle('A' . ($pcs_t + 1) . ':A' . ($fila - 1))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
-            $sheet->getStyle('A' . ($pcs_t + 1) . ':A' . ($fila - 1))->getFont()->setBold(true);
+            $sheet->getStyle('B' . ($pcs_t + 1) . ':B' . ($fila - 1))->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('B' . ($pcs_t + 1) . ':B' . ($fila - 1))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
+            $sheet->getStyle('B' . ($pcs_t + 1) . ':B' . ($fila - 1))->getFont()->setBold(true);
             // TOTALES
             $sheet->getStyle('A' . $fila . ':J' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
             $sheet->getStyle('A' . $fila . ':J' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('A' . $fila . ':J' . $fila)->getFont()->setBold(true);
-            $sheet->getStyle('A' . $fila . ':J' . $fila)->applyFromArray($styleArrayAllBorderMedium);
+            $sheet->getStyle('A' . $fila . ':J' . $fila)->applyFromArray($styleArrayBorderThin);
             $sheet->mergeCells('A' . $fila . ':C' . $fila);
             $sheet->setCellValue('A' . $fila, 'TOTAL PIEZAS');
+            $sheet->getStyle('A' . ($pcs_t) . ':J' . ($fila + 1))->applyFromArray($styleArrayBorderThick);
             $spreadsheet->getActiveSheet()->getStyle('D' . $fila . ':G' . $fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()->setRGB('CFCDCD');
             $sheet->setCellValue('D' . $fila, '=SUM(D' . ($pcs_t + 1) . ':D' . ($fila - 1) . ')');
