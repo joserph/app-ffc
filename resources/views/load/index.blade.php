@@ -55,7 +55,7 @@
                               <th class="text-center" scope="col">Clientes</th>
                               <th class="text-center" scope="col">Coordinado</th>
                               <th class="text-center" scope="col">Embarcado</th>
-                              <!--<th class="text-center" scope="col">Estatus</th>-->
+                              <th class="text-center" scope="col">Estatus de viaje</th>
                               <th class="text-center" width="80px" colspan="3">@can('haveaccess', 'load.show')Ver @endcan @can('haveaccess', 'load.edit')Editar @endcan @can('haveaccess', 'load.destroy')Eliminar @endcan</th>
                            </tr>
                         </thead>
@@ -116,6 +116,33 @@
                                     @endforeach
                                     {{ $totalEmbarq }}
                                  </td>
+                                 @php
+                                    $fecha_actual = date("Y-m-d");
+                                    /*$dias = date("d-m-Y",strtotime($fecha_actual."- 1 days"));*/
+                                    $loadDate = new DateTime($load->date);
+                                    $loadArrivalDate = new DateTime($load->arrival_date);
+                                    $nowDate = new DateTime($fecha_actual);
+                                    $totalTrip = $loadDate->diff($loadArrivalDate); // 14
+                                    $advanced = $loadDate->diff($nowDate);
+                                    
+                                    if($advanced->d >= $totalTrip->d || $nowDate > $loadArrivalDate)
+                                    {
+                                       $percent = 100;
+                                    }elseif($nowDate < $loadDate){
+                                       $percent = 0;
+                                    }else{
+                                       $percent = $advanced->d*100/$totalTrip->d;
+                                    }
+                                 @endphp
+                                 <td>
+                                    <p style="margin-bottom: 0"><code>@if($percent == 100) Entregado @elseif($percent == 0) Próximo a salir @else En camino @endif</code></p>
+                                    <div class="progress">
+                                       <div class="progress-bar @if($percent == 100) bg-success @else bg-primary @endif progress-bar-striped" role="progressbar" aria-valuenow="{{ $percent }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $percent }}%">
+                                          <span class="sr-only">{{ $percent }}% Complete (success)</span>
+                                       </div>
+                                    </div>
+                                 </td>
+                                 
                                  <!--<td>
                                     <div class="progress mb-3">
                                     <div class="progress-bar bg-success" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="15" style="width: 5%">
