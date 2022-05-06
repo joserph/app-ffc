@@ -23,10 +23,10 @@ class LoadController extends Controller
         $loads = Load::with('invoiceheader')->orderBy('date', 'DESC')->orderBy('shipment', 'DESC')->paginate(15);
         $coordination = Coordination::join('clients', 'coordinations.id_client', '=', 'clients.id')->select('coordinations.id_load', 'clients.name')->orderBy('name', 'ASC')->distinct()->get(); //72
         $palletItem = PalletItem::get();
-        $coordinationPcs = Coordination::join('clients', 'coordinations.id_client', '=', 'clients.id')->select('coordinations.id_load', 'coordinations.pieces', 'clients.name')->orderBy('name', 'ASC')->distinct()->get(); //72
-        //dd($palletItem);
+        $coordinacions = Coordination::get();
+        //dd($coordinacions);
         
-        return view('load.index', compact('loads', 'coordination', 'palletItem', 'coordinationPcs'));
+        return view('load.index', compact('loads', 'coordination', 'palletItem', 'coordinacions'));
     }
 
     /**
