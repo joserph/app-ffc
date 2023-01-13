@@ -17,7 +17,13 @@ class Load extends Model
         'code_deep',
         'brand_deep',
         'code_door',
-        'brand_door'
+        'brand_door',
+        'booking',
+        'id_logistic_company',
+        'container_number',
+        'seal_bottle',
+        'seal_cable',
+        'seal_sticker',
     ];
 
     public function invoiceheader()

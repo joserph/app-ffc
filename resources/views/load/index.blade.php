@@ -44,9 +44,12 @@
                      <table class="table table-sm">
                         <thead class="thead-dark">
                            <tr>
-                              <th class="text-center" scope="col">Embarque</th>
+                              <th class="text-center" scope="col">N°</th>
                               <th class="text-center" scope="col">Año</th>
                               <th class="text-center" scope="col">BL</th>
+                              <th class="text-center" scope="col">Booking</th>
+                              <th class="text-center" scope="col">Agencia</th>
+                              <th class="text-center" scope="col">Sellos</th>
                               <!--<th class="text-center" scope="col">Transportista</th>-->
                               <th class="text-center" scope="col">Fecha Salida</th>
                               <th class="text-center" scope="col">Fecha Llegada</th>
@@ -71,6 +74,29 @@
                                  <td class="text-center">{{ $load->shipment }}</td>
                                  <td class="text-center">{{ date('Y', strtotime($load->date)) }}</td>
                                  <td class="text-center">{{ $load->bl }}</td>
+                                 <td class="text-center">{{ $load->booking }}</td>
+                                 <td class="text-center">
+                                    @foreach ($logistics_companies as $item)
+                                       @if ($load->id_logistic_company == $item->id)
+                                          {{ $item->name }}
+                                       @endif
+                                    @endforeach
+                                 </td>
+                                 <td>
+                                    <button 
+                                       type="button" 
+                                       class="btn btn-outline-info btn-sm test" 
+                                       data-toggle="popover" 
+                                       title="Sellos" 
+                                       data-content="
+                                       CONTENEDOR N° --------> {{ $load->container_number }}
+                                       SELLO BOTELLA ---------> {{ $load->seal_bottle }}
+                                       SELLO CABLE ------------> {{ $load->seal_cable }}
+                                       SELLO STICKER ----------> {{ $load->seal_sticker }}
+                                       "
+                                       >Ver Sellos
+                                    </button>
+                                 </td>
                                  <!--<td>{{ $load->carrier }}</td>-->
                                  <td class="text-center">{{ date('d/m/Y', strtotime($load->date)) }}</td>
                                  <td class="text-center">{{ date('d/m/Y', strtotime($load->arrival_date)) }}</td>

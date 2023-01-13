@@ -21,7 +21,7 @@
 </head>
 
 
-<body class="hold-transition sidebar-mini layout-navbar-fixed">
+<body class="hold-transition dark-mode sidebar-mini layout-navbar-fixed sidebar-collapse">
    <!-- Site wrapper -->
    <div class="wrapper">
       <!-- Navbar -->

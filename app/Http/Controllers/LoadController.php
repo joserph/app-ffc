@@ -10,6 +10,7 @@ use App\MasterInvoiceItem;
 use App\Coordination;
 use App\Pallet;
 use App\PalletItem;
+use App\LogisticCompany;
 
 class LoadController extends Controller
 {
@@ -24,9 +25,10 @@ class LoadController extends Controller
         $coordination = Coordination::join('clients', 'coordinations.id_client', '=', 'clients.id')->select('coordinations.id_load', 'clients.name')->orderBy('name', 'ASC')->distinct()->get(); //72
         $palletItem = PalletItem::get();
         $coordinacions = Coordination::get();
-        //dd($coordinacions);
+        $logistics_companies = LogisticCompany::select('id', 'name')->get();
+        //dd($logistics_companies);
         
-        return view('load.index', compact('loads', 'coordination', 'palletItem', 'coordinacions'));
+        return view('load.index', compact('loads', 'coordination', 'palletItem', 'coordinacions', 'logistics_companies'));
     }
 
     /**
@@ -36,7 +38,9 @@ class LoadController extends Controller
      */
     public function create()
     {
-        return view('load.create');
+        $logistics_companies = LogisticCompany::pluck('name', 'id');
+        //dd($logistics_companies);
+        return view('load.create', compact('logistics_companies'));
     }
 
     /**
@@ -81,8 +85,9 @@ class LoadController extends Controller
     public function edit($id)
     {
         $load = Load::find($id);
+        $logistics_companies = LogisticCompany::pluck('name', 'id');
 
-        return view('load.edit', compact('load'));
+        return view('load.edit', compact('load', 'logistics_companies'));
     }
 
     /**
