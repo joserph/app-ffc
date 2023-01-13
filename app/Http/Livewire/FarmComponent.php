@@ -42,7 +42,7 @@ class FarmComponent extends Component
         // Validaciones
         $this->validate([
             'name'      => 'required|unique:farms,name',
-            'tradename' => 'required',
+            'tradename' => 'required|unique:farms,tradename',
             'phone'     => 'required',
             'address'   => 'required',
             'state'     => 'required',
@@ -88,7 +88,7 @@ class FarmComponent extends Component
         // Validaciones
         $this->validate([
             'name'      => 'required|unique:farms,name,' . $this->farm_id,
-            'tradename' => 'required',
+            'tradename' => 'required|unique:farms,tradename,' . $this->farm_id,
             'phone'     => 'required',
             'address'   => 'required',
             'state'     => 'required',

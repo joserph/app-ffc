@@ -18,6 +18,11 @@
             </ol>
          </div>
       </div>
+      <div class="alert alert-warning alert-dismissible">
+         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+         <h5><i class="icon fas fa-info"></i> Atención!</h5>
+         Antes de crear una finca verificar en el buscador si esta se encuentra agregada, tanto por nombre como por nombre comercial y así evitar duplicados.
+      </div>
    </div><!-- /.container-fluid -->
 </section>
 
