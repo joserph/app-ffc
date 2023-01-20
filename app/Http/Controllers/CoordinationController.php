@@ -38,8 +38,12 @@ class CoordinationController extends Controller
             ->get();
         // Fincas
         $farms = Farm::orderBy('name', 'ASC')->pluck('name', 'id');
+        $farmsList = Farm::select('id', 'name', 'tradename')->orderBy('name', 'ASC')->get();
         // Clientes
         $clients = Client::orderBy('name', 'ASC')->pluck('name', 'id');
+        $clientsList = Client::select('id', 'name')->orderBy('name', 'ASC')->get();
+        
+        //dd($clientLists);
         // Variedades
         $varieties = Variety::orderBy('name', 'ASC')->pluck('name', 'id');
         
@@ -55,7 +59,7 @@ class CoordinationController extends Controller
         $clientsCoordination = collect(array_unique($clientsCoord->toArray(), SORT_REGULAR));
 
         //dd($coordinations);
-        return view('coordination.index', compact('farms', 'clients', 'varieties', 'load', 'company', 'coordinations', 'clientsCoordination'));
+        return view('coordination.index', compact('farms', 'clients', 'varieties', 'load', 'company', 'coordinations', 'clientsCoordination', 'farmsList', 'clientsList'));
     }
 
     public function transferCoordination($load, $request)

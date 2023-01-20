@@ -78,7 +78,7 @@
                                  <td class="text-center">
                                     @foreach ($logistics_companies as $item)
                                        @if ($load->id_logistic_company == $item->id)
-                                          {{ $item->name }}
+                                          {{ Str::limit($item->name, 15, '...') }}
                                        @endif
                                     @endforeach
                                  </td>

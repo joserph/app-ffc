@@ -1042,10 +1042,14 @@ class PalletItemController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //dd($request);
         $palletItem = PalletItem::find($id);
         //dd($id);
         
         $palletItem->update($request->all());
+        $farm = Farm::select('name')->where('id', '=', $palletItem->id_farm)->first();
+        $palletItem->farms = $farm->name;
+        $palletItem->save();
 
         $load = Load::where('id', '=', $palletItem->id_load)->get();
 

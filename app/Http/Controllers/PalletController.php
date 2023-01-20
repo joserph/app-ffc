@@ -219,7 +219,7 @@ class PalletController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        //dd($request);
         $pallet = Pallet::find($request->id);
         $load = Load::where('id', '=', $pallet->id_load)->first();
         //dd($load);

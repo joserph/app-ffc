@@ -17,7 +17,7 @@
             <select class="form-control" name="id_client" id="clientsList_{{ $item->id }}">
                 <option value="">Seleccione cliente</option>
                 @foreach($clientsList as $itemClient)
-                  <option value="{{ $itemClient->id }}">{{ $itemClient->name }}</option>
+                  <option value="{{ $itemClient->id }}">{{ str_replace('SAG-', '', $itemClient->name) }}</option>
                 @endforeach
             </select>
         </div>
