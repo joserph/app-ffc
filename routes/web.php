@@ -122,6 +122,7 @@ Route::get('/invoiceheader/{id}', function($id){
 // Factura Master
 Route::get('comercial-invoice-pdf', 'InvoiceHeaderController@masterInvoicePdf')->name('comercial-invoice.pdf');
 Route::get('comercial-invoice-excel', 'InvoiceHeaderController@masterInvoiceExcel')->name('comercial-invoice.excel');
+Route::get('shiptment-confirmation-internal-use-excel', 'InvoiceHeaderController@shiptmentConfirmationUseInternalExcel')->name('shiptment-confirmation-internal-use.excel');
 // Shiptment Confirmation
 Route::get('shiptment-confirmation-pdf', 'InvoiceHeaderController@shiptmentConfirmation')->name('shiptment-confirmation.pdf');
 // Confirmacion de despacho
