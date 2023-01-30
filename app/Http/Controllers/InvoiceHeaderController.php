@@ -230,6 +230,17 @@ class InvoiceHeaderController extends Controller
 
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
+
+        //Page margins
+        $sheet->getPageMargins()->setTop(0.5);
+        $sheet->getPageMargins()->setRight(0.75);
+        $sheet->getPageMargins()->setLeft(0.75);
+        $sheet->getPageMargins()->setBottom(1);
+
+        //Use fit to page for the horizontal direction
+        $sheet->getPageSetup()->setFitToWidth(1);
+        $sheet->getPageSetup()->setFitToHeight(0);
+
         $styleArrayBorderThin = [
             'borders' => [
                 'allBorders' => [
@@ -355,7 +366,7 @@ class InvoiceHeaderController extends Controller
             $sheet->getStyle('A' . $count . ':J' . $count)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
             $sheet->setCellValue('A' . $count, 'Total:');
             //$test = $test . '+F' .$count;
-            $test[] = $count;
+            $arrTotal[] = $count;
             $sheet->setCellValue('F' . $count, '=SUM(F' . ($ini + 1) . ':F' . ($count - 1) . ')');
             $sheet->setCellValue('G' . $count, '=SUM(G' . ($ini + 1) . ':G' . ($count - 1) . ')');
             $spreadsheet->getActiveSheet()->getStyle('G' . $count)->getNumberFormat()->setFormatCode('#,##0.000');
@@ -367,7 +378,7 @@ class InvoiceHeaderController extends Controller
             $sheet->setCellValue('A' . $count,'');
             $count++;
         }
-        dd($test);
+        //dd($arrTotal);
         // TOTAL
         $sheet->mergeCells('A' . $count . ':E' . $count);
         $sheet->getStyle('A' . $count . ':J' . $count)->applyFromArray($styleArrayBorderThin);
@@ -375,21 +386,32 @@ class InvoiceHeaderController extends Controller
         $sheet->getStyle('A' . $count . ':J' . $count)->getFont()->setBold(true);
         $sheet->getStyle('A' . $count . ':J' . $count)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
         $sheet->getStyle('A' . $count . ':J' . $count)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $spreadsheet->getActiveSheet()->getStyle('G' . $count)->getNumberFormat()->setFormatCode('#,##0.000');
         $sheet->setCellValue('A' . $count, 'Total Global:');
-        $sheet->setCellValue('F' . $count, '=' . $test);
+        // SUMAR TODOS LOS SUBTOTALES DESDE LA CELDA F HASTA LA J.
+        $i = 'F';
+        for($i; $i <= 'J'; $i++)
+        {
+            $cadena = '';
+            //$cadena2 .= $i;
+            foreach($arrTotal as $tot)
+            {
+                $cadena .= '+' . $i . $tot;
+            }
+            $sheet->setCellValue($i . $count, '=' . $cadena);
+        }
+        /*
+        $sheet->setCellValue('F' . $count, '');
         $sheet->setCellValue('G' . $count, number_format($totalFulls, 3, '.',''));
         $sheet->setCellValue('H' . $count, $totalHb);
         $sheet->setCellValue('I' . $count, $totalQb);
-        $sheet->setCellValue('J' . $count, $totalEb);
-
-        
-
+        $sheet->setCellValue('J' . $count, $totalEb);*/
 
         $writer = new Xlsx($spreadsheet);
         //$writer->save('hello world.xlsx');
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="myfile.xlsx"');
+        header('Content-Disposition: attachment;filename="CONFIRMACIÓN DE DESPACHO ' . $load->bl . '.xlsx"');
         header('Cache-Control: max-age=0');
 
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
