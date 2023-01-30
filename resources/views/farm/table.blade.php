@@ -29,7 +29,7 @@
     <tbody>
        @foreach ($farms as $farm)
          <tr>
-            <td>{{ $farm->name }}</td>
+            <td><a class="text-decoration-none" href="{{ route('farm.show', $farm->id) }}">{{ $farm->name }}</a></td>
             <td>{{ $farm->tradename }}</td>
             <td>{{ $farm->phone }}</td>
             <td>{{ Str::limit($farm->address, 20) }}</td>
