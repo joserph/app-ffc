@@ -45,8 +45,10 @@ class DistributionController extends Controller
         $clientsDistribution = collect(array_unique($clientsDistr->toArray(), SORT_REGULAR));
         // Fincas
         $farms = Farm::orderBy('name', 'ASC')->pluck('name', 'id');
+        $farmsList = Farm::select('id', 'name', 'tradename')->orderBy('name', 'ASC')->get();
         // Clientes
         $clients = Client::orderBy('name', 'ASC')->pluck('name', 'id');
+        $clientsList = Client::select('id', 'name')->orderBy('name', 'ASC')->get();
         // Variedades
         $varieties = Variety::orderBy('name', 'ASC')->pluck('name', 'id');
         // Comercializadores
@@ -63,7 +65,7 @@ class DistributionController extends Controller
         // Colores
         $colors = Color::where('load_type', 'aereo')->get();
         //dd($colors);
-        return view('distribution.index', compact('flight', 'company', 'clientsDistribution', 'farms', 'clients', 'varieties', 'distributions', 'marketers', 'colors'));
+        return view('distribution.index', compact('flight', 'company', 'clientsDistribution', 'farms', 'clients', 'varieties', 'distributions', 'marketers', 'colors', 'farmsList', 'clientsList'));
     }
 
     public function distributionExcel($code)
