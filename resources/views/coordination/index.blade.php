@@ -372,6 +372,10 @@
          theme: 'bootstrap4',
       });
 
+      $('#id_clientEdit').select2({
+         theme: 'bootstrap4',
+      });
+
       $('#id_farm').select2({
          theme: 'bootstrap4',
       });

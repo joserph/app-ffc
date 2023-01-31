@@ -2,7 +2,7 @@
     <div class="col-md-4 form-group">
         {{ Form::label('id_farm', 'Finca', ['class' => 'control-label']) }}
         {{-- {{ Form::select('id_farm', $farms, null, ['class' => 'form-control select-farm', 'placeholder' => 'Seleccione finca']) }} --}}
-        <select class="form-control" name="id_farm" id="id_farm">
+        <select class="form-control select-farm" name="id_farm" id="id_farm">
             <option value="">Seleccione finca</option>
             @foreach($farmsList as $itemFarm)
               <option value="{{ $itemFarm->id }}">{{ $itemFarm->name }} {{ $itemFarm->tradename }}</option>
@@ -12,7 +12,7 @@
     <div class="col-md-3 form-group">
         {{ Form::label('id_client', 'Cliente', ['class' => 'control-label']) }}
         {{-- {{ Form::select('id_client', $clientsList, null, ['class' => 'form-control select-client', 'placeholder' => 'Seleccione cliente']) }} --}}
-        <select class="form-control" name="id_client" id="clientsList_{{ $item->id }}">
+        <select class="form-control select-client" name="id_client" id="id_client">
             <option value="">Seleccione cliente</option>
             @foreach($clientsList as $itemClient)
               <option value="{{ $itemClient->id }}">{{ str_replace('SAG-', '', $itemClient->name) }}</option>
