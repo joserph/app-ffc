@@ -14,6 +14,7 @@ use App\WeightDistribution;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\Company;
+use App\Http\Requests\weightDistributionRequest;
 
 
 class WeightDistributionController extends Controller
@@ -379,7 +380,7 @@ class WeightDistributionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(weightDistributionRequest $request)
     {
         $distribution = Distribution::find($request->id_distribution);
         $average = $request->report_w / $distribution->fulls;
@@ -422,7 +423,7 @@ class WeightDistributionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(weightDistributionRequest $request, $id)
     {
         $weightDistribution = WeightDistribution::find($id);
 
@@ -444,6 +445,12 @@ class WeightDistributionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $weightDistribution = WeightDistribution::where('id_distribution', '=', $id)->first();
+        $distribution = Distribution::find($weightDistribution->id_distribution);
+        $weightDistribution->delete();
+        
+
+        return redirect()->route('weight-distribution.index', $distribution->id_flight)
+            ->with('status_success', 'Peso eliminado con éxito');
     }
 }

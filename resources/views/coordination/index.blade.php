@@ -1,20 +1,20 @@
 @extends('layouts.principal')
 
-@section('title') Coordinaciones | Sistema de Carguera v1.1 @stop
+@section('title') Coordinaciones Marítimas | Sistema de Carguera v1.1 @stop
 
 @section('content')
 <section class="content-header">
     <div class="container-fluid">
        <div class="row mb-2">
           <div class="col-sm-6">
-             <h1>Coordinaciones</h1>
+             <h1>Coordinaciones Marítimas</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
                <li class="breadcrumb-item"><a href="{{ route('load.index') }}">Cargas</a></li>
                <li class="breadcrumb-item"><a href="{{ route('load.show', $load->id) }}">{{ $load->bl }}</a></li>
-               <li class="breadcrumb-item active">Coordinaciones</li>
+               <li class="breadcrumb-item active">Coordinaciones Marítimas</li>
             </ol>
           </div>
        </div>
@@ -50,7 +50,7 @@
                               @endcan
                             </div>
                           </div>
-                          <a href="{{ route('coordination.pdf', $load) }}" target="_blank" class="btn btn-xs btn-outline-success pull-right"><i class="far fa-file-pdf"></i></a>
+                          <a href="{{ route('coordination.pdf', $load) }}" target="_blank" class="btn btn-xs btn-outline-success pull-right"><i class="far fa-file-pdf"></i> Descargar Coordinación</a>
                           <!--
                           <div class="form-group col-md-12">
                               <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
@@ -79,7 +79,7 @@
                           <div class="card">
                             <div class="card-body">
                               <h5 class="card-title">Resumen coordinación</h5>
-                              <table class="table table-hover table-sm">
+                              <table class="table table-hover table-striped table-dark table-sm">
                                  @php
                                      $totalFulls = 0; $totalHb = 0; $totalQb = 0; $totalEb = 0; $totalPieces = 0;
                                  @endphp
@@ -148,7 +148,7 @@
                <div class="card-footer">
                   <!-- tabla de coordinaciones -->
                   <div class="table-responsive">
-                    <table class="table table-sm">
+                    <table class="table table-bordered table-sm">
                         @php
                             $totalFulls = 0; $totalHb = 0; $totalQb = 0; $totalEb = 0; $totalPcsr = 0; $totalHbr = 0; $totalQbr = 0;
                             $totalEbr = 0; $totalFullsr = 0; $totalDevr = 0; $totalMissingr = 0;
@@ -156,36 +156,46 @@
                         @foreach($clientsCoordination as $client)
                         <thead>
                             <tr>
-                                <th colspan="17" class="sin-border"></th>
+                                <th colspan="18" class="sin-border"></th>
                             </tr>
                         </thead>
                         <thead>
                             <tr>
-                                <th class="text-center medium-letter">AWB</th>
-                                <th class="text-center medium-letter" colspan="14">{{ $client['name'] }}</th>
+                                {{-- <th class="text-center medium-letter">AWB</th> --}}
+                                <th class="text-center medium-letter table-info" colspan="18">{{ $client['name'] }}</th>
                             </tr>
                         </thead>
                         <thead>
                             <tr class="gris">
                               <th class="text-center transfLavel">Transferir</th>
-                              <th class="text-center">Finca</th>
-                              <th class="text-center">HAWB</th>
-                              <th class="text-center">Variedad</th>
-                              <th class="text-center">PCS</th>
-                              <th class="text-center">HB</th>
-                              <th class="text-center">QB</th>
-                              <th class="text-center">EB</th>
-                              <th class="text-center">FULL</th>
-                              <th class="text-center">PCS</th>
-                              <th class="text-center">HB</th>
-                              <th class="text-center">QB</th>
-                              <th class="text-center">EB</th>
-                              <th class="text-center">FULL</th>
-                              <th class="text-center">Dev</th>
-                              <th class="text-center">Faltantes</th>
-                              <th class="text-center" colspan="2">Aciones</th>
+                              <th class="text-center" colspan="3"></th>
+                              <th class="text-center table-secondary" colspan="5">Coordinado</th>
+                              <th class="text-center table-success" colspan="5">Recibido</th>
+                              <th class="text-center" colspan="5"></th>
                             </tr>
                         </thead>
+                        <thead>
+                           <tr class="gris">
+                             <th class="text-center transfLavel">Transferir</th>
+                             <th class="text-center">Finca</th>
+                             <th class="text-center">HAWB</th>
+                             <th class="text-center">Variedad</th>
+                             <th class="text-center table-secondary">PCS</th>
+                             <th class="text-center table-secondary">HB</th>
+                             <th class="text-center table-secondary">QB</th>
+                             <th class="text-center table-secondary">EB</th>
+                             <th class="text-center table-secondary">FULL</th>
+                             <th class="text-center table-success">PCS</th>
+                             <th class="text-center table-success">HB</th>
+                             <th class="text-center table-success">QB</th>
+                             <th class="text-center table-success">EB</th>
+                             <th class="text-center table-success">FULL</th>
+                             <th class="text-center table-warning">Dev</th>
+                             <th class="text-center">Faltantes</th>
+                             <th class="text-center">Observación</th>
+                             <th class="text-center" colspan="2">Aciones</th>
+                           </tr>
+                       </thead>
                         <tbody>
                             @php
                                 $tPieces = 0; $tFulls = 0; $tHb = 0; $tQb = 0; $tEb = 0; $totalPieces = 0; $tPcsR = 0;
@@ -225,6 +235,7 @@
                                 <td class="text-center">{{ number_format($item->fulls_r, 3, '.','') }}</td>
                                 <td class="text-center">{{ $item->returns }}</td>
                                 <td class="text-center">{{ $item->missing }}</td>
+                                <td class="text-center"></td>
                                 <td class="text-center">
                                     @can('haveaccess', 'coordination.edit')
                                     <button type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#editarItem{{ $item->id }}">

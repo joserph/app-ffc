@@ -1,7 +1,9 @@
 @extends('layouts.principal')
 
 @section('title') Pesos Aéreos | Sistema de Carguera v1.1 @stop
-
+@section('css')
+    
+@endsection
 @section('content')
 <section class="content-header">
     <div class="container-fluid">
@@ -159,6 +161,11 @@
                                           <i class="fas fa-edit"></i>
                                        </button>
                                     @endcan
+                                    {{-- @can('haveaccess', 'weight-distribution.delete')
+                                       {{ Form::open(['route' => ['weight-distribution.destroy', $item['id']], 'method' => 'DELETE']) }}
+                                          {{ Form::button('<i class="fas fa-trash-alt"></i> ' . '', ['type' => 'submit', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Eliminar peso', 'class' => 'btn btn-sm btn-outline-danger', 'onclick' => 'return confirm("¿Seguro de eliminar el peso?")']) }}
+                                       {{ Form::close() }}
+                                    @endcan --}}
                                  @endif
 
                                     
@@ -175,13 +182,13 @@
                                     </div>
                                     <div class="modal-body">
                                        @include('custom.message') 
-                                       {{ Form::open(['route' => 'weight-distribution.store', 'class' => 'form-horizontal']) }}
+                                       {{ Form::open(['route' => 'weight-distribution.store', 'class' => 'form-horizontal submit-create-weight']) }}
                                             <div class="modal-body">
                                             @include('weightdistribution.partials.form')
                                             </div>
                                             <div class="modal-footer">
                                             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
-                                            <button type="submit" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
+                                            <button type="submit" class="btn btn-outline-primary submit-create-weight-button" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
                                                 <i class="fas fa-plus-circle"></i> Crear
                                             </button>
                                             </div>
@@ -203,13 +210,13 @@
                                        @include('custom.message') 
                                        @foreach($weightDistribution as $weight)
                                           @if($weight->id_distribution == $item['id'])
-                                             {{ Form::model($weight, ['route' => ['weight-distribution.update', $weight->id], 'class' => 'form-horizontal', 'method' => 'PUT']) }}
+                                             {{ Form::model($weight, ['route' => ['weight-distribution.update', $weight->id], 'class' => 'form-horizontal submit-edit-weight', 'method' => 'PUT']) }}
                                                 <div class="modal-body">
                                                    @include('weightdistribution.partials.formEdit')
                                                 </div>
                                                 <div class="modal-footer">
                                                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
-                                                   <button type="submit" class="btn btn-outline-warning" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
+                                                   <button type="submit" class="btn btn-outline-warning submit-edit-weight-button" data-toggle="tooltip" data-placement="top" title="Crear Empresa">
                                                       <i class="fas fa-sync"></i> Actualizar
                                                    </button>
                                                 </div>
@@ -303,6 +310,7 @@
 </section>
 
 @section('scripts')
+   <script src="{{ asset('assets/js/custom.js') }}"></script>
    <script>
       $('#id_farmEdit').select2({
          theme: 'bootstrap4',
