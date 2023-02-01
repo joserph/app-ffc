@@ -44,6 +44,7 @@ class WeightDistributionController extends Controller
             ->get();
         //dd($distributions);
         $clients = Client::orderBy('name', 'ASC')->pluck('name', 'id');
+        $clientsList = Client::select('id', 'name')->orderBy('name', 'ASC')->get();
         // Buscamos los clientes que esten en esta carga, por el id_load
         $clientsDistr = Distribution::where('id_flight', '=', $code)
             ->join('clients', 'distributions.id_client', '=', 'clients.id')
@@ -54,6 +55,7 @@ class WeightDistributionController extends Controller
         $clientsDistribution = collect(array_unique($clientsDistr->toArray(), SORT_REGULAR));
         // Fincas
         $farms = Farm::orderBy('name', 'ASC')->pluck('name', 'id');
+        $farmsList = Farm::select('id', 'name', 'tradename')->orderBy('name', 'ASC')->get();
         // Variedades
         $varieties = Variety::orderBy('name', 'ASC')->pluck('name', 'id');
         // Comercializadores
@@ -69,7 +71,7 @@ class WeightDistributionController extends Controller
         $dis = $distributions->toArray();
         //dd($dis[0]['weight'][0]['large']);
         //dd($dis);
-        return view('weightdistribution.index', compact('flight', 'distributions', 'clients', 'clientsDistribution', 'farms', 'varieties', 'marketers', 'packings', 'weightDistribution'));
+        return view('weightdistribution.index', compact('flight', 'distributions', 'clients', 'clientsDistribution', 'farms', 'varieties', 'marketers', 'packings', 'weightDistribution', 'farmsList', 'clientsList'));
     }
 
     public function weightDistributionExcel($codeDist)
