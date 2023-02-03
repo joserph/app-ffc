@@ -13,6 +13,9 @@ use App\Http\Requests\CoordinationRequest;
 use App\Http\Requests\UpdateCoordinationRequest;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Flight;
+use App\Marketer;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class CoordinationController extends Controller
 {
@@ -46,7 +49,8 @@ class CoordinationController extends Controller
         //dd($clientLists);
         // Variedades
         $varieties = Variety::orderBy('name', 'ASC')->pluck('name', 'id');
-        
+        // Comercializadores
+        $marketers = Marketer::orderBy('name', 'ASC')->pluck('name', 'id');
         // Empresa
         $company = Company::first();
         // Buscamos los clientes que esten en esta carga, por el id_load
@@ -59,12 +63,50 @@ class CoordinationController extends Controller
         $clientsCoordination = collect(array_unique($clientsCoord->toArray(), SORT_REGULAR));
 
         //dd($coordinations);
-        return view('coordination.index', compact('farms', 'clients', 'varieties', 'load', 'company', 'coordinations', 'clientsCoordination', 'farmsList', 'clientsList'));
+        return view('coordination.index', compact('farms', 'clients', 'varieties', 'load', 'company', 'coordinations', 'clientsCoordination', 'farmsList', 'clientsList', 'marketers'));
     }
 
     public function transferCoordination($load, $request)
     {
         //dd($request);
+    }
+
+    public function coordinationExcel($code)
+    {
+        $load = Load::with('logistic_company')->find($code);
+        // CLIENTES
+        // Buscamos los clientes que esten en esta carga, por el id_load
+        $clientsCoord = Coordination::where('id_load', '=', $code)
+            ->join('clients', 'coordinations.id_client', '=', 'clients.id')
+            ->select('clients.id', 'clients.name')
+            ->orderBy('clients.name', 'ASC')
+            ->get();
+        // Eliminamos los clientes duplicados
+        $clientsDistribution = collect(array_unique($clientsCoord->toArray(), SORT_REGULAR));
+        // Coordinaciones
+        // $coordinations = Coordination::select('*')
+            // ->where('id_load', '=', $code)
+            // ->with('variety')
+            // ->with('farm')
+            // ->join('clients', 'coordinations.id_client', '=', 'clients.id')
+            // ->select('clients.name', 'coordinations.*')
+            // ->orderBy('clients.name', 'ASC')
+            // /*->join('farms', 'distributions.id_farm', '=', 'farms.id')
+            // ->select('farms.name', 'distributions.*')
+            // ->orderBy('farms.name', 'ASC')*/
+            // ->get();
+        $coordinations = Coordination::select('*')
+            ->where('id_load', '=', $code)
+            ->with('variety')
+            ->join('clients', 'coordinations.id_client', '=', 'clients.id')
+            ->join('farms', 'coordinations.id_farm', '=', 'farms.id')
+            ->select('farms.name as farm_name', 'coordinations.*', 'clients.name as client_name')
+            ->orderBy('clients.name', 'ASC')
+            ->orderBy('farms.name', 'ASC')
+            ->get();
+        //dd($load);
+        $test = Coordination::excel($load, $clientsDistribution, $coordinations);
+        //dd($test);
     }
 
     public function coordinationPdf()
@@ -128,7 +170,6 @@ class CoordinationController extends Controller
      */
     public function store(CoordinationRequest $request)
     {
-        //dd($request);
         // calculo de fulls
         $request['fulls'] = ($request['hb'] * 0.5) + ($request['qb'] * 0.25) + ($request['eb'] * 0.125);
         $request['fulls_r'] = ($request['hb_r'] * 0.5) + ($request['qb_r'] * 0.25) + ($request['eb_r'] * 0.125);

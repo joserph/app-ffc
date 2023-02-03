@@ -2,7 +2,7 @@
     <div class="col-md-3 form-group">
         {{ Form::label('id_farmEdit', 'Finca', ['class' => 'control-label']) }}
         {{-- {{ Form::select('id_farm', $farms, null, ['class' => 'form-control select-farm', 'placeholder' => 'Seleccione finca', 'id' => 'id_farmEdit']) }} --}}
-        <select class="form-control" name="id_farm" id="id_farmEdit">
+        <select class="form-control id_farmEdit" name="id_farm" id="edit_farmsList_{{ $item->id }}">
             <option value="">Seleccione finca</option>
             @foreach($farmsList as $itemFarm)
                 <option value="{{ $itemFarm->id }}" {{ $itemFarm->id == $item->id_farm ? 'selected' : '' }}>{{ $itemFarm->name }} {{ $itemFarm->tradename }}</option>
@@ -12,7 +12,7 @@
     <div class="col-md-3 form-group">
         {{ Form::label('id_client', 'Cliente', ['class' => 'control-label']) }}
         {{-- {{ Form::select('id_client', $clients, null, ['class' => 'form-control select-client', 'placeholder' => 'Seleccione cliente']) }} --}}
-        <select class="form-control" name="id_client" id="id_clientEdit">
+        <select class="form-control id_clientEdit" name="id_client" id="edit_clientsList_{{ $item->id }}">
             <option value="">Seleccione cliente</option>
             @foreach($clientsList as $itemClient)
               <option value="{{ $itemClient->id }}" {{ $itemClient->id == $item->id_client ? 'selected' : '' }}>{{ str_replace('SAG-', '', $itemClient->name) }}</option>
@@ -62,12 +62,18 @@
         {{ Form::label('eb_r', 'EB Recibido', ['class' => 'control-label']) }}
         {{ Form::number('eb_r', null, ['class' => 'form-control']) }}
     </div>
-
     <div class="col-sm-2">
         {{ Form::label('returns', 'Devolución', ['class' => 'control-label']) }}
         {{ Form::number('returns', null, ['class' => 'form-control']) }}
     </div>
-    
+    <div class="col-sm-4">
+        {{ Form::label('observation', 'Observación', ['class' => 'control-label']) }}
+        {{ Form::textarea('observation', null, ['class' => 'form-control', 'rows' => '4', 'cols' => '50']) }}
+    </div>
+    <div class="col-md-5 form-group">
+        {{ Form::label('id_marketer', 'Comercializadora', ['class' => 'control-label']) }}
+        {{ Form::select('id_marketer', $marketers, null, ['class' => 'form-control', 'placeholder' => 'Seleccione Comercializadora']) }}
+    </div>
     
     {{ Form::hidden('update_user', Auth::user()->id, ['id' => 'update_user']) }}
     {{ Form::hidden('id_load', $load->id, ['id' => 'id_load']) }}

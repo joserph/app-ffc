@@ -50,7 +50,8 @@
                               @endcan
                             </div>
                           </div>
-                          <a href="{{ route('coordination.pdf', $load) }}" target="_blank" class="btn btn-xs btn-outline-success pull-right"><i class="far fa-file-pdf"></i> Descargar Coordinación</a>
+                          <a href="{{ route('coordination.pdf', $load) }}" target="_blank" class="btn btn-xs btn-outline-info pull-right"><i class="far fa-file-pdf"></i> Descargar PDF</a>
+                          <a href="{{ route('coordination.excel', $load) }}" target="_blank" class="btn btn-xs btn-outline-success pull-right"><i class="fas fa-file-excel"></i> Descargar Excel</a>
                           <!--
                           <div class="form-group col-md-12">
                               <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
@@ -235,10 +236,21 @@
                                 <td class="text-center">{{ number_format($item->fulls_r, 3, '.','') }}</td>
                                 <td class="text-center">{{ $item->returns }}</td>
                                 <td class="text-center">{{ $item->missing }}</td>
-                                <td class="text-center"></td>
+                                <td class="text-center text-danger">
+                                 <small>
+                                 @if($item->id_marketer)
+                                    COMPRA DE {{ strtoupper($item->marketer->name) }} 
+                                 @endif
+                                 @if ($item->observation)
+                                    ({{ strtoupper($item->observation) }})
+                                 @endif
+                                 
+                                 </small>
+                                 </td>
+                                
                                 <td class="text-center">
                                     @can('haveaccess', 'coordination.edit')
-                                    <button type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#editarItem{{ $item->id }}">
+                                    <button type="button" onclick="mifuncion2(this)" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#editarItem{{ $item->id }}">
                                        <i class="fas fa-pencil-alt"></i>
                                     </button>
                                     @endcan
@@ -378,12 +390,29 @@
 </section>
 
 @section('scripts')
+
    <script>
-      $('#id_farmEdit').select2({
+      // function mifuncion2(elemento) {
+      //    var id_pallet = elemento.getAttribute('value');
+      //    $(document).ready(function(){
+      //       //alert(id_pallet);
+            
+      //       $('#edit_farmsList_'+id_pallet).select2({
+      //             theme: 'bootstrap4',
+      //       });
+      //       $('#edit_clientsList_'+id_pallet).select2({
+      //             theme: 'bootstrap4',
+      //       });
+            
+      //    });
+         
+      // }
+
+      $('.id_farmEdit').select2({
          theme: 'bootstrap4',
       });
 
-      $('#id_clientEdit').select2({
+      $('.id_clientEdit').select2({
          theme: 'bootstrap4',
       });
 
@@ -394,6 +423,9 @@
          theme: 'bootstrap4'
       });
       $('#variety_id').select2({
+         theme: 'bootstrap4'
+      });
+      $('.variety_id').select2({
          theme: 'bootstrap4'
       });
 

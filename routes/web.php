@@ -137,6 +137,7 @@ Route::get('isf10_2Pdf', 'ISFController@isf10_2Pdf')->name('isf.isf10_2Pdf');
 Route::resource('/loadingplane', 'LoadingPlaneController')->names('loadingplane');
 // Coordination PDF
 Route::get('coordination-Pdf', 'CoordinationController@coordinationPdf')->name('coordination.pdf');
+Route::get('coordination-excel/{id}', 'CoordinationController@coordinationExcel')->name('coordination.excel');
 // Distrubucion PDF
 Route::get('distribution-Pdf', 'DistributionController@distributionPdf')->name('distribution.pdf');
 Route::get('distribution-excel/{id}', 'DistributionController@distributionExcel')->name('distribution.excel');

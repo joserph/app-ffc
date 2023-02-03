@@ -30,4 +30,9 @@ class Load extends Model
     {
         return $this->belongsTo('App\InvoiceHeader', 'id_load');
     }
+
+    public function logistic_company()
+    {
+        return $this->belongsTo('App\LogisticCompany', 'id_logistic_company');
+    }
 }

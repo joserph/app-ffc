@@ -21,7 +21,7 @@
     </div>
     <div class="col-md-3 form-group">
         {{ Form::label('variety_id', 'Variedad', ['class' => 'control-label']) }}
-        {{ Form::select('variety_id', $varieties, null, ['class' => 'form-control select-product', 'placeholder' => 'Seleccione tipo']) }}
+        {{ Form::select('variety_id', $varieties, null, ['class' => 'form-control select-product variety_id', 'placeholder' => 'Seleccione tipo']) }}
     </div>
     <div class="col-sm-2">
         {{ Form::label('hawb', 'HAWB', ['class' => 'control-label']) }}
@@ -65,7 +65,14 @@
         {{ Form::label('returns', 'Devolución', ['class' => 'control-label']) }}
         {{ Form::number('returns', 0, ['class' => 'form-control']) }}
     </div>
-    
+    <div class="col-sm-4">
+        {{ Form::label('observation', 'Observación', ['class' => 'control-label']) }}
+        {{ Form::textarea('observation', null, ['class' => 'form-control', 'rows' => '4', 'cols' => '50']) }}
+    </div>
+    <div class="col-md-5 form-group">
+        {{ Form::label('id_marketer', 'Comercializadora', ['class' => 'control-label']) }}
+        {{ Form::select('id_marketer', $marketers, null, ['class' => 'form-control', 'placeholder' => 'Seleccione Comercializadora']) }}
+    </div>
     
     {{ Form::hidden('id_user', Auth::user()->id, ['id' => 'id_user']) }}
     {{ Form::hidden('update_user', Auth::user()->id, ['id' => 'update_user']) }}

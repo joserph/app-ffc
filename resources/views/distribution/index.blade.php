@@ -240,7 +240,9 @@
                                     @if($item->id_marketer)
                                        COMPRA DE {{ strtoupper($item->marketer->name) }} 
                                     @endif
-                                    {{ strtoupper($item->observation) }}
+                                    @if ($item->observation)
+                                       ({{ strtoupper($item->observation) }})
+                                    @endif
                                  </small></td>
                                 <td class="text-center">
                                     @can('haveaccess', 'distribution.edit')
