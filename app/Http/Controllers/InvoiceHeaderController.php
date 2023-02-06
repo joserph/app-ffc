@@ -36,8 +36,8 @@ class InvoiceHeaderController extends Controller
         $url = $_SERVER["REQUEST_URI"];
         $arr = explode("?", $url);
         $code = $arr[1];
-        $load = Load::find($code);
-        
+        $load = Load::with('logistic_company')->find($code);
+        //dd($load);
         // Cabecera de la factura
         $invoiceheaders = InvoiceHeader::orderBy('id', 'DESC')->where('id_load', '=', $code)->with('user')->with('userupdate')->first();
         //

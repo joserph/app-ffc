@@ -184,3 +184,5 @@ Route::get('pickuporder-Pdf/{id}', 'PickUpOrderItemController@pickuporderPdf')->
 Route::resource('/varietiesflowers', 'VaietiesFlowersController')->names('varietiesflowers');
 // Farms
 Route::resource('/farm', 'FarmController')->names('farm');
+// QA Company
+Route::resource('/qacompany', 'QACompanyController')->names('qacompany');

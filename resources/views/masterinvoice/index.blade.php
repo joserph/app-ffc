@@ -92,11 +92,11 @@
            <div class="col-sm-4 invoice-col">
                Nombre y Dirección Cultivo
              <address>
-               <strong>{{ strtoupper($lc_active->name) }}</strong><br>
-               <strong>Ruc:</strong> {{ $lc_active->ruc }}<br>
-               {{ $lc_active->address }}<br>
-               {{ $lc_active->city }}, {{ $lc_active->state }} - {{ $lc_active->country }}<br>
-               <strong>Teléfono:</strong> {{ $lc_active->phone }}
+               <strong>{{ strtoupper($load->logistic_company->name) }}</strong><br>
+               <strong>Ruc:</strong> {{ $load->logistic_company->ruc }}<br>
+               {{ $load->logistic_company->address }}<br>
+               {{ $load->logistic_company->city }}, {{ $load->logistic_company->state }} - {{ $load->logistic_company->country }}<br>
+               <strong>Teléfono:</strong> {{ $load->logistic_company->phone }}
              </address>
            </div>
            <!-- /.col -->

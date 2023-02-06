@@ -181,6 +181,20 @@
             @endcan
          </div>
       </div>
+      <div class="col-lg-3 col-6">
+         <div class="small-box bg-success">
+            <div class="inner">
+               <h3>{{ $qacampanies }}</h3>
+               <p>Control de Calidad</p>
+            </div>
+            <div class="icon">
+               <i class="fas fa-certificate"></i>
+            </div>
+            @can('haveaccess', 'qacompany.index')
+               <a href="{{ route('qacompany.index') }}" class="small-box-footer">Ver <i class="fas fa-arrow-circle-right"></i></a>
+            @endcan
+         </div>
+      </div>
 
 
 

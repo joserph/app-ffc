@@ -15,8 +15,13 @@
     </div>
     <div class="col-md-4 form-group">
        {{ Form::label('id_logistics_company', 'Empresa de Logística', ['class' => 'control-label']) }}
-       <input type="text" name="" class="form-control" value="{{ $lc_active->name }}" readonly>
-       <input type="hidden" class="form-control" value="{{ $lc_active->id }}" name="id_logistics_company">
+       @isset($load->logistic_company->name)
+         <input type="text" name="" class="form-control" value="{{ $load->logistic_company->name }}" readonly>
+         <input type="hidden" class="form-control" value="{{ $load->id_logistic_company }}" name="id_logistics_company">
+      @else
+         <input type="text" name="" class="form-control" value="{{ $lc_active->name }}" readonly>
+         <input type="hidden" class="form-control" value="{{ $lc_active->id }}" name="id_logistics_company">
+      @endisset
     </div>
     <div class="col-md-4 form-group">
        {{ Form::label('invoice', 'N° de Factura', ['class' => 'control-label']) }}

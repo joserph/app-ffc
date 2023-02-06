@@ -225,6 +225,14 @@
                                  </a>
                               </li>
                            @endcan
+                           @can('haveaccess', 'qacompany.index')
+                              <li class="nav-item">
+                                 <a href="{{ route('qacompany.index') }}" class="nav-link">
+                                    <i class="fas fa-certificate"></i>
+                                    <p>Control de Calidad</p>
+                                 </a>
+                              </li>
+                           @endcan
                         </ul>
                      </nav>
                   @endguest
