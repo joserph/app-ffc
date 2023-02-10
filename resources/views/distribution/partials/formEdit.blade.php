@@ -25,7 +25,11 @@
     </div>
     <div class="col-sm-2">
         {{ Form::label('hawb', 'HAWB', ['class' => 'control-label']) }}
-        {{ Form::text('hawb', null, ['class' => 'form-control']) }}
+        @if($flight->type_awb == 'own')
+            {{ Form::text('hawb', null, ['class' => 'form-control', 'readonly']) }}
+        @else
+            {{ Form::text('hawb', null, ['class' => 'form-control']) }}
+        @endif
     </div>
     <h5 class="col-sm-12">
         <p class="lead">Coordinado</p>
@@ -81,6 +85,7 @@
     </div>
     
     
+    {{ Form::hidden('id_hawb', $item->id_hawb, ['id' => 'id_hawb']) }}
     {{ Form::hidden('update_user', Auth::user()->id, ['id' => 'update_user']) }}
     {{ Form::hidden('id_flight', $flight->id, ['id' => 'id_flight']) }}
 </div>

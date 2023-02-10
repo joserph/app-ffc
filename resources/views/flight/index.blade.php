@@ -48,28 +48,58 @@
                               <th class="text-center" scope="col">Transportista</th>
                               <th class="text-center" scope="col">Código Termografo</th>
                               <th class="text-center" scope="col">Marca Termografo</th>
+                              <th class="text-center" scope="col">Fecha Salida</th>
                               <th class="text-center" scope="col">Fecha Llegada</th>
-                              <th class="text-center" scope="col">Fecha Llegada</th>
+                              <th class="text-center" scope="col">Tipo de AWB</th>
                               <th class="text-center" scope="col">Estatus</th>
+                              <th class="text-center" scope="col">Ciudad Origen</th>
+                              <th class="text-center" scope="col">País Origen</th>
+                              <th class="text-center" scope="col">Ciudad Destino</th>
+                              <th class="text-center" scope="col">País Destino</th>
+                              {{-- <th class="text-center" scope="col">Estatus</th> --}}
                               <th class="text-center" class="text-center" width="80px" colspan="3">@can('haveaccess', 'flight.show')Ver @endcan @can('haveaccess', 'flight.edit')Editar @endcan @can('haveaccess', 'flight.destroy')Eliminar @endcan</th>
                            </tr>
                         </thead>
                         <tbody>
                            @foreach ($flights as $flight)
                               <tr>
-                                 <td>{{ $flight->awb }}</td>
-                                 <td>{{ $flight->carrier }}</td>
-                                 <td>{{ $flight->code }}</td>
-                                 <td>{{ $flight->brand }}</td>
-                                 <td>{{ date('d/m/Y', strtotime($flight->date)) }}</td>
-                                 <td>{{ date('d/m/Y', strtotime($flight->arrival_date)) }}</td>
-                                 <td>
+                                 <td class="text-center">{{ $flight->awb }}</td>
+                                 <td class="text-center">
+                                    @if ($flight->airline != NULL)
+                                       {{ Str::upper($flight->airline->name) }}
+                                    @else
+                                       {{ Str::upper($flight->carrier) }}
+                                    @endif
+                                 </td>
+                                 <td class="text-center">{{ $flight->code }}</td>
+                                 <td class="text-center">{{ $flight->brand }}</td>
+                                 <td class="text-center">{{ date('d/m/Y', strtotime($flight->date)) }}</td>
+                                 <td class="text-center">{{ date('d/m/Y', strtotime($flight->arrival_date)) }}</td>
+                                 {{-- <td class="text-center">
                                     <!--<div class="progress mb-3">
                                     <div class="progress-bar bg-success" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="15" style="width: 5%">
                                       <span class="sr-only">40% Complete (success)</span>
                                     </div>
                                   </div>-->
+                                 </td> --}}
+                                 <td class="text-center">
+                                    @if ($flight->type_awb == 'own')
+                                       <span class="badge badge-success">PROPIA</span>
+                                    @else
+                                       <span class="badge badge-secondary">EXTERNA</span>
+                                    @endif
                                  </td>
+                                 <td class="text-center">
+                                    @if ($flight->status == 'open')
+                                       <span class="badge badge-primary"><i class="fas fa-lock-open"></i> ABIERTA</span>
+                                    @else
+                                       <span class="badge badge-dark"><i class="fas fa-lock"></i> CERRADA</span>
+                                    @endif
+                                 </td>
+                                 <td class="text-center">{{ $flight->origin_city }}</td>
+                                 <td class="text-center">{{ $flight->origin_country }}</td>
+                                 <td class="text-center">{{ $flight->destination_city }}</td>
+                                 <td class="text-center">{{ $flight->destination_country }}</td>
                                  <td width="45px" class="text-center">
                                     @can('haveaccess', 'flight.show')
                                        <a href="{{ route('flight.show', $flight->id) }}" class="btn btn-outline-success btn-sm"><i class="fas fa-eye"></i></a>
@@ -100,15 +130,4 @@
       </div>
    </div>
 </section>
-
-
-
-
-
-
-
-
-
-
-
 @endsection

@@ -15,6 +15,8 @@ use App\Marketer;
 use App\Packing;
 use App\VarietyFlower;
 use App\QACompany;
+use App\Dae;
+use App\Airline;
 
 class HomeController extends Controller
 {
@@ -49,6 +51,8 @@ class HomeController extends Controller
         $packings = Packing::count();
         $varietiesflowers = VarietyFlower::count();
         $qacampanies = QACompany::count();
+        $daes = Dae::count();
+        $airlines = Airline::count();
         //dd($companyName[0]->name);
         return view('home', compact(
             'farms', 
@@ -64,6 +68,8 @@ class HomeController extends Controller
             'colors', 
             'marketers', 
             'packings',
-            'qacampanies'));
+            'qacampanies',
+            'daes',
+            'airlines'));
     }
 }

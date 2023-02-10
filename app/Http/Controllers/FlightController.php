@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Flight;
 use App\Distribution;
 use App\WeightDistribution;
+use App\Http\Requests\FlightRequest;
+use App\Airline;
 
 class FlightController extends Controller
 {
@@ -16,7 +18,7 @@ class FlightController extends Controller
      */
     public function index()
     {
-        $flights = Flight::orderBy('date', 'DESC')->paginate(15);
+        $flights = Flight::with('airline')->orderBy('date', 'DESC')->paginate(15);
         //dd($flights);
         return view('flight.index', compact('flights'));
     }
@@ -28,7 +30,10 @@ class FlightController extends Controller
      */
     public function create()
     {
-        return view('flight.create');
+        // Aerolineas
+        $airlines = Airline::orderBy('name', 'ASC')->pluck('name', 'id');
+
+        return view('flight.create', compact('airlines'));
     }
 
     /**
@@ -37,7 +42,7 @@ class FlightController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FlightRequest $request)
     {
         $flight = Flight::create($request->all());
 
@@ -69,8 +74,10 @@ class FlightController extends Controller
     public function edit($id)
     {
         $flight = Flight::find($id);
+        // Aerolineas
+        $airlines = Airline::orderBy('name', 'ASC')->pluck('name', 'id');
 
-        return view('flight.edit', compact('flight'));
+        return view('flight.edit', compact('flight', 'airlines'));
     }
 
     /**
@@ -80,7 +87,7 @@ class FlightController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(FlightRequest $request, $id)
     {
         $flight = Flight::find($id);
 

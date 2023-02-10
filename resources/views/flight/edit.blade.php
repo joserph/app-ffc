@@ -36,7 +36,7 @@
                    @include('custom.message')
 
                    {{ Form::model($flight, ['route' => ['flight.update', $flight->id], 'class' => 'form-horizontal', 'method' => 'PUT']) }}
-                        @include('flight.partials.form2')
+                        @include('flight.partials.form')
                         <hr>
                         <div class="form-group row">
                            <div class="col-sm-12">
@@ -51,4 +51,23 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+   <script>
+      let awb = document.getElementById('awb')
+      awb.addEventListener('blur', (e) => {
+         let awb_value = e.target.value
+         awb.value = awb_value.replace(/-/gi, ' ')
+         // Reempalzar AWB
+         let = new_awb = awb.value
+         awb.value = new_awb.replace('AWB ', '')
+      })
+
+      $('.origin_country').select2({
+         theme: 'bootstrap4',
+      });
+      $('.destination_country').select2({
+         theme: 'bootstrap4',
+      });
+   </script>
 @endsection

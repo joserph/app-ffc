@@ -12,6 +12,10 @@ use App\Http\Requests\UpdatePasswordRequest;
 use Auth;
 use App\Http\Requests\UpdateProfilePictureRequest;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\UserRequest;
+use App\Farm;
+use App\Client;
 
 class UserController extends Controller
 {
@@ -36,8 +40,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        /*$this->authorize('create', User::class);
-        return 'create';*/
+        $roles = Role::orderBy('name', 'ASC')->pluck('name', 'id');
+        $farmsList = Farm::select('id', 'name', 'tradename')->orderBy('name', 'ASC')->get();
+        $clientsList = Client::select('id', 'name')->orderBy('name', 'ASC')->get();
+
+        return view('user.create', compact('roles', 'farmsList', 'clientsList'));
     }
 
     /**
@@ -46,9 +53,25 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        // Validator::make($request, [
+        //     'name' => ['required', 'string', 'max:255'],
+        //     'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        //     'password' => ['required', 'string', 'min:8', 'confirmed'],
+        // ]);
+        //dd($request);
+        $user = User::create([
+            'name'      => $request->name,
+            'email'     => $request->email,
+            'type_user' => $request->type_user,
+            'password'  => Hash::make($request->password),
+        ]);
+
+        $user->roles()->sync($request->get('roles'));
+
+        return redirect()->route('user.index')
+            ->with('status_success', 'User creado con éxito');
     }
 
     /**
@@ -80,9 +103,11 @@ class UserController extends Controller
         $this->authorize('update', [$user, ['user.edit', 'userown.edit']]);
         
         $roles = Role::orderBy('name', 'ASC')->pluck('name', 'id');
+        $farmsList = Farm::select('id', 'name', 'tradename')->orderBy('name', 'ASC')->get();
+        $clientsList = Client::select('id', 'name')->orderBy('name', 'ASC')->get();
         //dd($roles);
         
-        return view('user.edit', compact('user', 'roles'));
+        return view('user.edit', compact('user', 'roles', 'farmsList', 'clientsList'));
     }
 
     /**

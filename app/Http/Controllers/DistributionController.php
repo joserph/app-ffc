@@ -17,6 +17,8 @@ use App\Http\Requests\UpdateDistributionRequest;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Illuminate\Support\Arr;
+use App\Hawb;
+use Auth;
 
 class DistributionController extends Controller
 {
@@ -64,7 +66,21 @@ class DistributionController extends Controller
             ->get();
         // Colores
         $colors = Color::where('load_type', 'aereo')->get();
-        //dd($colors);
+        // HAWB Propia
+        $hawb = Hawb::select('hawb')->get()->last();
+        // Verifico que Sea guia propia
+        // if($flight->type_awb == 'own')
+        // {
+        //     // Formateamos la guia
+        //     $new_hawb = (intval($hawb->hawb) + 1);
+        //     $hawb_zero = str_pad($new_hawb, 8, "0", STR_PAD_LEFT);
+        //     $uno = substr($hawb_zero, 0, 4);
+        //     $dos = substr($hawb_zero, 4, 8);
+        //     $hawb_format = 'FFC-' . $uno . '-' . $dos;
+        // }else{
+        //     $hawb_format = null;
+        // }
+        //
         return view('distribution.index', compact('flight', 'company', 'clientsDistribution', 'farms', 'clients', 'varieties', 'distributions', 'marketers', 'colors', 'farmsList', 'clientsList'));
     }
 
@@ -616,8 +632,8 @@ class DistributionController extends Controller
         return $distributionPdf->stream();
     }
 
-      public function distributionForDeliveryPdf()
-      {
+    public function distributionForDeliveryPdf()
+    {
          // Busco el ID de la carga por medio de la URL
         $url = $_SERVER["REQUEST_URI"];
         $arr = explode("?", $url);
@@ -654,7 +670,7 @@ class DistributionController extends Controller
         ))->setPaper('A4');
         //dd($farmsItemsLoad);
         return $distributionPdf->stream();
-      }
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -674,7 +690,6 @@ class DistributionController extends Controller
      */
     public function store(AddDistributionRequest $request)
     {
-        //dd($request);
         // calculo de fulls
         $request['fulls'] = ($request['hb'] * 0.5) + ($request['qb'] * 0.25) + ($request['eb'] * 0.125);
         $request['fulls_r'] = ($request['hb_r'] * 0.5) + ($request['qb_r'] * 0.25) + ($request['eb_r'] * 0.125);
@@ -690,7 +705,26 @@ class DistributionController extends Controller
         }else{
             $request['duplicate'] = 'no';
         }
-        
+        // Guardamos laguia hija en caso de ser Vuelo propio
+        $flight = Flight::find($request['id_flight']);
+        $hawb_last = Hawb::select('hawb')->get()->last();
+        if($flight->type_awb == 'own')
+        {
+            $new_hawb = (intval($hawb_last->hawb) + 1);
+            $hawb_zero = str_pad($new_hawb, 8, "0", STR_PAD_LEFT);
+            $uno = substr($hawb_zero, 0, 4);
+            $dos = substr($hawb_zero, 4, 8);
+            $hawb_format = 'FFC-' . $uno . '-' . $dos;
+            $hawb = Hawb::create([
+                'hawb'          => $new_hawb,
+                'hawb_format'   => $hawb_format,
+                'id_user'       => Auth::user()->id,
+                'update_user'   => Auth::user()->id,
+            ]);
+            $request['id_hawb'] = $hawb->id;
+            $request['hawb'] = $hawb_format;
+        }
+        //dd($request);
         $distrubution = Distribution::create($request->all());
 
         return redirect()->route('distribution.index', $distrubution->id_flight)
@@ -730,25 +764,6 @@ class DistributionController extends Controller
     {
         //dd($request->all());
         $distribution = Distribution::find($id);
-
-        /*$data = request()->validate([
-            'hawb'          => 'required|unique:distributions,hawb,' . $distribution->id,
-            'pieces'        => '',
-            'hb'            => 'required',
-            'qb'            => 'required', 
-            'eb'            => 'required', 
-            'hb_r'          => '',
-            'qb_r'          => '',
-            'eb_r'          => '',
-            'missing'       => '',
-            'id_client'     => 'required',
-            'id_farm'       => 'required',
-            'id_flight'     => 'required',
-            'variety_id'    => 'required',
-            'id_user'       => '',
-            'update_user'   => 'required'
-        ]);*/
-
         // calculo de fulls
         $request['fulls'] = ($request['hb'] * 0.5) + ($request['qb'] * 0.25) + ($request['eb'] * 0.125);
         $request['fulls_r'] = ($request['hb_r'] * 0.5) + ($request['qb_r'] * 0.25) + ($request['eb_r'] * 0.125);
@@ -763,6 +778,12 @@ class DistributionController extends Controller
             $request['duplicate'] = 'yes';
         }else{
             $request['duplicate'] = 'no';
+        }
+
+        $flight = Flight::find($request['id_flight']);
+        $hawb_last = Hawb::find($request['id_hawb']);
+        if($flight->type_awb == 'own'){
+            $request['hawb'] = $hawb_last->hawb_format;
         }
 
         $distribution->update($request->all());

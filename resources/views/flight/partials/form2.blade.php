@@ -23,6 +23,14 @@
       {{ Form::label('brand', 'Marca Termografo') }}
       {{ Form::text('brand', null, ['class' => 'form-control']) }}
    </div>
+   <div class="form-group col-md-3">
+      {{ Form::label('type_awb', 'Tipo de AWB') }}
+      {{ Form::select('type_awb', ['own' => 'Propia', 'external' => 'Externa'], null, ['placeholder' => 'Seleccione Tipo AWB', 'class' => 'form-control']) }}
+   </div>
+   <div class="form-group col-md-3">
+      {{ Form::label('status', 'Estatus de Guía') }}
+      {{ Form::select('status', ['open' => 'Abierta', 'closed' => 'Cerrada'], null, ['placeholder' => 'Seleccione Estatus', 'class' => 'form-control']) }}
+   </div>
     {{ Form::hidden('update_user', Auth::user()->id) }}
  </div>
      

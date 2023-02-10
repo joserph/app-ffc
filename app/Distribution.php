@@ -28,7 +28,8 @@ class Distribution extends Model
         'returns',
         'observation',
         'id_marketer',
-        'duplicate'
+        'duplicate',
+        'id_hawb'
     ];
 
     public function farm()
@@ -54,5 +55,10 @@ class Distribution extends Model
     public function weight()
     {
         return $this->hasMany('App\WeightDistribution', 'id_distribution');
+    }
+
+    public function flight()
+    {
+        return $this->belongsTo('App\Flight', 'id_flight');
     }
 }

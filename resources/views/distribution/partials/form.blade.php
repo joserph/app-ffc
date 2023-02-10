@@ -24,8 +24,13 @@
         {{ Form::select('variety_id', $varieties, null, ['class' => 'form-control select-product', 'placeholder' => 'Seleccione tipo']) }}
     </div>
     <div class="col-sm-2">
-        {{ Form::label('hawb', 'HAWB', ['class' => 'control-label']) }}
-        {{ Form::text('hawb', null, ['class' => 'form-control']) }}
+        
+        @if($flight->type_awb == 'own')
+            {{-- {{ Form::text('hawb', $hawb_format, ['class' => 'form-control', 'readonly']) }} --}}
+        @else
+            {{ Form::label('hawb', 'HAWB', ['class' => 'control-label']) }}
+            {{ Form::text('hawb', null, ['class' => 'form-control']) }}
+        @endif
     </div>
     <h5 class="col-sm-12">
         <p class="lead">Coordinado</p>

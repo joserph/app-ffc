@@ -71,7 +71,7 @@ Route::get('/test', function(){
 // Roles
 Route::resource('/role', 'RoleController')->names('role');
 // Usuarios
-Route::resource('/user', 'UserController', ['except' => ['create', 'store']])->names('user');
+Route::resource('/user', 'UserController')->names('user');
 // Cambio de Contraseña
 Route::get('user/password', 'UserController@password')->name('user.password');
 Route::post('user/updatepassword', 'UserController@updatePassword')->name('user.updatepassword');
@@ -186,3 +186,9 @@ Route::resource('/varietiesflowers', 'VaietiesFlowersController')->names('variet
 Route::resource('/farm', 'FarmController')->names('farm');
 // QA Company
 Route::resource('/qacompany', 'QACompanyController')->names('qacompany');
+// DAE
+Route::resource('/dae', 'DaeController')->names('dae');
+// Distribution Client
+Route::resource('/distribution-client', 'DistributionClientController')->names('distribution-client');
+// Aerolineas
+Route::resource('/airline', 'AirlineController')->names('airline');

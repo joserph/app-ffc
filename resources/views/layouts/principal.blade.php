@@ -39,11 +39,11 @@
                <li class="nav-item">
                   <a class="nav-link" href="{{ route('login') }}"><!--{{ __('Login') }}--> Iniciar Sesión</a>
                </li>
-               @if (Route::has('register'))
+               {{-- @if (Route::has('register'))
                   <li class="nav-item">
                      <a class="nav-link" href="{{ route('register') }}"><!--{{ __('Register') }}--> Registrar</a>
                   </li>
-               @endif
+               @endif --}}
             @else
                <li class="nav-item dropdown">
                   <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -233,6 +233,30 @@
                                  </a>
                               </li>
                            @endcan
+                           @can('haveaccess', 'dae.index')
+                              <li class="nav-item">
+                                 <a href="{{ route('dae.index') }}" class="nav-link">
+                                    <i class="fas fa-file-invoice"></i>
+                                    <p>DAEs</p>
+                                 </a>
+                              </li>
+                           @endcan
+                           @can('haveaccess', 'airline.index')
+                              <li class="nav-item">
+                                 <a href="{{ route('airline.index') }}" class="nav-link">
+                                    <i class="fas fa-plane-departure"></i>
+                                    <p>Aerolineas</p>
+                                 </a>
+                              </li>
+                           @endcan
+                           @can('haveaccess', 'distribution-client.index')
+                              <li class="nav-item">
+                                 <a href="{{ route('distribution-client.index') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-plane"></i>
+                                    <p>Coordinaciones Aéreas</p>
+                                 </a>
+                              </li>
+                           @endcan
                         </ul>
                      </nav>
                   @endguest
@@ -254,8 +278,7 @@
     <div class="float-right d-none d-sm-block">
       <b>Version</b> 1.1
     </div>
-    <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
-    reserved.
+    <strong>Copyright &copy; 2023 <a target="_blank" href="https://freshflowercargo.com/">Fresh Flower Cargo</a>.</strong>
   </footer>
 
   <!-- Control Sidebar -->

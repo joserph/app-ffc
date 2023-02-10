@@ -27,7 +27,7 @@
          <div class="col-md-12">
             <div class="card">
                <div class="card-header">
-                  Lista de usuarios
+                  Lista de usuarios <a class="btn btn-primary" href="{{ route('user.create') }}">Crear Usuario</a>
 
                   <div class="card-tools">
                      {{ $users->links() }}
@@ -44,6 +44,7 @@
                            <th class="text-center" scope="col">#</th>
                            <th class="text-center" scope="col">Nombre</th>
                            <th class="text-center" scope="col">Email</th>
+                           <th class="text-center" scope="col">Tipo Usuario</th>
                            @can('haveaccess', 'role.index')
                               <th class="text-center" scope="col">Role(s)</th>
                            @endcan
@@ -56,6 +57,7 @@
                            <td class="text-center">{{ $user->id }}</td>
                            <td class="text-center">{{ $user->name }}</td>
                            <td class="text-center">{{ $user->email }}</td>
+                           <td class="text-center">{{ $user->type_user }}</td>
                            @can('haveaccess', 'role.index')
                               <td class="text-center">
                                  @isset($user->roles[0]->name)

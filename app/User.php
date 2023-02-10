@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'type_user', 'id_farm', 'id_client'
     ];
 
     /**
@@ -37,5 +37,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function farm()
+    {
+        return $this->belongsTo('App\Farm', 'id_farm');
+    }
   
 }

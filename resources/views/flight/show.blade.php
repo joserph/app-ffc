@@ -7,7 +7,11 @@
     <div class="container-fluid">
        <div class="row mb-2">
           <div class="col-sm-6">
-             <h1>AWB - {{ $flight->awb }}</h1>
+             <h1>AWB - {{ $flight->awb }} - @if ($flight->type_awb == 'own')
+              <span class="badge badge-success">PROPIA</span>
+             @else
+             <span class="badge badge-secondary">EXTERNA</span>
+             @endif</h1>
           </div>
           <div class="col-sm-6">
              <ol class="breadcrumb float-sm-right">

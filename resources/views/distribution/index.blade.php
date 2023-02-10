@@ -32,7 +32,11 @@
 
             <div class="card">
                <div class="card-header">
-                  Coordinaciones Vuelo AWB {{ $flight->awb }}
+                  Coordinaciones Vuelo AWB {{ $flight->awb }} @if ($flight->type_awb == 'own')
+                  <span class="badge badge-success">PROPIA</span>
+                 @else
+                 <span class="badge badge-secondary">EXTERNA</span>
+                 @endif
                </div>
                <div class="card-body">
                      <div class="row">
