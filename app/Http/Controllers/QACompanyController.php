@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\QACompany;
+use App\Http\Requests\QACompanyRequest;
 
 class QACompanyController extends Controller
 {
@@ -13,7 +15,9 @@ class QACompanyController extends Controller
      */
     public function index()
     {
-        //
+        $qa_companies = QACompany::paginate(10);
+
+        return view('qacompany.index', compact('qa_companies'));
     }
 
     /**
@@ -23,7 +27,7 @@ class QACompanyController extends Controller
      */
     public function create()
     {
-        //
+        return view('qacompany.create');
     }
 
     /**
@@ -32,9 +36,12 @@ class QACompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(QACompanyRequest $request)
     {
-        //
+        $qa_company = QACompany::create($request->all());
+
+        return redirect()->route('qacompany.index')
+            ->with('status_success', 'Empresa QA agregada con éxito');
     }
 
     /**
@@ -56,7 +63,9 @@ class QACompanyController extends Controller
      */
     public function edit($id)
     {
-        //
+        $qacompany = QACompany::find($id);
+
+        return view('qacompany.edit', compact('qacompany'));
     }
 
     /**
@@ -66,9 +75,13 @@ class QACompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(QACompanyRequest $request, $id)
     {
-        //
+        $qacompany = QACompany::find($id);
+        $qacompany->update($request->all());
+
+        return redirect()->route('qacompany.index')
+            ->with('status_success', 'Empresa QA actualizada con éxito');
     }
 
     /**
@@ -79,6 +92,10 @@ class QACompanyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $qacompany = QACompany::find($id);
+        $qacompany->delete();
+
+        return redirect()->route('qacompany.index')
+            ->with('status_success', 'Empresa QA eliminada con éxito');
     }
 }

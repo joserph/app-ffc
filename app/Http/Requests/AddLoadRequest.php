@@ -28,7 +28,8 @@ class AddLoadRequest extends FormRequest
             'shipment'  => 'required|numeric',
             'bl'        => 'max:19|unique:loads,bl',
             'carrier'   => 'required',
-            'date'      => 'required'
+            'date'      => 'required',
+            'id_logistic_company' => 'required'
         ];
     }
 }

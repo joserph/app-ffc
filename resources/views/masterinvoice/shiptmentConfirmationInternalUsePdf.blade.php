@@ -71,6 +71,9 @@
         .pcs-bxs{
            width: 40px;
         }
+        .pcs-bxs2{
+           width: 40px;
+        }
         .gris{
            background-color: #d1cfcf;
         }
@@ -96,7 +99,10 @@
            line-height: 35px;
         }
         .headTitulo{
-           padding: 5px 0 -7px 0;
+            padding: 5px 0 -7px 0;
+        }
+        .headTitulo2 {
+         padding: 5px 0 -7px 0;
         }
         .headDetalle{
            padding: 2px 0 0 3px;
@@ -110,35 +116,55 @@
    <header>
       <table>
          <tr>
-            <th colspan="4" class="large-letter headTitulo">CONFIRMACIÓN DE DESPACHO</th>
+            <th colspan="5" class="large-letter headTitulo">CONFIRMACIÓN DE DESPACHO</th>
          </tr>
          <tr>
             <th class="medium-letter text-left pcs-bxs headDetalle">Date:</th>
-            <th class="small-letter text-left farms2 headDetalle">{{ date('l, d F - Y', strtotime($load->date)) }}</th>
-            <th class="medium-letter text-left pcs-bxs headDetalle">Pcs:</th>
+            <th colspan="2" class="small-letter text-left farms2 headDetalle">{{ date('l, d F - Y', strtotime($load->date)) }}</th>
+            <th class="medium-letter text-left pcs-bxs2 headDetalle">Pcs:</th>
             <th class="small-letter text-left headDetalle">{{ $totalPieces }}</th>
          </tr>
          <tr>
             <th class="medium-letter text-left headDetalle">Client:</th>
-            <th class="small-letter text-left headDetalle">{{ $company->name }}</th>
+            <th colspan="2" class="small-letter text-left headDetalle">{{ $company->name }}</th>
             <th class="medium-letter text-left headDetalle">Carrier:</th>
             <th class="small-letter text-left headDetalle">MARITIMO</th>
          </tr>
          <tr>
             <th class="medium-letter text-left headDetalle">Awb:</th>
-            <th colspan="3" class="small-letter text-left headDetalle">{{ $load->bl }}</th>
+            <th class="small-letter text-left headDetalle">{{ $load->bl }}</th>
+            <th colspan="2" class="medium-letter text-center headDetalle text-red">
+               @isset($load->floor)
+                  @if ($load->floor == 'si')
+                     @if ($load->num_pallets > 1)
+                        <span>{{ $load->num_pallets }} PALLETS AL PISO</span>
+                     @else
+                        <span>{{ $load->num_pallets }} PALLET AL PISO</span>
+                     @endif
+                  @else
+                     <span>NO HAY PALLETS AL PISO</span>
+                  @endif
+               @endisset
+            </th>
+            <th class="medium-letter text-center headDetalle text-red">
+               @isset($load->id_qa)
+                  <span>CONTROL DE CALIDAD: {{ Str::upper($load->qacompany->name) }}</span>
+               @endisset
+
+            </th>
          </tr>
       </table>
+
    </header>
    <main>
       <table class="table">
          @php
-               $totalFulls = 0; $totalHb = 0; $totalQb = 0; $totalEb = 0;
+            $totalFulls = 0; $totalHb = 0; $totalQb = 0; $totalEb = 0;
          @endphp
+         <tr>
+            <th colspan="9" class="sin-border"></th>
+         </tr>
          @foreach($clients as  $key => $client)
-            <tr>
-               <th colspan="9" class="sin-border"></th>
-            </tr>
             <tr>
                <th class="text-center medium-letter">AWB</th>
                <th class="text-center medium-letter" colspan="8">{{ $client['name'] }}</th>
@@ -160,7 +186,7 @@
                @endphp
                @foreach($invoiceItems as $item)
                   @if($client['id'] == $item->id_client)
-                     
+
                      @php
                         $tPieces+= $item->pieces;
                         $tFulls+= $item->fulls;
@@ -181,7 +207,7 @@
                            @foreach ($coordinationObserver as $coordOb)
                               @if ($coordOb->hawb == $item->hawb)
                                  @isset($coordOb->marketer->name)
-                                    {{ $coordOb->marketer->name }} 
+                                    {{ $coordOb->marketer->name }}
                                  @endisset
                                  @isset($coordOb->observation)
                                     ({{ $coordOb->observation }})
@@ -209,10 +235,11 @@
                   <th class="small-letter">{{ $tEb }}</th>
                   <th class="small-letter"></th>
                </tr>
-            @endforeach
                <tr>
                   <th colspan="9" class="sin-border"></th>
                </tr>
+         @endforeach
+               
                <tr class="gris">
                   <th colspan="3">Total Global:</th>
                   <th class="small-letter">{{ $totalPieces }}</th>
@@ -225,8 +252,8 @@
             </tfoot>
         </table>
     </main>
-    
-    
-    
+
+
+
 </body>
 </html>

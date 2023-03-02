@@ -13,7 +13,7 @@ class QACompanyRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,16 @@ class QACompanyRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required',
+            'owner' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
+            'state' => 'required',
+            'city' => 'required',
+            'country' => 'required',
+            'email' => 'required',
+            'id_user' => 'required',
+            'update_user' => 'required',
         ];
     }
 }

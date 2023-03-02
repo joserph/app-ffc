@@ -231,6 +231,6 @@
          $('.test').popover({
             container: 'body'
          })
-      })
+      });
    </script>
 @endsection

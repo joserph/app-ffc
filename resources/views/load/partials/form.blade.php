@@ -61,6 +61,21 @@
       {{ Form::label('seal_sticker', 'Sello Sticker') }}
       {{ Form::text('seal_sticker', null, ['class' => 'form-control']) }}
    </div>
+   <div class="form-group col-md-4">
+      {{ Form::label('id_qa', 'Empresa QA') }}
+      {{ Form::select('id_qa', $qacompanies, null, ['class' => 'form-control', 'placeholder' => 'Seleccione Carguera']) }}
+   </div>
+   <div class="form-group col-md-3">
+      {{ Form::label('floor', 'Paletas al Piso') }}
+      {{ Form::select('floor', [
+         'si' => 'Si',
+         'no' => 'No'
+         ], null, ['class' => 'form-control', 'placeholder' => 'Paletas al Piso']) }}
+   </div>
+   <div class="form-group col-md-2" id="hide">
+      {{ Form::label('num_pallets', 'Cantidad de paletas') }}
+      {{ Form::number('num_pallets', null, ['class' => 'form-control']) }}
+   </div>
 
    {{ Form::hidden('id_user', Auth::user()->id) }}
    {{ Form::hidden('update_user', Auth::user()->id) }}

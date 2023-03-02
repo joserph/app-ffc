@@ -52,3 +52,27 @@
     </div>
 </div>
 @endsection
+@section('scripts')
+   <script>
+      let num_pallet = document.getElementById('hide')
+      let piso = document.getElementById('floor')
+      let pallet = document.getElementById('num_pallets')
+      if(pallet.value > 0)
+      {
+         num_pallet.style.display = 'block'
+      }else{
+         num_pallet.style.display = 'none'
+      }
+
+      piso.addEventListener('change', (e) => {
+         if(piso.value === 'si')
+         {
+            num_pallet.style.display = 'block'
+         }else{
+            num_pallet.style.display = 'none'
+            pallet.value = 0
+         }
+      });
+      
+   </script>
+@endsection

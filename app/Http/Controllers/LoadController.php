@@ -11,6 +11,7 @@ use App\Coordination;
 use App\Pallet;
 use App\PalletItem;
 use App\LogisticCompany;
+use App\QACompany;
 
 class LoadController extends Controller
 {
@@ -26,9 +27,10 @@ class LoadController extends Controller
         $palletItem = PalletItem::get();
         $coordinacions = Coordination::get();
         $logistics_companies = LogisticCompany::select('id', 'name')->get();
+        $qacompanies = QACompany::pluck('name', 'id');
         //dd($logistics_companies);
         
-        return view('load.index', compact('loads', 'coordination', 'palletItem', 'coordinacions', 'logistics_companies'));
+        return view('load.index', compact('loads', 'coordination', 'palletItem', 'coordinacions', 'logistics_companies', 'qacompanies'));
     }
 
     /**
@@ -39,8 +41,9 @@ class LoadController extends Controller
     public function create()
     {
         $logistics_companies = LogisticCompany::pluck('name', 'id');
+        $qacompanies = QACompany::pluck('name', 'id');
         //dd($logistics_companies);
-        return view('load.create', compact('logistics_companies'));
+        return view('load.create', compact('logistics_companies', 'qacompanies'));
     }
 
     /**
@@ -86,8 +89,9 @@ class LoadController extends Controller
     {
         $load = Load::find($id);
         $logistics_companies = LogisticCompany::pluck('name', 'id');
+        $qacompanies = QACompany::pluck('name', 'id');
 
-        return view('load.edit', compact('load', 'logistics_companies'));
+        return view('load.edit', compact('load', 'logistics_companies', 'qacompanies'));
     }
 
     /**

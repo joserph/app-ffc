@@ -518,7 +518,7 @@ class InvoiceHeaderController extends Controller
         $url = $_SERVER["REQUEST_URI"];
         $arr = explode("?", $url);
         $code = $arr[1];
-        $load = Load::find($code);
+        $load = Load::with('qacompany')->find($code);
         
         // Mi empresa
         $company = Company::first();

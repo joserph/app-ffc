@@ -24,6 +24,9 @@ class Load extends Model
         'seal_bottle',
         'seal_cable',
         'seal_sticker',
+        'id_qa',
+        'floor',
+        'num_pallets'
     ];
 
     public function invoiceheader()
@@ -34,5 +37,10 @@ class Load extends Model
     public function logistic_company()
     {
         return $this->belongsTo('App\LogisticCompany', 'id_logistic_company');
+    }
+
+    public function qacompany()
+    {
+        return $this->belongsTo('App\QACompany', 'id_qa');
     }
 }
