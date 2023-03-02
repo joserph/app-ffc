@@ -29,7 +29,7 @@
            page-break-before: auto;
         }
         .small-letter{
-           font-size: 9px;
+           font-size: 8px;
            font-weight: normal;
         }
         .medium-letter{
@@ -39,6 +39,9 @@
            font-size: 13px;
         }
         .farms{
+           width: 220px;
+        }
+        .farms2{
            width: 300px;
         }
         table, th{
@@ -98,6 +101,9 @@
         .headDetalle{
            padding: 2px 0 0 3px;
         }
+        .text-red{
+         color: red;
+        }
    </style>
 </head>
 <body>
@@ -108,7 +114,7 @@
          </tr>
          <tr>
             <th class="medium-letter text-left pcs-bxs headDetalle">Date:</th>
-            <th class="small-letter text-left farms headDetalle">{{ date('l, d F - Y', strtotime($load->date)) }}</th>
+            <th class="small-letter text-left farms2 headDetalle">{{ date('l, d F - Y', strtotime($load->date)) }}</th>
             <th class="medium-letter text-left pcs-bxs headDetalle">Pcs:</th>
             <th class="small-letter text-left headDetalle">{{ $totalPieces }}</th>
          </tr>
@@ -131,11 +137,11 @@
          @endphp
          @foreach($clients as  $key => $client)
             <tr>
-               <th colspan="8" class="sin-border"></th>
+               <th colspan="9" class="sin-border"></th>
             </tr>
             <tr>
                <th class="text-center medium-letter">AWB</th>
-               <th class="text-center medium-letter" colspan="7">{{ $client['name'] }}</th>
+               <th class="text-center medium-letter" colspan="8">{{ $client['name'] }}</th>
             </tr>
             <tr class="gris">
                <th class="text-center medium-letter">Exporter</th>
@@ -146,6 +152,7 @@
                <th class="text-center medium-letter box-size">HALF</th>
                <th class="text-center medium-letter box-size">QUART</th>
                <th class="text-center medium-letter box-size">OCT</th>
+               <th class="text-center medium-letter">Note</th>
             </tr>
             <tbody>
                @php
@@ -153,6 +160,7 @@
                @endphp
                @foreach($invoiceItems as $item)
                   @if($client['id'] == $item->id_client)
+                     
                      @php
                         $tPieces+= $item->pieces;
                         $tFulls+= $item->fulls;
@@ -169,6 +177,18 @@
                         <td class="small-letter text-center">{{ $item->hb }}</td>
                         <td class="small-letter text-center">{{ $item->qb }}</td>
                         <td class="small-letter text-center">{{ $item->eb }}</td>
+                        <td class="small-letter text-center text-red">
+                           @foreach ($coordinationObserver as $coordOb)
+                              @if ($coordOb->hawb == $item->hawb)
+                                 @isset($coordOb->marketer->name)
+                                    {{ $coordOb->marketer->name }} 
+                                 @endisset
+                                 @isset($coordOb->observation)
+                                    ({{ $coordOb->observation }})
+                                 @endisset
+                              @endif
+                           @endforeach
+                        </td>
                      </tr>
                   @endif
                @endforeach
@@ -187,10 +207,11 @@
                   <th class="small-letter">{{ $tHb }}</th>
                   <th class="small-letter">{{ $tQb }}</th>
                   <th class="small-letter">{{ $tEb }}</th>
+                  <th class="small-letter"></th>
                </tr>
             @endforeach
                <tr>
-                  <th colspan="8" class="sin-border"></th>
+                  <th colspan="9" class="sin-border"></th>
                </tr>
                <tr class="gris">
                   <th colspan="3">Total Global:</th>
@@ -199,6 +220,7 @@
                   <th class="small-letter">{{ $totalHb }}</th>
                   <th class="small-letter">{{ $totalQb }}</th>
                   <th class="small-letter">{{ $totalEb }}</th>
+                  <th class="small-letter"></th>
                </tr>
             </tfoot>
         </table>

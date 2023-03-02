@@ -249,14 +249,14 @@
                                  </a>
                               </li>
                            @endcan
-                           @can('haveaccess', 'distribution-client.index')
+                           {{-- @can('haveaccess', 'distribution-client.index')
                               <li class="nav-item">
                                  <a href="{{ route('distribution-client.index') }}" class="nav-link">
                                     <i class="nav-icon fas fa-plane"></i>
                                     <p>Coordinaciones Aéreas</p>
                                  </a>
                               </li>
-                           @endcan
+                           @endcan --}}
                         </ul>
                      </nav>
                   @endguest

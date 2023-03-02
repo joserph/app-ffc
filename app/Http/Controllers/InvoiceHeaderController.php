@@ -519,7 +519,7 @@ class InvoiceHeaderController extends Controller
         $arr = explode("?", $url);
         $code = $arr[1];
         $load = Load::find($code);
-
+        
         // Mi empresa
         $company = Company::first();
 
@@ -532,7 +532,8 @@ class InvoiceHeaderController extends Controller
             ->join('farms', 'master_invoice_items.id_farm', '=', 'farms.id')
             ->orderBy('farms.name', 'ASC')
             ->get();
-        
+        $coordinationObserver = Coordination::where('id_load', $code)->with('marketer')->get();
+        //dd($coordinationObserver);
         // Buscamos los clientes que esten en esta carga, por el id_load
         $clientsInInvoice = MasterInvoiceItem::where('id_load', '=', $code)
             ->join('clients', 'master_invoice_items.id_client', '=', 'clients.id')
@@ -552,7 +553,8 @@ class InvoiceHeaderController extends Controller
             'clients',
             'load',
             'company',
-            'totalPieces'
+            'totalPieces',
+            'coordinationObserver'
         ));
 
         return $shiptmentConfirmationPdf->stream();

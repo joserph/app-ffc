@@ -242,7 +242,7 @@
          </div>
       </div>
       @endcan
-      @can('haveaccess', 'distribution-client.index')
+      {{-- @can('haveaccess', 'distribution-client.index')
       <div class="col-lg-3 col-6">
          <div class="small-box bg-primary">
             <div class="inner">
@@ -257,7 +257,7 @@
             
          </div>
       </div>
-      @endcan
+      @endcan --}}
 
 
 
