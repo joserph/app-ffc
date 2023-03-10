@@ -15,7 +15,8 @@ class Farm extends Model
         'city', // Ciudad
         'country',
         'id_user',
-        'update_user'
+        'update_user',
+        'ruc'
     ];
 
     public function masterinvoiceitems()

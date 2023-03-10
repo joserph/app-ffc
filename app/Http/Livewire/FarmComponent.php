@@ -15,7 +15,7 @@ class FarmComponent extends Component
 
     protected $paginationTheme = 'bootstrap'; /// Importante
 
-    public $farm_id, $name, $tradename, $phone, $address, $state, $city, $country;
+    public $farm_id, $name, $tradename, $phone, $address, $state, $city, $country, $ruc;
     public $view = 'create';
     public $term;
 
@@ -31,6 +31,7 @@ class FarmComponent extends Component
                 ->orWhere('address', 'LIKE', "%$term%")
                 ->orWhere('state', 'LIKE', "%$term%")
                 ->orWhere('city', 'LIKE', "%$term%")
+                ->orWhere('ruc', 'LIKE', "%$term%")
                 ->orWhere('country', 'LIKE', "%$term%");
             })->orderBy('name', 'ASC')->with('user')->paginate(10),
             'users' => User::orderBy('name', 'ASC')->get()
@@ -48,6 +49,7 @@ class FarmComponent extends Component
             'state'     => 'required',
             'city'      => 'required',
             'country'   => 'required',
+            'ruc'       => 'required|unique:farms,ruc'
         ]);
 
         $farm = Farm::create([
@@ -59,7 +61,8 @@ class FarmComponent extends Component
             'city'          => $this->city,
             'country'       => $this->country,
             'id_user'       => Auth::user()->id,
-            'update_user'   => Auth::user()->id
+            'update_user'   => Auth::user()->id,
+            'ruc'           => $this->ruc
         ]);
         
         session()->flash('create', 'La finca "' . $farm->name . '" se creó con éxito');
@@ -79,6 +82,7 @@ class FarmComponent extends Component
         $this->state = $farm->state;
         $this->city = $farm->city;
         $this->country = $farm->country;
+        $this->ruc = $farm->ruc;
 
         $this->view = 'edit';
     }
@@ -94,6 +98,7 @@ class FarmComponent extends Component
             'state'     => 'required',
             'city'      => 'required',
             'country'   => 'required',
+            'ruc'       => 'required|unique:farms,ruc,' . $this->farm_id
         ]);
 
         $farm = Farm::find($this->farm_id);
@@ -107,7 +112,8 @@ class FarmComponent extends Component
             'city'          => $this->city,
             'country'       => $this->country,
             'id_user'       => $farm->id_user,
-            'update_user'   => Auth::user()->id
+            'update_user'   => Auth::user()->id,
+            'ruc'           => $this->ruc
         ]);
 
         session()->flash('edit', 'La finca "' . $farm->name . '" se actualizó con éxito');
@@ -131,6 +137,7 @@ class FarmComponent extends Component
         $this->state = '';
         $this->city = '';
         $this->country = '';
+        $this->ruc = '';
 
         $this->view = 'create';
     }

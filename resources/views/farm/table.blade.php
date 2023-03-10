@@ -15,6 +15,7 @@
     <thead>
        <tr>
           <th scope="col">Nombre</th>
+          <th scope="col">RUC</th>
           <th scope="col">Nombre Comercial</th>
           <th scope="col">Teléfono</th>
           <th scope="col">Dirección</th>
@@ -30,6 +31,7 @@
        @foreach ($farms as $farm)
          <tr>
             <td><a class="text-decoration-none" href="{{ route('farm.show', $farm->id) }}">{{ $farm->name }}</a></td>
+            <td>{{ $farm->ruc }}</td>
             <td>{{ $farm->tradename }}</td>
             <td>{{ $farm->phone }}</td>
             <td>{{ Str::limit($farm->address, 20) }}</td>
