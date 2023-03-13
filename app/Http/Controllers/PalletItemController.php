@@ -17,6 +17,7 @@ use App\Client;
 use App\LogisticCompany;
 use App\Company;
 use App\MasterInvoiceItem;
+use App\Coordination;
 
 class PalletItemController extends Controller
 {
@@ -1009,6 +1010,34 @@ class PalletItemController extends Controller
 
         
         return $palletitemsPdf->stream();
+    }
+
+    public function palletExcel($code)
+    {
+        $load = Load::with('logistic_company')->find($code);
+
+        $resumenCarga = PalletItem::where('id_load', '=', $code)
+            ->join('clients', 'pallet_items.id_client', '=', 'clients.id')
+            ->select('clients.id', 'clients.name')
+            ->orderBy('clients.name', 'ASC')
+            ->get();
+        // Eliminamos los clientes duplicados
+        $resumenCargaAll = collect(array_unique($resumenCarga->toArray(), SORT_REGULAR));
+        // Items de carga
+        $itemsCargaAll = PalletItem::select('*')
+            ->where('id_load', '=', $code)
+            ->join('farms', 'pallet_items.id_farm', '=', 'farms.id')
+            ->select('farms.name', 'pallet_items.*')
+            ->orderBy('farms.name', 'ASC')
+            ->get();
+        
+        $itemsCarga = PalletItem::groupEqualsItemsCargas($itemsCargaAll, $code);
+        // Coordinaciones
+        $itemCoordinations = Coordination::where('id_load', $load->id)->get();
+
+        //dd($itemCoordinations);
+
+        PalletItem::excelP($load, $resumenCargaAll, $itemsCarga, $itemCoordinations);
     }
 
     /**

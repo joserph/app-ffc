@@ -192,3 +192,5 @@ Route::resource('/dae', 'DaeController')->names('dae');
 Route::resource('/distribution-client', 'DistributionClientController')->names('distribution-client');
 // Aerolineas
 Route::resource('/airline', 'AirlineController')->names('airline');
+
+Route::get('closing-excel/{id}', 'PalletItemController@palletExcel')->name('closing.excel');

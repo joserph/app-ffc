@@ -5,6 +5,8 @@ use Illuminate\Support\Arr;
 use App\Pallet;
 
 use Illuminate\Database\Eloquent\Model;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class PalletItem extends Model
 {
@@ -177,5 +179,84 @@ class PalletItem extends Model
             }
             return $newResult;
         }
+    }
+
+    public static function ExcelP($load, $resumenCargaAll, $itemsCarga, $itemCoordinations)
+    {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        //Page margins
+        $sheet->getPageMargins()->setTop(0.5);
+        $sheet->getPageMargins()->setRight(0.75);
+        $sheet->getPageMargins()->setLeft(0.75);
+        $sheet->getPageMargins()->setBottom(1);
+        //Use fit to page for the horizontal direction
+        $sheet->getPageSetup()->setFitToWidth(1);
+        $sheet->getPageSetup()->setFitToHeight(0);
+        // Horientacion de la pagina
+        $spreadsheet->getActiveSheet()->getPageSetup()
+        ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+        // Bordes finos
+        $styleArray = [
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['rgb' => '000000'],
+                ],
+            ],
+        ];
+
+        $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(2);
+        $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(50);
+        $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(13);
+        $spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(16);
+        $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(6);
+        $spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(6);
+        $spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(6);
+
+        // Número de paginas
+        $spreadsheet->getActiveSheet()->getHeaderFooter()
+            ->setOddFooter('&RPagina &P de &N');
+
+        $letra = 'A';
+        // Calculo de las caldas en blanco
+        $total_lineas = $resumenCargaAll->count() + ($itemsCarga->count() * 3) + 5 + 9;
+        for($letra; $letra <= 'G'; $letra++)
+        {
+            $spreadsheet->getActiveSheet()->getStyle($letra . '1:' . $letra . $total_lineas)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()->setRGB('FFFFFF');
+        }
+
+        $sheet->getStyle('A2:G2')->getFont()->setBold(true);
+        $sheet->mergeCells('A2:G2');
+        $sheet->getStyle('A2:G2')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('A2:G2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A2:G2')->getFont()->setSize(24);
+        $sheet->setCellValue('A2', 'CIERRE DE CARGA MARITIMA');
+
+        $sheet->mergeCells('A3:G3');
+        $sheet->getStyle('A3:G3')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('A3:G3')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A3:G3')->getFont()->setSize(20);
+        $sheet->setCellValue('A3', $load->bl . ' - #' . $load->shipment);
+
+        $sheet->mergeCells('A5:G5');
+        $sheet->getStyle('A5:G5')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('A5:G5')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $spreadsheet->getActiveSheet()->getStyle('A5:G5')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+        ->getStartColor()->setRGB('d7f4fe');
+        $sheet->getStyle('A5:G5')->applyFromArray($styleArray);
+        $sheet->setCellValue('A5', 'SAG-BONNET');
+
+
+
+        $writer = new Xlsx($spreadsheet);
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="COORDINACIÓN MARÍTIMA - .xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output');
     }
 }

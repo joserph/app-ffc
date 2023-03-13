@@ -274,7 +274,8 @@
              <div class="card text-white bg-dark">
                <div class="card-header">
                  Resumen de la carga - #{{ $load->shipment }}
-                 <a href="{{ route('palletitems.pdf', $load) }}" target="_blank" class="btn btn-xs btn-outline-success pull-right"><i class="far fa-file-pdf"></i></a>
+                 <a href="{{ route('palletitems.pdf', $load) }}" target="_blank" class="btn btn-xs btn-outline-success pull-right"><i class="far fa-file-pdf"></i> Cierre PDF</a>
+                 <a href="{{ route('closing.excel', $load) }}" target="_blank" class="btn btn-xs btn-outline-primary pull-right"><i class="far fa-file-excel"></i> Cierre Excel</a>
                </div>
                <div class="card-body">
                   <!-- tabla de coordinaciones -->
