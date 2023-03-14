@@ -206,9 +206,9 @@ class PalletItem extends Model
             ],
         ];
 
-        $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(2);
-        $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(50);
-        $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(13);
+        $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(20);
+        $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(10);
+        $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(10);
         $spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(16);
         $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(6);
         $spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(6);
@@ -240,13 +240,34 @@ class PalletItem extends Model
         $sheet->getStyle('A3:G3')->getFont()->setSize(20);
         $sheet->setCellValue('A3', $load->bl . ' - #' . $load->shipment);
 
-        $sheet->mergeCells('A5:G5');
-        $sheet->getStyle('A5:G5')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-        $sheet->getStyle('A5:G5')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $spreadsheet->getActiveSheet()->getStyle('A5:G5')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-        ->getStartColor()->setRGB('d7f4fe');
-        $sheet->getStyle('A5:G5')->applyFromArray($styleArray);
-        $sheet->setCellValue('A5', 'SAG-BONNET');
+        $fila = 5;
+        foreach($resumenCargaAll as $client)
+        {
+            $sheet->mergeCells('A' . $fila . ':G' . $fila); 
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $spreadsheet->getActiveSheet()->getStyle('A' . $fila . ':G' . $fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()->setRGB('d7f4fe');
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($styleArray);
+            $sheet->setCellValue('A' . $fila, $client['name']);
+            break;
+            $fila++;
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $spreadsheet->getActiveSheet()->getStyle('A' . $fila . ':G' . $fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()->setRGB('#BFBFBF');
+            $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($styleArray);
+            $sheet->setCellValue('A' . $fila, 'FINCA');
+            $sheet->setCellValue('B' . $fila, 'AWB');
+            $sheet->setCellValue('C' . $fila, 'RUC');
+            $sheet->setCellValue('D' . $fila, 'AWB');
+            $sheet->setCellValue('E' . $fila, 'HB');
+            $sheet->setCellValue('F' . $fila, 'QB');
+            $sheet->setCellValue('G' . $fila, 'EB');
+        }
+        
+
+
 
 
 
