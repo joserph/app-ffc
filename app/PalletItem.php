@@ -55,7 +55,7 @@ class PalletItem extends Model
                 $update_user = ['update_user' => $item->update_user];
                 $id_farm = ['id_farm' => $item->id_farm];
                 $id_client = ['id_client' => $item->id_client];
-                //$id_pallet = ['id_pallet' => $item->id_pallet];
+                $farm_ruc = ['farm_ruc' => $item->ruc];
             }else{
                 //$id = ['id' => $item->id];
                 $quantity = ['quantity' => $item->quantity];
@@ -69,8 +69,9 @@ class PalletItem extends Model
                 $id_farm = ['id_farm' => $item->id_farm];
                 $id_client = ['id_client' => $item->id_client];
                 //$id_pallet = ['id_pallet' => $item->id_pallet];
+                $farm_ruc = ['farm_ruc' => $item->ruc];
             }
-            $itemCargaArray[] = Arr::collapse([$quantity, $hb, $qb, $eb, $farms, $id_load, $id_user, $update_user, $id_farm, $id_client]);
+            $itemCargaArray[] = Arr::collapse([$quantity, $hb, $qb, $eb, $farms, $id_load, $id_user, $update_user, $id_farm, $id_client, $farm_ruc]);
         }
         //dd($itemCargaArray);
         return collect(array_unique($itemCargaArray, SORT_REGULAR));
@@ -181,7 +182,7 @@ class PalletItem extends Model
         }
     }
 
-    public static function ExcelP($load, $resumenCargaAll, $itemsCarga, $itemCoordinations)
+    public static function ExcelP($load, $resumenCargaAll, $itemsCarga)
     {
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -206,69 +207,156 @@ class PalletItem extends Model
             ],
         ];
 
-        $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(20);
-        $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(10);
-        $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(10);
-        $spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(16);
-        $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(6);
-        $spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(6);
-        $spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(6);
-
+        $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(55);
+        $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(15);
+        $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(17);
+        $spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(15);
+        $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(10);
+        $spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(10);
+        $spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(10);
+        $spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(15);
         // Número de paginas
         $spreadsheet->getActiveSheet()->getHeaderFooter()
             ->setOddFooter('&RPagina &P de &N');
 
         $letra = 'A';
         // Calculo de las caldas en blanco
-        $total_lineas = $resumenCargaAll->count() + ($itemsCarga->count() * 3) + 5 + 9;
-        for($letra; $letra <= 'G'; $letra++)
+        $total_lineas = $resumenCargaAll->count() + ($itemsCarga->count() * 2) + 5 + 9;
+        for($letra; $letra <= 'H'; $letra++)
         {
             $spreadsheet->getActiveSheet()->getStyle($letra . '1:' . $letra . $total_lineas)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()->setRGB('FFFFFF');
         }
 
-        $sheet->getStyle('A2:G2')->getFont()->setBold(true);
-        $sheet->mergeCells('A2:G2');
-        $sheet->getStyle('A2:G2')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-        $sheet->getStyle('A2:G2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('A2:G2')->getFont()->setSize(24);
+        $sheet->getStyle('A2:H2')->getFont()->setBold(true);
+        $sheet->mergeCells('A2:H2');
+        $sheet->getStyle('A2:H2')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('A2:H2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A2:H2')->getFont()->setSize(24);
         $sheet->setCellValue('A2', 'CIERRE DE CARGA MARITIMA');
 
-        $sheet->mergeCells('A3:G3');
-        $sheet->getStyle('A3:G3')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-        $sheet->getStyle('A3:G3')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('A3:G3')->getFont()->setSize(20);
+        $sheet->mergeCells('A3:H3');
+        $sheet->getStyle('A3:H3')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('A3:H3')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A3:H3')->getFont()->setSize(20);
         $sheet->setCellValue('A3', $load->bl . ' - #' . $load->shipment);
 
-        $fila = 5;
+        $sheet->mergeCells('A4:H4');
+        $sheet->getStyle('A4:H4')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('A4:H4')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A4:H4')->getFont()->setSize(20);
+        $sheet->setCellValue('A4', date('d/m/Y', strtotime($load->date)));
+
+        $fila = 6;
+        $arrTotal = array();
         foreach($resumenCargaAll as $client)
         {
-            $sheet->mergeCells('A' . $fila . ':G' . $fila); 
-            $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-            $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-            $spreadsheet->getActiveSheet()->getStyle('A' . $fila . ':G' . $fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            $sheet->mergeCells('A' . $fila . ':H' . $fila);
+            $sheet->getStyle('A' . $fila . ':H' . $fila)->getFont()->setBold(true);
+            $sheet->getStyle('A' . $fila . ':H' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('A' . $fila . ':H' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $spreadsheet->getActiveSheet()->getStyle('A' . $fila . ':H' . $fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()->setRGB('d7f4fe');
-            $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($styleArray);
+            $sheet->getStyle('A' . $fila . ':H' . $fila)->applyFromArray($styleArray);
+            $spreadsheet->getActiveSheet()->getRowDimension($fila)->setRowHeight(20);
             $sheet->setCellValue('A' . $fila, $client['name']);
-            break;
+            
             $fila++;
-            $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-            $sheet->getStyle('A' . $fila . ':G' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-            $spreadsheet->getActiveSheet()->getStyle('A' . $fila . ':G' . $fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-            ->getStartColor()->setRGB('#BFBFBF');
-            $sheet->getStyle('A' . $fila . ':G' . $fila)->applyFromArray($styleArray);
-            $sheet->setCellValue('A' . $fila, 'FINCA');
-            $sheet->setCellValue('B' . $fila, 'AWB');
+            $sheet->getStyle('A' . $fila . ':H' . $fila)->getFont()->setBold(true);
+            $sheet->getStyle('A' . $fila . ':H' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('A' . $fila . ':H' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $spreadsheet->getActiveSheet()->getStyle('A' . $fila . ':H' . $fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()->setRGB('FFFFFF');
+            $sheet->getStyle('A' . $fila . ':H' . $fila)->applyFromArray($styleArray);
+            $sheet->setCellValue('A' . $fila, 'EXPORTER');
+            $sheet->setCellValue('B' . $fila, 'HAWB');
             $sheet->setCellValue('C' . $fila, 'RUC');
-            $sheet->setCellValue('D' . $fila, 'AWB');
+            $sheet->setCellValue('D' . $fila, 'FBX');
             $sheet->setCellValue('E' . $fila, 'HB');
             $sheet->setCellValue('F' . $fila, 'QB');
             $sheet->setCellValue('G' . $fila, 'EB');
+            $sheet->setCellValue('H' . $fila, 'TOTAL');
+            $f_sub = $fila;
+            $fila++;
+            
+            foreach($itemsCarga as $item)
+            {
+                if($client['id'] == $item['id_client'])
+                {
+                    $sheet->getStyle('B' . $fila . ':H' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+                    $sheet->getStyle('B' . $fila . ':H' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                    $spreadsheet->getActiveSheet()->getStyle('A' . $fila . ':H' . $fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    ->getStartColor()->setRGB('FFFFFF');
+                    $sheet->getStyle('A' . $fila . ':H' . $fila)->applyFromArray($styleArray);
+                    $spreadsheet->getActiveSheet()->getStyle('C' . $fila)->getNumberFormat()
+                    ->setFormatCode('0000');
+                    $sheet->setCellValue('A' . $fila, $item['farms']);
+                    
+                    $coordHawb = Coordination::where('id_load', $load->id)
+                        ->where('id_client', $item['id_client'])
+                        ->where('id_farm', $item['id_farm'])
+                        ->first();
+                    //dd($item['farm_ruc']);
+                    $sheet->setCellValue('B' . $fila, $coordHawb->hawb);
+                    $sheet->setCellValue('C' . $fila, $item['farm_ruc']);
+                    $sheet->setCellValue('D' . $fila, '=(E' . $fila . '*0.5)+(F' . $fila . '*0.25)+(G' . $fila . '*0.125)');
+                    $spreadsheet->getActiveSheet()->getStyle('D' . $fila)->getNumberFormat()->setFormatCode('#,##0.000');
+                    $sheet->setCellValue('E' . $fila, $item['hb']);
+                    $sheet->setCellValue('F' . $fila, $item['qb']);
+                    $sheet->setCellValue('G' . $fila, $item['eb']);
+                    $sheet->setCellValue('H' . $fila, '=SUM(E' . $fila . ':G' . $fila . ')');
+                    
+                    $fila++;
+                }
+                
+            }
+            $sheet->getStyle('A' . $fila . ':H' . $fila)->getFont()->setBold(true);
+            $sheet->getStyle('A' . $fila . ':C' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('A' . $fila . ':C' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
+            $sheet->getStyle('D' . $fila . ':H' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('D' . $fila . ':H' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $spreadsheet->getActiveSheet()->getStyle('A' . $fila . ':H' . $fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    ->getStartColor()->setRGB('D9D9D9');
+            $sheet->getStyle('A' . $fila . ':H' . $fila)->applyFromArray($styleArray);
+            $sheet->mergeCells('A' . $fila . ':C' . $fila);
+            $spreadsheet->getActiveSheet()->getRowDimension($fila)->setRowHeight(20);
+            $sheet->setCellValue('A' . $fila, 'TOTAL:');
+            $sheet->setCellValue('D' . $fila, '=SUM(D' . ($f_sub + 1) . ':D' . ($fila - 1) . ')');
+            $spreadsheet->getActiveSheet()->getStyle('D' . $fila)->getNumberFormat()->setFormatCode('#,##0.000');
+            $sheet->setCellValue('E' . $fila, '=SUM(E' . ($f_sub + 1) . ':E' . ($fila - 1) . ')');
+            $sheet->setCellValue('F' . $fila, '=SUM(F' . ($f_sub + 1) . ':F' . ($fila - 1) . ')');
+            $sheet->setCellValue('G' . $fila, '=SUM(G' . ($f_sub + 1) . ':G' . ($fila - 1) . ')');
+            $sheet->setCellValue('H' . $fila, '=SUM(H' . ($f_sub + 1) . ':H' . ($fila - 1) . ')');
+            $arrTotal[] = $fila;
+            $f_total = $fila;
+            $fila++;
+            
         }
-        
+        $fila++;
+        $sheet->getStyle('A' . $fila . ':H' . $fila)->getFont()->setBold(true);
+        $sheet->getStyle('A' . $fila . ':C' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('A' . $fila . ':C' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
+        $sheet->getStyle('D' . $fila . ':H' . $fila)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('D' . $fila . ':H' . $fila)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $spreadsheet->getActiveSheet()->getStyle('A' . $fila . ':H' . $fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()->setRGB('D9D9D9');
+        $sheet->getStyle('A' . $fila . ':H' . $fila)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getRowDimension($fila)->setRowHeight(20);
+        $sheet->mergeCells('A' . $fila . ':C' . $fila);
+        $sheet->setCellValue('A' . $fila, 'TOTAL GLOBAL:');
+        $spreadsheet->getActiveSheet()->getStyle('D' . $fila)->getNumberFormat()->setFormatCode('#,##0.000');
 
-
-
+        // SUMAR TODOS LOS SUBTOTALES DESDE LA CELDA D HASTA LA H.
+        $i = 'D';
+        for($i; $i <= 'H'; $i++)
+        {
+            $cadena = '';
+            foreach($arrTotal as $tot)
+            {
+                $cadena .= '+' . $i . $tot;
+            }
+            $sheet->setCellValue($i . $fila, '=' . $cadena);
+        }
 
 
         $writer = new Xlsx($spreadsheet);

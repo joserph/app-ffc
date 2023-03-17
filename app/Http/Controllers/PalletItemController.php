@@ -1027,17 +1027,14 @@ class PalletItemController extends Controller
         $itemsCargaAll = PalletItem::select('*')
             ->where('id_load', '=', $code)
             ->join('farms', 'pallet_items.id_farm', '=', 'farms.id')
-            ->select('farms.name', 'pallet_items.*')
+            ->select('farms.name', 'farms.ruc', 'pallet_items.*')
             ->orderBy('farms.name', 'ASC')
             ->get();
         
+        
         $itemsCarga = PalletItem::groupEqualsItemsCargas($itemsCargaAll, $code);
-        // Coordinaciones
-        $itemCoordinations = Coordination::where('id_load', $load->id)->get();
 
-        //dd($itemCoordinations);
-
-        PalletItem::excelP($load, $resumenCargaAll, $itemsCarga, $itemCoordinations);
+        PalletItem::excelP($load, $resumenCargaAll, $itemsCarga);
     }
 
     /**
