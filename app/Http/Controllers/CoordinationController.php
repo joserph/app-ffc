@@ -16,6 +16,7 @@ use App\Flight;
 use App\Marketer;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Illuminate\Support\Facades\Route;
 
 class CoordinationController extends Controller
 {
@@ -73,6 +74,15 @@ class CoordinationController extends Controller
 
     public function coordinationExcel($code)
     {
+        $url = url()->full();
+        $ruc = strpos($url, 'ruc');
+        if($ruc == false)
+        {
+            $ruc = false;
+        }else{
+            $ruc = true;
+        }
+        //dd($ruc);
         $load = Load::with('logistic_company')->find($code);
         // CLIENTES
         // Buscamos los clientes que esten en esta carga, por el id_load
@@ -100,12 +110,13 @@ class CoordinationController extends Controller
             ->with('variety')
             ->join('clients', 'coordinations.id_client', '=', 'clients.id')
             ->join('farms', 'coordinations.id_farm', '=', 'farms.id')
-            ->select('farms.name as farm_name', 'coordinations.*', 'clients.name as client_name')
+            ->select('farms.name as farm_name', 'farms.ruc as farm_ruc', 'coordinations.*', 'clients.name as client_name')
             ->orderBy('clients.name', 'ASC')
             ->orderBy('farms.name', 'ASC')
             ->get();
-        //dd($load);
-        $test = Coordination::excel($load, $clientsDistribution, $coordinations);
+        //dd($coordinations);
+        
+        $test = Coordination::excel($load, $clientsDistribution, $coordinations, $ruc);
         //dd($test);
     }
 

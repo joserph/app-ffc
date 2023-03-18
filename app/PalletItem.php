@@ -296,9 +296,22 @@ class PalletItem extends Model
                         ->where('id_client', $item['id_client'])
                         ->where('id_farm', $item['id_farm'])
                         ->first();
-                    //dd($item['farm_ruc']);
-                    $sheet->setCellValue('B' . $fila, $coordHawb->hawb);
-                    $sheet->setCellValue('C' . $fila, $item['farm_ruc']);
+                    if(isset($coordHawb))
+                    {
+                        $sheet->setCellValue('B' . $fila, $coordHawb->hawb);
+                    }else{
+                        $spreadsheet->getActiveSheet()->getStyle('B' . $fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                        ->getStartColor()->setRGB('F29F05');
+                        $sheet->setCellValue('B' . $fila, '-');
+                    }
+                    if(isset($item['farm_ruc'])){
+                        $sheet->setCellValue('C' . $fila, $item['farm_ruc']);
+                    }else{
+                        $spreadsheet->getActiveSheet()->getStyle('C' . $fila)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                        ->getStartColor()->setRGB('F29F05');
+                        $sheet->setCellValue('C' . $fila, '-');
+                    }
+                    
                     $sheet->setCellValue('D' . $fila, '=(E' . $fila . '*0.5)+(F' . $fila . '*0.25)+(G' . $fila . '*0.125)');
                     $spreadsheet->getActiveSheet()->getStyle('D' . $fila)->getNumberFormat()->setFormatCode('#,##0.000');
                     $sheet->setCellValue('E' . $fila, $item['hb']);
