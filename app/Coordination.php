@@ -254,16 +254,16 @@ class Coordination extends Model
                     
                     $sheet->setCellValue('E' . $filaDos, $coord->variety->name);
                     $sheet->setCellValue('F' . $filaDos, '=SUM(G' . $filaDos . ':I' . $filaDos . ')');
-                    $sheet->setCellValue('G' . $filaDos, $coord->hb);
-                    $sheet->setCellValue('H' . $filaDos, $coord->qb);
-                    $sheet->setCellValue('I' . $filaDos, $coord->eb);
-                    $sheet->setCellValue('J' . $filaDos, '=+(F' . $filaDos . '*0.5)+(G' . $filaDos . '*0.25)+(H' . $filaDos . '*0.125)');
+                    $sheet->setCellValue('G' . $filaDos, ($coord->hb > 0 ? $coord->hb : NULL));
+                    $sheet->setCellValue('H' . $filaDos, ($coord->qb > 0 ? $coord->qb : NULL));
+                    $sheet->setCellValue('I' . $filaDos, ($coord->eb > 0 ? $coord->eb : NULL));
+                    $sheet->setCellValue('J' . $filaDos, '=+(G' . $filaDos . '*0.5)+(H' . $filaDos . '*0.25)+(I' . $filaDos . '*0.125)', \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_FORMULA);
                     $sheet->setCellValue('K' . $filaDos, '=SUM(L' . $filaDos . ':N' . $filaDos . ')');
-                    $sheet->setCellValue('L' . $filaDos, $coord->hb_r);
-                    $sheet->setCellValue('M' . $filaDos, $coord->qb_r);
-                    $sheet->setCellValue('N' . $filaDos, $coord->eb_r);
+                    $sheet->setCellValue('L' . $filaDos, ($coord->hb_r > 0 ? $coord->hb_r : NULL));
+                    $sheet->setCellValue('M' . $filaDos, ($coord->qb_r > 0 ? $coord->qb_r : NULL));
+                    $sheet->setCellValue('N' . $filaDos, ($coord->eb_r > 0 ? $coord->eb_r : NULL));
                     $sheet->setCellValue('O' . $filaDos, '=+(L' . $filaDos . '*0.5)+(M' . $filaDos . '*0.25)+(N' . $filaDos . '*0.125)');
-                    $sheet->setCellValue('P' . $filaDos, $coord->returns);
+                    $sheet->setCellValue('P' . $filaDos, ($coord->returns > 0 ? $coord->returns : NULL));
                     $sheet->setCellValue('Q' . $filaDos, '=+F' . $filaDos . '-K' . $filaDos);
                     
                     if($coord->id_marketer)

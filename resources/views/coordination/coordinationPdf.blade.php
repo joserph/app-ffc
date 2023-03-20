@@ -164,18 +164,18 @@
                             <td class="farms small-letter">{{ $item->name }}</td>
                             <td class="text-center small-letter">{{ $item->hawb }}</td>
                             <td class="text-center small-letter">{{ $item->variety->name }}</td>
-                            <td class="text-center small-letter">{{ $item->pieces }}</td>
-                            <td class="text-center small-letter">{{ $item->hb }}</td>
-                            <td class="text-center small-letter">{{ $item->qb }}</td>
-                            <td class="text-center small-letter">{{ $item->eb }}</td>
+                            <td class="text-center small-letter">{{ $item->pieces > 0 ? $item->pieces : '' }}</td>
+                            <td class="text-center small-letter">{{ $item->hb > 0 ? $item->hb : '' }}</td>
+                            <td class="text-center small-letter">{{ $item->qb > 0 ? $item->qb : '' }}</td>
+                            <td class="text-center small-letter">{{ $item->eb > 0 ? $item->eb : '' }}</td>
                             <td class="text-center small-letter">{{ number_format($item->fulls, 3, '.','') }}</td>
-                            <td class="text-center small-letter">{{ $item->pieces_r }}</td>
-                            <td class="text-center small-letter">{{ $item->hb_r }}</td>
-                            <td class="text-center small-letter">{{ $item->qb_r }}</td>
-                            <td class="text-center small-letter">{{ $item->eb_r }}</td>
-                            <td class="text-center small-letter">{{ number_format($item->fulls_r, 3, '.','') }}</td>
-                            <td class="text-center small-letter">{{ $item->returns }}</td>
-                            <td class="text-center small-letter">{{ $item->missing }}</td>
+                            <td class="text-center small-letter">{{ $item->pieces_r > 0 ? $item->pieces_r : '' }}</td>
+                            <td class="text-center small-letter">{{ $item->hb_r > 0 ? $item->hb_r : '' }}</td>
+                            <td class="text-center small-letter">{{ $item->qb_r > 0 ? $item->qb_r : '' }}</td>
+                            <td class="text-center small-letter">{{ $item->eb_r > 0 ? $item->eb_r : '' }}</td>
+                            <td class="text-center small-letter">{{ $item->fulls_r > 0 ? number_format($item->fulls_r, 3, '.','') : ''}}</td>
+                            <td class="text-center small-letter">{{ $item->returns > 0 ? $item->returns : '' }}</td>
+                            <td class="text-center small-letter">{{ $item->missing > 0 ? $item->missing : '' }}</td>
                         </tr>
             
                     @endif
