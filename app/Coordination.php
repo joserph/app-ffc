@@ -243,7 +243,15 @@ class Coordination extends Model
 
                     $sheet->setCellValue('B' . $filaDos, $coord->farm_name);
                     $sheet->setCellValue('C' . $filaDos, $coord->hawb);
-                    $sheet->setCellValue('D' . $filaDos, $coord->farm_ruc);
+                    if(isset($coord->farm_ruc))
+                    {
+                        $sheet->setCellValue('D' . $filaDos, $coord->farm_ruc);
+                    }else{
+                        $spreadsheet->getActiveSheet()->getStyle('D' . $filaDos)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                        ->getStartColor()->setRGB('F29F05');
+                        $sheet->setCellValue('D' . $filaDos, '-');
+                    }
+                    
                     $sheet->setCellValue('E' . $filaDos, $coord->variety->name);
                     $sheet->setCellValue('F' . $filaDos, '=SUM(G' . $filaDos . ':I' . $filaDos . ')');
                     $sheet->setCellValue('G' . $filaDos, $coord->hb);
@@ -360,7 +368,13 @@ class Coordination extends Model
         $writer = new Xlsx($spreadsheet);
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="COORDINACIÓN MARÍTIMA - ' . $load->bl . '.xlsx"');
+        if($ruc == false)
+        {
+            header('Content-Disposition: attachment;filename="COORDINACIÓN_MARÍTIMA - ' . $load->bl . '.xlsx"');
+        }else{
+            header('Content-Disposition: attachment;filename="COORDINACIÓN_MARÍTIMA_CON_RUC - ' . $load->bl . '.xlsx"');
+        }
+        
         header('Cache-Control: max-age=0');
 
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
