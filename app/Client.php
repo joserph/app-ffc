@@ -43,7 +43,7 @@ class Client extends Model
     public static function excel()
     {
         // CLIENTS
-        $clients = Client::get();
+        $clients = Client::orderBy('name', 'ASC')->get();
         //dd($clients->count());
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -68,14 +68,14 @@ class Client extends Model
             ],
         ];
 
-        $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(30);
+        $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(32);
         $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(16);
-        $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(60);
+        $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(67);
         $spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(15);
         $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(15);
         $spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(20);
         $spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(6);
-        $spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(30);
+        $spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(35);
         $spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(20);
         $spreadsheet->getActiveSheet()->getColumnDimension('J')->setWidth(20);
         $spreadsheet->getActiveSheet()->getColumnDimension('K')->setWidth(20);
@@ -91,7 +91,7 @@ class Client extends Model
 
         $letra = 'A';
         // Calculo de las caldas en blanco
-        $total_lineas = $clients->count() + 5;
+        $total_lineas = $clients->count() + 3;
         for($letra; $letra <= 'P'; $letra++)
         {
             $spreadsheet->getActiveSheet()->getStyle($letra . '1:' . $letra . $total_lineas)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
