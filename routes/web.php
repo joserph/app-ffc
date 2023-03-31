@@ -34,7 +34,7 @@ Route::get('/farms', function () {
 Route::get('/clients', function () {
     return view('client.clients');
 })->name('clients');
-
+Route::get('client-excel', 'HomeController@clientExcel')->name('client.excel');
 // Compañia
 Route::get('/companies', function () {
     return view('company.companies');
@@ -193,5 +193,6 @@ Route::resource('/dae', 'DaeController')->names('dae');
 Route::resource('/distribution-client', 'DistributionClientController')->names('distribution-client');
 // Aerolineas
 Route::resource('/airline', 'AirlineController')->names('airline');
-
+// Cierre de carga
 Route::get('closing-excel/{id}', 'PalletItemController@palletExcel')->name('closing.excel');
+

@@ -72,4 +72,9 @@ class HomeController extends Controller
             'daes',
             'airlines'));
     }
+
+    public function clientExcel()
+    {
+        Client::excel();
+    }
 }

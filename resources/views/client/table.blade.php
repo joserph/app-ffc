@@ -1,5 +1,7 @@
 @can('haveaccess', 'client.index')
-<h2>Listado de Clientes</h2>
+<h2>Listado de Clientes 
+   <a href="{{ route('client.excel') }}" target="_blank" class="btn btn-xs btn-outline-success pull-right"><i class="fas fa-file-excel"></i> Descargar Excel de Clientes</a>
+</h2>
 <div class="table-responsive">
    <div class="form-group row">
       <label for="inputPassword" class="col-sm-1 col-form-label">Buscar</label>
@@ -10,17 +12,18 @@
    <table class="table table-sm table-hover">
     <thead>
        <tr>
-          <th scope="col">Nombre</th>
-          <th scope="col">Teléfono</th>
-          <th scope="col">Correo</th>
-          <th scope="col">Dirección</th>
-          <th scope="col">Estado</th>
-          <th scope="col">Ciudad</th>
-          <th scope="col">País</th>
-          <th scope="col">POA</th>
-          <th scope="col">Color</th>
-          <th scope="col">Creado / Editado</th>
-          <th scope="col">Fecha Creado / Editado</th>
+          <th scope="col" class="text-center">Nombre</th>
+          <th scope="col" class="text-center">Teléfono</th>
+          <th scope="col" class="text-center">Correo</th>
+          <th scope="col" class="text-center">Dirección</th>
+          <th scope="col" class="text-center">POA</th>
+          <th scope="col" class="text-center">Color</th>
+          <th scope="col" class="text-center">Propietario</th>
+          <th scope="col" class="text-center">Sub Propietario</th>
+          <th scope="col" class="text-center">Nombres Relacionados</th>
+          <th scope="col" class="text-center">Broker/Comprador</th>
+          <th scope="col" class="text-center">Creado / Editado</th>
+          <th scope="col" class="text-center">Fecha Creado / Editado</th>
           <th class="text-center" colspan="2">@can('haveaccess', 'client.edit') Editar @endcan  @can('haveaccess', 'client.destroy')/ Eliminar @endcan</th>
        </tr>
     </thead>
@@ -30,11 +33,14 @@
             <td>{{ $client->name }}</td>
             <td>{{ $client->phone }}</td>
             <td>{{ $client->email }}</td>
-            <td>{{ Str::limit($client->address, 20) }}</td>
-            <td>{{ $client->state }}</td>
-            <td>{{ $client->city }}</td>
-            <td>{{ $client->country }}</td>
-            <td>{{ $client->poa }}</td>
+            <td>{{ Str::limit($client->address, 15) }}</td>
+            <td>
+               @if ($client->poa == 'yes')
+               <span class="badge badge-success">SI</span>
+               @else
+               <span class="badge badge-dark">NO</span>
+               @endif
+            </td>
             <td>
                @foreach ($colors as $item)
                   @if ($client->id == $item->id_type)
@@ -50,6 +56,10 @@
                   @endif
                @endforeach
             </td>
+            <td>{{ $client->owner }}</td>
+            <td>{{ $client->sub_owner }}</td>
+            <td>{{ $client->related_names }}</td>
+            <td>{{ $client->buyer }}</td>
             <td>
                {{ ucfirst($client->user->name) }} / 
                @foreach ($users as $user)
