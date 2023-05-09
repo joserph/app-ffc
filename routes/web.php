@@ -195,4 +195,5 @@ Route::resource('/distribution-client', 'DistributionClientController')->names('
 Route::resource('/airline', 'AirlineController')->names('airline');
 // Cierre de carga
 Route::get('closing-excel/{id}', 'PalletItemController@palletExcel')->name('closing.excel');
-
+// Importar Excel coordinacion maritimo
+Route::post('coordination-load-import')->name('coordination-load.import');
