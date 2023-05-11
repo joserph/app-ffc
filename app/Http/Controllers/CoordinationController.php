@@ -17,6 +17,7 @@ use App\Marketer;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Illuminate\Support\Facades\Route;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CoordinationController extends Controller
 {
@@ -65,6 +66,27 @@ class CoordinationController extends Controller
 
         //dd($coordinations);
         return view('coordination.index', compact('farms', 'clients', 'varieties', 'load', 'company', 'coordinations', 'clientsCoordination', 'farmsList', 'clientsList', 'marketers'));
+    }
+
+    public function importExcel(Request $request, $load)
+    {
+        if($request->hasFile('excel_coord'))
+        {
+            $path = $request->file('excel_coord')->getRealPath();
+            $datos = Excel::load($path, function($reader){
+
+            })->get();
+            if(!empty($datos) && $datos->count())
+            {
+                $datos = $datos->toArray();
+                for($i = 0; $i < count($datos); $i++)
+                {
+                    $datosImport[] = $datos[$i];
+                }
+            }
+            dd($path);
+        }
+        
     }
 
     public function transferCoordination($load, $request)

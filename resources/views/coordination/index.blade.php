@@ -53,7 +53,11 @@
                           <a href="{{ route('coordination.pdf', $load) }}" target="_blank" class="btn btn-xs btn-outline-info pull-right"><i class="far fa-file-pdf"></i> Descargar PDF</a>
                           <a href="{{ route('coordination.excel', $load) }}" target="_blank" class="btn btn-xs btn-outline-success pull-right"><i class="fas fa-file-excel"></i> Descargar Excel</a>
                           <a href="{{ route('coordination-ruc.excel', $load) }}" target="_blank" class="btn btn-xs btn-outline-success pull-right"><i class="fas fa-file-excel"></i> Descargar Excel con RUC</a>
-                          
+                          <form action="{{ route('coordination-load.import', $load) }}" method="POST" enctype="multipart/form-data">
+                           @csrf
+                           <input type="file" name="excel_coord">
+                           <button class="btn btn-outline-primary" type="submit">Importar</button>
+                          </form>
                           <!--
                           <div class="form-group col-md-12">
                               <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
