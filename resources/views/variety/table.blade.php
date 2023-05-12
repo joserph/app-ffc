@@ -4,6 +4,7 @@
    <table class="table table-sm table-hover">
     <thead>
        <tr>
+          <th scope="col">ID</th>
           <th scope="col">Nombre</th>
           <th scope="col">Nombre Cientifico</th>
           <th scope="col">Creado / Editado</th>
@@ -14,6 +15,7 @@
     <tbody>
        @foreach ($varieties as $variety)
          <tr>
+            <td>{{ $variety->id }}</td>
             <td>{{ $variety->name }}</td>
             <td>{{ $variety->scientific_name }}</td>
             <td>

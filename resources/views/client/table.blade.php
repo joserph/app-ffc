@@ -12,6 +12,7 @@
    <table class="table table-sm table-hover">
     <thead>
        <tr>
+       <th scope="col" class="text-center">ID</th>
           <th scope="col" class="text-center">Nombre</th>
           <th scope="col" class="text-center">Teléfono</th>
           <th scope="col" class="text-center">Correo</th>
@@ -30,6 +31,7 @@
     <tbody>
        @foreach ($clients as $client)
          <tr>
+            <td>{{ $client->id }}</td>
             <td>{{ $client->name }}</td>
             <td>{{ $client->phone }}</td>
             <td>{{ $client->email }}</td>

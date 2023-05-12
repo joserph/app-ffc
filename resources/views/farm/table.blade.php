@@ -14,6 +14,7 @@
    <table class="table table-sm table-hover" id="farm-table">
     <thead>
        <tr>
+       <th scope="col">ID</th>
           <th scope="col">Nombre</th>
           <th scope="col">RUC</th>
           <th scope="col">Nombre Comercial</th>
@@ -30,6 +31,7 @@
     <tbody>
        @foreach ($farms as $farm)
          <tr>
+            <td>{{ $farm->id }}</td>
             <td><a class="text-decoration-none" href="{{ route('farm.show', $farm->id) }}">{{ $farm->name }}</a></td>
             <td>{{ $farm->ruc }}</td>
             <td>{{ $farm->tradename }}</td>

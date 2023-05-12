@@ -4,8 +4,9 @@ namespace App\Imports;
 
 use App\Coordination;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class CoordinationImport implements ToModel
+class CoordinationImport implements ToModel, WithHeadingRow
 {
     /**
     * @param array $row
@@ -19,7 +20,7 @@ class CoordinationImport implements ToModel
             'pieces' => $row['pieces'],
             'hb'    => $row['hb'],
             'qb'  => $row['qb'],
-            'qb' => $row['qb'],
+            'eb' => $row['eb'],
             'fulls'    => $row['fulls'],
             'hb_r'  => $row['hb_r'],
             'qb_r' => $row['qb_r'],

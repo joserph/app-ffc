@@ -18,6 +18,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\CoordinationImport;
 
 class CoordinationController extends Controller
 {
@@ -70,6 +71,13 @@ class CoordinationController extends Controller
 
     public function importExcel(Request $request, $load)
     {
+        $file = $request->file('excel_coord');
+        //dd($file);
+        Excel::import(new CoordinationImport, $file);
+
+        return redirect()->route('coordination.index', $load)
+            ->with('status_success', 'Coordinación importada con éxito');
+        /* Otro Ejemplo 
         if($request->hasFile('excel_coord'))
         {
             $path = $request->file('excel_coord')->getRealPath();
@@ -86,6 +94,7 @@ class CoordinationController extends Controller
             }
             dd($path);
         }
+        */
         
     }
 
