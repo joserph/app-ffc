@@ -28,7 +28,7 @@
       <div class="row justify-content-center">
          <div class="col-12">
 
-            @include('custom.message') 
+            @include('custom.message')
 
             <div class="card">
                <div class="card-header">
@@ -100,7 +100,7 @@
                                     </tr>
                                 </thead>
                                  @foreach($clientsCoordination as  $key => $client)
-                                 
+
                                  <tbody>
                                      @php
                                          $tPieces = 0; $tFulls = 0; $tHb = 0; $tQb = 0; $tEb = 0;
@@ -114,7 +114,7 @@
                                           $tQb+= $item->qb;
                                           $tEb+= $item->eb;
                                        @endphp
-                                       
+
                                        @endif
                                      @endforeach
                                      @php
@@ -147,35 +147,38 @@
                              </table>
                             </div>
                           </div>
-                          
+
                         </div>
                       </div>
-                  
+
                </div>
                <div class="card-footer">
                   <!-- tabla de coordinaciones -->
                   <div class="table-responsive">
-                    <table class="table table-bordered table-sm">
+                     <a href="" class="btn btn-xs btn-outline-danger pull-right" id="deleteAllSelected"><i class="far fa-times-circle"></i> Eliminar Coordinación</a>
+                     <table class="table table-bordered table-sm">
                         @php
                             $totalFulls = 0; $totalHb = 0; $totalQb = 0; $totalEb = 0; $totalPcsr = 0; $totalHbr = 0; $totalQbr = 0;
                             $totalEbr = 0; $totalFullsr = 0; $totalDevr = 0; $totalMissingr = 0;
                         @endphp
+                        <thead>
+                           <tr>
+                              <th colspan="2" class="text-center medium-letter"><input type="checkbox" name="ids" id="select_all_ids"> Seleccionar Todos</th>
+                              <th colspan="17" class="sin-border"></th>
+                           </tr>
+                        </thead>
+                        
                         @foreach($clientsCoordination as $client)
                         <thead>
                             <tr>
-                                <th colspan="18" class="sin-border"></th>
-                            </tr>
-                        </thead>
-                        <thead>
-                            <tr>
                                 {{-- <th class="text-center medium-letter">AWB</th> --}}
-                                <th class="text-center medium-letter table-info" colspan="18">{{ $client['name'] }}</th>
+                                <th class="text-center medium-letter table-info" colspan="19">{{ $client['name'] }}</th>
                             </tr>
                         </thead>
                         <thead>
                             <tr class="gris">
                               <th class="text-center transfLavel">Transferir</th>
-                              <th class="text-center" colspan="3"></th>
+                              <th class="text-center" colspan="4"></th>
                               <th class="text-center table-secondary" colspan="5">Coordinado</th>
                               <th class="text-center table-success" colspan="5">Recibido</th>
                               <th class="text-center" colspan="5"></th>
@@ -183,7 +186,7 @@
                         </thead>
                         <thead>
                            <tr class="gris">
-                             <th class="text-center transfLavel">Transferir</th>
+                             <th class="text-center">Transferir</th>
                              <th class="text-center">Finca</th>
                              <th class="text-center">HAWB</th>
                              <th class="text-center">Variedad</th>
@@ -208,7 +211,7 @@
                                 $tPieces = 0; $tFulls = 0; $tHb = 0; $tQb = 0; $tEb = 0; $totalPieces = 0; $tPcsR = 0;
                                  $tHbr = 0; $tQbr = 0; $tEbr = 0; $tFullsR = 0; $tDevR = 0; $tMissingR = 0;
                             @endphp
-                            
+
                             @foreach($coordinations as $item)
                             @if($client['id'] == $item->id_client)
                             @php
@@ -225,8 +228,8 @@
                                  $tDevR+= $item->returns;
                                  $tMissingR+= $item->missing;
                             @endphp
-                            <tr>
-                               <!--<td class="text-center"><input type="checkbox" class="transf" name="{{ $item->id }}" value="{{ $item->id }}" placeholder="{{ $item->name }} - {{ $client['name'] }} - {{ $item->pieces }}"></td>-->
+                            <tr id="coord_ids{{ $item->id }}">
+                                 <td class="text-center"><input type="checkbox" class="checkbox_ids" name="ids" value="{{ $item->id }}"></td>
                                 <td class="farms">{{ $item->name }}</td>
                                 <td class="text-center">{{ $item->hawb }}</td>
                                 <td class="text-center">{{ $item->variety->name }}</td>
@@ -245,15 +248,15 @@
                                 <td class="text-center text-danger">
                                  <small>
                                  @if($item->id_marketer)
-                                    COMPRA DE {{ strtoupper($item->marketer->name) }} 
+                                    COMPRA DE {{ strtoupper($item->marketer->name) }}
                                  @endif
                                  @if ($item->observation)
                                     ({{ strtoupper($item->observation) }})
                                  @endif
-                                 
+
                                  </small>
                                  </td>
-                                
+
                                 <td class="text-center">
                                     @can('haveaccess', 'coordination.edit')
                                     <button type="button" onclick="mifuncion2(this)" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#editarItem{{ $item->id }}">
@@ -280,7 +283,7 @@
                                        </button>
                                     </div>
                                     <div class="modal-body">
-                                       @include('custom.message') 
+                                       @include('custom.message')
                                        {{ Form::model($item, ['route' => ['coordination.update', $item->id], 'class' => 'form-horizontal', 'method' => 'PUT']) }}
                                           <div class="modal-body">
                                              @include('coordination.partials.formEdit')
@@ -298,7 +301,7 @@
                            </div>
                             @endif
                             @endforeach
-                            
+
                             @php
                                  $totalFulls+= $tFulls;
                                  $totalHb+= $tHb;
@@ -313,7 +316,7 @@
                                  $totalMissingr+= $tMissingR;
                               @endphp
                            <tr class="gris">
-                              <th class="text-center text-right" colspan="3">Total:</th>
+                              <th class="text-center text-right" colspan="4">Total:</th>
                               <th class="text-center">{{ $tPieces }}</th>
                               <th class="text-center">{{ $tHb }}</th>
                               <th class="text-center">{{ $tQb }}</th>
@@ -337,7 +340,7 @@
                                 <th colspan="8" class="sin-border"></th>
                             </tr>
                             <tr class="gris">
-                                <th class="text-center" colspan="3">Total Global:</th>
+                                <th class="text-center" colspan="4">Total Global:</th>
                                 <th class="text-center">{{ $totalPieces }}</th>
                                 <th class="text-center">{{ $totalHb }}</th>
                                 <th class="text-center">{{ $totalQb }}</th>
@@ -357,9 +360,9 @@
                   <!-- fin tabla de coordinaciones -->
                </div>
             </div>
-            
+
          </div>
-         
+
          <div class="modal fade" id="agregarItem" tabindex="-1" aria-labelledby="agregarItemLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl">
                <div class="modal-content">
@@ -386,9 +389,9 @@
                </div>
             </div>
          </div>
-         
 
-         
+
+
 
 
       </div>
@@ -398,20 +401,51 @@
 @section('scripts')
 
    <script>
+      // Seleccionar todo
+      $(function(e){
+         $('#select_all_ids').click(function(){
+            $('.checkbox_ids').prop('checked', $(this).prop('checked'));
+         });
+
+         $('#deleteAllSelected').click(function(e){
+            
+            e.preventDefault();
+            var all_ids = [];
+            $('input:checkbox[name=ids]:checked').each(function(){
+               all_ids.push($(this).val());
+            });
+
+            $.ajax({
+               url: "{{ route('coordination.delete') }}",
+               type: "DELETE",
+               data: {
+                  ids: all_ids,
+                  _token: '{{ csrf_token() }}'
+               },
+               success: function(response){
+                  $.each(all_ids, function(key, val){
+                     $('#coord_ids' + val).remove();
+                     location.reload();
+                  });
+               }
+            });
+         });
+      });
+
       // function mifuncion2(elemento) {
       //    var id_pallet = elemento.getAttribute('value');
       //    $(document).ready(function(){
       //       //alert(id_pallet);
-            
+
       //       $('#edit_farmsList_'+id_pallet).select2({
       //             theme: 'bootstrap4',
       //       });
       //       $('#edit_clientsList_'+id_pallet).select2({
       //             theme: 'bootstrap4',
       //       });
-            
+
       //    });
-         
+
       // }
 
       $('.id_farmEdit').select2({
@@ -461,7 +495,7 @@
 
       $('#ListCoord').click(function()
       {
-         
+
          lista.innerHTML = '';
          checks_farm.forEach((e)=>{
             if(e.checked == true)
@@ -473,7 +507,7 @@
                lista.appendChild(elemento);
                $('#btnTransf').show();
             }
-            
+
          });
          /*$('#btnTransf').click(function()
          {
@@ -494,16 +528,16 @@
                }
             });
          });*/
-         
+
          for ( x in test) {
             console.log( test[x] );
          }
       });
 
-      
+
    </script>
 
-   
+
 @endsection
 
 @endsection

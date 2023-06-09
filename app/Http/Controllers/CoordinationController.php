@@ -310,4 +310,19 @@ class CoordinationController extends Controller
         return redirect()->route('coordination.index', $load->id)
             ->with('status_success', 'Coordinación eliminada con éxito');
     }
+
+    public function deleteAll(Request $request)
+    {
+        $ids = $request->ids;
+        //dd($ids[0]);
+        if($ids[0] == "on"){
+            $new_ids = array_slice($ids, 1); // Elimino el primer valos del Array.
+        }else{
+            $new_ids = $ids;
+        }
+        
+        Coordination::whereIn('id', $new_ids)->delete();
+        return response()->json(["success" => "Coordinaciones eliminadas"]);
+        //
+    }
 }

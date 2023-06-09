@@ -93,10 +93,11 @@ class PalletItemController extends Controller
             ->get();
         // Eliminamos los clientes duplicados
         $clientsLoad = collect(array_unique($resumenCarga->toArray(), SORT_REGULAR));
-        // Empresa de logistica
-        $logistic = LogisticCompany::first();
 
         $load = Load::find($codeLoad);
+
+        // Empresa de logistica
+        $logistic = LogisticCompany::find($load->id_logistic_company);
 
         $company = Company::first();
 
@@ -203,6 +204,7 @@ class PalletItemController extends Controller
             $sheet->getStyle('F2')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
             $sheet->getStyle('F2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
             //Shipper
+            //dd($logistic);
             $spreadsheet->getActiveSheet()->getStyle('A3:E6')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()->setRGB('FFFFFF');
             $sheet->getStyle('A3:E6')->applyFromArray($styleArrayBorderThick);
